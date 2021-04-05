@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,6 +8,7 @@
     <title>메인페이지</title>
     <link rel="stylesheet" href="main.css">
 </head>
+
 <body>
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -50,127 +52,216 @@
             height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <script>/* eslint-disable */(function (w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-NSQ8BP');/* eslint-enable */</script>
     <!-- End Google Tag Manager -->
-</head>
+    </head>
 
-<body class="asp_check">
-    <div class="newSb" style="display:none">
-        <div class="newSb__close"><button type="button" id="newSb_btn_close"><svg version="1.1"
-                    xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 15 15"
-                    width="10" height="10">
-                    <path style="stroke:rgb(105,105,105);stroke-width:2"
-                        d="M7.5 7.03L0.47 0L0 0.48L7 7.5L0 14.53L0.47 15L7.5 7.98L14.5 15L15 14.53L7.98 7.5L15 0.48L14.5 0L7.5 7.03Z">
-                    </path>
-                </svg></button></div><img class="newSb__logo" src="image/ico-welcome-coupon.png" alt="banner image" />
-        <div class="newSb__meta">
-            <header class="newSb__header">요기요가 처음이라면?<br />총 10,000원 혜택을 받아보세요.</header>
+    <body class="asp_check">
+        <div class="newSb" style="display:none">
+            <div class="newSb__close"><button type="button" id="newSb_btn_close"><svg version="1.1"
+                        xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                        viewBox="0 0 15 15" width="10" height="10">
+                        <path style="stroke:rgb(105,105,105);stroke-width:2"
+                            d="M7.5 7.03L0.47 0L0 0.48L7 7.5L0 14.53L0.47 15L7.5 7.98L14.5 15L15 14.53L7.98 7.5L15 0.48L14.5 0L7.5 7.03Z">
+                        </path>
+                    </svg></button></div><img class="newSb__logo" src="image/ico-welcome-coupon.png"
+                alt="banner image" />
+            <div class="newSb__meta">
+                <header class="newSb__header">요기요가 처음이라면?<br />총 10,000원 혜택을 받아보세요.</header>
+            </div>
+            <div class="newSb__applink"><a class="newSb__applink__btn">열기</a></div>
         </div>
-        <div class="newSb__applink"><a class="newSb__applink__btn">열기</a></div>
-    </div>
-    <script type="text/javascript">if (is_11st) { HeaderExtra.init(); }</script>
-    <div class="fake-header">
-        <div class="navigation" role="navigation">
-            <div class="navbar-fixed-top">
-                <div class="nav-top clearfix">
-                    <h1 class="logo pull-left">요기요</h1>
-                    <div id="cart" class="pull-right"></div>
+        <script type="text/javascript">if (is_11st) { HeaderExtra.init(); }</script>
+        <div class="fake-header">
+            <div class="navigation" role="navigation">
+                <div class="navbar-fixed-top">
+                    <div class="nav-top clearfix" ng-hide="$location.path() == '/login/' &amp;&amp; is_mobile_device">
+                        <h1 class="logo pull-left" ng-click="click_home()">요기요</h1>
+                        <div id="cart" class="pull-right">
+                            <span class="gps-status ng-binding" ng-show="check_show_location_button()"
+                                ng-click="toggle_location_block()" ng-bind="current_location">위치 알 수 없음</span>
+                            <a class="visible-xs" ng-show="check_show_location_button()"
+                                ng-click="toggle_location_block()">
+                                <span class="ico-set-pic"></span>
+                            </a>
+                            <a id="button-cart" href="" class="visible-xs ng-hide" ng-click="click_cart_button()"
+                                ng-show="check_show_cart_button()">
+                                <span class="ico-cart"></span>
+                                <span class="badge ng-binding" ng-bind="global_cart.get_amount()">0</span>
+                            </a>
+                            <button type="button" class="btn btn-login ng-binding" ng-click="login()"
+                                ng-bind-html="check_login() ? '로그아웃' : '로그인'"
+                                ng-show="is_yogiyo &amp;&amp; !session_storage.oauth_next">로그인</button>
+                            <button type="button" class="btn btn-warning hidden-xs ng-binding ng-hide"
+                                ng-show="show_pc_cart_button()" ng-click="click_cart_button()"
+                                ng-bind="&quot;주문표(&quot; + global_cart.get_amount() + &quot;)&quot;">주문표(0)</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div yogiyo-header></div>
-    <div id='messages' class="messages"></div>
-    <div id='messages_bottom' class="messages messages-bottom"></div>
-    <div ng-show='on_loading' id='spinner' style="display:none;">
-        <div></div><span class='message'></span>
-    </div>
-    <div id='content' class='container-fluid' ng-view></div>
-    <div class="category-list" ng-hide='$location.path() != "/"'>
-        <div class="row">
-            <div class="col-xs-6 col-sm-4 col-md-3 category-banner" ng-repeat='banner in banner_list'
-                style="display:none" on-finish-render="completeBannerListRender()"><a href="" class="thumbnail"
-                    ng-click="setEvent($index, banner)" ng-style="{'background': banner.background_color}"><img
-                        ng-src="{{banner.event_image_url}}" alt="{{banner.event_name}}"><i class="icon-move"></i></a>
+        <div yogiyo-header="">
+            <div id="header" class="header">
+
+
+                <div class="nav-top clearfix" ng-hide="$location.path() == '/login/' &amp;&amp; is_mobile_device">
+                    <h1 class="logo pull-left" ng-click="click_home()">요기요</h1>
+                    <div id="cart" class="pull-right">
+                        <span class="gps-status ng-binding" ng-show="check_show_location_button()"
+                            ng-click="toggle_location_block()" ng-bind="current_location">위치 알 수 없음</span>
+                        <a class="visible-xs" ng-show="check_show_location_button()" ng-click="toggle_location_block()">
+                            <span class="ico-set-pic"></span>
+                        </a>
+                        <a id="button-cart" href="" class="visible-xs ng-hide" ng-click="click_cart_button()"
+                            ng-show="check_show_cart_button()">
+                            <span class="ico-cart"></span>
+                            <span class="badge ng-binding" ng-bind="global_cart.get_amount()">0</span>
+                        </a>
+                        <button type="button" class="btn btn-login ng-binding" ng-click="login()"
+                            ng-bind-html="check_login() ? '로그아웃' : '로그인'"
+                            ng-show="is_yogiyo &amp;&amp; !session_storage.oauth_next">로그인</button>
+                        <button type="button" class="btn btn-warning hidden-xs ng-binding ng-hide"
+                            ng-show="show_pc_cart_button()" ng-click="click_cart_button()"
+                            ng-bind="&quot;주문표(&quot; + global_cart.get_amount() + &quot;)&quot;">주문표(0)</button>
+                    </div>
+                </div>
             </div>
-            <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3"><a href="" class="thumbnail"
-                    ng-click="select_home_category('all')">
-                    <div class="category-title">전체보기</div><img src="image/category-01.png">
-                </a></div>
-            <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3"><a href="" class="thumbnail"
-                    ng-click="select_home_category('1인분주문')">
-                    <div class="category-title">1인분 주문</div><img src="image/category-onedish.png">
-                </a></div>
-            <div class="col-xs-6 col-sm-4 col-md-3"><a href="" class="thumbnail"
-                    ng-click="select_home_category('프랜차이즈')">
-                    <div class="category-title">프랜차이즈</div><img src="image/category-10.png">
-                </a></div>
-            <div class="col-xs-6 col-sm-4 col-md-3"><a href="" class="thumbnail" ng-click="select_home_category('치킨')">
-                    <div class="category-title">치킨</div><img src="image/category-02.png">
-                </a></div>
-            <div class="col-xs-6 col-sm-4 col-md-3"><a href="" class="thumbnail"
-                    ng-click="select_home_category('피자양식')">
-                    <div class="category-title">피자/양식</div><img src="image/category-03.png">
-                </a></div>
-            <div class="col-xs-6 col-sm-4 col-md-3"><a href="" class="thumbnail" ng-click="select_home_category('중식')">
-                    <div class="category-title">중국집</div><img src="image/category-04.png">
-                </a></div>
-            <div class="col-xs-6 col-sm-4 col-md-3"><a href="" class="thumbnail" ng-click="select_home_category('한식')">
-                    <div class="category-title">한식</div><img src="image/category-05.png">
-                </a></div>
-            <div class="col-xs-6 col-sm-4 col-md-3"><a href="" class="thumbnail"
-                    ng-click="select_home_category('일식돈까스')">
-                    <div class="category-title">일식/돈까스</div><img src="image/category-06.png">
-                </a></div>
-            <div class="col-xs-6 col-sm-4 col-md-3"><a href="" class="thumbnail"
-                    ng-click="select_home_category('족발보쌈')">
-                    <div class="category-title">족발/보쌈</div><img src="image/category-07.png">
-                </a></div>
-            <div class="col-xs-6 col-sm-4 col-md-3"><a href="" class="thumbnail" ng-click="select_home_category('야식')">
-                    <div class="category-title">야식</div><img src="image/category-08.png">
-                </a></div>
-            <div class="col-xs-6 col-sm-4 col-md-3"><a href="" class="thumbnail" ng-click="select_home_category('분식')">
-                    <div class="category-title">분식</div><img src="image/category-09.png">
-                </a></div>
-            <div class="col-xs-6 col-sm-4 col-md-3"><a href="" class="thumbnail"
-                    ng-click="select_home_category('카페디저트')">
-                    <div class="category-title">카페/디저트</div><img src="image/category-11.png">
-                </a></div>
-            <div class="col-xs-6 col-sm-4 col-md-3"><a href="" class="thumbnail" ng-click="select_home_category('편의점')">
-                    <div class="category-title">편의점/마트</div><img src="image/category-convenience-store.png">
-                </a></div>
-        </div>
-    </div>
-    <div class="footer" ng-show="is_yogiyo && !session_storage.oauth_next">
-        <div class="company-wrap">
-            <div class="company-logo"><a href="" ng-click="click_home()">요기요</a></div>
+
+            <div id="search" class="search clearfix search-show">
+                <div class="input-group">
+                    <span class="input-group-btn loc">
+                        <button class="btn btn-default ico-loc" type="button"
+                            ng-click="get_current_location()">&nbsp;</button>
+                    </span>
+                    <form action="." onsubmit="return false"
+                        class="ng-pristine ng-invalid ng-invalid-required ng-valid-minlength">
+                        <input type="search"
+                            class="form-control ng-pristine ng-scope ng-invalid ng-invalid-required ng-valid-minlength ng-touched"
+                            name="address_input" autocomplete="off" autocorrect="off" autocapitalize="off"
+                            spellcheck="false" placeholder="건물명, 도로명, 지번으로 검색하세요." ng-minlength="1" ng-required="true"
+                            ng-model="session_storage.location.address_input" bs-dropdown=""
+                            ng-focus="show_location_search()" required="required">
+                    </form>
+                    <span id="button_search_address" class="input-group-btn always-show-search-buttons">
+                        <button class="btn-search-location-cancel btn-search-location btn btn-default ng-hide"
+                            type="button" ng-click="clear_search_location_input($event)"
+                            ng-show="is_shown_location_search.v"><span
+                                class="searchfield-cancel-button">&nbsp;</span></button>
+                        <button class="btn btn-default ico-pick" type="button"
+                            ng-click="select_location($event)">검색</button>
+                    </span>
+                </div>
+            </div>
         </div>
         </div>
-    </div>
-    <script
-        type="text/javascript">if (is_11st) { document.write('<s' + 'cript src="' + '//m.11st.co.kr/MW/js/lifecategory/delivery/inc_footer_extra.js?random=' + Math.random() + '" charset="euc-kr" type="text/javascript">' + '</s' + 'cript>'); }</script>
-    <script type="text/javascript" src='js/jquery-2.1.3.min.js?v=68733540a4ff8c2a8f57c24046fae5bfc95ad5ec'></script>
-    <script src="//nsp.pay.naver.com/sdk/js/naverpay.min.js"></script>
-    <script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js"
-        charset="utf-8"></script>
-    <script type="text/javascript" src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
-    <script type="text/javascript" src="https://pg.cnspay.co.kr/dlp/scripts/smilepay.js" charset="euc-kr"></script>
-    <script
-        type="text/javascript">if (is_yogiyo) { if (window.naver) { var naver_login = new naver.LoginWithNaverId({ clientId: '96m5xiTC0SajLMvqJOUH', callbackUrl: location.protocol + '//' + location.hostname + '/mobile/', isPopup: false }); naver_login.init(); window.naver_login = naver_login; } if (window.Kakao) { Kakao.init('92dcdbf99967e46645137d9983a77fc9'); } }</script>
-    <script src='js/require.js?v=68733540a4ff8c2a8f57c24046fae5bfc95ad5ec'></script>
-    <script src='js/app.js?v=68733540a4ff8c2a8f57c24046fae5bfc95ad5ec'></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA5QSVWW0EUN3p9RoHwOJdsSovksfPkqg0"
-        type="text/javascript"></script>
-    <script
-        language='javascript'>/**/window.isMobile = function () { var check = false;/* eslint-disable */(function (a) { if (/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino|android|ipad|playbook|silk/i.test(a) || /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(a.substr(0, 4))) check = true; })(navigator.userAgent || navigator.vendor || window.opera); return check;/* eslint-enable */ };</script>
-    <!-- Naver Analytics -->
-    <script type="text/javascript" src="//wcs.naver.net/wcslog.js"> </script>
-    <script type="text/javascript">if (!wcs_add) var wcs_add = {}; wcs_add['wa'] = 's_51119d387dfa';</script>
-    <!-- End Naver Analytics -->
-    <!-- // -->
-    <!-- // -->
-    <!-- // -->
-    <!-- // -->
-    <script
-        type="text/javascript">var is_smart_banner_closed = false; var smart_banner_margin_top = 76; var menu_detail_top = 60; function showSmartBanner() { if (is_smart_banner_closed) { return; } $('body').css('margin-top', smart_banner_margin_top + 'px'); $('.newSb').show().css('margin-top', 0); } function hideSmartBanner() { if (is_smart_banner_closed) { return; } $('body').css('margin-top', '0px'); $('.newSb').hide(); } function smartbanner_click(adjustToken) { window.location.href = adjustToken ? smartbanner_tracking_link.replace('ft8dqw_m86r2k', adjustToken) : smartbanner_tracking_link; } if (is_yogiyo && isMobile()) { var urlParam = window.location.search.replace(/^\?/, ''); if (window.location.search.indexOf('referrer=') >= 0) { urlParam = decodeURIComponent(urlParam.replace('referrer=', '')); } $.extend({ getUrlVars: function () { var vars = [], hash; var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&'); for (var i = 0; i < hashes.length; i++) { hash = hashes[i].split('='); vars.push(hash[0]); vars[hash[0]] = hash[1]; } return vars; }, getUrlVar: function (name) { return $.getUrlVars()[name]; } }); var campaign_id = $.getUrlVar('utm_campaign') || ''; var adgroup_id = $.getUrlVar('utm_source') || ''; var creative_id = $.getUrlVar('utm_term') || ''; var label_id = $.getUrlVar('utm_id') || ''; var gclid = $.getUrlVar('gclid') || ''; var pathname = window.location.pathname; var deeplink_id = encodeURIComponent('yogiyoapp://open?' + urlParam + '&referrer=' + encodeURIComponent(urlParam)); var smartbanner_tracking_link = 'https://app.adjust.com/ft8dqw_m86r2k?campaign=' + campaign_id + '&adgroup=' + adgroup_id + '&creative=' + creative_id + '&label=' + label_id + '&gclid=' + gclid + '&deep_link=' + deeplink_id; $('#newSb_btn_close').on('click', function () { is_smart_banner_closed = true; $('.ygy-app-down-btn-close').css('top', 0); $('body').css('margin-top', 0); $('.detail-wrap').css('top', 0); $('.newSb').remove(); window.resize_location_map(); if ($('.detail-header').length > 0) { $('.detail-header').css('top', 0); $('.detail-content').css('top', menu_detail_top + 'px'); } }); $('.newSb__applink__btn').on('click', function () { parent.download_app_for_ga(); smartbanner_click(); }); $(window).on('load', function () { var getCookie = function (cname) { var name = cname + '='; var decodedCookie = decodeURIComponent(document.cookie); var ca = decodedCookie.split(';'); for (var i = 0; i < ca.length; i++) { var c = ca[i]; while (c.charAt(0) == ' ') { c = c.substring(1); } if (c.indexOf(name) == 0) { return c.substring(name.length, c.length); } } return ''; }; if (getCookie('hide_app_down') == 'true') { showSmartBanner(); } }); }</script>
-    <!-- End Smart App BAnner (Adjust) -->
-</body>
+
+        <div id="quick-btn" class="hide-btn">
+            <a ng-click="click_cart_button()" id="button-cart-btm" href="" class="btn-cart ng-hide"
+                ng-show="check_show_cart_button('quick')"><span class="badge ng-binding"
+                    ng-bind="global_cart.get_amount()">0</span></a>
+            <a ng-click="scrollTop($event)" class="btn-top">top</a>
+        </div>
+
+        </div>
+        <div id='messages' class="messages"></div>
+        <div id='messages_bottom' class="messages messages-bottom"></div>
+        <div ng-show='on_loading' id='spinner' style="display:none;">
+            <div></div><span class='message'></span>
+        </div>
+        <div id='content' class='container-fluid' ng-view></div>
+        <div class="category-list" ng-hide='$location.path() != "/"'>
+            <div class="row">
+                <div class="col-xs-6 col-sm-4 col-md-3 category-banner" ng-repeat='banner in banner_list'
+                    style="display:none" on-finish-render="completeBannerListRender()"><a href="" class="thumbnail"
+                        ng-click="setEvent($index, banner)" ng-style="{'background': banner.background_color}"><img
+                            ng-src="{{banner.event_image_url}}" alt="{{banner.event_name}}"><i
+                            class="icon-move"></i></a>
+                </div>
+                <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3"><a href="" class="thumbnail"
+                        ng-click="select_home_category('all')">
+                        <div class="category-title">전체보기</div><img src="image/category-01.png">
+                    </a></div>
+                <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3"><a href="" class="thumbnail"
+                        ng-click="select_home_category('1인분주문')">
+                        <div class="category-title">1인분 주문</div><img src="image/category-onedish.png">
+                    </a></div>
+                <div class="col-xs-6 col-sm-4 col-md-3"><a href="" class="thumbnail"
+                        ng-click="select_home_category('프랜차이즈')">
+                        <div class="category-title">프랜차이즈</div><img src="image/category-10.png">
+                    </a></div>
+                <div class="col-xs-6 col-sm-4 col-md-3"><a href="" class="thumbnail"
+                        ng-click="select_home_category('치킨')">
+                        <div class="category-title">치킨</div><img src="image/category-02.png">
+                    </a></div>
+                <div class="col-xs-6 col-sm-4 col-md-3"><a href="" class="thumbnail"
+                        ng-click="select_home_category('피자양식')">
+                        <div class="category-title">피자/양식</div><img src="image/category-03.png">
+                    </a></div>
+                <div class="col-xs-6 col-sm-4 col-md-3"><a href="" class="thumbnail"
+                        ng-click="select_home_category('중식')">
+                        <div class="category-title">중국집</div><img src="image/category-04.png">
+                    </a></div>
+                <div class="col-xs-6 col-sm-4 col-md-3"><a href="" class="thumbnail"
+                        ng-click="select_home_category('한식')">
+                        <div class="category-title">한식</div><img src="image/category-05.png">
+                    </a></div>
+                <div class="col-xs-6 col-sm-4 col-md-3"><a href="" class="thumbnail"
+                        ng-click="select_home_category('일식돈까스')">
+                        <div class="category-title">일식/돈까스</div><img src="image/category-06.png">
+                    </a></div>
+                <div class="col-xs-6 col-sm-4 col-md-3"><a href="" class="thumbnail"
+                        ng-click="select_home_category('족발보쌈')">
+                        <div class="category-title">족발/보쌈</div><img src="image/category-07.png">
+                    </a></div>
+                <div class="col-xs-6 col-sm-4 col-md-3"><a href="" class="thumbnail"
+                        ng-click="select_home_category('야식')">
+                        <div class="category-title">야식</div><img src="image/category-08.png">
+                    </a></div>
+                <div class="col-xs-6 col-sm-4 col-md-3"><a href="" class="thumbnail"
+                        ng-click="select_home_category('분식')">
+                        <div class="category-title">분식</div><img src="image/category-09.png">
+                    </a></div>
+                <div class="col-xs-6 col-sm-4 col-md-3"><a href="" class="thumbnail"
+                        ng-click="select_home_category('카페디저트')">
+                        <div class="category-title">카페/디저트</div><img src="image/category-11.png">
+                    </a></div>
+                <div class="col-xs-6 col-sm-4 col-md-3"><a href="" class="thumbnail"
+                        ng-click="select_home_category('편의점')">
+                        <div class="category-title">편의점/마트</div><img src="image/category-convenience-store.png">
+                    </a></div>
+            </div>
+        </div>
+        <div class="footer" ng-show="is_yogiyo && !session_storage.oauth_next">
+            <div class="company-wrap">
+                <div class="company-logo"><a href="" ng-click="click_home()">요기요</a></div>
+            </div>
+        </div>
+        </div>
+        <script
+            type="text/javascript">if (is_11st) { document.write('<s' + 'cript src="' + '//m.11st.co.kr/MW/js/lifecategory/delivery/inc_footer_extra.js?random=' + Math.random() + '" charset="euc-kr" type="text/javascript">' + '</s' + 'cript>'); }</script>
+        <script type="text/javascript" src='js/jquery-2.1.3.min.js?v=68733540a4ff8c2a8f57c24046fae5bfc95ad5ec'></script>
+        <script src="//nsp.pay.naver.com/sdk/js/naverpay.min.js"></script>
+        <script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js"
+            charset="utf-8"></script>
+        <script type="text/javascript" src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
+        <script type="text/javascript" src="https://pg.cnspay.co.kr/dlp/scripts/smilepay.js" charset="euc-kr"></script>
+        <script
+            type="text/javascript">if (is_yogiyo) { if (window.naver) { var naver_login = new naver.LoginWithNaverId({ clientId: '96m5xiTC0SajLMvqJOUH', callbackUrl: location.protocol + '//' + location.hostname + '/mobile/', isPopup: false }); naver_login.init(); window.naver_login = naver_login; } if (window.Kakao) { Kakao.init('92dcdbf99967e46645137d9983a77fc9'); } }</script>
+        <script src='js/require.js?v=68733540a4ff8c2a8f57c24046fae5bfc95ad5ec'></script>
+        <script src='js/app.js?v=68733540a4ff8c2a8f57c24046fae5bfc95ad5ec'></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA5QSVWW0EUN3p9RoHwOJdsSovksfPkqg0"
+            type="text/javascript"></script>
+        <script
+            language='javascript'>/**/window.isMobile = function () { var check = false;/* eslint-disable */(function (a) { if (/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino|android|ipad|playbook|silk/i.test(a) || /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(a.substr(0, 4))) check = true; })(navigator.userAgent || navigator.vendor || window.opera); return check;/* eslint-enable */ };</script>
+        <!-- Naver Analytics -->
+        <script type="text/javascript" src="//wcs.naver.net/wcslog.js"> </script>
+        <script type="text/javascript">if (!wcs_add) var wcs_add = {}; wcs_add['wa'] = 's_51119d387dfa';</script>
+        <!-- End Naver Analytics -->
+        <!-- // -->
+        <!-- // -->
+        <!-- // -->
+        <!-- // -->
+        <script
+            type="text/javascript">var is_smart_banner_closed = false; var smart_banner_margin_top = 76; var menu_detail_top = 60; function showSmartBanner() { if (is_smart_banner_closed) { return; } $('body').css('margin-top', smart_banner_margin_top + 'px'); $('.newSb').show().css('margin-top', 0); } function hideSmartBanner() { if (is_smart_banner_closed) { return; } $('body').css('margin-top', '0px'); $('.newSb').hide(); } function smartbanner_click(adjustToken) { window.location.href = adjustToken ? smartbanner_tracking_link.replace('ft8dqw_m86r2k', adjustToken) : smartbanner_tracking_link; } if (is_yogiyo && isMobile()) { var urlParam = window.location.search.replace(/^\?/, ''); if (window.location.search.indexOf('referrer=') >= 0) { urlParam = decodeURIComponent(urlParam.replace('referrer=', '')); } $.extend({ getUrlVars: function () { var vars = [], hash; var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&'); for (var i = 0; i < hashes.length; i++) { hash = hashes[i].split('='); vars.push(hash[0]); vars[hash[0]] = hash[1]; } return vars; }, getUrlVar: function (name) { return $.getUrlVars()[name]; } }); var campaign_id = $.getUrlVar('utm_campaign') || ''; var adgroup_id = $.getUrlVar('utm_source') || ''; var creative_id = $.getUrlVar('utm_term') || ''; var label_id = $.getUrlVar('utm_id') || ''; var gclid = $.getUrlVar('gclid') || ''; var pathname = window.location.pathname; var deeplink_id = encodeURIComponent('yogiyoapp://open?' + urlParam + '&referrer=' + encodeURIComponent(urlParam)); var smartbanner_tracking_link = 'https://app.adjust.com/ft8dqw_m86r2k?campaign=' + campaign_id + '&adgroup=' + adgroup_id + '&creative=' + creative_id + '&label=' + label_id + '&gclid=' + gclid + '&deep_link=' + deeplink_id; $('#newSb_btn_close').on('click', function () { is_smart_banner_closed = true; $('.ygy-app-down-btn-close').css('top', 0); $('body').css('margin-top', 0); $('.detail-wrap').css('top', 0); $('.newSb').remove(); window.resize_location_map(); if ($('.detail-header').length > 0) { $('.detail-header').css('top', 0); $('.detail-content').css('top', menu_detail_top + 'px'); } }); $('.newSb__applink__btn').on('click', function () { parent.download_app_for_ga(); smartbanner_click(); }); $(window).on('load', function () { var getCookie = function (cname) { var name = cname + '='; var decodedCookie = decodeURIComponent(document.cookie); var ca = decodedCookie.split(';'); for (var i = 0; i < ca.length; i++) { var c = ca[i]; while (c.charAt(0) == ' ') { c = c.substring(1); } if (c.indexOf(name) == 0) { return c.substring(name.length, c.length); } } return ''; }; if (getCookie('hide_app_down') == 'true') { showSmartBanner(); } }); }</script>
+        <!-- End Smart App BAnner (Adjust) -->
+    </body>
+
 </html>
