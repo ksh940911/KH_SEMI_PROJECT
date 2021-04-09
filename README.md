@@ -81,3 +81,35 @@ https://app.diagrams.net/ 다이어그램 작성
 https://docs.google.com/spreadsheets/d/1OxBM3mX17M5GJi4vRXFSXmCLwKZenXF_dz5fy1SURUA/edit#gid=248420108 프로젝트산출물 작성
 
 
+2021.04.09 MEETING
+팀명 정하기 : 여기맛집이조
+PPT작업방식, PPT역할분담, 차별성 논의
+기능추가 안건
+
+방문예약 / 포장기능 추가
+선물하기가 정말 필요할까? -> 뺀다 ver2로
+가입할때 가상머니를 제공해서 한번 결제까지 해볼 수 있게 하는건 어떨까?
+가상머니 -> ver2
+컨셉확정
+
+배달
+여기요와 KH의 제휴가 있다는 가정하의 KH人만의 특별한 혜택 제공
+- 배달비 무료
+- 할인쿠폰
+- 오늘 뭐먹지 기능
+스토리보드 작업완료
+https://ovenapp.io/view/TdeaDWSzd05zew71EW0BxpHEHYme7FLB/0ZZ8z
+PPT 작업완료
+https://docs.google.com/presentation/d/1VZlXShFJVXbhDd2DAiqH-THgSKq_0X6Hb7UEvx__OL4/edit#slide=id.p1
+
+슬라이드 발표 대본작성
+김상훈 6 9 10 11
+이재성 12 17
+송준호 13 16
+황윤진 14 18
+김영미 15 19
+송민성 스토리보드
+
+- 다음회의 전까지
+
+다음회의 21.04.12 예정(22:00)
