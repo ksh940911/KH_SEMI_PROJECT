@@ -113,3 +113,12 @@ https://docs.google.com/presentation/d/1VZlXShFJVXbhDd2DAiqH-THgSKq_0X6Hb7UEvx__
 - 다음회의 전까지
 
 다음회의 21.04.12 예정(22:00)
+
+2021.04.12 MEETING
+발표대본 취합
+구두체로 번역작업하기
+영상촬영 준비
+영상 예비촬영
+피드백 준비
+
+다음회의 21.04.13 예정(22:00)
