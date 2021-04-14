@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import src.restaurant.model.service.RestaurantService;
-import src.restaurant.model.vo.Menu;
+import restaurant.model.service.RestaurantService;
+import restaurant.model.vo.Menu;
 
 /**
  * Servlet implementation class MenuListServlet
