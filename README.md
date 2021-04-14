@@ -1,5 +1,5 @@
 # KH_SEMI_PROJECT
-SEMI_TEAM_PROJECT
+
 
 2021.04.01 MEETING
 팀선정후 첫 회의
@@ -85,13 +85,11 @@ https://docs.google.com/spreadsheets/d/1OxBM3mX17M5GJi4vRXFSXmCLwKZenXF_dz5fy1SU
 팀명 정하기 : 여기맛집이조
 PPT작업방식, PPT역할분담, 차별성 논의
 기능추가 안건
-
 방문예약 / 포장기능 추가
 선물하기가 정말 필요할까? -> 뺀다 ver2로
 가입할때 가상머니를 제공해서 한번 결제까지 해볼 수 있게 하는건 어떨까?
 가상머니 -> ver2
 컨셉확정
-
 배달
 여기요와 KH의 제휴가 있다는 가정하의 KH人만의 특별한 혜택 제공
 - 배달비 무료
@@ -101,7 +99,6 @@ PPT작업방식, PPT역할분담, 차별성 논의
 https://ovenapp.io/view/TdeaDWSzd05zew71EW0BxpHEHYme7FLB/0ZZ8z
 PPT 작업완료
 https://docs.google.com/presentation/d/1VZlXShFJVXbhDd2DAiqH-THgSKq_0X6Hb7UEvx__OL4/edit#slide=id.p1
-
 슬라이드 발표 대본작성
 김상훈 6 9 10 11
 이재성 12 17
@@ -109,10 +106,8 @@ https://docs.google.com/presentation/d/1VZlXShFJVXbhDd2DAiqH-THgSKq_0X6Hb7UEvx__
 황윤진 14 18
 김영미 15 19
 송민성 스토리보드
-
-- 다음회의 전까지
-
-다음회의 21.04.12 예정(22:00)
+- 다음회의(21.04.12 예정(22:00)) 전까지
+ 
 
 2021.04.12 MEETING
 발표대본 취합
@@ -121,4 +116,28 @@ https://docs.google.com/presentation/d/1VZlXShFJVXbhDd2DAiqH-THgSKq_0X6Hb7UEvx__
 영상 예비촬영
 피드백 준비
 
-다음회의 21.04.13 예정(22:00)
+
+2021.04.13 MEETING
+팀원들과 기획발표영상 시청
+피드백반영 영상수정
+깃허브 협업관련 상의
+
+
+2021.04.14 MEETING
+팀장회의 브리핑
+기본적으로 Spring전 Servlet/JSP 구조이해가 세미프로젝트 목표.
+하루 한번 10분씩 회의 권장(평일 22:00예정)
+회의안건은 각자 구현한내용 브리핑. 에러발생내용 공유
+팀별로 등원 2회 가능 → 필요할때 얘기해서 결정. 우리팀은 예정없음.
+프론트단을 특정인이 맡아서 하는것 지양. 모두가 수업내용 활용해서 프로젝트 해볼수있도록 업무분담
+우리팀 협의사항
+프론트단 담당자 목요일(4/15)까지 메인페이지 jsp개발
+로그인페이지, 메인페이지 등 프론트단 담당자가 만들기 전에 필요하면 먼저 dummy로 라도 제작해서 작업해서 기능 먼저 구현
+가게 상세페이지에서 리뷰는 별도 페이지로 나오게 분리 (리뷰 페이지 링크만 잡아놓기)
+리뷰 댓글테이블 추가
+메인페이지 주소검색 영역 삭제
+음식점 검색기능 : 팀원별 기능구현 후 추가로 담당자 지정하여 구현할 예정
+
+
+
+
