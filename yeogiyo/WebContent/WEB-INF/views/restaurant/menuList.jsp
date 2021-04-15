@@ -9,6 +9,7 @@
     <%
     List<Menu> list = (List<Menu>)request.getAttribute("list");
     Restaurant r = (Restaurant) request.getAttribute("restaurant");
+    StringBuilder categoryStr = new StringBuilder();
     %>
 <!DOCTYPE html>
 <html lang="en">
@@ -36,7 +37,12 @@
                 <span class="star-fill" id="star4">★</span>
                 <span class="star-empty" id="star5">★</span>
                 <input type="button" id="btn-review" value="리뷰 보기">
-                <form id="review_frm" action="">
+                <input type="button" id="btn-notice" value="사장님 공지">
+                
+                <form id="frm-review" action="">
+                    <input type="hidden" name="res_id">
+                </form>
+                <form id="frm-notice" action="">
                     <input type="hidden" name="res_id">
                 </form>
                 <br><br>
@@ -92,6 +98,7 @@
             <% for(int i = 0; i < list.size(); i++){ %>
                 <div class="hori-menu btn-layer-popup">
                 <% if(list.get(i).getMenuImg()!= null){ %>
+                	<div class="menu-id" style="display : none;"><%= list.get(i).getMenuId() %></div>
                     <div class="hori-photo"><img src="<%= list.get(i).getMenuImg() %>" alt=""></div>
                     <% } else{ %>
                     <div class="hori-photo"><img src="<%= request.getContextPath() %>/images/defaultMenu.png" alt=""></div>
@@ -105,26 +112,34 @@
         </div>
         
         <!-- ul : 메뉴 카테고리만큼 반복생성 -->
+        
         <% 
         //카테고리를 Set에 담아 중복 제거
         Set<String> categorySet = new HashSet<>();
         for(int i = 0; i < list.size(); i++){
         	categorySet.add(list.get(i).getMenuCategory());
         }
+        
+       //	List<String> categoryList = new ArrayList<>(categorySet);
+        
         //카테고리만큼 토글메뉴 반복 생성
         for(String s : categorySet){
+        //for(int i = 0; i < categoryList.size(); i++){
+        	
         %>
         <div class="menu-category-wrapper">
             <div class="menu-category"><span><%= s %></span><!--<span class="arrow" style="float: right;">▼</span>--></div>
-            <ul class="ul-menu-list">
+            <ul class="ul-menu-list"  id="<%= s %>">
                 <!-- 메뉴 카테고리 누르면 나타나고/사라지는 메뉴. 카테고리별 메뉴만큼 반복생성 -->
                <% for(Menu m : list){
+            	  
             	   if(s.equals(m.getMenuCategory())){
             	   %>
                 <li class="li-menu btn-layer-popup">
                     <table>
                         <tr>
                             <td class="td-menu-text">
+                           		 <div class="menu-id" style="display : none;"><%= m.getMenuId() %></div>
                                 <div class="menu-name"><%= m.getMenuName() %></div>
                                 <div class="description"><%= m.getDescription() != null? m.getDescription() : "" %></div>
                                 <br>
@@ -139,15 +154,17 @@
                     </table>
                 </li>
                 <!--  하얀메뉴 반복종료 -->
-	        <% } // if(s.equals(m.getMenuCategory()) 종료  %>
+	        <% 
+	        } // if(s.equals(m.getMenuCategory()) 종료  %>
 	     <%  } //카테고리변 메뉴리스트 반복 종료  %>
             </ul>
     	</div>
     <%  } //카테고리 토글메뉴 반복 종료 %>
  </div>
     <!--  .container 끝  -->
- <!-- 레이어 팝업... 메뉴번호를 어떻게 받아오지? -->
+ <!-- 레이어 팝업. ajax로 json받아서 요소 생성-->
  <div class="dim-layer">
+ 	<!--
     <div class="dimBg"></div>
     <div id="layer2" class="pop-layer">
         <div class="detail-header">
@@ -156,7 +173,8 @@
         </div>
         <div class="pop-container">
             <div class="pop-conts">
-                <!--content //-->
+            
+               
                <div class="detail-image"><img src="https://images.deliveryhero.io/image/yogiyo/PARTNER_FR_IMG/%EB%89%B4%EC%9A%95%EB%B2%84%EA%B1%B0/2021-02-24/%EC%A0%9C%ED%9C%B4FR_20210223_%EB%89%B4%EC%9A%95%EB%B2%84%EA%B1%B0_%EB%89%B4%EC%9A%95%EB%B2%84%EA%B1%B0_1080x640.jpg" alt=""></div>
                 <div class="detail-text">
                     <div class="detail-menu-name">메뉴명</div>
@@ -180,7 +198,7 @@
                   </div>
                 
                 
-                <!--// content-->
+               
             </div>
             <div class="detail-btn-wrap">
                 <button class="btn-add-cart" onclick="add_to_cart();">주문표에 추가</button>
@@ -189,50 +207,80 @@
               </div>
         </div>
     </div>
+    -->
 </div>
 <!-- 레이어 팝업 끝 -->
 
  <script>
-     //메뉴 상세 레이어 팝업에서 '주문표에 추가' 버튼 클릭 시
-     function add_to_cart(){
-
-        $(".cart-empty").hide();
-
-        //.li-order에 메뉴명+수량 반영하기
-
-        $(".li-order").show();
-        dim_layer_hide();
-
-        
 
 
-
-     }
-
-     //메뉴 상세 레이어 팝업에서 '주문하기' 버튼 클릭 시
-     function checkout(){
-        //메뉴 번호, 이름, 수량 담아 제출
-
-
-
-
-     }
-
-     //btn-review클릭 시 가게 번호 담아서 리뷰 페이지로 이동
+     /*
+     btn-review클릭 시 가게 번호 담아서 리뷰 페이지로 이동
+     */
      $("#btn-review").click(function(){
-         alert("review!");
-
-
-
-         
+    	 
+    	 console.log("review!");
+    	 
+	     var servletUrl = ""; //<-여기에 이동할 서블릿 url작성
+	     var $frm = $("#frm-review");
+	     //폼에 hidden input으로 가게아이디 담아놨어요. 서블릿에서 파라미터명 "res_id"로 꺼내세요 
+	    	 
+     	$frm.attr("action", servletUrl).submit();
+     
      });
+     
+     /*
+     btn-notice클릭 시 가게 번호 담아서 사장님 공지 페이지로 이동
+     */
+     $("#btn-notice").click(function(){
+    	 
+     
+		 console.log("notice!");
+    	 
+	     var servletUrl = ""; //<-여기에 이동할 서블릿 url작성
+	     var $frm = $("#frm-notice");
+	     //폼에 hidden input으로 가게아이디 담아놨어요. 서블릿에서 파라미터명 "res_id"로 꺼내세요 
+	    	 
+     	$frm.attr("action", servletUrl).submit();
 
-     //메뉴 선택 시 레이어 팝업창 띄우기---------------------------------
+     });
+     
+     
+     
+	/*
+	메뉴 선택 시 레이어 팝업창 띄우기---------------------------------
+	*/
      $('.btn-layer-popup').click(function(){
-         console.log(this);
-         //this로 메뉴번호 받아서 layer_popup()에 같이 보내는게 좋을..까?
-        layer_popup($("#layer2"));
-    });
+    	
+    	var $clickedMenuId = $(this).find(".menu-id").text();
+    	//console.log($clickedMenuId);
+    	
+    	//ajax로 menu id 보내고 메뉴객체 json받기 
+    	$.ajax({
+    		url: "<%= request.getContextPath() %>/restaurant/menu.do",
+    		data : {
+    			menuId : $clickedMenuId	
+    		},
+    		success : function(data){
+    			//console.log(data);
+    			
+    			//json data반영한 팝업레이어 html 삽입
+    			var $popupHtml = $('<div class="dimBg"></div><div id="layer2"class="pop-layer"><div class="detail-header"><div class="title">메뉴상세</div><input type="button"class="btn-layerClose"value="X"></div><div class="pop-container"><div class="pop-conts"><div class="detail-image"><img src="' + data.menuImg + '"alt=""></div><div class="detail-text"><div class="detail-menu-name">' + data.menuName + '</div><div class="menu-description">' + data.description + '</div></div><div class="detail-price"><strong>가격</strong><div class="detail-price-price"><span class="price" id="popup-price">' + data.price + '</span>원</div></div><div class="quantity-control"><strong>수량</strong><div><input type="button" id="popup-btn-minus" value="-"><span id="popup-amount">1</span><input type="button" id="popup-btn-plus" value="+"></div></div><div class="detail-total-wrap"><strong>총주문금액</strong><div class="total"><strong><span id="popup-total-price">4500</span>원</strong></div></div></div><div class="detail-btn-wrap"><button class="btn-add-cart"onclick="add_to_cart();">주문표에추가</button><button class="btn-order"onclick="checkout()">주문하기</button><div class="message ng-binding"></div></div></div></div>');
+    			$(".dim-layer").html($popupHtml);
+    			
+    			//팝업 컨트롤
+		        layer_popup($("#layer2"));
+    			
+    		},
+    		error: function(xhr, status, err){
+    			console.log(xhr, status, err)
+    		}
+    	
+    	});
+    	
+    	  //this로 메뉴번호 받아서 layer_popup()에 같이 보내는게 좋을..까?
+  	  });
+     
     function layer_popup(el){
         $(".dim-layer").show();
         var $el = $(el);    //레이어의 id를 $el 변수에 저장
@@ -251,7 +299,18 @@
         } else {
             $el.css({top: 0, left: 0});
         }
-
+        
+        //수량 늘리기 줄이기
+		var $btnMinus = $("#popup-btn-minus");
+        var $btnPlus = $("#popup-btn-plus");
+        var $amountSpan = $("#popup-amount");
+        var originalPriceValue = $("#popup-price").text();
+        var $totalPriceSpan = $("#popup-total-price");
+        
+        console.log($btnMinus, $btnPlus, $amountSpan, originalPriceValue, $totalPriceSpan);
+        btn_plus_minus($btnMinus, $btnPlus, $amountSpan, originalPriceValue, $totalPriceSpan);
+            
+        
         //esc 눌러 닫기
         $(document).keydown(function(event) {
             if ( event.keyCode == 27 || event.which == 27 ) {
@@ -269,15 +328,90 @@
             dim_layer_hide();
         });
     }
+    
+    /*
+     - + 버튼으로 수량 조절하기
+    */
+    function btn_plus_minus($btnMinus, $btnPlus, $amountSpan, originalPriceValue, $totalPriceSpan){
+    	console.log("function");
+    	
+    	//total price 초기화
+    	$totalPriceSpan.text(originalPriceValue);
+    	
+    	//amount 초기화 
+    	$amountSpan.text(1);
+    	
+    	
+    	var i = 1;
+    	var totalPriceValue = Number($totalPriceSpan.text());
+    	$btnPlus.click(function(){
+    		i++;
+    		
+    		$amountSpan.text(i);
+ 
+    		totalPriceValue = Number((originalPriceValue * i));
+    		$totalPriceSpan.text(totalPriceValue);
+    		
+    	
+    	});
+    	
+    	$btnMinus.click(function(){
+    		if(i <= 1){
+    			return false;
+    		}
+    		else{
+    			i--;
+    		}
+        		$amountSpan.text(i);
+        		
+        		totalPriceValue = Number((originalPriceValue * i));
+        		$totalPriceSpan.text(totalPriceValue);
+
+    	});
+    	
+    	
+    }
 
     function dim_layer_hide(){
+        
+        //팝업창 숨기기
         $(".dim-layer").hide();
+        
     }
     //---------------------------------------
+    
+    //메뉴 상세 레이어 팝업에서 '주문표에 추가' 버튼 클릭 시
+    function add_to_cart(){
 
-    //카테고리 클릭 시 메뉴 나타남/사라짐
+       $(".cart-empty").hide();
+
+       //.li-order에 메뉴명+수량 반영하기
+
+       $(".li-order").show();
+       dim_layer_hide();
+
+       
+
+
+
+    }
+
+    //메뉴 상세 레이어 팝업에서 '주문하기' 버튼 클릭 시
+    function checkout(){
+       //메뉴 번호, 이름, 수량 담아 제출
+
+
+
+
+    }
+
+    /*
+    카테고리 클릭 시 메뉴 나타남/사라짐
+    */
     $(".menu-category").click(function(){
-        $(".ul-menu-list").toggle();
+      var $clickedCategoryName = $(this).find("span").text();
+      str = "#" + $clickedCategoryName;
+      $(str).toggle();
      });
  </script>
 </body>
