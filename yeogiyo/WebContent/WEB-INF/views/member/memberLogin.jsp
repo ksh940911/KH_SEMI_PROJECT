@@ -25,6 +25,7 @@
             </div>
             <div class="login-submit">
                 <input type="submit" value="로그인">
+                <input type="button" value="임시 회원가입" onclick="location.href='<%= request.getContextPath() %>/member/memberEnroll';">
             </div>    
         </form>
         <div class="join-container">
