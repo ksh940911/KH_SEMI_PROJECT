@@ -36,7 +36,7 @@ public class RestaurantDao {
 		}
 	}
 
-	public List<Restaurant> selectRestaurant(Connection conn) {
+	public List<Restaurant> selectRestaurantList(Connection conn) {
 		List<Restaurant> list = new ArrayList<>();
 		Restaurant restaurant = null;
 		String sql = prop.getProperty("selectRestaurantList");
@@ -100,6 +100,38 @@ public class RestaurantDao {
 		}
 		
 		return list;
+	}
+
+	public Restaurant selectRestaurant(Connection conn, int resId) {
+		Restaurant restaurant = new Restaurant();
+		String sql = prop.getProperty("selectRestaurant");
+		ResultSet rset = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, resId);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				restaurant.setResId(rset.getInt("res_id"));
+				restaurant.setResName(rset.getString("res_name"));
+				restaurant.setResAddress(rset.getString("res_address"));
+				restaurant.setCategory(rset.getString("category"));
+				restaurant.setMinPrice(rset.getInt("min_price"));
+				restaurant.setLogoImg(rset.getString("logo_img"));
+				restaurant.setRateAvg(rset.getDouble("rate_avg"));
+				restaurant.setReviewCnt(rset.getInt("review_cnt"));
+			}
+			
+		} catch (Exception e) {
+			throw new RestaurantException("가게 조회 오류", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return restaurant;
 	}
 
 }
