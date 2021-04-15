@@ -14,9 +14,9 @@ public class RestaurantService {
 	
 	private RestaurantDao restaurantDao = new RestaurantDao();
 
-	public List<Restaurant> selectRestaurant() {
+	public List<Restaurant> selectRestaurantList() {
 		Connection conn = getConnection();
-		List<Restaurant> list = restaurantDao.selectRestaurant(conn);
+		List<Restaurant> list = restaurantDao.selectRestaurantList(conn);
 		close(conn);
 		return list;
 	}
@@ -26,6 +26,13 @@ public class RestaurantService {
 		List<Menu> list = restaurantDao.selectMenuList(conn, resId);
 		close(conn);
 		return list;
+	}
+
+	public Restaurant selectRestaurant(int resId) {
+		Connection conn = getConnection();
+		Restaurant restaurant = restaurantDao.selectRestaurant(conn, resId);
+		close(conn);
+		return restaurant;
 	}
 
 }
