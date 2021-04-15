@@ -1,0 +1,398 @@
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap');
+body{
+color:  #333333;
+font-size:15px;
+font-family: 'Nanum Gothic', sans-serif;
+}
+.wrapper{
+margin: 0 auto;
+/* border: 1px solid black; */
+width: 1020px;
+}
+table{
+border-collapse: collapse;
+border: 1px solid  #D9D9D9;
+}
+tr, td{
+border: 1px solid  #D9D9D9;
+}
+/* 가게정보테이블 */
+#restaurant-info{
+margin: 10px;
+width: 658px;
+float:left;
+}
+/* 가게명 */
+#res_name{
+font-size: 15.4px;
+height: 43px;
+padding-left: 10px;
+}
+#logo-img{
+width: 100px;
+height: 100px;
+object-fit: cover;
+text-align : center;
+border-right: none;
+}
+#logo-img>img{
+width: 80px;
+height: 80px;
+}
+/* 별점 별 */
+.star-fill{
+color: #ffa400;
+}
+.star-empty{
+color: #e0e0e0 ;
+}
+#res-info-sub{
+font-size: 14px;
+border-left: none;
+}
+/* 주문표 */
+#cart{
+float:right;
+width: 330px;
+}
+#cart-title{
+height: 42px;
+color: #fff;
+font-size: 15.4px;
+background-color: #333333;
+}
+/* 주문표 안의 주문 메뉴 */
+.li-order{
+    display: none;
+border-bottom: 1px solid #ddd;
+padding: 10px;
+/* background-color:lightsalmon; */
+/* height: 100px; */
+}
+.cart-empty{
+    background: #fff;
+    text-align: center;
+    padding: 50px 0;
+    border: 1px solid #d9d9d9;
+}
+.left{
+width:173px;
+display:inline-block;
+}
+.right{
+width: 75px;
+display:inline-block;
+text-align:center;
+}
+.li-order>div{
+/* border:1px solid #FA0050; */
+padding: 5px 12px 8px 12px;
+font-size: 14px;
+
+}
+#btn-order-del{
+border: 1px solid black;
+}
+#td-total{
+background-color: #fff8eb;
+text-align: right;
+color: #fa0050;
+padding: 10px 12px;
+font-size: 110%;
+font-weight: bold;
+}
+/* 주문표 버튼 */
+#btn-order{
+width: 330px;
+height: 46px;
+border : none;
+color : white;
+font-size : 18px;
+background-color:  #FA0050;
+}
+/* 메뉴 h3 */
+h3{
+margin-left : 10px;
+font-size: 15.4px;
+}
+/* 메뉴리스트 div */
+.container{
+border: 1px solid  #D9D9D9;
+width: 658px;
+margin : 10px;
+}
+#menu-horizontal{
+/* border: 1px solid deeppink; */
+overflow: auto;
+overflow-y:hidden;
+padding: 10px;
+}
+#slide{
+/* border: 1px solid red; */
+width: 930px;
+}
+.hori-menu{
+border: 1px solid #E6E6E6;
+width: 140px;
+margin-right: 8px;
+display:inline-block;
+}
+.hori-menu-name{
+padding-left: 14px;
+padding-top: 8px;
+color: #333;
+font-weight: bold;
+font-size: 110%;
+text-overflow: ellipsis;
+overflow: hidden;
+white-space: nowrap;
+}
+.hori-price{
+padding-left: 14px;
+padding-bottom: 8px;
+padding-top: 0px;
+color: #333;
+font-size: 95%;
+}
+.hori-photo>img{
+width: 140px;
+height: 98px;
+object-fit:cover;
+}
+
+/* 메뉴 카테고리 토글 버튼 리스트 */
+ul{
+list-style: none;
+margin: 0;
+padding: 0;
+}
+/* 메뉴 카테고리 토글 버튼 div */
+.menu-category{
+display: table-cell;
+vertical-align: middle;
+width: 658px;
+height: 40px;
+background-color: #E6E6E6;
+padding: 10px 15px;
+font-size: 16px;
+}
+/* 카테고리 누르면 나타날 메뉴의 리스트 */
+.ul-menu-list{
+margin : 0;
+display:none;
+}
+/* 카테고리 누르면 나타날 메뉴 */
+.li-menu{
+/* background-color: lightskyblue; */
+/* height: 104px; */
+list-style: none;
+width: 638px;
+border-bottom: 1px solid #E6E6E6;
+padding: 10px;
+}
+.td-menu-text{
+width: 500px;
+padding: 10px;
+border: 1px solid white;
+}
+.menu-name{
+color: #333;
+font-size: 110%;
+font-weight: bold;
+line-height: 1.4;
+padding-top: 5px;
+}
+.description{
+font-size: 90%;
+color: #999;
+overflow: hidden;
+text-overflow: ellipsis;
+}
+.price{
+color: #333;
+font-size: 110%;
+}
+.td-menu-img{
+text-align:center;
+width: 112px;
+border: 1px solid white;
+}
+.td-menu-img>img{
+width: 100px;
+}
+
+/* --------레이어 팝업------------------------------------- */
+.pop-layer .pop-container {
+/* padding: 20px 25px; */
+}
+.detail-header{
+    background: #fff;
+    position: relative;
+    border-bottom: 1px solid #e5e5e5;
+    height: 36x;
+    padding: 20px 10px;
+    z-index: 2;
+}
+.title{
+/* border: 1px solid red; */
+width: 400px;
+display:inline-block;
+font-size: 17px;
+text-align: center;
+}
+.detail-image {
+/* border: 1px solid red; */
+background: #fff;
+width: 100%;
+background-size: cover;
+background-repeat: no-repeat;
+background-position: center;
+}
+.detail-image>img{
+width: 100%;
+height: 220px;
+object-fit: cover;
+}
+.detail-text {
+    border-bottom: 1px solid #f0f0f0;
+    background-color: #fff;
+    text-align: center;
+    padding: 20px;
+}
+.detail-menu-name{
+    font-size: 24px;
+    line-height: 1.2;
+    text-align: center;
+    padding-left: 0;
+}
+.menu-description {
+    color: #999;
+    font-size: 12px;
+    text-align: center;
+    padding-top: 5px;
+    padding-bottom: 3px;
+}
+.detail-price {
+    background: #fff;
+    font-size: 15px;
+    font-weight: bold;
+    padding: 20px 15px 15px 15px;
+    overflow: hidden;
+}
+.quantity-control {
+    background: #fff;
+    position: relative;
+    border-top: 1px solid #f0f0f0;
+    font-size: 15px;
+    height:19px;
+    padding: 18px 15px;
+}
+.quantity-control > strong{
+    float:left;
+}
+.quantity-control>div{
+    float: right;
+}
+.detail-price-price{
+    float: right;
+}
+
+.detail-total-wrap {
+    padding: 20px 15px 15px 15px;
+    border-top: 1px solid #f0f0f0;
+    overflow: hidden;
+    background-color: #EFEFEF;
+}
+.total{
+    float:right;
+    text-align:right;
+}
+.total>strong{
+    color: #fa0050;
+    font-size: 24px;
+    font-weight: bold;
+    line-height: 1.1;
+}
+
+.detail-btn-wrap button {
+    float: left;
+    width: 50%;
+    height: 48px;
+    border: none;
+    font-size: 16px;
+    font-weight: bold;
+    padding-top: 4px;
+    margin: 0;
+}
+.btn-add-cart {
+    background: #555;
+    color: #fff;
+}
+.btn-order {
+    background: #fa0050;
+    color: #fff;
+}
+
+/* 팝업 영역 */
+.pop-layer {
+display: none;
+position: absolute;
+top: 50%;
+left: 50%;
+width: 460px;
+height: auto;
+background-color: #fff;
+/* border: 5px solid #3571B5; */
+z-index: 10;
+}
+
+.dim-layer {
+display: none;
+position: fixed;
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+z-index: 100;
+}
+
+.dim-layer .dimBg {
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background: #000;
+opacity: .5;
+opacity: 0.5;
+}
+
+.dim-layer .pop-layer {
+display: block;
+}
+
+.btn-layerClose {
+float:right;
+right: 15px;
+/* right: 15px; */
+/* top: 20px; */
+width: 24px;
+height: 24px;
+
+/* display: inline-block;
+height: 25px;
+padding: 0 14px 0;
+border: 1px solid #304a8a;
+background-color: #3f5a9d;
+font-size: 13px;
+color: #fff;
+line-height: 25px; */
+}
+
+a.btn-layerClose:hover {
+border: 1px solid #091940;
+background-color: #1f326a;
+color: #fff;
+}
+/* ------------------------------------------------------ */
