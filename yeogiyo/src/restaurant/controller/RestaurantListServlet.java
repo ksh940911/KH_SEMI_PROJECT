@@ -23,7 +23,11 @@ public class RestaurantListServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		List<Restaurant> list = new RestaurantService().selectRestaurant();
+		
+		List<Restaurant> list = new RestaurantService().selectRestaurantList();
+		
+	
+		
 		System.out.println("list@servlet = " + list);
 		request.setAttribute("list", list);
 		request.getRequestDispatcher("/WEB-INF/views/restaurant/restaurantList.jsp").forward(request, response);
