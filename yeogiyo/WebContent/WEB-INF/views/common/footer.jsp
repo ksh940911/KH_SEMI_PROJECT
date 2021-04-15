@@ -4,6 +4,7 @@
 </section>
 
 	<footer>
+	<link rel="stylesheet" href="<%=request.getContextPath() %>/css/footer_style.css" />
 		<div class="footer"
 			ng-show="is_yogiyo &amp;&amp; !session_storage.oauth_next">
 			<div class="footer-menu">
