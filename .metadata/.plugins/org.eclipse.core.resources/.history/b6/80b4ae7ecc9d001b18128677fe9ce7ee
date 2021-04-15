@@ -1,0 +1,12 @@
+package notice.model.sevice;
+
+import static common.JDBCTemplate.*;
+
+public class NoticeService {
+
+	private NoticeDao noticeDao = new NoticeDao();
+	
+	
+	
+	
+}

@@ -1,0 +1,29 @@
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+</head>
+<body>
+	<input type="button" value="회원관리" id="memberBtn"/>
+	<input type="button" value="가게관리" id="resBtn"/>
+	
+	<div class="wrapper"></div>
+
+<script>
+$("#memberBtn").click(function(){
+	$.ajax({
+		url: "<%= request.getContextPath() %>/admin/memberManagement",
+		data: {
+			
+		}
+	})
+	
+});
+
+</script>
+
+</body>
+</html>

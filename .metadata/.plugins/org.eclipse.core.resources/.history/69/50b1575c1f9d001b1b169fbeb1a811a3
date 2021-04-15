@@ -1,0 +1,16 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>여기요 맛집이조</title>
+	
+</head>
+<body>
+	<div id="container">
+		<header>
+			<h2>헤더 부분</h2>	
+		</header>
+	
+		<section id="content">

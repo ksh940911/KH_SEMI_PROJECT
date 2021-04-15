@@ -1,0 +1,33 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ include file="/WEB_INF/views/common/header.jsp" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>관리자 페이지</title>
+<script src="<%= request.getContextPath() %>/js/jquery-3.6.0.js"></script>
+<style>
+[type=button]{
+	widtn: 100px;
+	height: 100px;
+}
+
+</style>
+
+</head>
+<body>
+	<input type="button" value="회원관리" id="memberBtn"/>
+	<input type="button" value="가게관리" id="resBtn"/>
+	
+	<div class="wrapper"></div>
+
+<script>
+$("#memberBtn").click(function(){
+	location	
+});
+
+</script>
+
+</body>
+</html>
