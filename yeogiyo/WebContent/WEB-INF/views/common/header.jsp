@@ -45,7 +45,7 @@ section#content .login-container{width:500px; margin: 0 auto; }
 		<div class="header_container">
 			<div class="logo_container">
 				<h1>
-					<a href="../index.jsp" class="Home_btn"> <img src="../img/Home_button.png"
+					<a href="./index.jsp" class="Home_btn"> <img src="../img/Home_button.png"
 						alt="홈으로" width="150" height="50">
 					</a>
 				</h1>
