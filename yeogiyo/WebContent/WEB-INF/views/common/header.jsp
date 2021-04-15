@@ -11,8 +11,8 @@
 <!-- link 선언 -->
 <!-- <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/style_index.css"> -->
-<link rel="stylesheet" href="<%=request.getContextPath() %>/css/style.css" />
-<link rel="stylesheet" href="<%=request.getContextPath() %>/css/style_index.css" />
+<link rel="stylesheet" href="<%=request.getContextPath() %>/css/header_style.css" />
+<link rel="stylesheet" href="<%=request.getContextPath() %>/css/footer_style.css" />
 <!-- script 선언 -->
 <script src="https://kit.fontawesome.com/e1bd1cb2a5.js"></script>
 <!--  
@@ -45,7 +45,9 @@ section#content .login-container{width:500px; margin: 0 auto; }
 		<div class="header_container">
 			<div class="logo_container">
 				<h1>
-					<a href="./index.jsp">여기요</a>
+					<a href="../index.jsp" class="Home_btn"> <img src="../img/Home_button.png"
+						alt="홈으로" width="150" height="50">
+					</a>
 				</h1>
 			</div>
 			<div class="nav_container" id="nav_menu">
