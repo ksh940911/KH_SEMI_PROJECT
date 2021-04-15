@@ -41,7 +41,7 @@ header #loginBtn {
 	text-decoration: none;
 	text-align: center;
 	color: rgba(0, 0, 0, 1);
-	background: url(../image/logo.png) no-repeat;
+	background: url(../img/logo.png) no-repeat;
 }
 
 .footer_container {
