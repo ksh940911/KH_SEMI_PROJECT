@@ -11,7 +11,8 @@ header {
 	padding: 10px 0 0 0;
 }
 
-header #loginBtn {
+.login_container #loginBtn {
+	color:white;
 	background: #fa0050;
 	border: 1px solid #ea7266;
 	position: absolute;
@@ -20,7 +21,57 @@ header #loginBtn {
 	top: 21px;
 	right: 100px;
 	border-radius: 2px;
+	cursor:pointer;
 }
+/* 관리자 로그인성공시 */
+table#admin {
+	color:white;
+	position: absolute;
+	width: 150px;
+	height: 30px;
+	top: 21px;
+	right: 150px;
+	
+}
+table#admin input {
+	color:white;
+	background: #fa0050;
+	border: 1px solid #ea7266;
+	cursor:pointer;
+	width: 150px;
+	height: 30px;
+	border-radius: 2px;
+}
+
+/*일반회원 로그인성공시 */
+table#login {
+	color:white;
+	position: absolute;
+	width: 150px;
+	height: 30px;
+	top: 21px;
+	right: 150px;
+	
+}
+table#login input {
+	color:white;
+	background: #fa0050;
+	border: 1px solid #ea7266;
+	cursor:pointer;
+	border-radius: 2px;
+}
+table#login input[name=basket] {
+	color:white;
+	position: absolute;
+	top:0;
+	width:60px; 
+	height:50px;
+	background:#ff8a00;
+	border: 1px solid #ea7266;
+	cursor:pointer;
+	border-radius: 2px;
+}
+
 
 .header_container {
 	display: flex;

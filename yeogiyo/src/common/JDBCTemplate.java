@@ -31,7 +31,7 @@ public class JDBCTemplate {
 			prop.load(new FileReader(filename));
 //			System.out.println("prop = " + prop);
 			driverClass = prop.getProperty("driverClass");
-			System.out.println("driverClass@JDBCTemplate = " + driverClass);
+//			System.out.println("driverClass@JDBCTemplate = " + driverClass);
 			url = prop.getProperty("url");
 			user = prop.getProperty("user");
 			password = prop.getProperty("password");
