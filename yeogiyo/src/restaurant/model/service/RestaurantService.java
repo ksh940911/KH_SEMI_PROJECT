@@ -35,4 +35,11 @@ public class RestaurantService {
 		return restaurant;
 	}
 
+	public Menu selectMenu(int menuId) {
+		Connection conn = getConnection();
+		Menu menu = restaurantDao.selectMenu(conn, menuId);
+		close(conn);
+		return menu;
+	}
+
 }

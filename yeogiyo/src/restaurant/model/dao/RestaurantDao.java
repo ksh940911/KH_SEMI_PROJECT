@@ -134,4 +134,35 @@ public class RestaurantDao {
 		return restaurant;
 	}
 
+	public Menu selectMenu(Connection conn, int menuId) {
+		Menu menu = new Menu();
+		String sql = prop.getProperty("selectMenu");
+		ResultSet rset = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, menuId);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				menu.setMenuId(rset.getInt("menu_id"));
+				menu.setResId(rset.getInt("res_id"));
+				menu.setMenuName(rset.getString("menu_name"));
+				menu.setDescription(rset.getString("description"));
+				menu.setMenuCategory(rset.getString("menu_category"));
+				menu.setPrice(rset.getInt("price"));
+				menu.setMenuImg(rset.getString("menu_img"));
+			}
+			
+		} catch (Exception e) {
+			throw new RestaurantException("가게 조회 오류", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return menu;
+	}
+
 }
