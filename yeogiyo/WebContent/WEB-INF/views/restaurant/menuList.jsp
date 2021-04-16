@@ -51,10 +51,10 @@
             </td>
         </tr>
     </table>
+
     <div>
         <table id="cart">
             <tr>
-                <!-- js로 top고정 -->
                 <td id="cart-title" style="padding: 0 10px">주문표  <input type="button" value="전체삭제" style="float:right"></td>
             </tr>
             <tr>
@@ -162,6 +162,7 @@
     <%  } //카테고리 토글메뉴 반복 종료 %>
  </div>
     <!--  .container 끝  -->
+
  <!-- 레이어 팝업. ajax로 json받아서 요소 생성-->
  <div class="dim-layer">
  	<!--
@@ -212,8 +213,8 @@
 <!-- 레이어 팝업 끝 -->
 
  <script>
-
-
+   
+   
      /*
      btn-review클릭 시 가게 번호 담아서 리뷰 페이지로 이동
      */
@@ -227,6 +228,7 @@
 	    	 
      	$frm.attr("action", servletUrl).submit();
      
+
      });
      
      /*
@@ -237,14 +239,17 @@
      
 		 console.log("notice!");
     	 
-	     var servletUrl = ""; //<-여기에 이동할 서블릿 url작성
+	     var servletUrl = "<%= request.getContextPath() %>/admin/noticeView"; //<-여기에 이동할 서블릿 url작성
 	     var $frm = $("#frm-notice");
 	     //폼에 hidden input으로 가게아이디 담아놨어요. 서블릿에서 파라미터명 "res_id"로 꺼내세요 
 	    	 
      	$frm.attr("action", servletUrl).submit();
 
+
+
+         
      });
-     
+    
      
      
 	/*
@@ -265,7 +270,7 @@
     			//console.log(data);
     			
     			//json data반영한 팝업레이어 html 삽입
-    			var $popupHtml = $('<div class="dimBg"></div><div id="layer2"class="pop-layer"><div class="detail-header"><div class="title">메뉴상세</div><input type="button"class="btn-layerClose"value="X"></div><div class="pop-container"><div class="pop-conts"><div class="detail-image"><img src="' + data.menuImg + '"alt=""></div><div class="detail-text"><div class="detail-menu-name">' + data.menuName + '</div><div class="menu-description">' + data.description + '</div></div><div class="detail-price"><strong>가격</strong><div class="detail-price-price"><span class="price" id="popup-price">' + data.price + '</span>원</div></div><div class="quantity-control"><strong>수량</strong><div><input type="button" id="popup-btn-minus" value="-"><span id="popup-amount">1</span><input type="button" id="popup-btn-plus" value="+"></div></div><div class="detail-total-wrap"><strong>총주문금액</strong><div class="total"><strong><span id="popup-total-price">4500</span>원</strong></div></div></div><div class="detail-btn-wrap"><button class="btn-add-cart"onclick="add_to_cart();">주문표에추가</button><button class="btn-order"onclick="checkout()">주문하기</button><div class="message ng-binding"></div></div></div></div>');
+    			var $popupHtml = $('<div class="dimBg"></div><div id="layer2"class="pop-layer"><div class="detail-header"><div class="title">메뉴상세</div><input type="button"class="btn-layerClose"value="X"></div><div class="pop-container"><div class="pop-conts"><div class="detail-image"><img src="' + data.menuImg + '"alt=""></div><div class="detail-menu-id" style="display:none;">' + data.menuId + '</div><div class="detail-text"><div class="detail-menu-name">' + data.menuName + '</div><div class="menu-description">' + data.description + '</div></div><div class="detail-price"><strong>가격</strong><div class="detail-price-price"><span class="price" id="popup-price">' + data.price + '</span>원</div></div><div class="quantity-control"><strong>수량</strong><div><input type="button" id="popup-btn-minus" value="-"><span id="popup-amount">1</span><input type="button" id="popup-btn-plus" value="+"></div></div><div class="detail-total-wrap"><strong>총주문금액</strong><div class="total"><strong><span id="popup-total-price">4500</span>원</strong></div></div></div><div class="detail-btn-wrap"><button class="btn-add-cart"onclick="add_to_cart();">주문표에추가</button><button class="btn-order"onclick="checkout()">주문하기</button><div class="message ng-binding"></div></div></div></div>');
     			$(".dim-layer").html($popupHtml);
     			
     			//팝업 컨트롤
@@ -307,7 +312,7 @@
         var originalPriceValue = $("#popup-price").text();
         var $totalPriceSpan = $("#popup-total-price");
         
-        console.log($btnMinus, $btnPlus, $amountSpan, originalPriceValue, $totalPriceSpan);
+        //console.log($btnMinus, $btnPlus, $amountSpan, originalPriceValue, $totalPriceSpan);
         btn_plus_minus($btnMinus, $btnPlus, $amountSpan, originalPriceValue, $totalPriceSpan);
             
         
@@ -333,7 +338,7 @@
      - + 버튼으로 수량 조절하기
     */
     function btn_plus_minus($btnMinus, $btnPlus, $amountSpan, originalPriceValue, $totalPriceSpan){
-    	console.log("function");
+    	//console.log("function");
     	
     	//total price 초기화
     	$totalPriceSpan.text(originalPriceValue);
@@ -382,20 +387,98 @@
     
     //메뉴 상세 레이어 팝업에서 '주문표에 추가' 버튼 클릭 시
     function add_to_cart(){
+    	//session storage로 주문내용을 js object로 만들어서 json에 담기 
+    	
+    	//1. selectedMenuArr 초기화
+    	//sessionStorage에 selectedMenuArr배열이 없는 경우 : 생성
+    	//sessionStorage에 selectedMenuArr배열이 있는 경우 : getItem 후 parsing	
+    	var selectedMenuArr = JSON.parse(sessionStorage.getItem('selectedMenuArr')) || [];
+    	 //짧은조건식. A || B
+        //A가 true일 경우 A값을 대입. 아니면 B대입.
+    	
+		//2. selectedMenuArr 배열에 selectedMenu 객체 추가
+		/*
+		if(배열이 비어있으면){
+			바로 추가
+		}else{
+			배열이 있으면
+			아이디 일치하는 객체에 수량만 추가
+		}
+		for(var i = 0; i < selectedMenuArr; i++){
 
-       $(".cart-empty").hide();
-
-       //.li-order에 메뉴명+수량 반영하기
-
-       $(".li-order").show();
+			 //이미 같은 메뉴가 있으면 수량만 추가
+			if(selectedMenuArr[i]["menuId"] === Number($popupLayer.find(".detail-menu-id").text())){
+				console.log("이미 메뉴가 있지");
+				selectedMenuArr[i]['amount'] += Number($popupLayer.find("#popup-amount").text());
+				break;
+			
+			}else{
+				console.log("메뉴 없어서 새로 추가 ");
+	    	
+		    	var $popupLayer = $("#layer2");
+		    	var selectedMenu = {
+		    			menuId : Number($popupLayer.find(".detail-menu-id").text()),
+		    			menuName : $popupLayer.find(".detail-menu-name").text(),
+		    			amount : Number($popupLayer.find("#popup-amount").text()),
+		    			totalPrice : Number($popupLayer.find("#popup-total-price").text())
+		    			
+		    	};
+	    	
+		    	selectedMenuArr.push(selectedMenu);
+		    	break;
+		    }
+			
+		}
+		*/
+        
+    	
+    	//4. selectedMenuArr배열을 JSON으로 변환
+    	var jsonSelectedMenuArr = JSON.stringify(selectedMenuArr);
+    	
+    	//3. sessionStorage에 저장
+    	sessionStorage.setItem("selectedMenuArr", jsonSelectedMenuArr);
+    	
+    	//주문표 최신화
+    	showCart();
+    	
        dim_layer_hide();
-
-       
-
-
-
     }
 
+    /*
+    주문표 보여주기
+    */
+    function showCart(){
+
+    	console.log("showCart()");
+    	//1. selectedMenuArr 객체배열 가져오기
+     	var selectedMenuArr = JSON.parse(sessionStorage.getItem("selectedMenuArr")) || [];
+    	console.log(selectedMenuArr);
+    	
+    	//2. html로 표시. ul에 기존 li안보이게 하고, 새로운 li 추가하기
+    	$(".cart-empty").hide();
+    	
+    	var $ul = $("#cart").find("ul");
+    	
+    	//selectedMenu가 있는 경우
+    	if(selectedMenuArr.length){
+    		
+			$.each(selectedMenuArr, function(i, menu){
+				
+				$ul.append('<li class="li-order"><div stype="display:none;">' + menu["menuId"] + '</div><div>' + menu["menuName"] + '</div><div class="left"><input type="button"class="btn-order-del"value="X"><span class="span-order-price">'+menu["totalPrice"]+'</span>원</div><div class="right"><input type="button"value="-"><span class="amnt">'+menu["amount"]+'</span><input type="button"value="+"></div></li>')
+				//menu["menuId"], menu["menuName"], menu["amount"],menu["totalPrice"]
+			
+			});
+			
+    		
+    		
+    	}else{
+    		//$ul.append(' <li class="cart-empty">주문표에 담긴 메뉴가 없습니다.</li>');
+    	}
+    	
+    	
+    }
+    
+    
     //메뉴 상세 레이어 팝업에서 '주문하기' 버튼 클릭 시
     function checkout(){
        //메뉴 번호, 이름, 수량 담아 제출
