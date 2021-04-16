@@ -174,8 +174,8 @@ insert into yeogiyo.menu(menu_id, res_id, menu_name, description, menu_category,
 --                   이재성                    --
 --=========================
 --=========================
-
-
+select * from member;
+desc member;
 
 내용
 

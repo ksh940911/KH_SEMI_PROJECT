@@ -28,14 +28,38 @@
             </div>    
         </form>
         <div class="join-container">
-            <span>이미지(회원가입페이지링크)</span>
-            <a href="#">
-                <img src="" alt="">
+            <a href="<%= request.getContextPath() %>/member/memberEnroll">
+                <img src="<%= request.getContextPath() %>/images/sign_banner.png" alt="가입배너">
             </a>
 
         </div>
 	</div>
 
+<script>
+$("#loginFrm").submit(function(){
+	var $memberId = $(memberId);
+	var $password = $(password);
+	
+	if(/^.{4,}$/.test($memberId.val()) == false){
+		alert("유효한 아이디를 입력하세요");
+		$memberId.select();
+		return false;
+	}
+	
+	if(/^.{4,}$/.test($password.val()) == false){
+		alert("유효한 비밀번호를 입력하세요");
+		$password.select();
+		return false;
+	}
+	
+});
+
+
+
+
+
+
+</script>
 
 
 
