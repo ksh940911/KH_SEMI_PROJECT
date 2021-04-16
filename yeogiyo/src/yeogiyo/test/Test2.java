@@ -6,6 +6,7 @@ public class Test2 {
 		
 		System.out.println("classes�뤃�뜑 �솗�씤�슜");
 		System.out.println("asd");
+		System.out.println("merge");
 	}
  
 }
