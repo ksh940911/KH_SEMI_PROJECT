@@ -25,6 +25,7 @@
             </div>
             <div class="login-submit">
                 <input type="submit" value="로그인">
+                <!-- 페이지 확인을 위한 임시 버튼 -->
                 <input type="button" value="임시 회원가입" onclick="location.href='<%= request.getContextPath() %>/member/memberEnroll';">
             </div>    
         </form>
