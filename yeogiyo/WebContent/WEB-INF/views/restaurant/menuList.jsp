@@ -9,6 +9,7 @@
     <%
     List<Menu> list = (List<Menu>)request.getAttribute("list");
     Restaurant r = (Restaurant) request.getAttribute("restaurant");
+    StringBuilder categoryStr = new StringBuilder();
     %>
 <!DOCTYPE html>
 <html lang="en">
@@ -36,7 +37,12 @@
                 <span class="star-fill" id="star4">★</span>
                 <span class="star-empty" id="star5">★</span>
                 <input type="button" id="btn-review" value="리뷰 보기">
-                <form id="review_frm" action="">
+                <input type="button" id="btn-notice" value="사장님 공지">
+                
+                <form id="frm-review" action="">
+                    <input type="hidden" name="res_id">
+                </form>
+                <form id="frm-notice" action="">
                     <input type="hidden" name="res_id">
                 </form>
                 <br><br>
@@ -92,6 +98,7 @@
             <% for(int i = 0; i < list.size(); i++){ %>
                 <div class="hori-menu btn-layer-popup">
                 <% if(list.get(i).getMenuImg()!= null){ %>
+                	<div class="hori-menu-id" style="display : none;"><%= list.get(i).getMenuId() %></div>
                     <div class="hori-photo"><img src="<%= list.get(i).getMenuImg() %>" alt=""></div>
                     <% } else{ %>
                     <div class="hori-photo"><img src="<%= request.getContextPath() %>/images/defaultMenu.png" alt=""></div>
@@ -111,14 +118,20 @@
         for(int i = 0; i < list.size(); i++){
         	categorySet.add(list.get(i).getMenuCategory());
         }
+        
+       //	List<String> categoryList = new ArrayList<>(categorySet);
+        
         //카테고리만큼 토글메뉴 반복 생성
         for(String s : categorySet){
+        //for(int i = 0; i < categoryList.size(); i++){
+        	
         %>
         <div class="menu-category-wrapper">
             <div class="menu-category"><span><%= s %></span><!--<span class="arrow" style="float: right;">▼</span>--></div>
-            <ul class="ul-menu-list">
+            <ul class="ul-menu-list"  id="<%= s %>">
                 <!-- 메뉴 카테고리 누르면 나타나고/사라지는 메뉴. 카테고리별 메뉴만큼 반복생성 -->
                <% for(Menu m : list){
+            	  
             	   if(s.equals(m.getMenuCategory())){
             	   %>
                 <li class="li-menu btn-layer-popup">
@@ -139,7 +152,8 @@
                     </table>
                 </li>
                 <!--  하얀메뉴 반복종료 -->
-	        <% } // if(s.equals(m.getMenuCategory()) 종료  %>
+	        <% 
+	        } // if(s.equals(m.getMenuCategory()) 종료  %>
 	     <%  } //카테고리변 메뉴리스트 반복 종료  %>
             </ul>
     	</div>
@@ -147,6 +161,10 @@
  </div>
     <!--  .container 끝  -->
  <!-- 레이어 팝업... 메뉴번호를 어떻게 받아오지? -->
+ <% 
+ boolean isPopupOn = false;
+ 
+ %>
  <div class="dim-layer">
     <div class="dimBg"></div>
     <div id="layer2" class="pop-layer">
@@ -218,21 +236,59 @@
 
      }
 
-     //btn-review클릭 시 가게 번호 담아서 리뷰 페이지로 이동
+     /*
+     btn-review클릭 시 가게 번호 담아서 리뷰 페이지로 이동
+     */
      $("#btn-review").click(function(){
-         alert("review!");
+    	 
+    	 console.log("review!");
+    	 
+	     var servletUrl = ""; //<-여기에 이동할 서블릿 url작성
+	     var $frm = $("#frm-review");
+	     //폼에 hidden input으로 가게아이디 담아놨어요. 서블릿에서 파라미터명 "res_id"로 꺼내세요 
+	    	 
+     	$frm.attr("action", servletUrl).submit();
+     
+     });
+     
+     /*
+     btn-notice클릭 시 가게 번호 담아서 사장님 공지 페이지로 이동
+     */
+     $("#btn-notice").click(function(){
+    	 
+     
+		 console.log("notice!");
+    	 
+	     var servletUrl = "<%= request.getContextPath() %>/admin/noticeView"; //<-여기에 이동할 서블릿 url작성
+	     var $frm = $("#frm-notice");
+	     //폼에 hidden input으로 가게아이디 담아놨어요. 서블릿에서 파라미터명 "res_id"로 꺼내세요 
+	    	 
+     	$frm.attr("action", servletUrl).submit();
 
 
 
          
      });
-
-     //메뉴 선택 시 레이어 팝업창 띄우기---------------------------------
+     
+     
+     
+	/*
+	메뉴 선택 시 레이어 팝업창 띄우기---------------------------------
+	*/
      $('.btn-layer-popup').click(function(){
-         console.log(this);
-         //this로 메뉴번호 받아서 layer_popup()에 같이 보내는게 좋을..까?
+    	
+    	var $clickedMenuId = $(this).find(".hori-menu-id").text();
+    	//db
+    	
+    	
+    	
+    	
+    	
+    	 
+    	  //this로 메뉴번호 받아서 layer_popup()에 같이 보내는게 좋을..까?
         layer_popup($("#layer2"));
-    });
+  	  });
+     
     function layer_popup(el){
         $(".dim-layer").show();
         var $el = $(el);    //레이어의 id를 $el 변수에 저장
@@ -271,13 +327,20 @@
     }
 
     function dim_layer_hide(){
+        
+        //팝업창 숨기기
         $(".dim-layer").hide();
+        
     }
     //---------------------------------------
 
-    //카테고리 클릭 시 메뉴 나타남/사라짐
+    /*
+    카테고리 클릭 시 메뉴 나타남/사라짐
+    */
     $(".menu-category").click(function(){
-        $(".ul-menu-list").toggle();
+      var $clickedCategoryName = $(this).find("span").text();
+      str = "#" + $clickedCategoryName;
+      $(str).toggle();
      });
  </script>
 </body>
