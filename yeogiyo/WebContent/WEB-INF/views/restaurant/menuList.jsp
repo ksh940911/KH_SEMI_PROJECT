@@ -9,6 +9,7 @@
     <%
     List<Menu> list = (List<Menu>)request.getAttribute("list");
     Restaurant r = (Restaurant) request.getAttribute("restaurant");
+    StringBuilder categoryStr = new StringBuilder();
     %>
 <!DOCTYPE html>
 <html lang="en">
@@ -161,6 +162,7 @@
     <%  } //카테고리 토글메뉴 반복 종료 %>
  </div>
     <!--  .container 끝  -->
+
  <!-- 레이어 팝업. ajax로 json받아서 요소 생성-->
  <div class="dim-layer">
  	<!--
@@ -211,8 +213,8 @@
 <!-- 레이어 팝업 끝 -->
 
  <script>
-
-
+   
+   
      /*
      btn-review클릭 시 가게 번호 담아서 리뷰 페이지로 이동
      */
@@ -226,6 +228,7 @@
 	    	 
      	$frm.attr("action", servletUrl).submit();
      
+
      });
      
      /*
@@ -236,14 +239,17 @@
      
 		 console.log("notice!");
     	 
-	     var servletUrl = ""; //<-여기에 이동할 서블릿 url작성
+	     var servletUrl = "<%= request.getContextPath() %>/admin/noticeView"; //<-여기에 이동할 서블릿 url작성
 	     var $frm = $("#frm-notice");
 	     //폼에 hidden input으로 가게아이디 담아놨어요. 서블릿에서 파라미터명 "res_id"로 꺼내세요 
 	    	 
      	$frm.attr("action", servletUrl).submit();
 
+
+
+         
      });
-     
+    
      
      
 	/*
