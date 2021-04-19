@@ -23,27 +23,27 @@ public class ReviewDao {
 		//board-query.properties의 내용읽어와서 prop에 저장
 		//resources/sql/board-query.properties가 아니라
 		//WEB-INF/classes/sql/board/board-query.properties에 접근해야함.
-		String fileName = "/sql/board/board-query.properties";
+		String fileName = "/sql/review/review-query.properties";
 		String absPath = ReviewDao.class.getResource(fileName).getPath();
 		try {
 			prop.load(new FileReader(absPath));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
 	}
 
 	public List<Review> selectList(Connection conn, int start, int end) {
-		List<Review> list = new ArrayList<>();
+		List<Review> list = null;
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		String sql = prop.getProperty("selectList");
+		String sql = prop.getProperty("selectReviewList");
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, start);
 			pstmt.setInt(2, end);
 			rset = pstmt.executeQuery();
+			list = new ArrayList<>();
 			while(rset.next()) {
 				Review review = new Review();
 				review.setReviewNo(rset.getInt("review_no"));

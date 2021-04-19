@@ -7,7 +7,7 @@
 %>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/review.css" />
-<section id="board-container">
+<section id="review-container">
 	<h2>클린리뷰</h2>
 	<%
 		//if(loginMember != null){
@@ -20,8 +20,8 @@
 	%>
 	<div>
 	<%
-		Review r = new Review();
-		int star = r.getReviewStar();
+		Review review = new Review();
+		int star = review.getReviewStar();
 		if(star < 1){
 			System.out.println("☆☆☆☆☆");
 		}
@@ -40,7 +40,7 @@
 		else
 			System.out.println("★★★★★");
 	%>
-	<br><span style="text-align:center"><%= r.getReviewStar() %>/5</span>
+	<br><span style="text-align:center"><%= review.getReviewStar() %>/5</span>
 	</div>
 	<table id="tbl-review">
 		<tr>
@@ -48,19 +48,19 @@
 		</tr>
 	<% 
 	   if(list != null && !list.isEmpty()) { 
-		  for(Review b : list){
+		  for(Review r : list){
 	%>	
 		<tr>
-			<td><%= b.getMemberId() %></td>
-			<td><%= b.getReviewTime() %></td>
-			<td><%= b.getReviewStar() %></td>
+			<td><%= r.getMemberId() %></td>
+			<td><%= r.getReviewTime() %></td>
+			<td><%= r.getReviewStar() %></td>
 			<td>
-				<% if(b.getReviewphoto() != null){ %>
-				<img src="<%= request.getContextPath() %>/images/file.png" alt="" />
+				<% if(r.getReviewphoto() != null){ %>
+				<img src="<%= request.getContextPath() %>/images/logo.png" alt="" />
 				<% } %>
 			</td>
-			<td><%= b.getReviewOrder() %></td>
-			<td><%= b.getReviewContent() %></td>
+			<td><%= r.getReviewOrder() %></td>
+			<td><%= r.getReviewContent() %></td>
 		</tr>
 	<%   
 		  }
