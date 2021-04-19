@@ -30,7 +30,7 @@
         </form>
         <div class="join-container">
             <a href="<%= request.getContextPath() %>/member/memberEnroll">
-                <img src="<%= request.getContextPath() %>/images/sign_banner.png" alt="가입배너">
+                <img src="<%= request.getContextPath() %>/images/sign_banner1.png" alt="가입배너">
             </a>
 
         </div>

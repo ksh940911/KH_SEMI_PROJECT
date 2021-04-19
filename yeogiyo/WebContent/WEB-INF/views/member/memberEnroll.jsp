@@ -1,92 +1,87 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="EUC-KR">
-<title>¿©±â¿ä - È¸¿ø°¡ÀÔ</title>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/views/common/header_sign.jsp" %>
 <script src="<%= request.getContextPath() %>/js/jquery-3.6.0.js"></script>
-</head>
 <body>
 <section id=enroll-container>
-	<h2>È¸¿ø °¡ÀÔ Á¤º¸ ÀÔ·Â</h2>
+	<h2>íšŒì› ê°€ìž… ì •ë³´ ìž…ë ¥</h2>
 	<form name="memberEnrollFrm" action="<%= request.getContextPath() %>/member/memberEnroll" method="post">
 		<table>
 			<tr>
-				<th>¾ÆÀÌµð<sup>*</sup></th>
+				<th>ì•„ì´ë””<sup>*</sup></th>
 				<td>
 					<input type="text" placeholder="" name="memberId" id="memberId" required>
-					<input type="button" value="Áßº¹°Ë»ç" onclick="checkIdDuplicate();" />
+					<input type="button" value="ì¤‘ë³µê²€ì‚¬" onclick="checkIdDuplicate();" />
 					<!-- <input type="hidden" id="idValid" value="0" />  -->
-					<%-- #idValid 1ÀÌ¸é »ç¿ë°¡´ÉÇÑ ¾ÆÀÌµðÀÌ°í Áßº¹°Ë»çÇÔ, 0ÀÌ¸é Áßº¹°Ë»çÀü. --%>
-					<%-- ¾ÆÀÌµð Áßº¹°Ë»ç´Â ajax·Î ±¸ÇöÇÒ ¿¹Á¤ --%>
+					<%-- #idValid 1ì´ë©´ ì‚¬ìš©ê°€ëŠ¥í•œ ì•„ì´ë””ì´ê³  ì¤‘ë³µê²€ì‚¬í•¨, 0ì´ë©´ ì¤‘ë³µê²€ì‚¬ì „. --%>
+					<%-- ì•„ì´ë”” ì¤‘ë³µê²€ì‚¬ëŠ” ajaxë¡œ êµ¬í˜„í•  ì˜ˆì • --%>
 				</td>
 			</tr>
 			<tr>
-				<th>ÆÐ½º¿öµå<sup>*</sup></th>
+				<th>íŒ¨ìŠ¤ì›Œë“œ<sup>*</sup></th>
 				<td>
 					<input type="password" name="password" id="password" required>
 					<br>
 				</td>
 			</tr>
 			<tr>
-				<th>ÆÐ½º¿öµåÈ®ÀÎ<sup>*</sup></th>
+				<th>íŒ¨ìŠ¤ì›Œë“œí™•ì¸<sup>*</sup></th>
 				<td>	
 					<input type="password" id="password2" required>
 					<br>
 				</td>
 			</tr>  
 			<tr>
-				<th>ÀÌ¸§<sup>*</sup></th>
+				<th>ì´ë¦„<sup>*</sup></th>
 				<td>	
 				<input type="text"  name="memberName" id="memberName" required><br>
 				</td>
 			</tr>
 			<tr>
-				<th>»ý³â¿ùÀÏ</th>
+				<th>ìƒë…„ì›”ì¼</th>
 				<td>	
 				<input type="date" name="birthday" id="birthday" ><br />
 				</td>
 			</tr> 
 			<tr>
-				<th>¼ºº° </th>
+				<th>ì„±ë³„ </th>
 				<td>
 					<div class="gender-group">
 						<label for="gender0" class="gender0 active">
-							<input type="radio" name="gender" id="gender0" value="M" autocomplete="off" checked />³²ÀÚ
+							<input type="radio" name="gender" id="gender0" value="M" autocomplete="off" checked />ë‚¨ìž
 						</label>
 						<label for="gender1" class="gender1">
-							<input type="radio" name="gender" id="gender1" value="F" autocomplete="off"/>¿©ÀÚ
+							<input type="radio" name="gender" id="gender1" value="F" autocomplete="off"/>ì—¬ìž
 						</label>
 					</div>
 				</td>
 			</tr>
 			<tr>
-				<th>ÁÖ¼Ò<sup>*</sup></th>
+				<th>ì£¼ì†Œ<sup>*</sup></th>
 				<td>	
 					<input type="text" placeholder="" name="address" id="address"><br>
 				</td>
 			</tr>
 			<tr>
-				<th>»ó¼¼ ÁÖ¼Ò</th>
+				<th>ìƒì„¸ ì£¼ì†Œ</th>
 				<td>	
 					<input type="text" placeholder="" name="address_sub" id="address_sub"><br>
 				</td>
 			</tr>
 			<tr>
-				<th>ÈÞ´ëÆù<sup>*</sup></th>
+				<th>íœ´ëŒ€í°<sup>*</sup></th>
 				<td>	
-					<input type="tel" placeholder="(-¾øÀÌ)01012345678" name="phone" id="phone" maxlength="11" required><br>
+					<input type="tel" placeholder="(-ì—†ì´)01012345678" name="phone" id="phone" maxlength="11" required><br>
 				</td>
 			</tr>
 			<tr>
-				<th>ÀÌ¸ÞÀÏ</th>
+				<th>ì´ë©”ì¼</th>
 				<td>	
 					<input type="email" placeholder="abc@xyz.com" name="email" id="email"><br>
 				</td>
 			</tr>
 		</table>
-		<input type="submit" value="È¸¿ø°¡ÀÔ" >
+		<input type="submit" value="íšŒì›ê°€ìž…" >
 	</form>
 </section>
 </body>
