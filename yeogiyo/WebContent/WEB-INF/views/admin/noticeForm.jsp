@@ -1,9 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
-<!-- 
-	가게 상세페이지에서 공지부분에 [공지등록] 버튼 클릭시 noticeForm 페이지 이동 
--->
 <section id="notice-container">
 <h2>공지작성</h2>
 <form 
@@ -14,15 +11,15 @@
 	<table id="tbl-notice-view">
 		<tr>
 			<th>제목</th>
-			<td><input type="text" name="title" required /></td>
+			<td><input type="text" name="noticeTitle" required /></td>
 		</tr>
 		<tr>
-			<th>이미지파일</th>
+			<th>이미지추가</th>
 			<td><input type="file" name="upImgFile" /></td>
 		</tr>
 		<tr>
 			<th>내용</th>
-			<td><textarea name="content" cols="30" rows="10"></textarea></td>
+			<td><textarea name="noticeContent" cols="30" rows="10"></textarea></td>
 		</tr>
 		<tr>
 			<th colspan="2">

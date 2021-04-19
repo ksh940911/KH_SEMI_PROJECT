@@ -14,6 +14,9 @@ import com.oreilly.servlet.multipart.FileRenamePolicy;
 import common.YeogiyoFileRenamePolicy;
 import notice.model.sevice.NoticeService;
 import notice.model.vo.Notice;
+import notice.model.vo.NoticeImg;
+import restaurant.model.service.RestaurantService;
+import restaurant.model.vo.Menu;
 
 
 /**
@@ -22,7 +25,7 @@ import notice.model.vo.Notice;
 @WebServlet("/admin/noticeEnroll")
 public class NoticeEnrollServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+	
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
@@ -46,20 +49,28 @@ public class NoticeEnrollServlet extends HttpServlet {
 							policy);
 			
 			// 입력값
-			String title = multipartRequest.getParameter("title");
-			String content = multipartRequest.getParameter("content");
-			int resId = Integer.parseInt(multipartRequest.getParameter("resId"));
-			
+			String noticeTitle = multipartRequest.getParameter("noticeTitle");
+			String noticeContent = multipartRequest.getParameter("noticeContent");
+//			int resId = Integer.parseInt(multipartRequest.getParameter("resId"));
+			int resId = 0;
 			String originalFileName = multipartRequest.getOriginalFileName("upImgFile");
 			String renamedFileName = multipartRequest.getFilesystemName("upImgFile");
 			
 			Notice notice = new Notice();
-			notice.setNoticeTitle(title);
-			notice.setNoticeContent(content);
+			notice.setNoticeTitle(noticeTitle);
+			notice.setNoticeContent(noticeContent);
 			notice.setResId(resId);
 			
+			// 첨부이미지 있는경우
+			if(originalFileName != null) {
+				NoticeImg noticeImg = new NoticeImg();
+				noticeImg.setOriginalFilname(originalFileName);
+				noticeImg.setRenamedFilename(renamedFileName);
+				notice.setNoticeImg(noticeImg);
+			}
+			
 			// 업무로직
-			int result = NoticeService.insertNotice(notice);
+			int result = new NoticeService().insertNotice(notice);
 			String msg = (result > 0) ? "공지 등록 완료." : "공지 등록 실패";
 			
 			HttpSession session = request.getSession();
