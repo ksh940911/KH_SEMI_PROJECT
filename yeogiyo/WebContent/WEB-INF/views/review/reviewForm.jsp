@@ -12,13 +12,7 @@ $(function(){
 * reviewEnrollFrm 유효성 검사
 */
 function reviewValidate(){
-	var $title = $("[name=title]");
 	var $content = $("[name=content]");
-	//제목을 작성하지 않은 경우 폼제출할 수 없음.
-	if(/^.+$/.test($title.val()) == false){
-		alert("제목을 입력하세요.");
-		return false;
-	}
 					   
 	//내용을 작성하지 않은 경우 폼제출할 수 없음.
 	if(/^(.|\n)+$/.test($content.val()) == false){
@@ -30,7 +24,7 @@ function reviewValidate(){
 }
 </script>
 <section id="review-container">
-<h2>리뷰 작성</h2>
+<h2>주문내역가져오기</h2>
 <form
 	name="reviewEnrollFrm"
 	action="<%=request.getContextPath() %>/review/reviewEnroll" 
@@ -38,29 +32,46 @@ function reviewValidate(){
 	enctype="multipart/form-data">
 	<table id="tbl-review-view">
 	<tr>
-		<th>제 목</th>
-		<td><input type="text" name="title" required></td>
+		<th colspan="5">별점을 선택해주세요.</th>
 	</tr>
 	<tr>
-		<th>작성자</th>
 		<td>
-			<input type="text" name="writer" value="<%= loginMember.getMemberId() %>" readonly/>
+		<input type="radio" name="star" id="star-1" value=1><label for="star-1">★</label>
+		<input type="radio" name="star" id="star-2" value=2><label for="star-2">★★</label>
+		<input type="radio" name="star" id="star-3" value=3><label for="star-3">★★★</label>
+		<input type="radio" name="star" id="star-4" value=4><label for="star-4">★★★★</label>
+		<input type="radio" name="star" id="star-5" value=5 checked><label for="star-5">★★★★★</label>
+		</td>
+	</tr>	
+	<tr>
+		<td colspan="5"><textarea rows="5" cols="40" name="content" placeholder="여기요를 통해 음식을 주문해주셔서 감사합니다.&#13;&#10;더 좋은 서비스를 위해 별점과 리뷰를 등록해주세요."></textarea></td>
+	</tr>
+	<br><hr><br>
+	<tr>
+		<td>
+		<script>			
+			<input type='file' id='reviewphotofile' name='reviewphoto' style='display: none;'>
+			<img src='images/reviewphoto.png' id='reviewphotoid' border='0' onclick='document.all.reviewphoto.click()'>
+	         $('#reviewphotofile').change(function () {
+	     	  	readURL(this);
+	     	});
+
+	     	function readURL(input) {
+	     	    if (input.files && input.files[0]) {
+	     	        var reader = new FileReader();
+	     	        reader.onload = function (e) {
+	     	            $('#reviewphotoid').attr('src', e.target.result);
+	     	        }
+	     	        reader.readAsDataURL(input.files[0]);
+	     	    }
+	     	}
+		</script>	
 		</td>
 	</tr>
 	<tr>
-		<th>첨부파일</th>
-		<td>			
-			<input type="file" name="upFile">
+		<td colspan="5">
+			<input type="image" src="images/reviewsubmit.png">
 		</td>
-	</tr>
-	<tr>
-		<th>내 용</th>
-		<td><textarea rows="5" cols="40" name="content"></textarea></td>
-	</tr>
-	<tr>
-		<th colspan="2">
-			<input type="submit" value="등록하기">
-		</th>
 	</tr>
 </table>
 </form>

@@ -108,7 +108,7 @@ public class ReviewEnrollServlet extends HttpServlet {
 								"/review/reviewList";
 			
 			//3. DML요청 : 리다이렉트 & 사용자피드백
-			// /mvc/board/boardList
+			// /mvc/review/reviewList로 리다이렉트
 			HttpSession session = request.getSession();
 			session.setAttribute("msg", msg);
 			response.sendRedirect(location);
