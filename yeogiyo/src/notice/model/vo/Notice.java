@@ -8,18 +8,21 @@ public class Notice {
 	private String noticeTitle;
 	private String noticeContent;
 	private Date noticeDate;
+	private NoticeImg noticeImg;
 
 	public Notice() {
 		super();
 	}
 
-	public Notice(int noticeNo, int resId, String noticeTitle, String noticeContent, Date noticeDate) {
+	public Notice(int noticeNo, int resId, String noticeTitle, String noticeContent, Date noticeDate,
+			NoticeImg noticeImg) {
 		super();
 		this.noticeNo = noticeNo;
 		this.resId = resId;
 		this.noticeTitle = noticeTitle;
 		this.noticeContent = noticeContent;
 		this.noticeDate = noticeDate;
+		this.noticeImg = noticeImg;
 	}
 
 	public int getNoticeNo() {
@@ -62,10 +65,18 @@ public class Notice {
 		this.noticeDate = noticeDate;
 	}
 
+	public NoticeImg getNoticeImg() {
+		return noticeImg;
+	}
+
+	public void setNoticeImg(NoticeImg noticeImg) {
+		this.noticeImg = noticeImg;
+	}
+
 	@Override
 	public String toString() {
 		return "Notice [noticeNo=" + noticeNo + ", resId=" + resId + ", noticeTitle=" + noticeTitle + ", noticeContent="
-				+ noticeContent + ", noticeDate=" + noticeDate + "]";
+				+ noticeContent + ", noticeDate=" + noticeDate + ", noticeImg=" + noticeImg + "]";
 	}
 
 }

@@ -35,6 +35,7 @@ public class MemberLoginServlet extends HttpServlet {
 		//사용자 입력값 처리
 		String memberId = request.getParameter("memberId");
 		String password = request.getParameter("password");
+		//String password = MvcUtils.getSha512(request.getParameter("password")); //암호화처리코드
 		System.out.println("memberId@MemberLoginServlet = " + memberId);
 		System.out.println("password@MemberLoginServlet = " + password);
 		
