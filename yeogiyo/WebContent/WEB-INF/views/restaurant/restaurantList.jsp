@@ -3,27 +3,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <% List<Restaurant> list = (List<Restaurant>)request.getAttribute("list"); %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<style>
-table{
-border-collapse : collapse;
-border : 1px solid #000;
-}
-
-tr, td, th{
-border : 1px solid #000;
-}
-
-img{
-	width: 200px;
-}
-</style>
-</head>
-<body>
+    
+<%@ include file="/WEB-INF/views/common/header.jsp" %>
 	<h1>restaurant list</h1>
 	<table>
 	<tr>
@@ -50,5 +31,19 @@ img{
 	
 	<%} %>
 	</table>
-</body>
-</html>
+	
+	<style>
+table{
+border-collapse : collapse;
+border : 1px solid #000;
+}
+
+tr, td, th{
+border : 1px solid #000;
+}
+
+img{
+	width: 200px;
+}
+</style>
+<%@ include file="/WEB-INF/views/common/footer.jsp" %>

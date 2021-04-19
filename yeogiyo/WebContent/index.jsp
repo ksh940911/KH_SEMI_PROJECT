@@ -15,8 +15,8 @@
                         class="icon-move"></i>
                 </a>
             </div><!-- end ngRepeat: banner in banner_list -->
-            <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3"><a href="" class="thumbnail"
-                    ng-click="select_home_category('all')">
+            <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3"><a href="<%= request.getContextPath() %>/restaurant/restaurantList.do" class="thumbnail"
+                    ng-click="select_home_category('전체보기')">
                     <div class="category-title">전체보기</div><img src="images/category-01.png">
                 </a></div>
             <div class="col-xs-6 col-sm-4 col-md-3"><a href="" class="thumbnail"

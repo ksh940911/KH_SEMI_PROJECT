@@ -1,0 +1,127 @@
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap');
+body{
+color:  #333333;
+font-size:15px;
+font-family: 'Nanum Gothic', sans-serif;
+}
+.wrapper{
+margin: 0 auto;
+/* border: 1px solid black; */
+width: 1040px;
+height: 665px;
+}
+table{
+border-collapse: collapse;
+border: 1px solid  #D9D9D9;
+}
+tr, td{
+border: 1px solid  #D9D9D9;
+}
+
+#tb-order{
+    margin: 10px;
+    width: 658px;
+    float:left;
+}
+
+.sub-title {
+    background-color: #333;
+    color: #fff;
+    font-size: 110%;
+    padding: 10px 10px 10px 15px;
+}
+.panel-head{
+    padding: 10px;
+    background-color: #E6E6E6;
+    font-weight: bold;
+}
+.panel-body{
+    padding: 15px;
+}
+.panel-text{
+    width: 500px;
+    padding: 6px 12px;
+    height: auto;
+    margin-bottom: 15px;
+    border: 1px solid  #D9D9D9;
+}
+.stxt{
+    color: #999;
+    font-size: 12px;
+}
+.form-control {
+    width: 95%;
+    height: 75px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.paybtn{
+    width: 300px;
+    height: 40px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+}
+.paybtn-selected{
+    color: #fa0050;
+    border: 1px solid #fa0050;
+}
+
+/* 주문표 */
+#tb-order-cart{
+    margin: 10px;
+    width: 330px;
+    float:right;
+}
+#cart-res-name{
+    padding: 10px;
+}
+#cart-ul{
+    list-style: none;
+    padding: 10px;
+    margin: 0;
+    font-size: 14px;
+    background-color: #fff8eb;
+}
+.left{
+    display : inline-block;
+    width: 196px;
+}
+.right{
+    display : inline-block;
+    text-align : right;
+    width: 100px;
+}
+.td-total{
+    background-color: #fff8eb;
+    padding: 15px;
+    color:#fa0050;
+    font-weight: bold;
+    font-size: 110%;
+}
+.td-notice{
+    border: 1px solid #fff;
+    display: block;
+    margin: 15px 0;
+}
+.notice{
+    font-size: 11px;
+}
+.cart-li{
+    padding: 10px 0;
+}
+
+#btn-pay {
+    width: 330px;
+    height: 46px;
+    border: none;
+    color: white;
+    font-size: 18px;
+    background-color: #FA0050;
+}
