@@ -6,6 +6,8 @@ create user yeogiyo
 identified by yeogiyo
 default tablespace users;
 
+select * from tab; --db에 생성된 테이블조회
+
 --권한부여
 grant connect, resource to yeogiyo;
 
@@ -105,6 +107,7 @@ insert into yeogiyo.menu(menu_id, res_id, menu_name, menu_category, price) value
 insert into yeogiyo.menu(menu_id, res_id, menu_name, menu_category, price) values(	seq_tb_menu_id.nextval,	3	,	'함박스테이크'	,			'대표메뉴'	,	7500			);
 insert into yeogiyo.menu(menu_id, res_id, menu_name, description, menu_category, price) values(	seq_tb_menu_id.nextval,	3	,	'뢰벤정식'	,	'돈가스,함박스테이크,생선까스'	,	'대표메뉴'	,	8500			);
 
+set define off;
 --=========================
 --=========================
 --                   김영미                    --

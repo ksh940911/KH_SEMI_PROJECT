@@ -7,7 +7,8 @@
 	<div class="content-wrap">
         <form id="loginFrm" action="<%= request.getContextPath() %>/member/memberlogin" method="POST" name="loginFrm">
             <div class="login-container">
-                <div class="title"><span>여기요</span></div>
+                <div class="title"> <img src="<%= request.getContextPath() %>/images/logo.png" alt="로고" width="150" height="50">
+                </div>
                 <ul>
                     <li>
                         <input type="text" name="memberId" id="memberId" placeholder="아이디" >
