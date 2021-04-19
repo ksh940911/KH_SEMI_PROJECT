@@ -1,0 +1,84 @@
+@charset "UTF-8";
+
+.verify-wrapper { 
+	background-color:#e3e7ea;
+	padding:17px 10px 50px 10px;
+}
+
+
+/* 아이디찾기 페이지 css */
+.idsearch {
+	width:500px;
+	margin: 0 auto;
+}
+.name-phone ul {
+	text-align: center;
+	padding: 0; 
+	margin-top: 0;
+}
+.name-phone li {
+	border: 1px solid #ccc;
+	/* rgba(0,0,0,.125) */
+	position:relative;
+}
+.name-phone li input {
+	width: 100%; 
+	height: 30px;
+	border: none;
+}
+.name-phone .sms-verify-btn {
+	width:10%;
+	height:20px;
+	position:absolute;
+	right:20px;
+	bottom:5px;
+	z-index:1;
+}
+
+.idsearch button {
+	width: 100%; 
+	height:35px; 
+	margin-top: 30px; 
+	background-color:#fff;
+    border-radius: 0;
+    border: 1px solid #ccc;
+    cursor:pointer;
+}
+
+
+
+
+/* 비밀번호찾기 페이지 css */
+
+.pwdsearch {
+	width:500px;
+	margin: 0 auto;
+}
+
+.id-email ul {
+	text-align: center;
+	padding: 0; 
+	margin-top: 0;
+}
+.id-email li {
+	border: 1px solid #ccc;
+	/* rgba(0,0,0,.125) */
+}
+.id-email li input {
+	width: 100%; 
+	height: 30px;
+	border: none;
+}
+
+.pwdsearch button {
+	color: #FFF;
+	width: 100%; 
+	height:35px; 
+	margin-top: 30px; 
+	background-color:#fa0050;
+    border-radius: 0;
+    border: 0;
+    cursor:pointer;
+}
+
+

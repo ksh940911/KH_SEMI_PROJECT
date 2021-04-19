@@ -7,20 +7,7 @@ import java.util.Base64;
 
 public class MvcUtils {
 
-	/**
-	 * 단방향 암호화 알고리즘
-	 * - md5
-	 * - sha1 - 160byte
-	 * - sha256
-	 * - sha512
-	 * 
-	 * 1. MessageDigest : 단방향암호화처리
-	 * 
-	 * 2. Base64 인코딩 처리 : 암호화된 byte[](이진데이터)를 64개의 문자로 변환
-	 * 
-	 * @param password
-	 * @return
-	 */
+	
 	public static String getSha512(String password) {
 		String encryptedPassword = null;
 		
@@ -39,7 +26,7 @@ public class MvcUtils {
 		}
 		md.update(bytes);
 		byte[] encryptedBytes = md.digest(); //암호화 처리
-		System.out.println("암호화 처리후 : " + new String(encryptedBytes));
+		//System.out.println("암호화 처리후 : " + new String(encryptedBytes));
 		
 		//2. 문자 인코딩 처리
 		encryptedPassword = Base64.getEncoder().encodeToString(encryptedBytes);
@@ -49,23 +36,7 @@ public class MvcUtils {
 	}
 
 	
-	/**
-	 *  1. cPage
-	 *  2. numPerPage
-	 * 	3. totalContents 총 컨텐츠수
-	 * 	4. url 이동할 주소  /mvc/admin/memberList?cPage=
-	 *  ----------------------------------------
-	 * 	5. totalPage 전체페이지수 - pageNo 넘침 방지
-	 * 	6. pageBarSize 페이지바에 표시할 페이지 개수 지정 : 5
-	 * 	7. pageStart ~ pageEnd pageNo의 범위
-	 * 	8. pageNo 페이지넘버를 출력할 증감변수
-	 * 
-	 * @param cPage
-	 * @param numPerPage
-	 * @param totalContents
-	 * @param url
-	 * @return
-	 */
+	
 	public static String getPageBar(int cPage, int numPerPage, int totalContents, String url) {
 		StringBuilder pageBar = new StringBuilder();
 		
