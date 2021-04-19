@@ -28,10 +28,10 @@
                 <input type="button" id="btn-notice" value="사장님 공지">
                 
                 <form id="frm-review" action="">
-                    <input type="hidden" name="res_id">
+                    <input type="hidden" name="res_id" value="<%= r.getResId() %>">
                 </form>
                 <form id="frm-notice" action="">
-                    <input type="hidden" name="res_id">
+                    <input type="hidden" name="res_id" value="<%= r.getResId() %>">
                 </form>
                 <br>
                 <span style="color: #999">결제</span> 신용카드, 현금<br>
@@ -74,7 +74,7 @@
                 <td id="td-total">합계 금액 : <span id="total-price">0</span>원</td>
             </tr>
             <tr>
-                <td><input type="button" id="btn-order" class="btn-order" value="주문하기" onclick="checkout()"></td>
+                <td><input type="button" id="btn-order" class="btn-order" value="주문하기" onclick=""></td>
                 <form id="orderFrm" action="<%= request.getContextPath() %>/order/order.do">
               	  <input type="hidden" name="resId"  value="<%= r.getResId() %>" />
                 </form>
@@ -641,14 +641,20 @@
     
     //주문표에서 '주문하기' 버튼 클릭 시 
     $(".btn-order").on("click", function(){
+    	
+    <% if(loginMember == null){ %>
+    alert("로그인이 필요합니다.");
+    <% } else { %>
     	var selectedMenuArr = JSON.parse(sessionStorage.getItem('selectedMenuArr'));
     	
-    	if( selectedMenuArr = null){
+    	if( selectedMenuArr[0].menuName === ""){
     		alert("메뉴를 선택해주세요.");
-    	}else{
+    	}
+    	else{
     		//결제페이지로 이동
     		$("#orderFrm").submit();
     	}
+    	<% } %>
     });
     
     
