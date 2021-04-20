@@ -45,6 +45,7 @@ public class MemberEnrollServlet extends HttpServlet {
 		String phone = request.getParameter("phone");
 		String email = request.getParameter("email");
 		
+
 		//Date type으로 변환
 		Date birthday = null;
 		if(_birthday != null && !"".equals("_birthday")) 
@@ -58,13 +59,15 @@ public class MemberEnrollServlet extends HttpServlet {
 		int result = new MemberService().insertMember(member);
 		
 		//4. 사용자 피드백 및 페이지 리다이렉트
-		String msg = "";
+		String msg = null;
 		if(result > 0) {
-			msg = "성공적으로 회원가입 되었습니다.";
+			request.getSession().setAttribute("messageType", "성공 메세지");
+			request.getSession().setAttribute("messageContent", "회원 가입에 성공했습니다.");
 			System.out.println("회원가입 성공!");
 		}
 		else {
-			msg = "회원가입에 실패했습니다.";
+			request.getSession().setAttribute("messageType", "오류 메세지");
+			request.getSession().setAttribute("messageContent", "회원 가입에 실패했습니다.");
 			System.out.println("회원가입 실패!");
 		}
 		

@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+<%@ include file="/WEB-INF/views/common/header.jsp" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,16 +18,15 @@
 	<form name="memberEnrollFrm" action="<%= request.getContextPath() %>/member/memberEnroll" method="post">
 		<div id="contentBox">
 			<table>
-				<tr>
-					<th>아이디<sup>*</sup></th>
-					<td>
-						<input type="text" placeholder="ID를 입력하세요." name="memberId" id="memberId" required>
-						<!--  <input type="button" value="중복검사" onclick="checkIdDuplicate();" /> -->
-						<!-- <input type="hidden" id="idValid" value="0" />  -->
-						<%-- #idValid 1이면 사용가능한 아이디이고 중복검사함, 0이면 중복검사전. --%>
-						<%-- 아이디 중복검사는 ajax로 구현할 예정 --%>
-					</td>
-				</tr>
+					<tr>
+						<th>아이디<sup>*</sup></th>
+						<td>
+							<input type="text" placeholder="ID를 입력하세요." name="memberId" id="memberId" onkeyup="memberIdCheck()" required>
+							<%-- #idValid 1이면 사용가능한 아이디이고 중복검사함, 0이면 중복검사전. --%>
+							<input type="hidden" id="idValid" value="0" />
+							<span id="memberIdResult"></span>
+						</td>
+					</tr>
 				<tr>
 					<th>패스워드<sup>*</sup></th>
 					<td>
@@ -97,11 +99,41 @@
 <script>
 
 /**
+ * ajax 비동기방식으로 아이디 중복 검사
+ */
+function memberIdCheck(){
+	$.ajax({
+		url: "<%= request.getContextPath() %>/member/memberIdCheck",
+		method : "POST",
+		data : {
+			id : $("#memberId").val()
+		},
+		success : function(data) {
+			if(data == "success") {
+				$("#memberIdResult").html("<p style='color:blue'>사용 가능한 아이디입니다.</p>");
+				$("#idValid").val(1);
+			} else if(data == "fail"){
+				$("#memberIdResult").html("<p style='color:red'>중복된 아이디입니다.</p>");
+				$("#idValid").val(0);
+			}
+		}
+	})
+};
+
+/**
+ * 중복검사 이후 다시 아이디를 변경하는 것을 방지
+ */
+$("#memberId").change(function() {
+	$("#idValid").val(0);
+});
+
+/**
  * 회원가입 유효성 검사
  */
  $(document.memberEnrollFrm).submit(function(){
 	 var re = /^[a-zA-Z0-9]{4,12}$/ //아이디, 패스워드 정규표현식
 	 var $memberId = $("#memberId");
+	 var $idValid = $("#idValid");
 	 
 	 //아이디 유효성 검사
 	 if(re.test($memberId.val()) == false) {
@@ -109,6 +141,12 @@
 		 $memberId.select();
 		 return false;
 	 }
+	 
+	if($idValid.val() == 0) {
+		alert("아이디 중복검사를 해주세요.");
+		$idValid.select();
+		return false;
+	}
 	 
 	 var $pwd1 = $("#password");
 	 var $pwd2 = $("#password2");
@@ -153,3 +191,5 @@
 </script>
 </body>
 </html>
+
+<%@ include file="/WEB-INF/views/common/footer.jsp" %>
