@@ -23,7 +23,7 @@ public class Order {
 	}
 	
 	public Order(int orderId, String memberId, int resId, Date orderDate, String address, String addressSub,
-			String phone, String comment, String paymentWay, String paymentPlace, String orderMenu, int totalPrice) {
+			String phone, String orderComment, String paymentWay, String paymentPlace, String orderMenu, int totalPrice) {
 		super();
 		this.orderId = orderId;
 		this.memberId = memberId;
@@ -32,7 +32,7 @@ public class Order {
 		this.address = address;
 		this.addressSub = addressSub;
 		this.phone = phone;
-		this.orderComment = comment;
+		this.orderComment = orderComment;
 		this.paymentWay = paymentWay;
 		this.paymentPlace = paymentPlace;
 		this.orderMenu = orderMenu;
@@ -81,11 +81,11 @@ public class Order {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-	public String getComment() {
+	public String getOrderComment() {
 		return orderComment;
 	}
-	public void setComment(String comment) {
-		this.orderComment = comment;
+	public void setOrderComment(String orderComment) {
+		this.orderComment = orderComment;
 	}
 	public String getPaymentWay() {
 		return paymentWay;
@@ -115,7 +115,7 @@ public class Order {
 	@Override
 	public String toString() {
 		return "Order [orderId=" + orderId + ", memberId=" + memberId + ", resId=" + resId + ", orderDate=" + orderDate
-				+ ", address=" + address + ", addressSub=" + addressSub + ", phone=" + phone + ", comment=" + orderComment
+				+ ", address=" + address + ", addressSub=" + addressSub + ", phone=" + phone + ", orderComment=" + orderComment
 				+ ", paymentWay=" + paymentWay + ", paymentPlace=" + paymentPlace + ", orderMenu=" + orderMenu
 				+ ", totalPrice=" + totalPrice + "]";
 	}
