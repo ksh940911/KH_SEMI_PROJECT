@@ -16,8 +16,10 @@ public class NoticeService {
 	public Notice selectOne(int resId) {
 		Connection conn = getConnection();
 		Notice notice = noticeDao.selectOne(conn, resId);
-		NoticeImg noticeImg = noticeDao.selectOneNoticeImg(conn, notice.getNoticeNo());
-		notice.setNoticeImg(noticeImg);
+		if(notice != null && notice.getNoticeImg() != null) {
+			NoticeImg noticeImg = noticeDao.selectOneNoticeImg(conn, notice);
+			notice.setNoticeImg(noticeImg);
+		}
 		close(conn);
 		return notice;
 	}
@@ -28,9 +30,8 @@ public class NoticeService {
 		try {
 			result = noticeDao.insertNotice(conn, notice);
 
-			int noticeNo = noticeDao.selectLastNoticeNo(conn);
-
 			if (notice.getNoticeImg() != null) {
+				int noticeNo = noticeDao.selectLastNoticeNo(conn);
 				notice.getNoticeImg().setNoticeNo(noticeNo);
 				result = noticeDao.insertNoticeImg(conn, notice.getNoticeImg());
 			}
