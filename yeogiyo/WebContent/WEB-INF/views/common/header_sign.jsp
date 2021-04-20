@@ -1,4 +1,5 @@
 <%@page import="member.model.vo.Member"%>
+<%@page import="member.model.service.MemberService"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
@@ -24,6 +25,9 @@
 <link rel="stylesheet" href="<%=request.getContextPath() %>/css/content_style_index.css">
 <link rel="stylesheet" href="<%=request.getContextPath() %>/css/footer_style.css">
 <link rel="stylesheet" href="<%=request.getContextPath() %>/css/login_style.css">
+<link rel="stylesheet" href="<%=request.getContextPath() %>/css/search_style.css">
+<link rel="stylesheet" href="<%=request.getContextPath() %>/css/menuList.css">
+<link rel="stylesheet" href="<%=request.getContextPath() %>/css/order.css">
 
 <!-- script 선언 -->
 <script src="https://kit.fontawesome.com/e1bd1cb2a5.js"></script>
@@ -46,34 +50,6 @@ alert("<%= msg %>");
 						alt="홈으로" width="150" height="50">
 					</a>
 				</h1>
-			</div>
-			<div class="nav_container" id="nav_menu">
-			<% if(loginMember == null) { %>
-			<% } else if("A".equals(loginMember.getMemberRole())) { %>
-				<table id="admin">
-					<tr>
-						<td>관리자님, 반갑습니다</td>
-					</tr>
-					<tr>
-						<td><input type="button" value="로그아웃" onclick="location.href='<%= request.getContextPath() %>/member/logout';"/></td>
-					</tr>
-				</table>
-			<% } else {%>
-			
-				<table id="login">
-					<tr>
-						<td><%= loginMember.getMemberName() %>님, 반갑습니다</td>
-						<td><input type="button" value="장바구니" name="basket"/></td>
-					</tr>
-					<tr>
-						<td>
-							<input type="button" value="마이페이지" />
-							<input type="button" value="로그아웃" onclick="location.href='<%= request.getContextPath() %>/member/logout';"/>							
-						</td>
-					</tr>
-				</table>
-				
-			<% } %>	
 			</div>
 		</div>
 	</header>

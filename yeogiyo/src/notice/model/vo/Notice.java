@@ -3,34 +3,34 @@ package notice.model.vo;
 import java.sql.Date;
 
 public class Notice {
-	private int noticeId;
+	private int noticeNo;
 	private int resId;
 	private String noticeTitle;
 	private String noticeContent;
-	private String noticeImg;
-	private Date noticeEnrollDate;
+	private Date noticeDate;
+	private NoticeImg noticeImg;
 
 	public Notice() {
 		super();
 	}
 
-	public Notice(int noticeId, int resId, String noticeTitle, String noticeContent, String noticeImg,
-			Date noticeEnrollDate) {
+	public Notice(int noticeNo, int resId, String noticeTitle, String noticeContent, Date noticeDate,
+			NoticeImg noticeImg) {
 		super();
-		this.noticeId = noticeId;
+		this.noticeNo = noticeNo;
 		this.resId = resId;
 		this.noticeTitle = noticeTitle;
 		this.noticeContent = noticeContent;
+		this.noticeDate = noticeDate;
 		this.noticeImg = noticeImg;
-		this.noticeEnrollDate = noticeEnrollDate;
 	}
 
-	public int getNoticeId() {
-		return noticeId;
+	public int getNoticeNo() {
+		return noticeNo;
 	}
 
-	public void setNoticeId(int noticeId) {
-		this.noticeId = noticeId;
+	public void setNoticeNo(int noticeNo) {
+		this.noticeNo = noticeNo;
 	}
 
 	public int getResId() {
@@ -57,26 +57,26 @@ public class Notice {
 		this.noticeContent = noticeContent;
 	}
 
-	public String getNoticeImg() {
+	public Date getNoticeDate() {
+		return noticeDate;
+	}
+
+	public void setNoticeDate(Date noticeDate) {
+		this.noticeDate = noticeDate;
+	}
+
+	public NoticeImg getNoticeImg() {
 		return noticeImg;
 	}
 
-	public void setNoticeImg(String noticeImg) {
+	public void setNoticeImg(NoticeImg noticeImg) {
 		this.noticeImg = noticeImg;
-	}
-
-	public Date getNoticeEnrollDate() {
-		return noticeEnrollDate;
-	}
-
-	public void setNoticeEnrollDate(Date noticeEnrollDate) {
-		this.noticeEnrollDate = noticeEnrollDate;
 	}
 
 	@Override
 	public String toString() {
-		return "Notice [noticeId=" + noticeId + ", resId=" + resId + ", noticeTitle=" + noticeTitle + ", noticeContent="
-				+ noticeContent + ", noticeImg=" + noticeImg + ", noticeEnrollDate=" + noticeEnrollDate + "]";
+		return "Notice [noticeNo=" + noticeNo + ", resId=" + resId + ", noticeTitle=" + noticeTitle + ", noticeContent="
+				+ noticeContent + ", noticeDate=" + noticeDate + ", noticeImg=" + noticeImg + "]";
 	}
 
 }

@@ -4,15 +4,11 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Properties;
-
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-import javax.sql.DataSource;
 
 public class JDBCTemplate {
 	static String driverClass; //ojdbc6.jar가져오는 필드
@@ -61,38 +57,20 @@ public class JDBCTemplate {
 	
 	public static Connection getConnection() {
 		Connection conn = null;
-		
 		try {
-			Context ctx = new InitialContext();
-			/**
-			 * JNDI구조
-			 * java:/comp/env/ + jdbc/myoracle
-			 */
-			DataSource dataSource = (DataSource) ctx.lookup("java:/comp/env/jdbc/myoracle");
-			conn = dataSource.getConnection();
+
+//		 * 2. Connection 객체 생성 (url, user, password)
+			conn = DriverManager.getConnection(url, user, password);
+			//DriverManager: java sql패키지의 클래스
+//		 * 	2.1 자동커밋 false설정
 			conn.setAutoCommit(false);
-		} catch (NamingException | SQLException e) {
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 		return conn;
 	}
-	
-//	public static Connection getConnection() {
-//		Connection conn = null;
-//		try {
-//
-////		 * 2. Connection 객체 생성 (url, user, password)
-//			conn = DriverManager.getConnection(url, user, password);
-//			//DriverManager: java sql패키지의 클래스
-////		 * 	2.1 자동커밋 false설정
-//			conn.setAutoCommit(false);
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		
-//		return conn;
-//	}
 	
 	public static void close(Connection conn) {
 //		 * 7. 자원반납 (conn)

@@ -19,7 +19,8 @@ header {
 	width: 150px;
 	height: 30px;
 	top: 21px;
-	right: 400px;
+	right: 100px;
+	/* right: 400px; */
 	border-radius: 2px;
 	cursor:pointer;
 }
@@ -92,7 +93,7 @@ table#login input[name=basket] {
 	text-decoration: none;
 	text-align: center;
 	color: rgba(0, 0, 0, 1);
-	background: url(../img/logo.png) no-repeat;
+	/* background: url(../img/logo.png) no-repeat; */
 }
 
 .footer_container {
