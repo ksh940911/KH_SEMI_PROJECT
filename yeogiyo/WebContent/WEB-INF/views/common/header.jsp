@@ -1,4 +1,5 @@
 <%@page import="member.model.vo.Member"%>
+<%@page import="member.model.service.MemberService"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
@@ -24,6 +25,9 @@
 <link rel="stylesheet" href="<%=request.getContextPath() %>/css/content_style_index.css">
 <link rel="stylesheet" href="<%=request.getContextPath() %>/css/footer_style.css">
 <link rel="stylesheet" href="<%=request.getContextPath() %>/css/login_style.css">
+<link rel="stylesheet" href="<%=request.getContextPath() %>/css/search_style.css">
+<link rel="stylesheet" href="<%=request.getContextPath() %>/css/menuList.css">
+<link rel="stylesheet" href="<%=request.getContextPath() %>/css/order.css">
 
 <!-- script 선언 -->
 <script src="https://kit.fontawesome.com/e1bd1cb2a5.js"></script>

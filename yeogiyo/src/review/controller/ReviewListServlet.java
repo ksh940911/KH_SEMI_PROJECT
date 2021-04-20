@@ -40,6 +40,7 @@ public class ReviewListServlet extends HttpServlet {
 		int start = (cPage - 1) * numPerPage + 1;
  		int end = cPage * numPerPage;
 		List<Review> list = reviewService.selectList(start, end);
+		System.out.println("list= " + list);
 		
 		//b. pageBar영역 
 		int totalContents = reviewService.selectReviewCount();

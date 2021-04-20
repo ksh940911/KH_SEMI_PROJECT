@@ -1,7 +1,7 @@
 package member.model.dao;
 
 
-import static common.JDBCTemplate.*;
+import static common.JDBCTemplate.close;
 
 import java.io.FileReader;
 import java.sql.Connection;
@@ -26,7 +26,7 @@ public class MemberDao {
 	}
 	
 
-	//아이디로 멤버조회
+	//아이디로 멤버조회(로그인시)
 	public Member selectOne(Connection conn, String memberId) {
 		Member member = null;
 		PreparedStatement pstmt = null;
@@ -95,6 +95,42 @@ public class MemberDao {
 			close(pstmt);
 		}
 		return result;
+	}
+
+	//휴대폰 전화번호로 멤버조회(아이디찾기)
+	public Member selectMemberId(Connection conn, String phone) {
+		Member member = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String query = prop.getProperty("selectMemberId");
+		
+		try{
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, phone);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()){
+				member = new Member();
+				member.setMemberId(rset.getString("member_id"));
+				member.setMemberName(rset.getString("member_name"));
+				member.setPassword(rset.getString("password"));
+				member.setBirthday(rset.getDate("birthday"));
+				member.setGender(rset.getString("gender")); //char
+				member.setAddress(rset.getString("address"));
+				member.setAddressSub(rset.getString("address_sub"));
+				member.setPhone(rset.getString("phone"));
+				member.setEmail(rset.getString("email"));
+				member.setMemberEnroll(rset.getDate("enroll_date"));
+				member.setMemberRole(rset.getString("member_role")); //char
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			close(rset);
+			close(pstmt);
+		}
+		return member;
 	}
 
 }
