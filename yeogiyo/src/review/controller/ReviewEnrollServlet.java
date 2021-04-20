@@ -16,7 +16,8 @@ import common.YeogiyoFileRenamePolicy;
 import review.model.service.ReviewService;
 import review.model.vo.ReviewPhoto;
 import review.model.vo.Review;
-//import review.MvcFileRenamePolicy;
+import common.YeogiyoFileRenamePolicy;
+
 
 /**
  * Servlet implementation class BoardEnrollServlet
@@ -61,7 +62,7 @@ public class ReviewEnrollServlet extends HttpServlet {
 			//중복파일인 경우, numbering처리
 			//filerename : 20210406191919_123.jpg
 	//		FileRenamePolicy policy = new DefaultFileRenamePolicy();
-			FileRenamePolicy policy = new YeogiyoFileRenamePolicy();
+			YeogiyoFileRenamePolicy policy = new YeogiyoFileRenamePolicy();
 			
 			MultipartRequest multipartRequest = 
 					new MultipartRequest(
@@ -75,8 +76,7 @@ public class ReviewEnrollServlet extends HttpServlet {
 			//2. db에 게시글/첨부파일 정보 저장
 			
 			//2-1. 사용자 입력값처리
-			String title = multipartRequest.getParameter("title");
-			String writer = multipartRequest.getParameter("writer");
+			String reviewstar = multipartRequest.getParameter("star");
 			String content = multipartRequest.getParameter("content");
 			
 			//업로드한 파일명
@@ -85,29 +85,28 @@ public class ReviewEnrollServlet extends HttpServlet {
 			
 	//		Board board = new Board(0, title, writer, content, null, 0, null);
 			Review review = new Review();
-//			review.setTitle(title);
-//			review.setWriter(writer);
-//			review.setContent(content);
+			review.setReviewStar(Integer.parseInt("reviewstar"));
+			review.setReviewContent(content);
 			
 			//첨부파일이 있는 경우
 			//multipartRequest.getFile("upFile"):File != null
 			if(originalFileName != null) {
-//				ReviewPhoto review = new ReviewPhoto();
-//				review.setOriginalFileName(originalFileName);
-//				review.setRenamedFileName(renamedFileName);
-//				review.setAttach(review);
+				ReviewPhoto reviewphoto = new ReviewPhoto();
+				reviewphoto.setPhotoOriginalFilename(originalFileName);
+				reviewphoto.setPhotoRenamedFilename(renamedFileName);
+				review.setReviewphoto(reviewphoto);
 			}
 			
-			//2. 업무로직 : db에 insert
+			//2-2. 업무로직 : db에 insert
 			int result = reviewService.insertReview(review);
 			String msg = (result > 0) ? 
 							"게시글 등록 성공!" :
 								"게시글 등록 실패!";
 			String location = request.getContextPath();
-//			location += (result > 0) ?
-//							"/review/reviewView?no=" + review.getNo() : 
-//								"/review/reviewList";
-//			
+			location += (result > 0) ?
+							"/review/reviewView?no=" + review.getReviewNo() : 
+								"/review/reviewList";
+			
 			//3. DML요청 : 리다이렉트 & 사용자피드백
 			// /mvc/review/reviewList로 리다이렉트
 			HttpSession session = request.getSession();

@@ -49,9 +49,9 @@ function reviewValidate(){
 	<br><hr><br>
 	<tr>
 		<td>
-		<script>			
 			<input type='file' id='reviewphotofile' name='reviewphoto' style='display: none;'>
-			<img src='images/reviewphoto.png' id='reviewphotoid' border='0' onclick='document.all.reviewphoto.click()'>
+			<img src="<%=request.getContextPath()%>/images/reviewphoto.png" id='reviewphotoid' border='0' onclick='document.all.reviewphoto.click()'>
+		<script>			
 	         $('#reviewphotofile').change(function () {
 	     	  	readURL(this);
 	     	});
@@ -70,7 +70,7 @@ function reviewValidate(){
 	</tr>
 	<tr>
 		<td colspan="5">
-			<input type="image" src="images/reviewsubmit.png">
+			<input style="width:300px" type="image" src="<%=request.getContextPath()%>/images/reviewsubmit.png">
 		</td>
 	</tr>
 </table>
