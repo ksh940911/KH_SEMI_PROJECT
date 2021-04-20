@@ -54,6 +54,7 @@ border-left: none;
 #cart{
 float:right;
 width: 330px;
+margin : 10px;
 }
 #cart-title{
 height: 42px;
@@ -63,7 +64,7 @@ background-color: #333333;
 }
 /* 주문표 안의 주문 메뉴 */
 .li-order{
-    display: none;
+   /* display: none;*/
 border-bottom: 1px solid #ddd;
 padding: 10px;
 /* background-color:lightsalmon; */

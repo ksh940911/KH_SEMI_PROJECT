@@ -12,10 +12,12 @@ import javax.servlet.http.HttpSession;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.FileRenamePolicy;
 
+import common.YeogiyoFileRenamePolicy;
 import review.model.service.ReviewService;
 import review.model.vo.ReviewPhoto;
 import review.model.vo.Review;
 import common.YeogiyoFileRenamePolicy;
+
 
 /**
  * Servlet implementation class BoardEnrollServlet
