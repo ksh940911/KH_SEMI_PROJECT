@@ -110,22 +110,6 @@ insert into yeogiyo.menu(menu_id, res_id, menu_name, description, menu_category,
 --                   김영미                    --
 --=========================
 --=========================
-CREATE TABLE menu (
-	menu_id	number	NOT NULL,
-    res_id number not null,
-	menu_name	varchar2(100)	NOT NULL,
-	description	varchar2(1000),
-	menu_category	varchar2(100) DEFAULT '대표메뉴' not null,
-	price	number DEFAULT 0 not null,
-	menu_img	varchar2(2000),
-    constraints pk_menu_id primary key(menu_id),
-    constraints fk_menu_res_id foreign key(res_id) 
-                            references restaurant(res_id)
-                            on delete cascade
-);
-
-
-
 create table tb_order (
     order_id number not null,
     member_id varchar2(100) not null,
@@ -145,6 +129,7 @@ create table tb_order (
     
 );
 
+create sequence seq_tb_order_id;
 
 
 

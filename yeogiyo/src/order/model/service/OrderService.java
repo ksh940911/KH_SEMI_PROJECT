@@ -1,8 +1,6 @@
 package order.model.service;
 
-import static common.JDBCTemplate.commit;
-import static common.JDBCTemplate.getConnection;
-import static common.JDBCTemplate.rollback;
+import static common.JDBCTemplate.*;
 
 import java.sql.Connection;
 
@@ -28,6 +26,13 @@ public class OrderService {
 		else
 			rollback(conn);
 		return result;
+	}
+
+	public int countOrder() {
+		Connection conn = getConnection();
+		int totalOrder = orderDao.selectOrderCount(conn);
+		close(conn);
+		return totalOrder;
 	}
 
 }

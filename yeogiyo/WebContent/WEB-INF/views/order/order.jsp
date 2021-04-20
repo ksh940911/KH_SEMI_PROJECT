@@ -186,6 +186,21 @@
         	
         	//submit
         	$("#payFrm").submit();
+		
+// 			$.ajax({
+<%-- 				url : '<%=request.getContextPath() %>/order/order.do', --%>
+// 				dataType: 'json',
+// 				success: function(data){
+// 					console.log(data);
+// 					var box = data.next_redirect_pc_url;
+// 					window.open(box);
+// 				},
+// 				error: function(xhr, status, err){
+// 					console.log(xhr, status, err)
+// 				}
+// 			});
+
+
     	}
     	
     	

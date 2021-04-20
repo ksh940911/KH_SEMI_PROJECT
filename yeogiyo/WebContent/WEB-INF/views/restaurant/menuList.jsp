@@ -397,6 +397,8 @@
 			//2-1. 객체배열 비어있으면 배열에 객체 바로 추가
 	    	
 	    	var selectedMenu = {
+					
+					resId : <%= r.getResId() %>,
 	    			menuId : Number($popupLayer.find(".detail-menu-id").text()),
 	    			menuName : $popupLayer.find(".detail-menu-name").text(),
 	    			amount : Number($popupLayer.find("#popup-amount").text()),
@@ -424,6 +426,8 @@
 			if(!isSame){
 				
 				var selectedMenu = {
+	
+						resId : <%= r.getResId() %>,
 		    			menuId : Number($popupLayer.find(".detail-menu-id").text()),
 		    			menuName : $popupLayer.find(".detail-menu-name").text(),
 		    			amount : Number($popupLayer.find("#popup-amount").text()),
