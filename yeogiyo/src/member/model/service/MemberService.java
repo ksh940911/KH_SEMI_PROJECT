@@ -31,7 +31,7 @@ public class MemberService {
 	}
 
 	
-	//아이디로 멤버조회
+	//아이디로 멤버조회(로그인시)
 	public Member selectOne(String memberId) {
 		Connection conn = getConnection();
 		Member member = memberDao.selectOne(conn, memberId);
@@ -39,5 +39,16 @@ public class MemberService {
 		return member;
 	}
 
+
+	//휴대폰 전화번호로 멤버조회(아이디찾기)
+	public Member selectMemberId(String phone) {
+		Connection conn = getConnection();
+		Member member = memberDao.selectMemberId(conn, phone);
+		close(conn);
+		return member;
+	}
+
+	
+	
 
 }

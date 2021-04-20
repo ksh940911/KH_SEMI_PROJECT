@@ -176,7 +176,9 @@ insert into yeogiyo.menu(menu_id, res_id, menu_name, description, menu_category,
 --=========================
 select * from member;
 desc member;
-
+select * from member where phone='01095959595';
+--update member set phone = '01078787878' where member_id = 'hyjoitt';
+--commit;
 내용
 
 

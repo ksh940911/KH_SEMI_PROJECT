@@ -9,20 +9,8 @@
     <%
     List<Menu> list = (List<Menu>)request.getAttribute("list");
     Restaurant r = (Restaurant) request.getAttribute("restaurant");
-    StringBuilder categoryStr = new StringBuilder();
     %>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MenuList</title>
-    <!-- jsp에서 css, jquery경로 request.contextPath()로 변경 -->
-    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/menuList.css">
-    <script src="<%= request.getContextPath() %>/js/jquery-3.6.0.js"></script>
-</head>
-<body>
+<%@ include file="/WEB-INF/views/common/header.jsp" %>
     <div class="wrapper">
     <table id="restaurant-info">
         <tr>
@@ -40,12 +28,14 @@
                 <input type="button" id="btn-notice" value="사장님 공지">
                 
                 <form id="frm-review" action="">
-                    <input type="hidden" name="resId" value="<%= r.getResId() %>">
+
+                    <input type="hidden" name="res_id" value="<%= r.getResId() %>">
                 </form>
                 <form id="frm-notice" action="">
-                    <input type="hidden" name="resId" value="<%= r.getResId() %>">
+                    <input type="hidden" name="res_id" value="<%= r.getResId() %>">
+
                 </form>
-                <br><br>
+                <br>
                 <span style="color: #999">결제</span> 신용카드, 현금<br>
                 배달시간 00분<br>
             </td>
@@ -55,7 +45,7 @@
     <div>
         <table id="cart">
             <tr>
-                <td id="cart-title" style="padding: 0 10px">주문표  <input type="button" value="전체삭제" style="float:right"></td>
+                <td id="cart-title" style="padding: 0 10px">주문표  <input type="button" id="cart-del-all" value="전체삭제" style="float:right"></td>
             </tr>
             <tr>
                 <td>
@@ -64,6 +54,7 @@
                             주문표에 담긴 메뉴가 없습니다.
                         </li>
                         <!--주문표에 추가한 경우//-->
+                        <!--
                         <li class="li-order">
                             <div>주문 메뉴 이름</div>
                             <div class="left">
@@ -76,19 +67,23 @@
                                 <input type="button" value="+">
                             </div>
                         </li>
+                        -->
                         <!--//주문표에 추가한 경우-->
                     </ul>
                 </td>
             </tr>
             <tr>
-                <td id="td-total">합계 금액 : <span id="total-price">1000</span>원</td>
+                <td id="td-total">합계 금액 : <span id="total-price">0</span>원</td>
             </tr>
             <tr>
-                <td><input type="button" id="btn-order" value="주문하기" onclick="checkout()"></td>
+                <td><input type="button" id="btn-order" class="btn-order" value="주문하기" onclick=""></td>
+                <form id="orderFrm" action="<%= request.getContextPath() %>/order/order.do">
+              	  <input type="hidden" name="resId"  value="<%= r.getResId() %>" />
+                </form>
             </tr>
         </table>
     </div>
-<br>
+<br><br><br><br><br><br><br>
     <br>
     <h3>메뉴 (<span id="menu_cnt"><%=list.size() %></span>) </h3>
     <div class="container">
@@ -256,7 +251,7 @@
 	메뉴 선택 시 레이어 팝업창 띄우기---------------------------------
 	*/
      $('.btn-layer-popup').click(function(){
-    	
+    	console.log("popup");
     	var $clickedMenuId = $(this).find(".menu-id").text();
     	//console.log($clickedMenuId);
     	
@@ -397,26 +392,44 @@
         //A가 true일 경우 A값을 대입. 아니면 B대입.
     	
 		//2. selectedMenuArr 배열에 selectedMenu 객체 추가
-		/*
-		if(배열이 비어있으면){
-			바로 추가
-		}else{
-			배열이 있으면
-			아이디 일치하는 객체에 수량만 추가
-		}
-		for(var i = 0; i < selectedMenuArr; i++){
-
-			 //이미 같은 메뉴가 있으면 수량만 추가
-			if(selectedMenuArr[i]["menuId"] === Number($popupLayer.find(".detail-menu-id").text())){
-				console.log("이미 메뉴가 있지");
-				selectedMenuArr[i]['amount'] += Number($popupLayer.find("#popup-amount").text());
-				break;
+	    var $popupLayer = $("#layer2");
+		
+		if(!selectedMenuArr.length){
 			
-			}else{
-				console.log("메뉴 없어서 새로 추가 ");
+			//2-1. 객체배열 비어있으면 배열에 객체 바로 추가
 	    	
-		    	var $popupLayer = $("#layer2");
-		    	var selectedMenu = {
+	    	var selectedMenu = {
+					
+					resId : <%= r.getResId() %>,
+	    			menuId : Number($popupLayer.find(".detail-menu-id").text()),
+	    			menuName : $popupLayer.find(".detail-menu-name").text(),
+	    			amount : Number($popupLayer.find("#popup-amount").text()),
+	    			totalPrice : Number($popupLayer.find("#popup-total-price").text())
+	    			
+	    	};
+    	
+	    	selectedMenuArr.push(selectedMenu);
+			
+		}else{
+			
+			//2-2. 배열에 객체가 있을 경우, 중복되는 메뉴아이디가 있을 경우 수량만 추가  or 객체 추가 
+			var isSame = false;
+	
+			$.each(selectedMenuArr, function(i, menu){
+				 
+				//2-2-1. 아이디 일치하는 객체에 수량만 추가
+				if(menu["menuId"] === Number($popupLayer.find(".detail-menu-id").text()) ){
+					selectedMenuArr[i]['amount'] += Number($popupLayer.find("#popup-amount").text());
+					isSame = true;
+				}
+			});
+			
+				//2-2-2. 아이디 일치하는 객체 없으면 객체 새로 추가
+			if(!isSame){
+				
+				var selectedMenu = {
+	
+						resId : <%= r.getResId() %>,
 		    			menuId : Number($popupLayer.find(".detail-menu-id").text()),
 		    			menuName : $popupLayer.find(".detail-menu-name").text(),
 		    			amount : Number($popupLayer.find("#popup-amount").text()),
@@ -425,12 +438,9 @@
 		    	};
 	    	
 		    	selectedMenuArr.push(selectedMenu);
-		    	break;
-		    }
+			}
 			
 		}
-		*/
-        
     	
     	//4. selectedMenuArr배열을 JSON으로 변환
     	var jsonSelectedMenuArr = JSON.stringify(selectedMenuArr);
@@ -443,47 +453,225 @@
     	
        dim_layer_hide();
     }
+    
+    $(document).ready(function(){
+    
+    	//주문표에 담은 채로 다른페이지를 이동했을 때 세션이 비어있지 않다면 주문표를 표시
+    	showCart();
+    	
+    });
+    
 
     /*
-    주문표 보여주기
+    주문표 추가하기
     */
     function showCart(){
-
-    	console.log("showCart()");
     	//1. selectedMenuArr 객체배열 가져오기
-     	var selectedMenuArr = JSON.parse(sessionStorage.getItem("selectedMenuArr")) || [];
-    	console.log(selectedMenuArr);
+     	var selectedMenuArr = JSON.parse(sessionStorage.getItem("selectedMenuArr"));
+		console.log(selectedMenuArr);
     	
-    	//2. html로 표시. ul에 기존 li안보이게 하고, 새로운 li 추가하기
-    	$(".cart-empty").hide();
-    	
-    	var $ul = $("#cart").find("ul");
-    	
-    	//selectedMenu가 있는 경우
-    	if(selectedMenuArr.length){
-    		
-			$.each(selectedMenuArr, function(i, menu){
-				
-				$ul.append('<li class="li-order"><div stype="display:none;">' + menu["menuId"] + '</div><div>' + menu["menuName"] + '</div><div class="left"><input type="button"class="btn-order-del"value="X"><span class="span-order-price">'+menu["totalPrice"]+'</span>원</div><div class="right"><input type="button"value="-"><span class="amnt">'+menu["amount"]+'</span><input type="button"value="+"></div></li>')
-				//menu["menuId"], menu["menuName"], menu["amount"],menu["totalPrice"]
+		//2. 세션이 비어있지 않다면 
+		if(selectedMenuArr != null){ 
 			
+			console.log("세션 비어있지 않음.");
+			//2-1. html로 표시. ul에 기존 li안보이게 하고, 새로운 li 추가하기
+	    	
+	    	//주문표 html 초기화 : 주문표에 추가할 때마다 삭제하고 다시 배열순회하면서 html추가ㅠㅠ 뭔가 삽질같다만...
+	    	var $ul = $("#cart").find("ul");
+	    	$("li.li-order").remove();
+	    	$(".cart-empty").hide();
+	    	
+	    	var totalPrice = 0;
+	    	$.each(selectedMenuArr, function(i, menu){
+				$ul.append('<li class="li-order"><div style="display:none;" class="cart-menu-id">' + menu["menuId"] + '</div><div class="cart-menu-name">' + menu["menuName"] + '</div><div class="left"><input type="button"class="btn-order-del" value="X"><span class="span-order-price">'+menu["totalPrice"]+'</span>원</div><div class="right"><input type="button"value="-"><span class="amnt">'+menu["amount"]+'</span><input type="button"value="+"></div></li>');
+				
+				totalPrice += (Number(menu["totalPrice"]) * Number(menu["amount"]));
+			});
+	    	
+	    	//html 합계금액 
+	    	$("#total-price").text(totalPrice);
+	    	
+		
+			//주문표 X버튼 이벤트핸들러 
+			//동적으로 추가한거라 이 함수를 벗어나면 이벤트핸들러가 안먹힘
+	        $(".btn-order-del").on('click', function(){
+	        	
+	        	var $this = $(this);
+	        
+	        	//객체배열에서 메뉴 삭제
+	        	for(var i = 0; i < selectedMenuArr.length; i++){
+					
+	        		if(Number(selectedMenuArr[i]["menuId"]) == Number($this.parent().parent().find(".cart-menu-id").text())){
+	        			selectedMenuArr.splice(i, 1);
+	        			i--;
+	        			break;
+	        		}
+				}
+	        	
+	        	//합계금액에서 삭제한만큼 빼기
+	        	var totalPrice = Number($("#total-price").text());
+	        	totalPrice -= Number($this.parent().parent().find(".span-order-price").text());
+	        	
+	        	$("#total-price").text(totalPrice);
+	        	
+	        	//html 삭제
+	        	$this.parent().parent().remove();
+	        		
+	        	//변경된 객체배열 다시 세션에 담기
+	        	var jsonSelectedMenuArr = JSON.stringify(selectedMenuArr);
+    			sessionStorage.setItem("selectedMenuArr", jsonSelectedMenuArr);
+    			
+    			if(selectedMenuArr.length == 0){
+    				$(".cart-empty").show();
+    			}
+	        	
+	    	});
+			
+			//주문표의 수량 증가
+			$("[value='+'").on('click', function(){
+				
+				//html
+				//선택한 버튼에 해당하는 메뉴의 수량 증가
+				var $this = $(this);
+				var amount = Number($(this).parent().find(".amnt").text());
+				amount += 1;
+				$this.parent().find(".amnt").text(amount);
+				
+				//html 총 금액 증가
+				//총 금액은 주문표 전체를 순회해서 계산
+				var $liArr = $(".li-order");
+				var sum = 0;
+				$.each($liArr, function(i, li){
+					//각 li에서 (메뉴가격 x 수량)을 총액 변수에 담기
+					sum += (Number($(li).find(".span-order-price").text()) * Number($(li).find(".amnt").text()));
+					
+				});
+				$("#total-price").text(sum);
+				
+				//arr
+				//선택한 메뉴의 수량 수정
+				var selectedMenuArr = JSON.parse(sessionStorage.getItem('selectedMenuArr'));
+				$.each(selectedMenuArr, function(i, menu){
+					
+					if(Number(menu["menuId"]) === Number($this.parent().parent().find(".cart-menu-id").text()) ){
+					
+					menu["amount"] = amount;
+					return false;
+					}
+				});
+				
+				//session
+				//객체배열 다시 담기
+				var jsonSelectedMenuArr = JSON.stringify(selectedMenuArr);
+	    			sessionStorage.setItem("selectedMenuArr", jsonSelectedMenuArr);
+				
+				
 			});
 			
-    		
-    		
-    	}else{
-    		//$ul.append(' <li class="cart-empty">주문표에 담긴 메뉴가 없습니다.</li>');
-    	}
-    	
+			//주문표의 수량 감소
+			$("[value='-'").on('click', function(){
+				
+				//html
+				//선택한 버튼에 해당하는 메뉴의 수량 감소. 1 아래로는 떨어지지 않는다
+				var $this = $(this);
+				var amount = Number($(this).parent().find(".amnt").text());
+				if(amount > 1){
+					amount -= 1;
+					$this.parent().find(".amnt").text(amount);
+				}
+				
+				//html 총 금액 감소
+				//총 금액은 주문표 전체를 순회해서 계산
+				var $liArr = $(".li-order");
+				var sum = 0;
+				$.each($liArr, function(i, li){
+					//각 li에서 (메뉴가격 x 수량)을 총액 변수에 담기
+					sum += (Number($(li).find(".span-order-price").text()) * Number($(li).find(".amnt").text()));
+					
+				});
+				$("#total-price").text(sum);
+				
+				//arr
+				//선택한 메뉴의 수량 수정
+				var selectedMenuArr = JSON.parse(sessionStorage.getItem('selectedMenuArr'));
+				$.each(selectedMenuArr, function(i, menu){
+					
+					if(Number(menu["menuId"]) === Number($this.parent().parent().find(".cart-menu-id").text()) ){
+					
+					menu["amount"] = amount;
+					return false;
+					}
+				});
+				
+				//session
+				//객체배열 다시 담기
+				var jsonSelectedMenuArr = JSON.stringify(selectedMenuArr);
+	    			sessionStorage.setItem("selectedMenuArr", jsonSelectedMenuArr);
+				
+				
+			});
+			
+			
+			
+		} else{
+			//세션이 비어있는 경우
+			console.log("세션 비어있음 ");
+		
+			$("li.li-order").remove();
+			$(".cart-empty").show();
+		}
     	
     }
     
+    /*
+    	주문표 전체삭제
+    */
+    $("#cart-del-all").click(function(){
+    	
+    	if(confirm("주문표를 전부 삭제하시겠습니까?")){
+    		
+			//html
+			$("li.li-order").remove();
+        	$(".cart-empty").show();
+        	$("#total-price").text(0);
+			
+			//arr
+			
+			//session
+    		sessionStorage.removeItem("selectedMenuArr");
+    	
+        	
+    	}
+    	
+    });
     
-    //메뉴 상세 레이어 팝업에서 '주문하기' 버튼 클릭 시
+    //주문표에서 '주문하기' 버튼 클릭 시 
+    $(".btn-order").on("click", function(){
+    <% if(loginMember == null){ %>
+    alert("로그인이 필요합니다.");
+    <% } else { %>
+    	var selectedMenuArr = JSON.parse(sessionStorage.getItem('selectedMenuArr'));
+    	
+    	if( selectedMenuArr[0].menuName === ""){
+    		alert("메뉴를 선택해주세요.");
+    	}
+    	else{
+    		//결제페이지로 이동
+    		$("#orderFrm").submit();
+    	}
+    	<% } %>
+    });
+    
+    
+    
+    
+    //레이어 팝업에서 '주문하기' 버튼 클릭 시
     function checkout(){
-       //메뉴 번호, 이름, 수량 담아 제출
-
-
+    	
+		//주문표에 추가한 후, 바로 결제페이지로 넘어간다.
+      	add_to_cart();
+		
+		$("#orderFrm").submit();
 
 
     }
@@ -497,5 +685,4 @@
       $(str).toggle();
      });
  </script>
-</body>
-</html>
+<%@ include file="/WEB-INF/views/common/footer.jsp" %>
