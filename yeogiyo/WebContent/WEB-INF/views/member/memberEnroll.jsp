@@ -23,7 +23,7 @@
 					<tr>
 						<th>아이디<sup>*</sup></th>
 						<td>
-							<input type="text" placeholder="ID를 입력하세요." name="memberId" id="memberId" onkeyup="memberIdCheck()" required>
+							<input type="text" placeholder="ID를 입력하세요." name="memberId" id="memberId" required>
 							<%-- #idValid 1이면 사용가능한 아이디이고 중복검사함, 0이면 중복검사전. --%>
 							<input type="hidden" id="idValid" value="0" />
 							<span id="memberIdResult"></span>
@@ -105,7 +105,7 @@
 /**
  * ajax 비동기방식으로 아이디 중복 검사
  */
-function memberIdCheck(){
+$("#memberId").blur(function(){
 	$.ajax({
 		url: "<%= request.getContextPath() %>/member/memberIdCheck",
 		method : "POST",
@@ -122,7 +122,7 @@ function memberIdCheck(){
 			}
 		}
 	})
-};
+});
 
 /**
  * 중복검사 이후 다시 아이디를 변경하는 것을 방지
