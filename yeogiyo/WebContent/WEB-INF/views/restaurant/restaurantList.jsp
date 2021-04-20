@@ -2,11 +2,9 @@
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<% List<Restaurant> list = (List<Restaurant>)request.getAttribute("list"); %>
+    <% List<Restaurant> list = (List<Restaurant>)request.getAttribute("list"); %>
     
 <%@ include file="/WEB-INF/views/common/menu_header.jsp" %>
-<link rel="stylesheet" href="/css/restaurantList.css" />
-<body>
 	<div ng-repeat="(key, list) in section_list" class="ng-scope">
         <div ng-show="list.length &gt; 0" class="">
           <!-- ngIf: key === 'superlist' -->
@@ -134,6 +132,4 @@
           </div>
         </div>
       </div>
-      </body>
-     
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
