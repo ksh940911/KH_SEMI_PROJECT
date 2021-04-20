@@ -7,11 +7,18 @@
 	<div class="content-wrap">
         <form id="loginFrm" action="<%= request.getContextPath() %>/member/memberlogin" method="POST" name="loginFrm">
             <div class="login-container">
+<<<<<<< Updated upstream
                 <div class="title"><img src="<%= request.getContextPath() %>/images/logo.png" alt="로고" width="150" height="50"></div>
+=======
+                <div class="title">
+                <img src="../images/yeogiyo.png" alt="여기요" width="150px" height="50px">
+                </div>
+>>>>>>> Stashed changes
                 <ul>
                     <li>
                         <input type="text" name="memberId" id="memberId" placeholder="아이디" required="required">
                     </li>
+                    <br />
                     <li>
                         <input type="password" name="password" id="password" placeholder="비밀번호" required="required">
                     </li>
@@ -31,7 +38,6 @@
             <a href="<%= request.getContextPath() %>/member/memberEnroll">
                 <img src="<%= request.getContextPath() %>/images/sign_banner.png" alt="가입배너">
             </a>
-
         </div>
 	</div>
 
