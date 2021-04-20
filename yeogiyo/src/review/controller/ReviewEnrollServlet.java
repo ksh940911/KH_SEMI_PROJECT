@@ -12,10 +12,11 @@ import javax.servlet.http.HttpSession;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.FileRenamePolicy;
 
+import common.YeogiyoFileRenamePolicy;
 import review.model.service.ReviewService;
 import review.model.vo.ReviewPhoto;
 import review.model.vo.Review;
-import review.MvcFileRenamePolicy;
+//import review.MvcFileRenamePolicy;
 
 /**
  * Servlet implementation class BoardEnrollServlet
@@ -60,7 +61,7 @@ public class ReviewEnrollServlet extends HttpServlet {
 			//중복파일인 경우, numbering처리
 			//filerename : 20210406191919_123.jpg
 	//		FileRenamePolicy policy = new DefaultFileRenamePolicy();
-			FileRenamePolicy policy = new MvcFileRenamePolicy();
+			FileRenamePolicy policy = new YeogiyoFileRenamePolicy();
 			
 			MultipartRequest multipartRequest = 
 					new MultipartRequest(
@@ -84,17 +85,17 @@ public class ReviewEnrollServlet extends HttpServlet {
 			
 	//		Board board = new Board(0, title, writer, content, null, 0, null);
 			Review review = new Review();
-			review.setTitle(title);
-			review.setWriter(writer);
-			review.setContent(content);
+//			review.setTitle(title);
+//			review.setWriter(writer);
+//			review.setContent(content);
 			
 			//첨부파일이 있는 경우
 			//multipartRequest.getFile("upFile"):File != null
 			if(originalFileName != null) {
-				ReviewPhoto review = new ReviewPhoto();
-				review.setOriginalFileName(originalFileName);
-				review.setRenamedFileName(renamedFileName);
-				review.setAttach(review);
+//				ReviewPhoto review = new ReviewPhoto();
+//				review.setOriginalFileName(originalFileName);
+//				review.setRenamedFileName(renamedFileName);
+//				review.setAttach(review);
 			}
 			
 			//2. 업무로직 : db에 insert
@@ -103,10 +104,10 @@ public class ReviewEnrollServlet extends HttpServlet {
 							"게시글 등록 성공!" :
 								"게시글 등록 실패!";
 			String location = request.getContextPath();
-			location += (result > 0) ?
-							"/review/reviewView?no=" + review.getNo() : 
-								"/review/reviewList";
-			
+//			location += (result > 0) ?
+//							"/review/reviewView?no=" + review.getNo() : 
+//								"/review/reviewList";
+//			
 			//3. DML요청 : 리다이렉트 & 사용자피드백
 			// /mvc/review/reviewList로 리다이렉트
 			HttpSession session = request.getSession();
