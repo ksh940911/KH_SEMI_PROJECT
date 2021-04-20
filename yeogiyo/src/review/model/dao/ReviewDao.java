@@ -13,6 +13,8 @@ import java.util.Properties;
 
 import review.model.exception.ReviewException;
 import review.model.vo.ReviewPhoto;
+import review.model.exception.ReviewException;
+import review.model.vo.ReviewPhoto;
 import review.model.vo.Review;
 
 public class ReviewDao {
@@ -100,8 +102,47 @@ public class ReviewDao {
 		} finally {
 			close(pstmt);
 		}
-		
 		return result;
+	}
+	
+	public int selectLastReviewNo(Connection conn) {
+		int reviewNo = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectLastReviewNo");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				reviewNo = rset.getInt("review_no");
+			}
+		} catch (SQLException e) {
+			throw new ReviewException("게시물 등록 번호 조회 오류", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return reviewNo;
+	}
+	
+	public int insertReviewPhoto(Connection conn, ReviewPhoto reviewphoto) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("insertReviewPhoto");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, reviewphoto.getReviewNo());
+			pstmt.setString(2, reviewphoto.getPhotoOriginalFilename());
+			pstmt.setString(3, reviewphoto.getPhotoRenamedFilename());
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			throw new ReviewException("게시물 첨부파일 등록 오류", e);
+		} finally {
+			close(pstmt);
+		}
+		return result;
+		
 	}
 }
 

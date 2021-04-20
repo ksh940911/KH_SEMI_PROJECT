@@ -19,8 +19,12 @@ header {
 	width: 150px;
 	height: 30px;
 	top: 21px;
+<<<<<<< Updated upstream
 	right: 100px;
 	/* right: 400px; */
+=======
+	right: 400px;
+>>>>>>> Stashed changes
 	border-radius: 2px;
 	cursor:pointer;
 }

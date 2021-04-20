@@ -14,6 +14,7 @@
 	method="POST"
 	>
 	<input type="hidden" name="noticeNo" value="<%= notice.getNoticeNo() %>" />
+	<input type="hidden" name="resId" value="<%= notice.getResId() %>" />
 	<table id="tbl-notice-view">
 		<tr>
 			<th>제목</th>
