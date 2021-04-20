@@ -43,21 +43,25 @@ public class MemberLoginServlet extends HttpServlet {
 		System.out.println("member@MemberLoginServlet = " + member);
 		
 		HttpSession session = request.getSession();
+		String referer = request.getHeader("Referer");	
+		String path = "";
 		if(member != null && password.equals(member.getPassword())) {
 			//로그인 성공
 			session.setAttribute("msg", "로그인에 성공하셨습니다");
 			session.setAttribute("loginMember", member);
+			path = request.getContextPath();
 		} else {
 			//로그인 실패
 			session.setAttribute("msg", "로그인에 실패하셨습니다");
-			
+			path = referer;
 		}
 		//이전페이지로 리다이렉트
-		//String referer = request.getHeader("Referer");	
+		
 		//System.out.println("referer@MemberLoginServlet = " + referer);
 		
-		//response.sendRedirect(referer);
-		response.sendRedirect(request.getContextPath());
+		
+		//response.sendRedirect(request.getContextPath());
+		response.sendRedirect(path);
 	}
 
 }
