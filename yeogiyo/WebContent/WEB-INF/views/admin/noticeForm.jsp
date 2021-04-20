@@ -8,6 +8,7 @@
 	action="<%= request.getContextPath() %>/admin/noticeEnroll" 
 	method="post"
 	enctype="multipart/form-data" >
+	<input type="hidden" name="resId" value="<%= request.getAttribute("resId") %>" />
 	<table id="tbl-notice-view">
 		<tr>
 			<th>제목</th>
@@ -22,7 +23,7 @@
 			<td><textarea name="noticeContent" cols="30" rows="10"></textarea></td>
 		</tr>
 		<tr>
-			<th colspan="2">
+			<th>
 				<input type="submit" value="등록" />
 			</th>
 		</tr>

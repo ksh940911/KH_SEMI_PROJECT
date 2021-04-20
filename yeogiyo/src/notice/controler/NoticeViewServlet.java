@@ -26,30 +26,34 @@ public class NoticeViewServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+
 		try {
 			int resId = 0;
 
 			// 공지찾기용 가게번호 참조
 			try {
-				resId = Integer.parseInt(request.getParameter("res_id"));
+				resId = Integer.parseInt(request.getParameter("resId"));
 			} catch (NumberFormatException e) {
 				throw new NoticeException("가게가 존재하지 않습니다.", e);
 			}
 
+			// 가게 공지 불러오기
 			Notice notice = noticeService.selectOne(resId);
-			if (notice == null) {
-				throw new NoticeException("공지 없음.");
+
+			if (notice != null) {
+				// xss공격방지
+				notice.setNoticeTitle(MvcUtils.escapeHtml(notice.getNoticeTitle()));
+				notice.setNoticeContent(MvcUtils.escapeHtml(notice.getNoticeContent()));
+
+				// \n 개행문자를 <br/>태그로 변경
+				notice.setNoticeContent(MvcUtils.convertLineFeedToBr(notice.getNoticeContent()));
 			}
-
-			// xss공격방지
-			notice.setNoticeTitle(MvcUtils.escapeHtml(notice.getNoticeTitle()));
-			notice.setNoticeContent(MvcUtils.escapeHtml(notice.getNoticeContent()));
-
-			// \n 개행문자를 <br/>태그로 변경
-			notice.setNoticeContent(MvcUtils.convertLineFeedToBr(notice.getNoticeContent()));
-
+			
 			request.setAttribute("notice", notice);
-			request.getRequestDispatcher("/WEB-INF/views/admin/noticeView/jsp").forward(request, response);
+			System.out.println("notice@ViewServlet = "+notice);
+			request.setAttribute("resId", resId);
+			System.out.println("resId@ViewServlet = "+resId);
+			request.getRequestDispatcher("/WEB-INF/views/admin/noticeView.jsp").forward(request, response);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;

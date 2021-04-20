@@ -17,10 +17,13 @@
 		<div id="notice-title"><%= notice.getNoticeTitle() %></div>
 		
 		<hr />
+		
+		<% if(notice.getNoticeImg() != null) { %>
 		<div id="notice-img">
 			<img src="<%= request.getContextPath() %>/upload/notice/<%= noticeImg.getRenamedFilename() %>" />
 		</div>
-		
+		<% } %>
+					
 		<hr />
 		<div id="notice-content"><%= notice.getNoticeContent() %></div>
 		
@@ -31,30 +34,53 @@
 		<% } %>
 	<% } else { %>
 		<div id="notice-noExist">공지사항이 없습니다.</div>
-		<% if(editable) {%>
-			<input type="button" value="등록" id="notice-add-btn" onclick="location.href'<%= request.getContextPath() %>/admin/noticForm';" />
-		<% } %>
 	<% } %>	
+  		<% if(editable && (notice == null)) { %>
+  		<input type="button" id="notice-add-btn" value="등록">
+  		<form id="notice-add-frm" action="<%= request.getContextPath() %>/admin/noticeForm">
+        	<input type="hidden" name="resId" value="<%= request.getAttribute("resId")%>">
+        </form>
+		<% } %>
 	</div>
 </section>
-<% if(editable) { %>
-	<form 
-		action="<%= request.getContextPath() %>/admin/noticeDelete"
-		name="noticeDelFrm"
-		method="POST">
-		<input type="hidden" name="noticeNo" value="<%= notice.getNoticeNo() %>" />
-	</form>
-	<script>
-	function updateNotice(){
-		location.href="<%= request.getContextPath() %>/admin/noticeUpdate?no=<%= notice.getNoticeNo() %>";
-	}
-	
-	function deleteNotice(){
-		if(confirm("공지를 삭제하시겠습니까?")){
-			$(document.noticeDelFrm).submit();
-		}
-	}
-	</script>
+
+<% if (editable) { %>
+<script>
+$("#notice-add-btn").click(function(){
+	var $frm = $("#notice-add-frm");
+   	$frm.submit();
+});
+</script>
+	<% if(notice != null) { %>
+		
+		<form 
+			id="notice-update-frm" 
+			action="<%= request.getContextPath() %>/admin/noticeUpdate?resId=<%= notice.getResId() %>">
+        	<input type="hidden" name="resId" value="<%= request.getAttribute("resId")%>">
+        </form>
+		
+		<form 
+			action="<%= request.getContextPath() %>/admin/noticeDelete"
+			id="notice-del-frm"
+			method="POST">
+				<input type="hidden" name="noticeNo" value="<%= notice.getNoticeNo() %>" />
+				<input type="hidden" name="resId" value="<%= request.getAttribute("resId")%>">
+		</form>
+					
+		<script>
+		function updateNotice(){
+			var $frm = $("#notice-update-frm");
+			$frm.submit();
+		};
+		
+		function deleteNotice(){
+			if(confirm("공지를  ㄹㅇ 삭제 하시겠습니까?")){
+				var $frm = $("#notice-del-frm");
+				$frm.submit();
+			}
+		};
+		</script>
+	<% } %>
 <% } %>
 
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>

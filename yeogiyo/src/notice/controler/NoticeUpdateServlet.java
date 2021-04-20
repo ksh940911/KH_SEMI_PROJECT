@@ -29,11 +29,11 @@ public class NoticeUpdateServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		// 입력값 (공지번호)
-		int noticeNo = Integer.parseInt(request.getParameter("noticeNo"));
+		// 입력값 
+		int resId = Integer.parseInt(request.getParameter("resId"));
 		
 		// 로직
-		Notice notice = noticeService.selectOne(noticeNo);
+		Notice notice = noticeService.selectOne(resId);
 		
 		// jsp forwarding
 		request.setAttribute("notice", notice);
@@ -45,22 +45,29 @@ public class NoticeUpdateServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
+			// 저장 파일 셋팅
 			String saveDirectory = getServletContext().getRealPath("/upload/notice");
 			int maxPostSize = 10 * 1024 * 1024;
 			String encoding = "utf-8";
+			
+			// 파일명 변경정책 객체 : 중복파일인 경우 넘버링처리
 			FileRenamePolicy policy = new YeogiyoFileRenamePolicy();
 			MultipartRequest multipartRequest = new MultipartRequest(request, saveDirectory, maxPostSize, encoding, policy);
 
+			
+			// 입력값
 			int noticeNo = Integer.parseInt(multipartRequest.getParameter("noticeNo"));
+			int resId = Integer.parseInt(multipartRequest.getParameter("resId"));
+			System.out.println("1:resId@UpdateServlet = " + resId);
 			String noticeTitle = multipartRequest.getParameter("noticeTitle");
 			String noticeContent = multipartRequest.getParameter("noticeContent");
-					
 			String originalFileName = multipartRequest.getOriginalFileName("upImgFile");
 			String renamedFileName = multipartRequest.getFilesystemName("upImgFile");
 			
 			String imgNo = multipartRequest.getParameter("delImgFile");
 			
 			Notice notice = new Notice();
+			notice.setResId(resId);
 			notice.setNoticeNo(noticeNo);
 			notice.setNoticeTitle(noticeTitle);
 			notice.setNoticeContent(noticeContent);
@@ -81,10 +88,15 @@ public class NoticeUpdateServlet extends HttpServlet {
 			}
 			
 			result = noticeService.updateNotice(notice);
-			String msg = (result > 0) ? "공지 삭제 완료" : "공지 삭제 실패";
+			String msg = (result > 0) ? "공지  수정 완료" : "공지 수정 실패";
 			
+			String location = request.getContextPath();
+			location += (result > 0) ?
+							"/admin/noticeView?resId=" + notice.getResId() : 
+								"/admin/noticeView";
+						
 			request.getSession().setAttribute("msg", msg);
-			response.sendRedirect(request.getContextPath() + "/admin/noticeView");
+			response.sendRedirect(location);
 		}catch(Exception e){
 			e.printStackTrace();
 			throw e;

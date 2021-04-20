@@ -28,10 +28,12 @@
                 <input type="button" id="btn-notice" value="사장님 공지">
                 
                 <form id="frm-review" action="">
+
                     <input type="hidden" name="res_id" value="<%= r.getResId() %>">
                 </form>
                 <form id="frm-notice" action="">
                     <input type="hidden" name="res_id" value="<%= r.getResId() %>">
+
                 </form>
                 <br>
                 <span style="color: #999">결제</span> 신용카드, 현금<br>
