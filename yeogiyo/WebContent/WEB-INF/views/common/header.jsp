@@ -67,7 +67,7 @@ alert("<%= msg %>");
 			
 				<table id="login">
 					<tr>
-						<td><%= loginMember.getMemberName() %>님, 반갑습니다</td>
+						<td><%= loginMember.getMemberName() %>님,  반갑습니다</td>
 						<td><input type="button" value="장바구니" name="basket"/></td>
 					</tr>
 					<tr>
