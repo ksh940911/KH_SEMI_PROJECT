@@ -1,0 +1,74 @@
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap');
+
+
+/* 회원가입페이지 */
+
+body {
+	color:  #333333;
+	font-size:15px;
+	font-family: 'Nanum Gothic', sans-serif;
+}
+
+section#enroll-container {
+	text-align: center;
+}
+
+section#enroll-container input {
+	margin: 3px;
+}
+
+section#enroll-container table {
+	margin: 0 auto;
+}
+
+section#enroll-container table th {
+	padding: 0 10px;
+	text-align: right;
+}
+
+section#enroll-container table td {
+	padding: 0 10px;
+	text-align: left;
+}
+
+section#enroll-container sup {
+	color: red;
+}
+
+/* 테이블간 간격 조절 */ 
+section#enroll-container table {
+	border-collapse: separate;
+	border-spacing: 0 10px;
+}
+
+section#enroll-container #contentBox {
+	margin : 30px 0;
+}
+
+/* 회원가입 버튼 */
+section#enroll-container #joinButton {
+	background-color : #FA0050;
+	color : white;
+	font-size : 17px;
+	height : 52px;
+	width : 460px;
+	border : 0;
+	outline : 0;
+}
+
+
+/* 라디오 버튼 제외한 텍스트 박스 크기 조절 */ 
+section#enroll-container input:not(input[type="radio"]){
+	width : 280px;
+	height : 40px;
+}
+
+/* 라디오 버튼 정렬 */
+section#enroll-container input[type="radio"]{
+	vertical-align: middle;
+	
+}
+
+section#enroll-container div.gender-group{
+	text-align : center;
+}

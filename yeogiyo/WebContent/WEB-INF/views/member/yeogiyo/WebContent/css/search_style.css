@@ -1,0 +1,147 @@
+@charset "UTF-8";
+
+.verify-wrapper { 
+	background-color:#e3e7ea;
+	padding:17px 10px 50px 10px;
+}
+
+
+/* 아이디찾기 페이지 css */
+.idsearch {
+	width:500px;
+	margin: 0 auto;
+}
+.name-phone ul {
+	text-align: center;
+	padding: 0; 
+	margin-top: 0;
+}
+.name-phone li {
+	border: 1px solid #ccc;
+	/* rgba(0,0,0,.125) */
+	position:relative;
+}
+.name-phone li input {
+	width: 100%; 
+	height: 30px;
+	border: none;
+}
+.name-phone .sms-verify-btn {
+	width:10%;
+	height:20px;
+	position:absolute;
+	right:20px;
+	bottom:5px;
+	z-index:1;
+}
+
+.idsearch button {
+	width: 100%; 
+	height:35px; 
+	margin-top: 30px; 
+	background-color:#fff;
+    border-radius: 0;
+    border: 1px solid #ccc;
+    cursor:pointer;
+}
+
+
+
+
+/* 비밀번호찾기 페이지 css */
+
+.pwdsearch {
+	width:500px;
+	margin: 0 auto;
+}
+
+.id-email ul {
+	text-align: center;
+	padding: 0; 
+	margin-top: 0;
+}
+.id-email li {
+	border: 1px solid #ccc;
+	/* rgba(0,0,0,.125) */
+}
+.id-email li input {
+	width: 100%; 
+	height: 30px;
+	border: none;
+}
+
+.pwdsearch button {
+	color: #FFF;
+	width: 100%; 
+	height:35px; 
+	margin-top: 30px; 
+	background-color:#fa0050;
+    border-radius: 0;
+    border: 0;
+    cursor:pointer;
+}
+
+
+/* 모달css */
+.modal-wrapper {
+	display:none;
+	position:fixed;
+	left:0;
+	top:0;
+	width:100%;
+	height:100%;
+	z-index:10;
+	background-color:rgba(0,0,0,0.4);
+}
+.modal-dialog {
+	width:500px;
+	margin : 30px auto;
+	margin-top: 75px;
+	position: relative;
+}
+.modal-content {
+	background-color: #fff;
+	width:500px;
+	margin:0 auto;
+}
+.modal-header {
+	background-color: #333;
+    padding: 8px 5px 8px;
+    color: #fff;
+    font-size: 16px;
+    line-height: 18px;
+}
+.modal-header .closebtn {
+	color: #fff;
+    width: 20px;
+    height: 20px;
+    cursor:pointer;
+    float:right;
+    background-color:#333;
+    font-size: 21px;
+    font-weight: normal;
+    line-height: 1;
+    border:0;
+}
+
+.modal-body {
+	padding: 12px 12px 0 12px;
+}
+.modal-footer {
+	padding: 9px 15px 10px;
+    margin-top: 10px;
+    text-align: right;
+    border-top: 1px solid #e5e5e5;
+}
+
+.modal-footer .chkbtn {
+	color:#fff;
+	background-color:#fa0050;
+	border-color: #fa0050;
+	border-radius: 0;
+	padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 10px;
+    font-weight: normal;
+    cursor:pointer;
+}

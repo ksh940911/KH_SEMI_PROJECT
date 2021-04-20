@@ -1,0 +1,117 @@
+@charset "UTF-8"; /* 기본 설정: 페이지 전체 */
+* {
+	margin: 0;
+	padding: 0;
+}
+
+header {
+	background-color: #fa0050;
+	height: 80px;
+	position: relative;
+	padding: 10px 0 0 0;
+}
+
+.login_container #loginBtn {
+	color:white;
+	background: #fa0050;
+	border: 1px solid #ea7266;
+	position: absolute;
+	width: 150px;
+	height: 30px;
+	top: 21px;
+	right: 100px;
+	/* right: 400px; */
+	border-radius: 2px;
+	cursor:pointer;
+}
+/* 관리자 로그인성공시 */
+table#admin {
+	color:white;
+	position: absolute;
+	width: 150px;
+	height: 30px;
+	top: 21px;
+	right: 150px;
+	
+}
+table#admin input {
+	color:white;
+	background: #fa0050;
+	border: 1px solid #ea7266;
+	cursor:pointer;
+	width: 150px;
+	height: 30px;
+	border-radius: 2px;
+}
+
+/*일반회원 로그인성공시 */
+table#login {
+	color:white;
+	position: absolute;
+	width: 150px;
+	height: 30px;
+	top: 21px;
+	right: 150px;
+	
+}
+table#login input {
+	color:white;
+	background: #fa0050;
+	border: 1px solid #ea7266;
+	cursor:pointer;
+	border-radius: 2px;
+}
+table#login input[name=basket] {
+	color:white;
+	position: absolute;
+	top:0;
+	width:60px; 
+	height:50px;
+	background:#ff8a00;
+	border: 1px solid #ea7266;
+	cursor:pointer;
+	border-radius: 2px;
+}
+
+
+.header_container {
+	display: flex;
+	align-items: center;
+	max-width: 1500px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.logo_container {
+	display: block;
+	margin: 5px 10px;
+}
+
+.logo_container a {
+	font-size: 30px;
+	font-weight: 500;
+	text-decoration: none;
+	text-align: center;
+	color: rgba(0, 0, 0, 1);
+	/* background: url(../img/logo.png) no-repeat; */
+}
+
+.footer_container {
+	padding-top: 35px;
+	padding-bottom: 35px;
+	display: block;
+	cursor: default;
+	text-align: center;
+	color: rgba(255, 255, 255, 1);
+	background-color: rgba(25, 25, 25, 1);
+}
+
+.footer_container .footA {
+	font-size: 25px;
+	margin-top: 20px;
+	margin-bottom: 10px;
+}
+
+.footer_container .footB {
+	font-size: 15px;
+}
