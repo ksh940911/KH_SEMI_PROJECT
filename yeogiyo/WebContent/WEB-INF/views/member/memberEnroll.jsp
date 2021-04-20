@@ -14,7 +14,8 @@
 <body>
 <section id=enroll-container>
 	<!-- 여기요 로고 삽입 -->
-	<h1>여기요</h1>
+	<img src="<%= request.getContextPath() %>/images/logo.png"
+						alt="홈으로" width="150" height="50">
 	<form name="memberEnrollFrm" action="<%= request.getContextPath() %>/member/memberEnroll" method="post">
 		<div id="contentBox">
 			<table>

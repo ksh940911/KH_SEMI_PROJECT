@@ -13,7 +13,7 @@ grant connect, resource to yeogiyo;
 --yeogiyo계정 
 --=========================
 show user;
-
+set define off;
 
 --=========================
 --=========================
