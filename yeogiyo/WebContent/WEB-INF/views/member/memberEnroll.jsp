@@ -14,7 +14,9 @@
 <body>
 <section id=enroll-container>
 	<!-- 여기요 로고 삽입 -->
-	<h1>여기요</h1>
+	<div class="enroll-title">
+		<img src="<%= request.getContextPath() %>/images/logo.png" alt="로고" width="150" height="50">
+	</div>
 	<form name="memberEnrollFrm" action="<%= request.getContextPath() %>/member/memberEnroll" method="post">
 		<div id="contentBox">
 			<table>
@@ -93,7 +95,9 @@
 			</table>
 			<div class="exformTxt"><sup>*</sup> 표시는 필수적으로 입력해주셔야 가입이 가능합니다.</div>
 		</div>
-		<input type="submit" value="회원가입" id="joinButton">
+		<div class="memberEnroll-join">
+			<input type="submit" value="회원가입" id="joinButton">
+		</div>
 	</form>
 </section>
 <script>
@@ -108,11 +112,11 @@ function memberIdCheck(){
 		data : {
 			id : $("#memberId").val()
 		},
-		success : function(data) {
-			if(data == "success") {
+		success : function(result) {
+			if(result == 1) {
 				$("#memberIdResult").html("<p style='color:blue'>사용 가능한 아이디입니다.</p>");
 				$("#idValid").val(1);
-			} else if(data == "fail"){
+			} else if(result == 0){
 				$("#memberIdResult").html("<p style='color:red'>중복된 아이디입니다.</p>");
 				$("#idValid").val(0);
 			}
