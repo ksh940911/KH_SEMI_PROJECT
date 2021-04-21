@@ -1,0 +1,80 @@
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap');
+body{
+color:  #333333;
+font-size:15px;
+font-family: 'Nanum Gothic', sans-serif;
+}
+.wrappers{
+    margin: 0 auto;
+    width: 658px;
+    height: 665px;
+ }
+.tb-approval{
+    border-collapse: collapse;
+    border: 1px solid  #D9D9D9;
+    margin: 10px;
+    width: 658px;
+    float:left;
+}
+
+.tb-approval>tr, .tb-approval>tr>td{
+    border: 1px solid  #D9D9D9;
+}
+
+.sub-title {
+    background-color: #333;
+    color: #fff;
+    font-size: 110%;
+    padding: 10px 10px 10px 15px;
+}
+.panel-head{
+    padding: 10px;
+    background-color: #E6E6E6;
+    font-weight: bold;
+}
+.panel-body{
+    padding: 15px;
+}
+.panel-text{
+    width: 500px;
+    padding: 6px 12px;
+    height: auto;
+    margin-bottom: 15px;
+    border: 1px solid  #D9D9D9;
+}
+.stxt{
+    color: #999;
+    font-size: 12px;
+}
+
+.sub-table{
+    border-collapse: collapse;
+    /* border: 1px solid deeppink; */
+}
+.sub-table-header{
+    width: 100px;
+    padding: 5px;
+    font-size: 90%;
+    font-weight: bolder;
+}
+.sub-table-body{
+    width: 492px;
+    padding: 5px;
+    font-size: 90%;
+}
+.sub-tb-menu-header{
+    width: 495px;
+    padding: 5px;
+    font-size: 90%;
+}
+.sub-tb-menu-body{
+    width: 100px;
+    padding: 5px;
+    text-align: right;
+    font-size: 90%;
+}
+.tr-total{
+    color: #fa0050;
+    font-size: 110%;
+    font-weight: bolder;
+}

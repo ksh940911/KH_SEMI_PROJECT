@@ -22,6 +22,9 @@ public class SelectedMenu {
 	@SerializedName("totalPrice")
 	@Expose
 	private Integer totalPrice;
+	@SerializedName("price")
+	@Expose
+	private Integer price;
 
 	public Integer getResId() {
 		return resId;
@@ -61,6 +64,14 @@ public class SelectedMenu {
 
 	public void setTotalPrice(Integer totalPrice) {
 		this.totalPrice = totalPrice;
+	}
+
+	public Integer getPrice() {
+		return price;
+	}
+
+	public void setPrice(Integer price) {
+		this.price = price;
 	}
 
 }
