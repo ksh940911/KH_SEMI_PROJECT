@@ -32,7 +32,7 @@ public class ApprovalServlet extends HttpServlet {
 		//2. 비즈니스 로직
 		//사용자 입력정보 주문테이블에 담기
 		int result = orderService.insertOrder(order);
-		int orderId = 
+//		int orderId = 
 //		System.out.println("result@approvalServlet = " + result);
 		
 		

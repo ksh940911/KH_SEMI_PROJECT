@@ -177,12 +177,23 @@ insert into yeogiyo.menu(menu_id, res_id, menu_name, description, menu_category,
 select * from member;
 desc member;
 select * from member where phone='01095959595';
---update member set phone = '01078787878' where member_id = 'hyjoitt';
+--insert into member(member_id, member_name, password, address, phone, email, member_role) 
+--values ('testjs','이재성','1ARVn2Auq2/WAqx2gNrL+q3RNjAzXpUfCXrzkA6d4Xa22yhRLy4AC50E+6UTPoscbo31nbOoq51gvkuXzJ6B2w==','서울시 강남구','01045611234','suver72@naver.com','U');
+update member set email = 'suver72@naver.com' where member_id = 'honggd2';
 --commit;
 내용
 
+--delete from member where member_id='testtt';
 
-
+--select constraint_name,
+--        uc.table_name,
+--        ucc.column_name,
+--        uc.constraint_type,
+--        uc.search_condition
+--from user_constraints uc
+--    join user_cons_columns ucc
+--        using(constraint_name)
+--where uc.table_name = 'member';
 --=========================
 --=========================
 --                   이재성                    --

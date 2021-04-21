@@ -9,13 +9,13 @@ margin: 0 auto;
 /* border: 1px solid black; */
 width: 1020px;
 }
-table{
+/* table{
 border-collapse: collapse;
 border: 1px solid  #D9D9D9;
 }
 tr, td{
 border: 1px solid  #D9D9D9;
-}
+} */
 /* 가게정보테이블 */
 #restaurant-info{
 margin: 10px;
