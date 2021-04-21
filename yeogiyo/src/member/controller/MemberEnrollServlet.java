@@ -55,7 +55,7 @@ public class MemberEnrollServlet extends HttpServlet {
 		
 		//Date type으로 변환
 		Date birthday = null;
-		if(_birthday != null && !"".equals("_birthday")) 
+		if(_birthday != null && !"".equals(_birthday)) 
 			birthday = Date.valueOf(_birthday);
 		
 		Member member = new Member(memberId, memberName, password, birthday, gender, address, addressSub, phone, email, null, MemberService.MEMBER_ROLE);

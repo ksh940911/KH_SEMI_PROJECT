@@ -13,23 +13,20 @@ import member.model.service.MemberService;
 import member.model.vo.Member;
 
 /**
- * Servlet implementation class IdCheckServlet
+ * Servlet implementation class phoneCheckServlet
  */
-@WebServlet("/member/memberIdCheck")
-public class IdCheckServlet extends HttpServlet {
+@WebServlet("/member/memberPhoneCheck")
+public class PhoneCheckServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+       
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         PrintWriter out = response.getWriter();
-        String memberId = request.getParameter("id");
+        String phone = request.getParameter("phone");
         
+        Member member = new MemberService().selectMemberByPhone(phone);
         
-        Member member = new MemberService().selectMemberById(memberId);
-        
-        //아이디 사용 가능 true, 아이디 사용 불가 false
+        //휴대폰 번호 사용 가능 true, 이미 등록 중인 휴대폰번호 false
         boolean available = member == null;
         
         if (available == true) {

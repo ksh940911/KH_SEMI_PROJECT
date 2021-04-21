@@ -65,7 +65,7 @@ alert("<%= msg %>");
 						<td>관리자님, 반갑습니다</td>
 					</tr>
 					<tr>
-						<td><input type="button" value="로그아웃" onclick="location.href='<%= request.getContextPath() %>/member/logout';"/></td>
+						<td><input type="button" value="로그아웃" onclick="location.href='<%= request.getContextPath()%>/member/logout';"/></td>
 					</tr>
 				</table>
 			<% } else {%>
@@ -77,7 +77,7 @@ alert("<%= msg %>");
 					</tr>
 					<tr>
 						<td>
-							<input type="button" value="마이페이지" />
+							<input type="button" value="마이페이지" onclick="location.href='<%= request.getContextPath() %>/member/memberView';"/>
 							<input type="button" value="로그아웃" onclick="location.href='<%= request.getContextPath() %>/member/logout';"/>							
 						</td>
 					</tr>
