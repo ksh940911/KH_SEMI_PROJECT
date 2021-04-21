@@ -10,13 +10,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.oreilly.servlet.MultipartRequest;
-import com.oreilly.servlet.multipart.FileRenamePolicy;
 
 import common.YeogiyoFileRenamePolicy;
+import order.model.service.OrderService;
 import review.model.service.ReviewService;
-import review.model.vo.ReviewPhoto;
 import review.model.vo.Review;
-import common.YeogiyoFileRenamePolicy;
+import review.model.vo.ReviewPhoto;
 
 
 /**
@@ -26,6 +25,7 @@ import common.YeogiyoFileRenamePolicy;
 public class ReviewEnrollServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private ReviewService reviewService = new ReviewService();
+	private OrderService orderService = new OrderService();
 	
 	/**
 	 * 0. form의 속성 enctype="multipart/form-data" 추가
@@ -74,10 +74,12 @@ public class ReviewEnrollServlet extends HttpServlet {
 								);
 			
 			//2. db에 게시글/첨부파일 정보 저장
-			
 			//2-1. 사용자 입력값처리
 			String reviewstar = multipartRequest.getParameter("star");
 			String content = multipartRequest.getParameter("content");
+			String memberId = multipartRequest.getParameter("writer");
+			int orderId = orderService.selectLastOrderById(memberId);
+			String reviewOrder = multipartRequest.getParameter("writer");
 			
 			//업로드한 파일명
 			String originalFileName = multipartRequest.getOriginalFileName("upFile");
@@ -85,7 +87,7 @@ public class ReviewEnrollServlet extends HttpServlet {
 			
 	//		Board board = new Board(0, title, writer, content, null, 0, null);
 			Review review = new Review();
-			review.setReviewStar(Integer.parseInt("reviewstar"));
+			review.setReviewStar(Integer.parseInt(reviewstar));
 			review.setReviewContent(content);
 			
 			//첨부파일이 있는 경우

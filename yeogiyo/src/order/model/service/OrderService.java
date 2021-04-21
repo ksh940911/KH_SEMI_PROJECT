@@ -30,4 +30,13 @@ public class OrderService {
 		return result;
 	}
 
+<<<<<<< Updated upstream
+=======
+	public int countOrder() {
+		Connection conn = getConnection();
+		int totalOrder = orderDao.selectOrderCount(conn);
+		close(conn);
+		return totalOrder;
+	}
+>>>>>>> Stashed changes
 }

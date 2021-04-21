@@ -49,6 +49,11 @@ function reviewValidate(){
 	<br><hr><br>
 	<tr>
 		<td>
+			<input type="text" name="writer" value="<%= loginMember.getMemberId() %>" hidden/>
+		</td>
+	</tr>
+	<tr>
+		<td>
 			<input type='file' id='reviewphotofile' name='reviewphoto' style='display: none;'>
 			<img src="<%=request.getContextPath()%>/images/reviewphoto.png" id='reviewphotoid' border='0' onclick='document.all.reviewphoto.click()'>
 		<script>			

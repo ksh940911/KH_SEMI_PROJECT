@@ -50,7 +50,7 @@ public class ReviewDao {
 				Review review = new Review();
 				review.setReviewNo(rset.getInt("review_no"));
 				review.setMemberId(rset.getString("member_id"));
-				review.setOrderNo(rset.getInt("order_no"));
+				review.setOrderId(rset.getInt("order_id"));
 				review.setReviewTime(rset.getDate("review_time"));
 				review.setReviewStar(rset.getInt("review_star"));
 				review.setReviewOrder(rset.getString("review_order"));
@@ -98,7 +98,7 @@ public class ReviewDao {
 			pstmt.setString(2, review.getReviewContent());
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
-			throw new ReviewException("게시물 등록 오류", e);
+			throw new ReviewException("리뷰 등록 오류", e);
 		} finally {
 			close(pstmt);
 		}
@@ -118,7 +118,7 @@ public class ReviewDao {
 				reviewNo = rset.getInt("review_no");
 			}
 		} catch (SQLException e) {
-			throw new ReviewException("게시물 등록 번호 조회 오류", e);
+			throw new ReviewException("리뷰 등록번호 조회 오류", e);
 		} finally {
 			close(rset);
 			close(pstmt);
@@ -137,12 +137,11 @@ public class ReviewDao {
 			pstmt.setString(3, reviewphoto.getPhotoRenamedFilename());
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
-			throw new ReviewException("게시물 첨부파일 등록 오류", e);
+			throw new ReviewException("리뷰 첨부파일 등록 오류", e);
 		} finally {
 			close(pstmt);
 		}
 		return result;
-		
 	}
 }
 

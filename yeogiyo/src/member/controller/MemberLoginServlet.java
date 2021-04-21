@@ -1,6 +1,7 @@
 package member.controller;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -8,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import common.MvcUtils;
 import member.model.service.MemberService;
 import member.model.vo.Member;
 
@@ -34,8 +36,8 @@ public class MemberLoginServlet extends HttpServlet {
 		
 		//사용자 입력값 처리
 		String memberId = request.getParameter("memberId");
-		String password = request.getParameter("password");
-		//String password = MvcUtils.getSha512(request.getParameter("password")); //암호화처리코드
+//		String password = request.getParameter("password");
+		String password = MvcUtils.getSha512(request.getParameter("password")); //암호화처리코드
 		System.out.println("memberId@MemberLoginServlet = " + memberId);
 		System.out.println("password@MemberLoginServlet = " + password);
 		
