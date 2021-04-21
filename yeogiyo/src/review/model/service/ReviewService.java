@@ -44,9 +44,9 @@ public class ReviewService {
 		
 		try {
 			result = reviewDao.insertReview(conn, review);
-			
+			String memberId = review.getMemberId();
 			//생성된 review_no를 가져오기
-			int reviewNo = reviewDao.selectLastReviewNo(conn);
+			int reviewNo = reviewDao.selectLastReviewNo(conn, memberId);
 			//redirect location설정
 			review.setReviewNo(reviewNo);
 			
@@ -56,7 +56,6 @@ public class ReviewService {
 				result = reviewDao.insertReviewPhoto(conn, review.getReviewphoto());
 			}
 			commit(conn);
-			
 		} catch(Exception e) {
 			rollback(conn);
 			throw e;

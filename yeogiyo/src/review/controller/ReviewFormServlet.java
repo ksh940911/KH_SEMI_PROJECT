@@ -18,6 +18,9 @@ public class ReviewFormServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		int resId = Integer.parseInt(request.getParameter("resId"));
+		System.out.println("resId@formServlce = " + resId);
+		request.setAttribute("resId", resId);
 		request.getRequestDispatcher("/WEB-INF/views/review/reviewForm.jsp")
 			   .forward(request, response);
 	}
