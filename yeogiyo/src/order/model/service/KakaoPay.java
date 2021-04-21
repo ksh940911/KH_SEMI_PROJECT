@@ -29,8 +29,8 @@ public class KakaoPay {
 			HttpURLConnection conn = (HttpURLConnection)url.openConnection();
 			conn.setRequestMethod("POST");
 			
-			String filename = KakaoPay.class.getResource("/kakao-api.properties").getPath();
-			System.out.println("filename@kakao = " + filename);
+//			String filename = KakaoPay.class.getResource("/kakao-api.properties").getPath();
+//			System.out.println("filename@kakao = " + filename);
 //			adminKey = prop.getProperty("adminKey");
 			//key를 properties파일에 담으려고 했는데 왜인지 계속 읽어오질 못한다ㅠㅠ
 			adminKey = "KakaoAK 75418995b493f8fec66ecbc9a35492cc";
@@ -103,19 +103,7 @@ public class KakaoPay {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
-		}finally {
-			try {
-				dos.flush();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			try {
-				dos.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		
+		}		
 		return kakaoResult;
 		
 	}

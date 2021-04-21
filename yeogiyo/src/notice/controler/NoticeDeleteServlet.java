@@ -27,7 +27,7 @@ public class NoticeDeleteServlet extends HttpServlet {
 			int resId = Integer.parseInt(request.getParameter("resId"));
 			
 			int result = new NoticeService().deleteNotice(noticeNo);
-			System.out.println("noticeNo@delServlet = " + noticeNo);
+			
 			String msg = result > 0 ? "공지 삭제 완료" : "공지 삭제 실패";
 
 			request.getSession().setAttribute("msg", msg);

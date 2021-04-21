@@ -33,11 +33,9 @@ public class NoticeDao {
 	public Notice selectOne(Connection conn, int resId) {
 		Notice notice = null;
 		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		
+		ResultSet rset = null;		
 		String sql = prop.getProperty("selectOne");
-//			select * from notice where res_id = ? 
-// 			조건 : 가게아이디로 조회 + 가장 최근에 작성 된 공지글 하나만 필요 <쿼리짜야됨
+//		select * from (select rownum rnum, N.* from notice N where res_id = ? order by notice_no desc) where rnum = 1
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, resId);
@@ -65,7 +63,7 @@ public class NoticeDao {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		String sql = prop.getProperty("selectLastNoticeNo");
-//			select seq_tb_notice_no.currval notice_no from dual
+//		select seq_tb_notice_no.currval from dual	
 		try {
 			pstmt = conn.prepareStatement(sql);
 			rset = pstmt.executeQuery();
@@ -73,7 +71,7 @@ public class NoticeDao {
 				noticeNo = rset.getInt("notice_no");
 			}
 		} catch (SQLException e) {
-			throw new NoticeException("공지등록 번호 조회 오류");
+			throw new NoticeException("공지등록 번호 조회 오류", e);
 		} finally {
 			close(rset);
 			close(pstmt);
@@ -85,9 +83,8 @@ public class NoticeDao {
 		NoticeImg noticeImg = null;
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-
 		String sql = prop.getProperty("selectOneNoticeImg");
-//			select * from noticeImg where notice_no = ? 
+//		select * from notice_img where notice_no = ? and img_status = 'Y' order by img_no desc;
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, notice.getNoticeNo());
@@ -97,8 +94,8 @@ public class NoticeDao {
 				noticeImg = new NoticeImg();
 				noticeImg.setImgNo(rset.getInt("img_no"));
 				noticeImg.setNoticeNo(rset.getInt("notice_no"));
-				noticeImg.setOriginalFilname(rset.getString("original_filename"));
-				noticeImg.setRenamedFilename(rset.getString("renamed_filename"));
+				noticeImg.setOriginalFilname(rset.getString("img_originalfile"));
+				noticeImg.setRenamedFilename(rset.getString("img_renamedfile"));
 				noticeImg.setStatus("Y".equals(rset.getNString("img_status")) ? true : false);
 			}
 		} catch (Exception e) {
@@ -114,7 +111,7 @@ public class NoticeDao {
 		int result = 0;
 		PreparedStatement pstmt = null;
 		String sql = prop.getProperty("insertNotice");
-//			insert into notice(notice_no, res_id, notice_title, notice_content) values(seq_tb_notice_no.nextval, ?, ?, ?)
+//		insert into notice(notice_no, res_id, notice_title, notice_content) values(seq_tb_notice_no.nextval, ?, ?, ?)
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, notice.getResId());
@@ -124,7 +121,7 @@ public class NoticeDao {
 		} catch (SQLException e) {
 			throw new NoticeException("공지 등록 오류", e);
 		} finally {
-			close(conn);
+			close(pstmt);
 		}
 		return result;
 	}
@@ -154,7 +151,6 @@ public class NoticeDao {
 		PreparedStatement pstmt = null;
 		String sql = prop.getProperty("deleteNotice");
 //		delete from notice where notice_no = ?
-		System.out.println("noticeNo@Dao = " + noticeNo);
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, noticeNo);
@@ -171,12 +167,13 @@ public class NoticeDao {
 		int result = 0;
 		PreparedStatement pstmt = null;
 		String sql = prop.getProperty("insertNoticeImg");
-//			insert into notice_img(img_no, notice_no, img_originalfile, img_renamed_file) values(seq_tb_notice_img_no.nextval, ?, ?, ?)
+//		insert into notice_img(img_no, notice_no, img_originalfile, img_renamed_file) values(seq_tb_notice_img_no.nextval, ?, ?, ?)
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, noticeImg.getNoticeNo());
 			pstmt.setString(2, noticeImg.getOriginalFilname());
 			pstmt.setString(3, noticeImg.getRenamedFilename());
+			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			throw new NoticeException("공지 이미지파일 등록 오류");
 		} finally {
@@ -189,7 +186,7 @@ public class NoticeDao {
 		int result = 0;
 		PreparedStatement pstmt = null;
 		String sql = prop.getProperty("deleteNoticeImg");
-//		update noticeImg set img_status = 'N' where img_no = ? 
+//		update notice_img set img_status = 'N' where img_no = ? 
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, imgNo);

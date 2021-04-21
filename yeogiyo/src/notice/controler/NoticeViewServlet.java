@@ -50,9 +50,9 @@ public class NoticeViewServlet extends HttpServlet {
 			}
 			
 			request.setAttribute("notice", notice);
-			System.out.println("notice@ViewServlet = "+notice);
+//			System.out.println("notice@ViewServlet = "+notice);
 			request.setAttribute("resId", resId);
-			System.out.println("resId@ViewServlet = "+resId);
+//			System.out.println("resId@ViewServlet = "+resId);
 			request.getRequestDispatcher("/WEB-INF/views/admin/noticeView.jsp").forward(request, response);
 		} catch (Exception e) {
 			e.printStackTrace();
