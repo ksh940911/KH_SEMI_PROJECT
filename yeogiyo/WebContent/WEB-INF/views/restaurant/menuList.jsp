@@ -26,7 +26,6 @@
                 <span class="star-empty" id="star5">★</span>
                 <input type="button" id="btn-review" value="리뷰 보기">
                 <input type="button" id="btn-notice" value="사장님 공지">
-                
                 <form id="frm-review" action="">
                     <input type="hidden" name="resId" value="<%= r.getResId() %>">
                 </form>

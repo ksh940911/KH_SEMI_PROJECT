@@ -48,12 +48,12 @@ public class NoticeEnrollServlet extends HttpServlet {
 							policy);
 			
 			// 입력값
+			int resId = Integer.parseInt(multipartRequest.getParameter("resId"));
 			String noticeTitle = multipartRequest.getParameter("noticeTitle");
 			String noticeContent = multipartRequest.getParameter("noticeContent");
-			int resId = Integer.parseInt(multipartRequest.getParameter("resId"));
 			String originalFileName = multipartRequest.getOriginalFileName("upImgFile");
 			String renamedFileName = multipartRequest.getFilesystemName("upImgFile");
-			
+
 			Notice notice = new Notice();
 			notice.setNoticeTitle(noticeTitle);
 			notice.setNoticeContent(noticeContent);
@@ -70,16 +70,11 @@ public class NoticeEnrollServlet extends HttpServlet {
 			// 업무로직
 			int result = new NoticeService().insertNotice(notice);
 			String msg = (result > 0) ? "공지 등록 완료." : "공지 등록 실패";
-			String location = request.getContextPath();
-			location += (result > 0) ?
-							"/admin/noticeView?resId=" + notice.getResId() : 
-								"/admin/noticeView";
-			
+			String location = request.getContextPath() + "/admin/noticeView?resId=" + notice.getResId();
 			
 			HttpSession session = request.getSession();
 			session.setAttribute("msg", msg);
 			request.setAttribute("resId", resId);
-			System.out.println("resId@EnrollServlet = " + resId);
 			response.sendRedirect(location);
 		} catch(Exception e) {
 			e.printStackTrace();
