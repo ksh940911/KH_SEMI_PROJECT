@@ -29,10 +29,10 @@
                 
                 <form id="frm-review" action="">
 
-                    <input type="hidden" name="res_id" value="<%= r.getResId() %>">
+                    <input type="hidden" name="resId" value="<%= r.getResId() %>">
                 </form>
                 <form id="frm-notice" action="">
-                    <input type="hidden" name="res_id" value="<%= r.getResId() %>">
+                    <input type="hidden" name="resId" value="<%= r.getResId() %>">
 
                 </form>
                 <br>

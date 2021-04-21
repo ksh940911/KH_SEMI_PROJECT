@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import order.model.service.OrderService;
 import order.model.vo.Order;
+import restaurant.model.service.RestaurantService;
+import restaurant.model.vo.Restaurant;
 
 /**
  * Servlet implementation class KakaoApprovalServlet
@@ -62,6 +64,11 @@ public class ApprovalServlet extends HttpServlet {
 		order = orderService.selectLastOrderById(memberId);
 		System.out.println("inserted order@approvalServlet =" + order);
 		
+		//가게정보 가져와서 세션에 담기
+		int resId = order.getResId();
+		Restaurant restaurant = new RestaurantService().selectRestaurant(resId);
+		request.getSession().setAttribute("restaurant", restaurant);
+		
 		//주문테이블에 입력한 정보 가져와서 다시 세션에 담기
 		request.getSession().setAttribute("order", order);
 		
@@ -69,15 +76,5 @@ public class ApprovalServlet extends HttpServlet {
 		request.getRequestDispatcher("/WEB-INF/views/order/approval.jsp").forward(request, response);
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		
-		//아임포트 결제 완료 시
-		
-		request.getRequestDispatcher("/WEB-INF/views/order/approval.jsp").forward(request, response);
-	}
 
 }
