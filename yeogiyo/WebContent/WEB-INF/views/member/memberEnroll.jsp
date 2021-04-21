@@ -10,18 +10,22 @@
 <title>여기요 - 회원가입</title>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/memberEnroll.css" />
 <script src="<%= request.getContextPath() %>/js/jquery-3.6.0.js"></script>
+<!-- 다음 카카오 주소 API -->
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 </head>
 <body>
 <section id=enroll-container>
 	<!-- 여기요 로고 삽입 -->
-	<h1>여기요</h1>
+	<div class="enroll-title">
+		<img src="<%= request.getContextPath() %>/images/logo.png" alt="로고" width="150" height="50">
+	</div>
 	<form name="memberEnrollFrm" action="<%= request.getContextPath() %>/member/memberEnroll" method="post">
 		<div id="contentBox">
 			<table>
 					<tr>
 						<th>아이디<sup>*</sup></th>
 						<td>
-							<input type="text" placeholder="ID를 입력하세요." name="memberId" id="memberId" onkeyup="memberIdCheck()" required>
+							<input type="text" placeholder="ID를 입력하세요." name="memberId" id="memberId" required>
 							<%-- #idValid 1이면 사용가능한 아이디이고 중복검사함, 0이면 중복검사전. --%>
 							<input type="hidden" id="idValid" value="0" />
 							<span id="memberIdResult"></span>
@@ -69,15 +73,22 @@
 				<tr>
 					<th>주소<sup>*</sup></th>
 					<td>	
-						<input type="text" placeholder="주소를 입력하세요." name="address" id="address"><br>
+						<!-- <input type="text" placeholder="주소를 입력하세요." name="address" id="address"><br> -->
+						<input type="text" id="postcode" placeholder="우편번호"><br>
+						<input type="button" onclick="execDaumPostcode()" value="우편번호 찾기"><br>
+						<input type="text" name="address" id="address" placeholder="주소"><br>
+						<input type="text" name="addressSub" id="addressSub" placeholder="상세주소"><br>
+						<input type="text" id="extraAddress" placeholder="참고항목"><br>
 					</td>
 				</tr>
+				<!--  
 				<tr>
 					<th>상세 주소</th>
 					<td>	
 						<input type="text" placeholder="" name="addressSub" id="addressSub"><br>
 					</td>
 				</tr>
+				-->
 				<tr>
 					<th>휴대폰<sup>*</sup></th>
 					<td>	
@@ -93,7 +104,9 @@
 			</table>
 			<div class="exformTxt"><sup>*</sup> 표시는 필수적으로 입력해주셔야 가입이 가능합니다.</div>
 		</div>
-		<input type="submit" value="회원가입" id="joinButton">
+		<div class="memberEnroll-join">
+			<input type="submit" value="회원가입" id="joinButton">
+		</div>
 	</form>
 </section>
 <script>
@@ -101,24 +114,46 @@
 /**
  * ajax 비동기방식으로 아이디 중복 검사
  */
-function memberIdCheck(){
+$("#memberId").blur(function(){
 	$.ajax({
 		url: "<%= request.getContextPath() %>/member/memberIdCheck",
 		method : "POST",
 		data : {
 			id : $("#memberId").val()
 		},
-		success : function(data) {
-			if(data == "success") {
+		success : function(result) {
+			var re = /^[a-zA-Z0-9]{4,12}$/; //아이디, 패스워드 정규표현식
+			var $memberId = $("#memberId");
+			
+			if(result == 1 && re.test($memberId.val()) == true) {
 				$("#memberIdResult").html("<p style='color:blue'>사용 가능한 아이디입니다.</p>");
 				$("#idValid").val(1);
-			} else if(data == "fail"){
+			} else if (result == 0){
 				$("#memberIdResult").html("<p style='color:red'>중복된 아이디입니다.</p>");
+				$("#idValid").val(0);
+			} else {
+				$("#memberIdResult").html("<p style='color:red'>아이디는 4~12자리의 영문자, 숫자만 가능합니다.</p>");
 				$("#idValid").val(0);
 			}
 		}
 	})
-};
+});
+
+/**
+* 
+*$("memberId").blur(function(){
+*	var re = /^[a-zA-Z0-9]{4,12}$/ //아이디, 패스워드 정규표현식
+*	var $memberId = $("#memberId");
+*	var $idValid = $("#idValid");
+*		 
+*	//아이디 유효성 검사
+*	if(re.test($memberId.val()) == false) {
+*		$("#memberIdResult").html("<p style='color:red'>아이디는 4~12자리의 영문자, 숫자만 가능합니다.</p>");
+*		$("idValid").val(0);
+*	}
+*})
+*
+**/
 
 /**
  * 중복검사 이후 다시 아이디를 변경하는 것을 방지
@@ -144,7 +179,7 @@ $("#memberId").change(function() {
 	 
 	if($idValid.val() == 0) {
 		alert("아이디 중복검사를 해주세요.");
-		$idValid.select();
+		$memberId.select();
 		return false;
 	}
 	 
@@ -187,8 +222,61 @@ $("#memberId").change(function() {
 	 
  });
  
+/*
+ * 다음 카카오 주소 API 스크립트
+ */
+ 
+ function execDaumPostcode() {
+     new daum.Postcode({
+         oncomplete: function(data) {
+             // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+             // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+             // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+             var addr = ''; // 주소 변수
+             var extraAddr = ''; // 참고항목 변수
+
+             //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+             if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                 addr = data.roadAddress;
+             } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                 addr = data.jibunAddress;
+             }
+
+             // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+             if(data.userSelectedType === 'R'){
+                 // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                 // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                 if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                     extraAddr += data.bname;
+                 }
+                 // 건물명이 있고, 공동주택일 경우 추가한다.
+                 if(data.buildingName !== '' && data.apartment === 'Y'){
+                     extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                 }
+                 // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                 if(extraAddr !== ''){
+                     extraAddr = ' (' + extraAddr + ')';
+                 }
+                 // 조합된 참고항목을 해당 필드에 넣는다.
+                 document.getElementById("extraAddress").value = extraAddr;
+             
+             } else {
+                 document.getElementById("extraAddress").value = '';
+             }
+
+             // 우편번호와 주소 정보를 해당 필드에 넣는다.
+             document.getElementById("postcode").value = data.zonecode;
+             document.getElementById("address").value = addr;
+             // 커서를 상세주소 필드로 이동한다.
+             document.getElementById("addressSub").focus();
+         }
+     }).open();
+ }
  
 </script>
+
+
 </body>
 </html>
 
