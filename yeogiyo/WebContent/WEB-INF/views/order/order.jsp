@@ -20,10 +20,10 @@
                         <label for="address">주소</label>
                         <input type="hidden" name="member_id" value="<%=loginMember.getMemberId() %>" />
                         <input type="hidden" name="res_id" value="<%= r.getResId() %>" />
-                        <input type="text" class="panel-text" name="address" id="address" placeholder="<%= loginMember.getAddress() %>"><br>
-                        <input type="text" class="panel-text" name="address-sub" id="address-sub" placeholder="<%= loginMember.getAddressSub() %>" required><br>
+                        <input type="text" class="panel-text" name="address" id="address" value="<%= loginMember.getAddress() %>"><br>
+                        <input type="text" class="panel-text" name="address-sub" id="address-sub" value="<%= loginMember.getAddressSub() %>" required><br>
                         <label for="phone">휴대전화번호</label>
-                        <input type="text" class="panel-text" name="phone" id="phone" placeholder="<%= loginMember.getPhone() %>" required>
+                        <input type="text" class="panel-text" name="phone" id="phone" value="<%= loginMember.getPhone() %>" required>
                         <input type="hidden" id="payment_way" name="payment_way" value="" /> <%-- 결제수단 : 신용카드(C), 카카오페이(K), 현금(M) --%>
                         <input type="hidden" id="payment_place" name="payment_place"/><%-- 결제장소 : 요기서결제(N), 현장결제(F) --%>
                         <input type="hidden" id="order_menu" name="order_menu"/> <%-- 주문내역 세션에서 가져온 json 그대로 담기 --%>

@@ -129,9 +129,28 @@ create table tb_order (
     
 );
 
+select * from member;
+
 create sequence seq_tb_order_id;
 
+select count(*)count from tb_order;
+select * from tb_order;
+--insertOrder
+--order_id, member_id, res_id, order_date, address, address_sub, phone, order_comment, payment_way, 
+--payment_place, order_menu, total_price
+--insert into tb_order values(seq_tb_order_id.nextval, ?, ?, sysdate, ?, ?, ?, ?, ?, ?, ?, ?)
 
+--		//주문테이블에 받은 주문정보 객체 가져오기
+--		//order by order_date desc로 정렬하고 rownum으로 맨위에꺼만 가져오기? 
+--		//->동시에 다른 유저가 주문해버리면 안되자너...memberId로 조회		//주문테이블에 받은 주문정보 객체 가져오기
+--		//order by order_date desc로 정렬하고 rownum으로 맨위에꺼만 가져오기? 
+--		//->동시에 다른 유저가 주문해버리면 안되자너...memberId로 조회
+
+--selectLastOrderById
+--select * from tb_order where member_id = ? order by order_date desc;
+
+
+--delete from member where member_id = 'test';
 
 --=========================
 --=========================

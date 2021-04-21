@@ -44,10 +44,15 @@ public class MemberEnrollServlet extends HttpServlet {
 		String gender = request.getParameter("gender");
 		String address = request.getParameter("address");
 		String addressSub = request.getParameter("addressSub");
+		String addresExt = request.getParameter("extraAddress");
 		String phone = request.getParameter("phone");
 		String email = request.getParameter("email");
 		
 
+		//상세주소 + 참고항목 합치기
+		if(addresExt != null)
+			addressSub += addresExt;
+		
 		//Date type으로 변환
 		Date birthday = null;
 		if(_birthday != null && !"".equals("_birthday")) 

@@ -74,19 +74,21 @@
 					<th>주소<sup>*</sup></th>
 					<td>	
 						<!-- <input type="text" placeholder="주소를 입력하세요." name="address" id="address"><br> -->
-						<input type="text" id="sample6_postcode" placeholder="우편번호"><br>
-						<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
-						<input type="text" name="address" id="sample6_address" placeholder="주소"><br>
-						<input type="text" name="addressSub" id="sample6_detailAddress" placeholder="상세주소"><br>
-						<input type="text" id="sample6_extraAddress" placeholder="참고항목"><br>
+						<input type="text" id="postcode" placeholder="우편번호"><br>
+						<input type="button" onclick="execDaumPostcode()" value="우편번호 찾기"><br>
+						<input type="text" name="address" id="address" placeholder="주소"><br>
+						<input type="text" name="addressSub" id="addressSub" placeholder="상세주소"><br>
+						<input type="text" id="extraAddress" placeholder="참고항목"><br>
 					</td>
 				</tr>
+				<!--  
 				<tr>
 					<th>상세 주소</th>
 					<td>	
 						<input type="text" placeholder="" name="addressSub" id="addressSub"><br>
 					</td>
 				</tr>
+				-->
 				<tr>
 					<th>휴대폰<sup>*</sup></th>
 					<td>	
@@ -120,16 +122,38 @@ $("#memberId").blur(function(){
 			id : $("#memberId").val()
 		},
 		success : function(result) {
-			if(result == 1) {
+			var re = /^[a-zA-Z0-9]{4,12}$/; //아이디, 패스워드 정규표현식
+			var $memberId = $("#memberId");
+			
+			if(result == 1 && re.test($memberId.val()) == true) {
 				$("#memberIdResult").html("<p style='color:blue'>사용 가능한 아이디입니다.</p>");
 				$("#idValid").val(1);
-			} else if(result == 0){
+			} else if (result == 0){
 				$("#memberIdResult").html("<p style='color:red'>중복된 아이디입니다.</p>");
+				$("#idValid").val(0);
+			} else {
+				$("#memberIdResult").html("<p style='color:red'>아이디는 4~12자리의 영문자, 숫자만 가능합니다.</p>");
 				$("#idValid").val(0);
 			}
 		}
 	})
 });
+
+/**
+* 
+*$("memberId").blur(function(){
+*	var re = /^[a-zA-Z0-9]{4,12}$/ //아이디, 패스워드 정규표현식
+*	var $memberId = $("#memberId");
+*	var $idValid = $("#idValid");
+*		 
+*	//아이디 유효성 검사
+*	if(re.test($memberId.val()) == false) {
+*		$("#memberIdResult").html("<p style='color:red'>아이디는 4~12자리의 영문자, 숫자만 가능합니다.</p>");
+*		$("idValid").val(0);
+*	}
+*})
+*
+**/
 
 /**
  * 중복검사 이후 다시 아이디를 변경하는 것을 방지
@@ -202,7 +226,7 @@ $("#memberId").change(function() {
  * 다음 카카오 주소 API 스크립트
  */
  
- function sample6_execDaumPostcode() {
+ function execDaumPostcode() {
      new daum.Postcode({
          oncomplete: function(data) {
              // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
@@ -235,17 +259,17 @@ $("#memberId").change(function() {
                      extraAddr = ' (' + extraAddr + ')';
                  }
                  // 조합된 참고항목을 해당 필드에 넣는다.
-                 document.getElementById("sample6_extraAddress").value = extraAddr;
+                 document.getElementById("extraAddress").value = extraAddr;
              
              } else {
-                 document.getElementById("sample6_extraAddress").value = '';
+                 document.getElementById("extraAddress").value = '';
              }
 
              // 우편번호와 주소 정보를 해당 필드에 넣는다.
-             document.getElementById('sample6_postcode').value = data.zonecode;
-             document.getElementById("sample6_address").value = addr;
+             document.getElementById("postcode").value = data.zonecode;
+             document.getElementById("address").value = addr;
              // 커서를 상세주소 필드로 이동한다.
-             document.getElementById("sample6_detailAddress").focus();
+             document.getElementById("addressSub").focus();
          }
      }).open();
  }

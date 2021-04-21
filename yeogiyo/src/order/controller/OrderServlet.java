@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 
 import order.model.service.KakaoPay;
+import order.model.service.OrderService;
 import order.model.vo.KakaoResult;
 import order.model.vo.Order;
 import restaurant.model.service.RestaurantService;
@@ -71,24 +72,46 @@ public class OrderServlet extends HttpServlet {
 		order.setPaymentWay(paymentWay);
 		order.setPaymentPlace(paymentPlace);
 		order.setTotalPrice(totalPrice);
+		System.out.println("order@OrderServlet = " + order);
+		
+		request.getSession().setAttribute("order", order);
 
 		
+		//결제방식 분기처리
+		
+		if(OrderService.ONLINE.equals(paymentPlace)) {
+			System.out.println("온라인");
+			//온라인 결제
+			if(OrderService.CREDIT_CARD.equals(paymentWay)) {
+				System.out.println("신카");
+				//신용카드. 아임포트 api
+			}
+			else if(OrderService.KAKAO_PAY.equals(paymentWay)) {
+				System.out.println("카카오");
+				//카카오페이 api
+				String kakaoJSON = new KakaoPay().requestKakaoPay(memberId, orderMenu);
+				System.out.println("kakaoJSON @OrderServlet = " + kakaoJSON);
+				
+				Gson gson = new Gson();
+				KakaoResult kakao = gson.fromJson(kakaoJSON, KakaoResult.class);
+				System.out.println("tid = " + kakao.getTid());
+				System.out.println("next_redirect_pc_url = " + kakao.getNextRedirectPcUrl()); //사용자가 볼 결제화면
+				System.out.println("created_at = " + kakao.getCreatedAt());
+				
+				response.sendRedirect(kakao.getNextRedirectPcUrl());
+				//결제 성공 시, approvalServlet.java로 이동
+			}
+		}else if(OrderService.OFFLINE.equals(paymentPlace)) {
+			System.out.println("오프라인.현장결제");
+			//현장결제
+			//바로 결제완료 페이지로 이동
+		}
 		
 		
 //		
 //		//2. 비즈니스 로직 
 		
-		//카카오페이 api
-		String kakaoJSON = new KakaoPay().requestKakaoPay(memberId, orderMenu);
-		System.out.println("kakaoJSON @OrderServlet = " + kakaoJSON);
 		
-		Gson gson = new Gson();
-		KakaoResult kakao = gson.fromJson(kakaoJSON, KakaoResult.class);
-		System.out.println("tid = " + kakao.getTid());
-		System.out.println("next_redirect_pc_url = " + kakao.getNextRedirectPcUrl()); //사용자가 볼 결제화면
-		System.out.println("created_at = " + kakao.getCreatedAt());
-		
-		response.sendRedirect(kakao.getNextRedirectPcUrl());
 		
 		
 		//(주문테이블에 값 insert)

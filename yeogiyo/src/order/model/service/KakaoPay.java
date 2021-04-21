@@ -3,11 +3,13 @@ package order.model.service;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -24,13 +26,19 @@ public class KakaoPay {
 	public String requestKakaoPay(String partner_user_id, String orderMenu) {
 		DataOutputStream dos = null;
 		String kakaoResult = null;
+		URL url = null;
+		InputStream inputStream = null;
+		InputStreamReader inputStreamReader = null;
+		BufferedReader bufferedReader = null;
+		
+		
 		try {
-			URL url = new URL("https://kapi.kakao.com/v1/payment/ready");
+			url = new URL("https://kapi.kakao.com/v1/payment/ready");
 			HttpURLConnection conn = (HttpURLConnection)url.openConnection();
 			conn.setRequestMethod("POST");
 			
-			String filename = KakaoPay.class.getResource("/kakao-api.properties").getPath();
-			System.out.println("filename@kakao = " + filename);
+//			String filename = KakaoPay.class.getResource("/kakao-api.properties").getPath();
+//			System.out.println("filename@kakao = " + filename);
 //			adminKey = prop.getProperty("adminKey");
 			//key를 properties파일에 담으려고 했는데 왜인지 계속 읽어오질 못한다ㅠㅠ
 			adminKey = "KakaoAK 75418995b493f8fec66ecbc9a35492cc";
@@ -58,17 +66,23 @@ public class KakaoPay {
 			
 			Gson gson = new Gson();
 			SelectedMenu[] result = gson.fromJson(orderMenu, SelectedMenu[].class);
+			int totalPrice = 0;
+			int totalAmount = 0;
+			for(SelectedMenu sm : result) {
+				totalAmount += sm.getAmount();
+				totalPrice += sm.getTotalPrice();
+			}
 			System.out.println("gsonTest@kakao = " + Arrays.toString(result));
 			
-			String menuName = result[0].getMenuName();
-			params.put("item_name", menuName);
+			String menuName = URLEncoder.encode((result[0].getMenuName() + " 외"), "UTF-8");
+			params.put("item_name", (menuName));
 			
 			String menuId = String.valueOf(result[0].getMenuId());
 			params.put("item_code", menuId);
 			
-			params.put("quantity", String.valueOf(result[0].getAmount()));
-			params.put("total_amount", String.valueOf(result[0].getTotalPrice()));
-			params.put("tax_free_amount", String.valueOf(result[0].getTotalPrice()));
+			params.put("quantity", String.valueOf(totalAmount)); //상품 수량
+			params.put("total_amount", String.valueOf(totalPrice)); //상품 총액
+			params.put("tax_free_amount", String.valueOf(totalPrice)); //상품 비과세 금액
 			
 			//리다이렉트 할 페이지 주소
 			//결제승인 요청을하면 approval_url에 넣은 value 값으로 
@@ -89,14 +103,23 @@ public class KakaoPay {
 			OutputStream os = conn.getOutputStream();
 			dos = new DataOutputStream(os);
 			dos.writeBytes(string_params); 
+			dos.writeBytes("Content-Disposition: form-data;");
+			dos.writeUTF("한글");
 			
 			//http response code 받기
 			int responseCode = conn.getResponseCode();
 			System.out.println("responseCode@kakao = " + responseCode);
 			
 			//받기
-			BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-			kakaoResult = br.readLine();
+//			BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+//			kakaoResult = br.readLine();
+			
+			inputStream = (InputStream) conn.getContent();
+			inputStreamReader = new InputStreamReader(inputStream, "UTF-8");
+			bufferedReader = new BufferedReader(inputStreamReader);
+			
+			kakaoResult = bufferedReader.readLine();
+			
 			
 			
 		} catch (MalformedURLException e) {
