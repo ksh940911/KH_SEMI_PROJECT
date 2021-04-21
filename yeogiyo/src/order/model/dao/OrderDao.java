@@ -35,17 +35,33 @@ public class OrderDao {
 			//payment_place, order_menu, total_price
 			//insert into tb_order values(sql_tb_order_id.nextval, ?, ?, sysdate, ?, ?, ?, ?, ?, ?, ?, ?)
 			
-			pstmt.setInt(1, order.getOrderId());
-			pstmt.setString(2, order.getMemberId());
-			pstmt.setInt(3, order.getResId());
-			pstmt.setString(4, order.getAddress());
-			pstmt.setString(5, order.getAddressSub());
-			pstmt.setString(6, order.getPhone());
-			pstmt.setString(7, order.getOrderComment());
-			pstmt.setString(8, order.getPaymentWay());
-			pstmt.setString(8, order.getPaymentPlace());
-			pstmt.setString(9, order.getOrderMenu());
-			pstmt.setInt(10, order.getTotalPrice());
+			/*
+			 * 
+			    member_id varchar2(100) not null,
+			    res_id number not null,
+			    address varchar2(100) not null,
+			    address_sub varchar2(100) not null,
+			    phone char(11) not null,
+			    order_comment varchar(200),
+			    payment_way char(1) not null,
+			    payment_place char(1) not null,
+			    order_menu varchar2(2000) not null,
+			    total_price number not null, 
+			 * */
+			
+			
+			pstmt.setString(1, order.getMemberId()); //honggd
+			pstmt.setInt(2, order.getResId()); //1
+			pstmt.setString(3, order.getAddress()); //서울시 강남구
+			pstmt.setString(4, order.getAddressSub()); //테헤란로
+			pstmt.setString(5, order.getPhone()); //01099999999
+			pstmt.setString(6, order.getOrderComment()); //null
+			pstmt.setString(7, order.getPaymentWay()); //K
+			pstmt.setString(8, order.getPaymentPlace()); //N
+			pstmt.setString(9, order.getOrderMenu()); //null
+			pstmt.setInt(10, order.getTotalPrice()); //28000
+			
+			System.out.println("orderDao(insertOrder) = " + order);
 			
 			result = pstmt.executeUpdate();
 			
@@ -103,6 +119,16 @@ public class OrderDao {
 				order.setOrderId(rset.getInt("order_id"));
 				order.setMemberId(rset.getString("member_id"));
 				order.setResId(rset.getInt("res_id"));
+				order.setOrderDate(rset.getDate("order_date"));
+				order.setAddress(rset.getString("address"));
+				order.setAddressSub(rset.getString("address_sub"));
+				order.setPhone(rset.getString("phone"));
+				order.setOrderComment(rset.getString("order_comment"));
+				order.setPaymentWay(rset.getString("payment_way"));
+				order.setPaymentPlace(rset.getString("payment_place"));
+				order.setOrderMenu(rset.getString("order_menu"));
+				order.setTotalPrice(rset.getInt("total_price"));
+				
 			}
 			
 			

@@ -140,14 +140,26 @@ select * from tb_order;
 --payment_place, order_menu, total_price
 --insert into tb_order values(seq_tb_order_id.nextval, ?, ?, sysdate, ?, ?, ?, ?, ?, ?, ?, ?)
 
---		//주문테이블에 받은 주문정보 객체 가져오기
---		//order by order_date desc로 정렬하고 rownum으로 맨위에꺼만 가져오기? 
---		//->동시에 다른 유저가 주문해버리면 안되자너...memberId로 조회		//주문테이블에 받은 주문정보 객체 가져오기
---		//order by order_date desc로 정렬하고 rownum으로 맨위에꺼만 가져오기? 
---		//->동시에 다른 유저가 주문해버리면 안되자너...memberId로 조회
+insert into tb_order
+values(seq_tb_order_id.nextval, 1, 'honggd', 1, sysdate, '서울시 강남구', '테헤란로', '01099999999', null, 'K', 'N', '[{"resId":1,"menuId":1,"menuName":"크래미키토","amount":1,"price":7000,"totalPrice":7000},{"resId":1,"menuId":3,"menuName":"트러플키토마요","amount":1,"price":7000,"totalPrice":7000}]', 14000);
+
+insert into tb_order(order_id) values(seq_tb_order_id.nextval);
 
 --selectLastOrderById
---select * from tb_order where member_id = ? order by order_date desc;
+/*
+select *
+from(
+    select rownum rnum, M.*
+    from (
+        select M.*
+        from tb_order M
+        where member_id = ?
+        order by order_date desc
+        )M
+    )M
+where rnum = 1
+*/
+
 
 
 --delete from member where member_id = 'test';
