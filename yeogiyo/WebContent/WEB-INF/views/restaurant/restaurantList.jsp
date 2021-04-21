@@ -6,7 +6,7 @@
     
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 	<h1>restaurant list</h1>
-	<table>
+	<table class="tb-restaurant">
 	<tr>
 		<th>가게 아이디</th>
 		<th>가게명</th>
@@ -24,7 +24,7 @@
 		<td><%= r.getResAddress() %></td>
 		<td><%= r.getCategory() %></td>
 		<td><%= r.getMinPrice() %></td>
-		<td><img src="<%= r.getLogoImg() %>" alt="" /></td>
+		<td><img style="width: 200px;" src="<%= r.getLogoImg() %>" alt="" /></td>
 		<td><%= r.getRateAvg() %></td>
 		<td><%= r.getReviewCnt() %></td>
 	</tr>
@@ -33,17 +33,13 @@
 	</table>
 	
 	<style>
-table{
+.tb-restaurant{
 border-collapse : collapse;
 border : 1px solid #000;
 }
 
-tr, td, th{
+.tb-restaurant>tbody>tr, .tb-restaurant>tbody>tr>td, .tb-restaurant>tbody>tr>th{
 border : 1px solid #000;
-}
-
-img{
-	width: 200px;
 }
 </style>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>

@@ -12,7 +12,7 @@ System.out.println("order@approval.jsp = " + order);
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>결제완료</h1>
-	<input type="button" href="<%= request.getContextPath() %>" value="메인화면으로" />
+	<h1>주문 완료</h1>
+	<input type="button" onclick="location.href='<%= request.getContextPath() %>'" value="메인화면으로" />
 </body>
 </html>

@@ -30,11 +30,11 @@ public class OrderServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//1. 입력값 처리 (가게아이디)
 		int resId = Integer.parseInt(request.getParameter("resId"));
-		System.out.println("resId@Orderservlet = " + resId);
+		//System.out.println("resId@Orderservlet = " + resId);
 		
 		//2. 비즈니스로직 : 가게 아이디로 가게객체 가져오기
 		Restaurant restaurant = new RestaurantService().selectRestaurant(resId);
-		System.out.println("restaurant @orderServlet = " + restaurant);
+		//System.out.println("restaurant @orderServlet = " + restaurant);
 		
 		//3. 결제페이지 보여주기
 		request.setAttribute("restaurant", restaurant);
@@ -45,7 +45,7 @@ public class OrderServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("path@OrderServlet = " + request.getContextPath());
+		//System.out.println("path@OrderServlet = " + request.getContextPath());
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html; charset=UTF-8");
 		
@@ -58,7 +58,7 @@ public class OrderServlet extends HttpServlet {
 		String orderComment = request.getParameter("order-comment");
 		String paymentWay = request.getParameter("payment_way");
 		String paymentPlace = request.getParameter("payment_place");
-		String orderMenu = request.getParameter("order_menu");
+		String orderMenu = (String)request.getParameter("order_menu");
 		int totalPrice = Integer.parseInt(request.getParameter("total_price"));
 		
 		
@@ -72,9 +72,12 @@ public class OrderServlet extends HttpServlet {
 		order.setPaymentWay(paymentWay);
 		order.setPaymentPlace(paymentPlace);
 		order.setTotalPrice(totalPrice);
+		order.setOrderMenu(orderMenu);
 		System.out.println("order@OrderServlet = " + order);
 		
+		//세션에 사용자입력값과 결제방식 담기 
 		request.getSession().setAttribute("order", order);
+		request.getSession().setAttribute("paymentWay", paymentWay);
 
 		
 		//결제방식 분기처리
@@ -83,8 +86,12 @@ public class OrderServlet extends HttpServlet {
 			System.out.println("온라인");
 			//온라인 결제
 			if(OrderService.CREDIT_CARD.equals(paymentWay)) {
-				System.out.println("신카");
-				//신용카드. 아임포트 api
+				System.out.println("신카 OrderServlet");
+				//신용카드. 아임포트 api...를 하려고 했떠니 제이쿼리 라이브러리네..?
+				
+				//approvalServlet으로 redirect
+				response.sendRedirect(request.getContextPath() + "/order/approval.do");
+				
 			}
 			else if(OrderService.KAKAO_PAY.equals(paymentWay)) {
 				System.out.println("카카오");
@@ -104,23 +111,12 @@ public class OrderServlet extends HttpServlet {
 		}else if(OrderService.OFFLINE.equals(paymentPlace)) {
 			System.out.println("오프라인.현장결제");
 			//현장결제
-			//바로 결제완료 페이지로 이동
+			
+			//approvalServlet으로 redirect
+			response.sendRedirect(request.getContextPath() + "/order/approval.do");
 		}
 		
 		
-//		
-//		//2. 비즈니스 로직 
-		
-		
-		
-		
-		//(주문테이블에 값 insert)
-//		Order order = new Order();
-//		order.setMemberId(memberId);
-//		order.setResId(resId);
-//		int result = new OrderService().insertOrder(order);
-//		
-//		//3. jsp위임. 
 	}
 
 }
