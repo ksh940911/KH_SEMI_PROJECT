@@ -1,8 +1,6 @@
 package order.model.service;
 
-import static common.JDBCTemplate.commit;
-import static common.JDBCTemplate.getConnection;
-import static common.JDBCTemplate.rollback;
+import static common.JDBCTemplate.*;
 
 import java.sql.Connection;
 
@@ -30,13 +28,18 @@ public class OrderService {
 		return result;
 	}
 
-<<<<<<< Updated upstream
-=======
 	public int countOrder() {
 		Connection conn = getConnection();
 		int totalOrder = orderDao.selectOrderCount(conn);
 		close(conn);
 		return totalOrder;
 	}
->>>>>>> Stashed changes
+
+	public Order selectLastOrderById(String memberId) {
+		Connection conn = getConnection();
+		Order order = orderDao.selectLastOrderById(conn, memberId);
+		close(conn);
+		return order;
+	}
+
 }

@@ -34,7 +34,7 @@ public class NoticeDao {
 		Notice notice = null;
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-
+		
 		String sql = prop.getProperty("selectOne");
 //			select * from notice where res_id = ? 
 // 			조건 : 가게아이디로 조회 + 가장 최근에 작성 된 공지글 하나만 필요 <쿼리짜야됨
@@ -81,7 +81,7 @@ public class NoticeDao {
 		return noticeNo;
 	}
 
-	public NoticeImg selectOneNoticeImg(Connection conn, int noticeNo) {
+	public NoticeImg selectOneNoticeImg(Connection conn, Notice notice) {
 		NoticeImg noticeImg = null;
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -90,7 +90,7 @@ public class NoticeDao {
 //			select * from noticeImg where notice_no = ? 
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, noticeNo);
+			pstmt.setInt(1, notice.getNoticeNo());
 			rset = pstmt.executeQuery();
 
 			if (rset.next()) {
@@ -154,6 +154,7 @@ public class NoticeDao {
 		PreparedStatement pstmt = null;
 		String sql = prop.getProperty("deleteNotice");
 //		delete from notice where notice_no = ?
+		System.out.println("noticeNo@Dao = " + noticeNo);
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, noticeNo);

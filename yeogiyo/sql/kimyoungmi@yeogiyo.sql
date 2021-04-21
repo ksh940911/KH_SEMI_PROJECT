@@ -110,22 +110,6 @@ insert into yeogiyo.menu(menu_id, res_id, menu_name, description, menu_category,
 --                   김영미                    --
 --=========================
 --=========================
-CREATE TABLE menu (
-	menu_id	number	NOT NULL,
-    res_id number not null,
-	menu_name	varchar2(100)	NOT NULL,
-	description	varchar2(1000),
-	menu_category	varchar2(100) DEFAULT '대표메뉴' not null,
-	price	number DEFAULT 0 not null,
-	menu_img	varchar2(2000),
-    constraints pk_menu_id primary key(menu_id),
-    constraints fk_menu_res_id foreign key(res_id) 
-                            references restaurant(res_id)
-                            on delete cascade
-);
-
-
-
 create table tb_order (
     order_id number not null,
     member_id varchar2(100) not null,
@@ -145,8 +129,40 @@ create table tb_order (
     
 );
 
+select * from member;
+
+create sequence seq_tb_order_id;
+
+select count(*)count from tb_order;
+select * from tb_order;
+--insertOrder
+--order_id, member_id, res_id, order_date, address, address_sub, phone, order_comment, payment_way, 
+--payment_place, order_menu, total_price
+--insert into tb_order values(seq_tb_order_id.nextval, ?, ?, sysdate, ?, ?, ?, ?, ?, ?, ?, ?)
+
+insert into tb_order
+values(seq_tb_order_id.nextval, 1, 'honggd', 1, sysdate, '서울시 강남구', '테헤란로', '01099999999', null, 'K', 'N', '[{"resId":1,"menuId":1,"menuName":"크래미키토","amount":1,"price":7000,"totalPrice":7000},{"resId":1,"menuId":3,"menuName":"트러플키토마요","amount":1,"price":7000,"totalPrice":7000}]', 14000);
+
+insert into tb_order(order_id) values(seq_tb_order_id.nextval);
+
+--selectLastOrderById
+/*
+select *
+from(
+    select rownum rnum, M.*
+    from (
+        select M.*
+        from tb_order M
+        where member_id = ?
+        order by order_date desc
+        )M
+    )M
+where rnum = 1
+*/
 
 
+
+--delete from member where member_id = 'test';
 
 --=========================
 --=========================

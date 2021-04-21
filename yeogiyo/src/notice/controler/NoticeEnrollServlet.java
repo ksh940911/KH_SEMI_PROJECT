@@ -38,8 +38,7 @@ public class NoticeEnrollServlet extends HttpServlet {
 	
 			// 파일명 변경정책 객체 : 중복파일인 경우 넘버링처리
 			FileRenamePolicy policy = new YeogiyoFileRenamePolicy();
-										  
-			
+								  
 			MultipartRequest multipartRequest = 
 					new MultipartRequest(
 							request, 
@@ -51,8 +50,7 @@ public class NoticeEnrollServlet extends HttpServlet {
 			// 입력값
 			String noticeTitle = multipartRequest.getParameter("noticeTitle");
 			String noticeContent = multipartRequest.getParameter("noticeContent");
-//			int resId = Integer.parseInt(multipartRequest.getParameter("resId"));
-			int resId = 0;
+			int resId = Integer.parseInt(multipartRequest.getParameter("resId"));
 			String originalFileName = multipartRequest.getOriginalFileName("upImgFile");
 			String renamedFileName = multipartRequest.getFilesystemName("upImgFile");
 			
@@ -72,10 +70,17 @@ public class NoticeEnrollServlet extends HttpServlet {
 			// 업무로직
 			int result = new NoticeService().insertNotice(notice);
 			String msg = (result > 0) ? "공지 등록 완료." : "공지 등록 실패";
+			String location = request.getContextPath();
+			location += (result > 0) ?
+							"/admin/noticeView?resId=" + notice.getResId() : 
+								"/admin/noticeView";
+			
 			
 			HttpSession session = request.getSession();
 			session.setAttribute("msg", msg);
-			response.sendRedirect(request.getContextPath() + "/admin/noticeView");
+			request.setAttribute("resId", resId);
+			System.out.println("resId@EnrollServlet = " + resId);
+			response.sendRedirect(location);
 		} catch(Exception e) {
 			e.printStackTrace();
 			throw e;
