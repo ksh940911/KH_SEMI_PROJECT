@@ -142,7 +142,6 @@ public class KakaoPay {
 //				e.printStackTrace();
 //			}
 //		}
-		
 		return kakaoResult;
 		
 	}

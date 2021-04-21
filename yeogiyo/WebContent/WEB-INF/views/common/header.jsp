@@ -28,7 +28,9 @@
 <link rel="stylesheet" href="<%=request.getContextPath() %>/css/search_style.css">
 <link rel="stylesheet" href="<%=request.getContextPath() %>/css/menuList.css">
 <link rel="stylesheet" href="<%=request.getContextPath() %>/css/order.css">
+<link rel="stylesheet" href="<%=request.getContextPath() %>/css/notice.css">
 <link rel="stylesheet" href="<%=request.getContextPath() %>/css/aproval.css">
+
 
 <!-- script 선언 -->
 <script src="https://kit.fontawesome.com/e1bd1cb2a5.js"></script>

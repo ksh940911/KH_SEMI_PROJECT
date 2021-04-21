@@ -58,12 +58,11 @@ public class NoticeUpdateServlet extends HttpServlet {
 			// 입력값
 			int noticeNo = Integer.parseInt(multipartRequest.getParameter("noticeNo"));
 			int resId = Integer.parseInt(multipartRequest.getParameter("resId"));
-			System.out.println("1:resId@UpdateServlet = " + resId);
 			String noticeTitle = multipartRequest.getParameter("noticeTitle");
 			String noticeContent = multipartRequest.getParameter("noticeContent");
 			String originalFileName = multipartRequest.getOriginalFileName("upImgFile");
 			String renamedFileName = multipartRequest.getFilesystemName("upImgFile");
-			
+
 			String imgNo = multipartRequest.getParameter("delImgFile");
 			
 			Notice notice = new Notice();
@@ -71,7 +70,7 @@ public class NoticeUpdateServlet extends HttpServlet {
 			notice.setNoticeNo(noticeNo);
 			notice.setNoticeTitle(noticeTitle);
 			notice.setNoticeContent(noticeContent);
-			
+
 			// 첨부이미지 있는경우
 			if(originalFileName != null) {
 				NoticeImg noticeImg = new NoticeImg();
@@ -83,18 +82,16 @@ public class NoticeUpdateServlet extends HttpServlet {
 			
 			// 로직
 			int result = 0;
+			
+			// 이미지 삭제시
 			if(imgNo != null) {
 				result = noticeService.deleteNoticeImg(imgNo);
 			}
-			
+
 			result = noticeService.updateNotice(notice);
 			String msg = (result > 0) ? "공지  수정 완료" : "공지 수정 실패";
-			
-			String location = request.getContextPath();
-			location += (result > 0) ?
-							"/admin/noticeView?resId=" + notice.getResId() : 
-								"/admin/noticeView";
-						
+			String location = request.getContextPath() + "/admin/noticeView?resId=" + notice.getResId();
+
 			request.getSession().setAttribute("msg", msg);
 			response.sendRedirect(location);
 		}catch(Exception e){

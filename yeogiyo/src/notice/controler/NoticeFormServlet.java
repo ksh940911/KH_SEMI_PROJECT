@@ -20,7 +20,7 @@ public class NoticeFormServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		int resId = Integer.parseInt(request.getParameter("resId"));
-		System.out.println("resId@FormServlet = " + resId);
+		System.out.println("resId@formServlet = " + resId);
 		request.setAttribute("resId", resId);
 		request.getRequestDispatcher("/WEB-INF/views/admin/noticeForm.jsp").forward(request, response);
 		
