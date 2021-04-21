@@ -9,11 +9,11 @@ margin: 0 auto;
 /* border: 1px solid black; */
 width: 1020px;
 }
-table{
+.tb-menuList{
 border-collapse: collapse;
 border: 1px solid  #D9D9D9;
 }
-tr, td{
+.tb-menuList>tr, .tb-menuList>tr>td{
 border: 1px solid  #D9D9D9;
 }
 /* 가게정보테이블 */

@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap');
 
 
-/* 회원가입페이지 */
+/* 회원가입페이지 css*/
 
 body {
 	color:  #333333;
@@ -19,6 +19,11 @@ section#enroll-container input {
 
 section#enroll-container table {
 	margin: 0 auto;
+	border : none;
+}
+
+section#enroll-container table td {
+	border : none;
 }
 
 section#enroll-container table th {
@@ -71,4 +76,12 @@ section#enroll-container input[type="radio"]{
 
 section#enroll-container div.gender-group{
 	text-align : center;
+}
+
+.enroll-title {
+	margin : 30px 0 25px 0;
+}
+
+.memberEnroll-join {
+	margin : 30px 0 25px 0;
 }

@@ -35,4 +35,11 @@ public class OrderService {
 		return totalOrder;
 	}
 
+	public Order selectLastOrderById(String memberId) {
+		Connection conn = getConnection();
+		Order order = orderDao.selectLastOrderById(conn, memberId);
+		close(conn);
+		return order;
+	}
+
 }

@@ -1,4 +1,4 @@
-package order.controller;
+package member.controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -8,25 +8,24 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class KakaoApprovalServlet
+ * Servlet implementation class MemberUpdateServlet
  */
-@WebServlet("/order/approval.do")
-public class KakaoApprovalServlet extends HttpServlet {
+@WebServlet("/member/memberUpdate")
+public class MemberUpdateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+       
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * 회원 정보 변경 페이지 제공
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("kakaoApprovalServlet doGet!");
-		request.getRequestDispatcher("/WEB-INF/views/order/approval.jsp").forward(request, response);
+		request.getRequestDispatcher("/WEB-INF/views/member/memberUpdate.jsp")
+				.forward(request, response);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

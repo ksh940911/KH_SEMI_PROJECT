@@ -12,7 +12,7 @@
     %>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <div class="wrapper">
-    <table id="restaurant-info">
+    <table class="tb-menuList" id="restaurant-info">
         <tr>
             <td colspan="2" id="res_name"><b><%= r.getResName() %></b></td>
         </tr>
@@ -43,7 +43,7 @@
     </table>
 
     <div>
-        <table id="cart">
+        <table class="tb-menuList" id="cart">
             <tr>
                 <td id="cart-title" style="padding: 0 10px">주문표  <input type="button" id="cart-del-all" value="전체삭제" style="float:right"></td>
             </tr>
@@ -131,7 +131,7 @@
             	   if(s.equals(m.getMenuCategory())){
             	   %>
                 <li class="li-menu btn-layer-popup">
-                    <table>
+                    <table class="tb-menuList">
                         <tr>
                             <td class="td-menu-text">
                            		 <div class="menu-id" style="display : none;"><%= m.getMenuId() %></div>
@@ -217,7 +217,7 @@
     	 
     	 console.log("review!");
     	 
-	     var servletUrl = ""; //<-여기에 이동할 서블릿 url작성
+	     var servletUrl = "<%= request.getContextPath() %>/review/reviewList"; //<-여기에 이동할 서블릿 url작성
 	     var $frm = $("#frm-review");
 	     //폼에 hidden input으로 가게아이디 담아놨어요. 서블릿에서 파라미터명 "res_id"로 꺼내세요 
 	    	 
@@ -404,6 +404,7 @@
 	    			menuId : Number($popupLayer.find(".detail-menu-id").text()),
 	    			menuName : $popupLayer.find(".detail-menu-name").text(),
 	    			amount : Number($popupLayer.find("#popup-amount").text()),
+	    			price : Number($popupLayer.find("#popup-price").text()),
 	    			totalPrice : Number($popupLayer.find("#popup-total-price").text())
 	    			
 	    	};
@@ -421,6 +422,9 @@
 				if(menu["menuId"] === Number($popupLayer.find(".detail-menu-id").text()) ){
 					selectedMenuArr[i]['amount'] += Number($popupLayer.find("#popup-amount").text());
 					isSame = true;
+					
+					//수량 추가하면서 가격도 변경
+					selectedMenuArr[i]['totalPrice'] = Number(selectedMenuArr[i]["price"]) * Number(selectedMenuArr[i]['amount']);
 				}
 			});
 			
@@ -428,11 +432,12 @@
 			if(!isSame){
 				
 				var selectedMenu = {
-	
+						
 						resId : <%= r.getResId() %>,
 		    			menuId : Number($popupLayer.find(".detail-menu-id").text()),
 		    			menuName : $popupLayer.find(".detail-menu-name").text(),
 		    			amount : Number($popupLayer.find("#popup-amount").text()),
+		    			price : Number($popupLayer.find("#popup-price").text()),
 		    			totalPrice : Number($popupLayer.find("#popup-total-price").text())
 		    			
 		    	};
@@ -481,15 +486,15 @@
 	    	$("li.li-order").remove();
 	    	$(".cart-empty").hide();
 	    	
-	    	var totalPrice = 0;
+	    	var totalPriceSum = 0;
 	    	$.each(selectedMenuArr, function(i, menu){
-				$ul.append('<li class="li-order"><div style="display:none;" class="cart-menu-id">' + menu["menuId"] + '</div><div class="cart-menu-name">' + menu["menuName"] + '</div><div class="left"><input type="button"class="btn-order-del" value="X"><span class="span-order-price">'+menu["totalPrice"]+'</span>원</div><div class="right"><input type="button"value="-"><span class="amnt">'+menu["amount"]+'</span><input type="button"value="+"></div></li>');
+				$ul.append('<li class="li-order"><div style="display:none;" class="cart-menu-id">' + menu["menuId"] + '</div><div class="cart-menu-name">' + menu["menuName"] + ' / <span class="each-price">'+ menu["price"] +'</span>원</div><div class="left"><input type="button"class="btn-order-del" value="X"><span class="span-order-price">'+menu["totalPrice"]+'</span>원</div><div class="right"><input type="button"value="-"><span class="amnt">'+menu["amount"]+'</span><span>개</span><input type="button"value="+"></div></li>');
 				
-				totalPrice += (Number(menu["totalPrice"]) * Number(menu["amount"]));
+				totalPriceSum += Number(menu["totalPrice"]);
 			});
 	    	
 	    	//html 합계금액 
-	    	$("#total-price").text(totalPrice);
+	    	$("#total-price").text(totalPriceSum);
 	    	
 		
 			//주문표 X버튼 이벤트핸들러 
@@ -509,10 +514,10 @@
 				}
 	        	
 	        	//합계금액에서 삭제한만큼 빼기
-	        	var totalPrice = Number($("#total-price").text());
-	        	totalPrice -= Number($this.parent().parent().find(".span-order-price").text());
+	        	var totalPriceSum = Number($("#total-price").text());
+	        	totalPriceSum -= Number($this.parent().parent().find(".span-order-price").text());
 	        	
-	        	$("#total-price").text(totalPrice);
+	        	$("#total-price").text(totalPriceSum);
 	        	
 	        	//html 삭제
 	        	$this.parent().parent().remove();
@@ -530,6 +535,7 @@
 			//주문표의 수량 증가
 			$("[value='+'").on('click', function(){
 				
+				
 				//html
 				//선택한 버튼에 해당하는 메뉴의 수량 증가
 				var $this = $(this);
@@ -537,13 +543,20 @@
 				amount += 1;
 				$this.parent().find(".amnt").text(amount);
 				
+				//html 수량 증가한 메뉴의 가격 증가 표시
+				//태그에서 단가 가져오기
+				var eachPrice = Number($this.parent().parent().find(".each-price").text());
+				eachPrice *= amount;
+				$this.parent().parent().find(".span-order-price").text(eachPrice);
+				
+				
 				//html 총 금액 증가
 				//총 금액은 주문표 전체를 순회해서 계산
 				var $liArr = $(".li-order");
 				var sum = 0;
 				$.each($liArr, function(i, li){
 					//각 li에서 (메뉴가격 x 수량)을 총액 변수에 담기
-					sum += (Number($(li).find(".span-order-price").text()) * Number($(li).find(".amnt").text()));
+					sum += Number($(li).find(".span-order-price").text());
 					
 				});
 				$("#total-price").text(sum);
@@ -554,11 +567,14 @@
 				$.each(selectedMenuArr, function(i, menu){
 					
 					if(Number(menu["menuId"]) === Number($this.parent().parent().find(".cart-menu-id").text()) ){
-					
 					menu["amount"] = amount;
+					
+					//수량 변경에 따른 totalPrice변경
+					menu["totalPrice"] = Number(menu["price"]) * Number(menu["amount"]);
 					return false;
 					}
 				});
+				
 				
 				//session
 				//객체배열 다시 담기
@@ -579,6 +595,13 @@
 					amount -= 1;
 					$this.parent().find(".amnt").text(amount);
 				}
+
+				//html 수량 증가한 메뉴의 가격 증가 표시
+				//태그에서 단가 가져오기
+				var eachPrice = Number($this.parent().parent().find(".each-price").text());
+				eachPrice *= amount;
+				$this.parent().parent().find(".span-order-price").text(eachPrice);
+				
 				
 				//html 총 금액 감소
 				//총 금액은 주문표 전체를 순회해서 계산
@@ -586,7 +609,7 @@
 				var sum = 0;
 				$.each($liArr, function(i, li){
 					//각 li에서 (메뉴가격 x 수량)을 총액 변수에 담기
-					sum += (Number($(li).find(".span-order-price").text()) * Number($(li).find(".amnt").text()));
+					sum += Number($(li).find(".span-order-price").text());
 					
 				});
 				$("#total-price").text(sum);
@@ -599,6 +622,9 @@
 					if(Number(menu["menuId"]) === Number($this.parent().parent().find(".cart-menu-id").text()) ){
 					
 					menu["amount"] = amount;
+					
+					//수량 변경에 따른 totalPrice변경
+					menu["totalPrice"] = Number(menu["price"]) * Number(menu["amount"]);
 					return false;
 					}
 				});

@@ -8,7 +8,7 @@
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <div class="wrapper">
         <form id="payFrm" action="<%=request.getContextPath() %>/order/order.do" method="post">
-            <table id="tb-order">
+            <table class="tb-order" id="tb-order">
                 <tr>
                     <td class="sub-title">결제하기</td>
                 </tr>
@@ -20,10 +20,10 @@
                         <label for="address">주소</label>
                         <input type="hidden" name="member_id" value="<%=loginMember.getMemberId() %>" />
                         <input type="hidden" name="res_id" value="<%= r.getResId() %>" />
-                        <input type="text" class="panel-text" name="address" id="address" placeholder="<%= loginMember.getAddress() %>"><br>
-                        <input type="text" class="panel-text" name="address-sub" id="address-sub" placeholder="<%= loginMember.getAddressSub() %>" required><br>
+                        <input type="text" class="panel-text" name="address" id="address" value="<%= loginMember.getAddress() %>"><br>
+                        <input type="text" class="panel-text" name="address-sub" id="address-sub" value="<%= loginMember.getAddressSub() %>" required><br>
                         <label for="phone">휴대전화번호</label>
-                        <input type="text" class="panel-text" name="phone" id="phone" placeholder="<%= loginMember.getPhone() %>" required>
+                        <input type="text" class="panel-text" name="phone" id="phone" value="<%= loginMember.getPhone() %>" required>
                         <input type="hidden" id="payment_way" name="payment_way" value="" /> <%-- 결제수단 : 신용카드(C), 카카오페이(K), 현금(M) --%>
                         <input type="hidden" id="payment_place" name="payment_place"/><%-- 결제장소 : 요기서결제(N), 현장결제(F) --%>
                         <input type="hidden" id="order_menu" name="order_menu"/> <%-- 주문내역 세션에서 가져온 json 그대로 담기 --%>
@@ -56,7 +56,7 @@
 
             </table>
 
-            <table id="tb-order-cart">
+            <table class="tb-order" id="tb-order-cart">
                 <tr>
                     <td class="panel-head">주문내역</td>
                 </tr>
@@ -96,7 +96,15 @@
 
         </form>
     </div>
+    <!-- 결제모듈 아임포트 jQuery 라이브러리 -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+	<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+   
     <script>
+    
+    //아임포트 초기화
+	var IMP = window.IMP;
+	IMP.init('imp32692513'); //가맹점 식별코드
     
     /*
     	주문표 html
@@ -107,9 +115,9 @@
     var totalPrice = 0;
     $.each(selectedMenuArr, function(i, menu){
     	console.log(menu);
-    	var $html = '<li class="cart-li"><div class="left">'+menu["menuName"]+'x'+menu["amount"]+'개</div><div class="right">'+menu["totalPrice"]+'원</div></li>';
+    	var $html = '<li class="cart-li"><div class="left">'+menu["menuName"]+'x'+menu["amount"]+'개</div><div class="right">'+(Number(menu["totalPrice"]) * Number(menu["amount"]))+'원</div></li>';
     	$("#cart-ul").append($html);
-    	totalPrice += menu["totalPrice"];
+    	totalPrice += (Number(menu["totalPrice"]) * Number(menu["amount"]));
     	
     });
     
@@ -125,6 +133,7 @@
     	색상 변경(활성화)
     	결제방법, 결제장소 hidden input에 담기
     */
+    	//전역변수
 	   var paymentWay = ""; //신용카드(C), kakaopay(K), 현금(M)
 	   var paymentPlace = ""; //요기서결제(N), 현장결제(F)
     $(".paybtn").click(function(){
@@ -177,32 +186,99 @@
     */
     $("#btn-pay").click(function(){
     	
-    	if(paymentWay == "" || paymentPlace == ""){
-    		alert("결제 수단을 고르세요.");
-    	}else{
-    		//hidden input에 메뉴 json값 담기
-        	var json = sessionStorage.getItem("selectedMenuArr");
-        	$("#order_menu").val(json);
-        	
-        	//submit
-        	$("#payFrm").submit();
-		
-// 			$.ajax({
-<%-- 				url : '<%=request.getContextPath() %>/order/order.do', --%>
-// 				dataType: 'json',
-// 				success: function(data){
-// 					console.log(data);
-// 					var box = data.next_redirect_pc_url;
-// 					window.open(box);
-// 				},
-// 				error: function(xhr, status, err){
-// 					console.log(xhr, status, err)
-// 				}
-// 			});
+    	<% if(loginMember == null){ %>
+    		alert("로그인이 필요합니다.");
+    	<% } else { %>
+    	
+    	if(confirm("결제하시겠습니까?")){
+    		
+    		
+
+        	if(paymentWay == "" || paymentPlace == ""){
+        		alert("결제 수단을 고르세요.");
+        	}else{
+       			//온라인 신용카드 결제일 경우
+        		if(paymentWay === 'C' && paymentPlace === 'N'){
+        			//아임포트 결제 api작동
+        			
+        			var name = ($(".cart-li:eq(1)").find(".left").text()) + " 외"; //주문명
+        			var amount = Number($("#total-price").text()); //결제 금액
+        			
+        			
+        			IMP.request_pay({
+        			    pg : 'inicis', // version 1.1.0부터 지원.
+        			    pay_method : 'card',
+        			    merchant_uid : 'merchant_' + new Date().getTime(),
+        			    name : name,
+        			   //amount : amount
+        			   amount : 10 //테스트용 10원 설정
+        			}, function(rsp) {
+        				 if ( rsp.success ) {
+        				    	//[1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
+        				    	jQuery.ajax({
+        				    		url: "/payments/complete", //cross-domain error가 발생하지 않도록 동일한 도메인으로 전송
+        				    		type: 'POST',
+        				    		dataType: 'json',
+        				    		data: {
+        					    		imp_uid : rsp.imp_uid
+        					    		//기타 필요한 데이터가 있으면 추가 전달
+        				    		}
+        				    	}).done(function(data) {
+        				    		//[2] 서버에서 REST API로 결제정보확인 및 서비스루틴이 정상적인 경우
+        				    		if ( everythings_fine ) {
+        				    			var msg = '결제가 완료되었습니다.';
+        				    			msg += '\n고유ID : ' + rsp.imp_uid;
+        				    			msg += '\n상점 거래ID : ' + rsp.merchant_uid;
+        				    			msg += '\결제 금액 : ' + rsp.paid_amount;
+        				    			msg += '카드 승인번호 : ' + rsp.apply_num;
+
+        				    			alert(msg);
+        				    		} else {
+        				    			//[3] 아직 제대로 결제가 되지 않았습니다.
+        				    			//[4] 결제된 금액이 요청한 금액과 달라 결제를 자동취소처리하였습니다.
+        				    		}
+        				    	});
+        				    	//성공 시 이동할 페이지
+        				    <%-- 	location.href="<%= request.getContextPath() %>/order/approval.do"; --%>
+        				    	
+        				    	//hidden input에 메뉴 json값 담기
+        		            	var json = sessionStorage.getItem("selectedMenuArr");
+        		            	$("#order_menu").val(json);
+        				    	
+        		            	
+        		            	//submit
+        		            	$("#payFrm").submit(); //OrderServlet doPost()로 이동
+        				    	
+        				    } else {
+        				        var msg = '결제에 실패하였습니다.';
+        				        msg += '에러내용 : ' + rsp.error_msg;
+        				        //실패시 이동할 페이지
+        		                //location.href="<%=request.getContextPath()%>/order/payFail";
+        				        alert(msg);
+        				    }
+        			});
+        			
+        		
+        			
+        		}
+        		else{
+        			//신용카드 결제가 아닐 경우
+        			
+            		//hidden input에 메뉴 json값 담기
+                	var json = sessionStorage.getItem("selectedMenuArr");
+                	$("#order_menu").val(json);
+                	
+                	console.log($("#order_menu").val());
+                	
+                	//submit
+                	$("#payFrm").submit();
+        		}
+    	}
+
+		<% } %>
 
 
     	}
-    	
     	
     	
     });

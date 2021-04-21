@@ -8,7 +8,7 @@ import net.nurigo.java_sdk.exceptions.CoolsmsException;
 public class SendSMS {
 	
 	
-	public static int verify(String phone) {
+	public static int verify(String phone,String rnum) {
 		//System.out.println("phone@SendSMS = " + phone);
 		String api_key = "NCSMMVOJHGFYV6PY";
 	    String api_secret = "LEXDMHL8HTGYVWSJ0ABOEVYHNHLD1FKA";
@@ -19,7 +19,7 @@ public class SendSMS {
 	    params.put("to", phone); //수신전화번호
 	    params.put("from", "01050048995"); //발신전화번호
 	    params.put("type", "SMS");
-	    params.put("text", "여기요 인증번호는 [1004]입니다. 위 번호를 인증창에 입력하세요.");
+	    params.put("text", "여기요 인증번호는 [" + rnum + "]입니다. 위 번호를 인증창에 입력하세요.");
 	    params.put("app_version", "test app 1.2"); // application name and version
 
 	    try {

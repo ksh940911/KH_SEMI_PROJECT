@@ -1,0 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap');
+
+/**
+* 마이페이지 관련 css
+*/
+
+/* 회원 탈퇴 버튼 */
+#deletMemberBtn {
+	color : red;
+}

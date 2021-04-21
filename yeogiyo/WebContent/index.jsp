@@ -10,6 +10,7 @@
                 on-finish-render="completeBannerListRender()"><a href="" class="thumbnail"
                     ng-click="setEvent($index, banner)" ng-style="{'background': banner.background_color}"
                     style="background: rgb(255, 255, 255);">
+
                     <div class="category-title">RANDOM</div>
                     <img ng-src="images/category-00.png" alt="202104_ohal" src="images/category-00.png"><i
                         class="icon-move"></i>

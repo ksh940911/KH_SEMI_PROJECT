@@ -11,6 +11,7 @@ header {
 	padding: 10px 0 0 0;
 }
 
+
 .login_container #loginBtn {
 	color:white;
 	background: #fa0050;
@@ -34,6 +35,9 @@ table#admin {
 	right: 150px;
 	
 }
+/* table#admin tr,td {
+	border:0;
+}  */
 table#admin input {
 	color:white;
 	background: #fa0050;
@@ -54,6 +58,10 @@ table#login {
 	right: 150px;
 	
 }
+/* table#login tr,td {
+	border:1px solid #fa0050;
+} */
+
 table#login input {
 	color:white;
 	background: #fa0050;
