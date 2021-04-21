@@ -76,7 +76,7 @@ alert("<%= msg %>");
 					</tr>
 					<tr>
 						<td>
-							<input type="button" value="마이페이지" />
+							<input type="button" value="마이페이지" onclick="location.href=''"/>
 							<input type="button" value="로그아웃" onclick="location.href='<%= request.getContextPath() %>/member/logout';"/>							
 						</td>
 					</tr>

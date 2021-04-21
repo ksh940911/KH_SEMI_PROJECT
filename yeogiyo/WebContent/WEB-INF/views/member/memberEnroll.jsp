@@ -222,6 +222,34 @@ $("#memberId").change(function() {
 	 
  });
  
+ /**
+  * ajax 비동기방식으로 휴대폰번호 중복 검사
+  */
+ $("#phone").blur(function(){
+ 	$.ajax({
+ 		url: "<%= request.getContextPath() %>/member/memberIdCheck",
+ 		method : "POST",
+ 		data : {
+ 			id : $("#memberId").val()
+ 		},
+ 		success : function(result) {
+ 			var re = /^[a-zA-Z0-9]{4,12}$/; //아이디, 패스워드 정규표현식
+ 			var $memberId = $("#memberId");
+ 			
+ 			if(result == 1 && re.test($memberId.val()) == true) {
+ 				$("#memberIdResult").html("<p style='color:blue'>사용 가능한 아이디입니다.</p>");
+ 				$("#idValid").val(1);
+ 			} else if (result == 0){
+ 				$("#memberIdResult").html("<p style='color:red'>중복된 아이디입니다.</p>");
+ 				$("#idValid").val(0);
+ 			} else {
+ 				$("#memberIdResult").html("<p style='color:red'>아이디는 4~12자리의 영문자, 숫자만 가능합니다.</p>");
+ 				$("#idValid").val(0);
+ 			}
+ 		}
+ 	})
+ });
+ 
 /*
  * 다음 카카오 주소 API 스크립트
  */

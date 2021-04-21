@@ -27,7 +27,7 @@ public class IdCheckServlet extends HttpServlet {
         String memberId = request.getParameter("id");
         
         
-        Member member = new MemberService().selectOne(memberId);
+        Member member = new MemberService().selectMemberById(memberId);
         
         //아이디 사용 가능 true, 아이디 사용 불가 false
         boolean available = member == null;
