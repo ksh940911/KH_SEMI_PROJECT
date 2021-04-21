@@ -93,12 +93,14 @@
 					<th>휴대폰<sup>*</sup></th>
 					<td>	
 						<input type="tel" placeholder="(-없이)01012345678" name="phone" id="phone" maxlength="11" required><br>
+						<input type="hidden" id="phoneValid" value="0" />
+						<span id="phoneResult"></span>
 					</td>
 				</tr>
 				<tr>
-					<th>이메일</th>
-					<td>	
-						<input type="email" placeholder="abc@xyz.com" name="email" id="email"><br>
+					<th>이메일<sup>*</sup></th>
+					<td>
+						<input type="email" placeholder="abc@xyz.com" name="email" id="email" required><br>
 					</td>
 				</tr>
 			</table>
@@ -112,8 +114,8 @@
 <script>
 
 /**
- * ajax 비동기방식으로 아이디 중복 검사
- */
+* ajax 비동기방식으로 아이디 중복 검사
+*/
 $("#memberId").blur(function(){
 	$.ajax({
 		url: "<%= request.getContextPath() %>/member/memberIdCheck",
@@ -153,32 +155,62 @@ $("#memberId").blur(function(){
 *	}
 *})
 *
-**/
+*/
 
 /**
- * 중복검사 이후 다시 아이디를 변경하는 것을 방지
+* ajax 비동기방식으로 휴대폰번호 중복 검사
+*/
+ $("#phone").blur(function(){
+ 	$.ajax({
+ 		url: "<%= request.getContextPath() %>/member/memberPhoneCheck",
+ 		method : "POST",
+ 		data : {
+ 			phone : $("#phone").val()
+ 		},
+ 		success : function(result) {
+ 			 //휴대폰번호
+ 			 var $phone = $("#phone");
+ 			 //숫자가 아닌 문자 제거
+ 			 $phone.val($phone.val().replace(/[^0-9]/g, ""))
+ 			 
+ 			 if(/^01[0-9][0-9]{8}/.test($phone.val()) == false) {
+ 				 $("#phoneResult").html("<p style='color:red'>유효한 휴대폰 번호를 입력하세요</p>");
+ 				 $("#phoneValid").val(0);
+ 				 return false;
+ 			 } else if (result == 0) {
+ 				 $("#phoneResult").html("<p style='color:red'>이미 회원가입된 휴대폰 번호입니다.</p>");
+ 				 $("#phoneValid").val(0);
+ 			 } else if (result == 1) {
+ 				 $("#phoneResult").html("<p style='color:blue'>사용 가능한 휴대폰 번호입니다.</p>");
+ 				 $("#phoneValid").val(1);
+ 			 }
+ 
+ 		}
+ 	})
+ });
+
+/**
+ * 중복검사 이후 다시 아이디, 전화번호를 변경하는 것을 방지
  */
 $("#memberId").change(function() {
 	$("#idValid").val(0);
 });
+
+$("#phone").change(function() {
+	$("#phoneValid").val(0);
+});
+
 
 /**
  * 회원가입 유효성 검사
  */
  $(document.memberEnrollFrm).submit(function(){
 	 var re = /^[a-zA-Z0-9]{4,12}$/ //아이디, 패스워드 정규표현식
-	 var $memberId = $("#memberId");
-	 var $idValid = $("#idValid");
 	 
-	 //아이디 유효성 검사
-	 if(re.test($memberId.val()) == false) {
-		 alert("아이디는 4~12자리의 영문자, 숫자만 가능합니다.");
-		 $memberId.select();
-		 return false;
-	 }
-	 
+	//id 중복검사 확인용
+	var $idValid = $("#idValid");
 	if($idValid.val() == 0) {
-		alert("아이디 중복검사를 해주세요.");
+		alert("아이디 중복검사가 되지 않았습니다.");
 		$memberId.select();
 		return false;
 	}
@@ -207,7 +239,7 @@ $("#memberId").change(function() {
 		 return false;
 	 }
 	 
-	 //휴대폰번호
+	 /*휴대폰번호
 	 var $phone = $("#phone");
 	 //숫자가 아닌 문자 제거
 	 $phone.val($phone.val().replace(/[^0-9]/g, ""))
@@ -217,39 +249,12 @@ $("#memberId").change(function() {
 		 $phone.select();
 		 return false;
 	 }
-	 
+	 */
 	 return true;
 	 
  });
- 
- /**
-  * ajax 비동기방식으로 휴대폰번호 중복 검사
-  */
- $("#phone").blur(function(){
- 	$.ajax({
- 		url: "<%= request.getContextPath() %>/member/memberIdCheck",
- 		method : "POST",
- 		data : {
- 			id : $("#memberId").val()
- 		},
- 		success : function(result) {
- 			var re = /^[a-zA-Z0-9]{4,12}$/; //아이디, 패스워드 정규표현식
- 			var $memberId = $("#memberId");
- 			
- 			if(result == 1 && re.test($memberId.val()) == true) {
- 				$("#memberIdResult").html("<p style='color:blue'>사용 가능한 아이디입니다.</p>");
- 				$("#idValid").val(1);
- 			} else if (result == 0){
- 				$("#memberIdResult").html("<p style='color:red'>중복된 아이디입니다.</p>");
- 				$("#idValid").val(0);
- 			} else {
- 				$("#memberIdResult").html("<p style='color:red'>아이디는 4~12자리의 영문자, 숫자만 가능합니다.</p>");
- 				$("#idValid").val(0);
- 			}
- 		}
- 	})
- });
- 
+
+
 /*
  * 다음 카카오 주소 API 스크립트
  */
