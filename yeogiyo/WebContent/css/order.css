@@ -10,11 +10,11 @@ margin: 0 auto;
 width: 1040px;
 height: 665px;
 }
-table{
+.tb-order{
 border-collapse: collapse;
 border: 1px solid  #D9D9D9;
 }
-tr, td{
+.tb-order>tr, .tb-order>tr>td{
 border: 1px solid  #D9D9D9;
 }
 
