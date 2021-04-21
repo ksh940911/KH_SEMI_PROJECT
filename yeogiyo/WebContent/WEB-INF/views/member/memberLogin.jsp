@@ -12,7 +12,7 @@
                     <li>
                         <input type="text" name="memberId" id="memberId" placeholder="아이디" required="required">
                         <span class="err-msg">유효한 아이디 형식이 아닙니다.</span>
-		    </li>
+		    		</li>
                     <li>
                         <input type="password" name="password" id="password" placeholder="비밀번호" required="required">
                     </li>

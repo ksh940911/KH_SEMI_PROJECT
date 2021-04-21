@@ -27,12 +27,12 @@ public class MemberDao {
 	
 
 	//아이디로 멤버조회(로그인시)
-	public Member selectOne(Connection conn, String memberId) {
+	public Member selectMemberById(Connection conn, String memberId) {
 		Member member = null;
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		
-		String query = prop.getProperty("selectOne");
+		String query = prop.getProperty("selectMemberById");
 		
 		try{
 			pstmt = conn.prepareStatement(query);
@@ -98,12 +98,12 @@ public class MemberDao {
 	}
 
 	//휴대폰 전화번호로 멤버조회(아이디찾기)
-	public Member selectMemberId(Connection conn, String phone) {
+	public Member selectMemberByPhone(Connection conn, String phone) {
 		Member member = null;
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		
-		String query = prop.getProperty("selectMemberId");
+		String query = prop.getProperty("selectMemberByPhone");
 		
 		try{
 			pstmt = conn.prepareStatement(query);
@@ -131,6 +131,64 @@ public class MemberDao {
 			close(pstmt);
 		}
 		return member;
+	}
+
+	//이메일로 멤버조회(비밀번호찾기)
+	public Member selectMemberByEmail(Connection conn, String email) {
+		Member member = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String query = prop.getProperty("selectMemberByEmail");
+		
+		try{
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, email);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()){
+				member = new Member();
+				member.setMemberId(rset.getString("member_id"));
+				member.setMemberName(rset.getString("member_name"));
+				member.setPassword(rset.getString("password"));
+				member.setBirthday(rset.getDate("birthday"));
+				member.setGender(rset.getString("gender")); //char
+				member.setAddress(rset.getString("address"));
+				member.setAddressSub(rset.getString("address_sub"));
+				member.setPhone(rset.getString("phone"));
+				member.setEmail(rset.getString("email"));
+				member.setMemberEnroll(rset.getDate("enroll_date"));
+				member.setMemberRole(rset.getString("member_role")); //char
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			close(rset);
+			close(pstmt);
+		}
+		return member;
+	}
+
+	//임시비밀번호로 비밀번호 수정(비밀번호찾기)
+	public int updateMemberPassword(Connection conn, Member member) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String query = prop.getProperty("updateMemberPassword");
+
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, member.getPassword());
+			pstmt.setString(2, member.getMemberId());
+
+			result = pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+
+		return result;
 	}
 
 }
