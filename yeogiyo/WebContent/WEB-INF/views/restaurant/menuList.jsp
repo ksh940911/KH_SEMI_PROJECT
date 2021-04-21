@@ -28,11 +28,10 @@
                 <input type="button" id="btn-notice" value="사장님 공지">
                 
                 <form id="frm-review" action="">
-
-                    <input type="hidden" name="res_id" value="<%= r.getResId() %>">
+                    <input type="hidden" name="resId" value="<%= r.getResId() %>">
                 </form>
                 <form id="frm-notice" action="">
-                    <input type="hidden" name="res_id" value="<%= r.getResId() %>">
+                    <input type="hidden" name="resId" value="<%= r.getResId() %>">
 
                 </form>
                 <br>
@@ -216,7 +215,7 @@
      $("#btn-review").click(function(){
     	 
     	 console.log("review!");
-    	 
+    	 console.log("resId@menulist="+<%= r.getResId()%>)
 	     var servletUrl = "<%= request.getContextPath() %>/review/reviewList"; //<-여기에 이동할 서블릿 url작성
 	     var $frm = $("#frm-review");
 	     //폼에 hidden input으로 가게아이디 담아놨어요. 서블릿에서 파라미터명 "res_id"로 꺼내세요 

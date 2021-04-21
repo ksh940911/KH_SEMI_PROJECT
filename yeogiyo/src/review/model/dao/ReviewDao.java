@@ -93,26 +93,48 @@ public class ReviewDao {
 		int result = 0;
 		String sql = prop.getProperty("insertReview");
 		try {
+			
+		//	insertReview = insert into review (review_no, member_id, order_id, review_time, 
+		//			review_star, review_order, review_content) values(seq_review_review_no, ?, ?, sysdate, ?, ?, ?)
+			
+			/**
+			 * 
+				member_id varchar2(100) not null, 
+				order_id number not null,
+				
+				review_star number default 5, 
+				review_order varchar2(100),
+				review_content varchar2(200) not null,
+			 */
+			
+			System.out.println("review@reviewDao = " + review);
+			
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, review.getReviewStar());
-			pstmt.setString(2, review.getReviewContent());
+			pstmt.setString(1,  review.getMemberId());
+			pstmt.setInt(2, review.getOrderId());
+			pstmt.setInt(3, review.getReviewStar());
+			pstmt.setString(4, review.getReviewOrder());
+			pstmt.setString(5, review.getReviewContent());
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
-			throw new ReviewException("리뷰 등록 오류", e);
+			e.printStackTrace();
+			//throw new ReviewException("리뷰 등록 오류", e);
 		} finally {
 			close(pstmt);
 		}
 		return result;
 	}
 	
-	public int selectLastReviewNo(Connection conn) {
+	public int selectLastReviewNo(Connection conn, String memberId) {
 		int reviewNo = 0;
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		String sql = prop.getProperty("selectLastReviewNo");
-		
+		//selectLastReviewNo = select seq_review_review_no.currval review_no from dual
 		try {
 			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, memberId);
+			
 			rset = pstmt.executeQuery();
 			while(rset.next()) {
 				reviewNo = rset.getInt("review_no");

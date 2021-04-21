@@ -30,6 +30,7 @@ function reviewValidate(){
 	action="<%=request.getContextPath() %>/review/reviewEnroll" 
 	method="post"
 	enctype="multipart/form-data">
+	<input type="hidden" name="resId" value="<%= request.getAttribute("resId") %>" />
 	<table id="tbl-review-view">
 	<tr>
 		<th colspan="5">별점을 선택해주세요.</th>

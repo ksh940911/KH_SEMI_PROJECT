@@ -29,7 +29,7 @@ public class NoticeViewServlet extends HttpServlet {
 
 		try {
 			int resId = 0;
-
+			System.out.println(request.getParameter("resId"));
 			// 공지찾기용 가게번호 참조
 			try {
 				resId = Integer.parseInt(request.getParameter("resId"));
