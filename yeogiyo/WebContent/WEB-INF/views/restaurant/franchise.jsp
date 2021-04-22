@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
@@ -252,12 +253,12 @@ table td#td2 .info {
                   <td>
                     <div class="restaurants-info">
                       <div class="restaurant-name ng-binding" ng-bind="restaurant.name" title="닥엔돈스쪽갈비-강남역삼점">
-                        보슬보슬</div>
+                        롯데리아-선릉점</div>
                       <ul>
                         <li class="payment-methods ng-binding yogiseo-payment"
-                          ng-class="is_online_payment(restaurant) ? &#39;yogiseo-payment&#39; : &#39;&#39;">서울 강남구
-                          테헤란로10길 21 2층</li>
-                        <li class="min-price ng-binding">5,000원 이상 배달</li>
+                          ng-class="is_online_payment(restaurant) ? &#39;yogiseo-payment&#39; : &#39;&#39;">서울 강남구 역삼동 707-5
+                          </li>
+                        <li class="min-price ng-binding">12,000원 이상 배달</li>
                       </ul>
                     </div>
                   </td>
