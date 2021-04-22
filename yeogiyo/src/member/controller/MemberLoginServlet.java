@@ -60,8 +60,8 @@ public class MemberLoginServlet extends HttpServlet {
 		//System.out.println("referer@MemberLoginServlet = " + referer);
 		
 		
-		//response.sendRedirect(request.getContextPath());
-		response.sendRedirect(path);
+		response.sendRedirect(request.getContextPath());
+		//response.sendRedirect(referer);
 	}
 
 }

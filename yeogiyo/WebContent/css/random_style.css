@@ -42,7 +42,7 @@
    	  color: #d9d9d9;
 } */
 
-.restaurant-categori-menu li:hover {
+.restaurant-categori-menu li:not(:first-child):hover {
 	background-color:black;
 	color:#fff;
 }
@@ -86,6 +86,7 @@
     /* margin-bottom: 10px; */
     height: 150px;
     margin: 0 auto;
+    cursor:pointer;
 }
 .recommend-item table {
 	width:50%;
@@ -115,7 +116,10 @@ table td#td1 .logo {
     height: 90px;
     border: 1px solid #d9d9d9;
 }
-
+table td#td1 .logo img {
+	width: 90px;
+    height: 90px;
+}
 
 table td#td2 {
 	width: 200px;
@@ -139,12 +143,7 @@ table td#td2 .stars {
     content: "|";
     color: #d9d9d9;
 }
-.stars span.review-user {
-	
-}
-.stars span.review-ceo {
-	
-}
+
 table td#td2 .info {
 	font-size: 12px;
 }
