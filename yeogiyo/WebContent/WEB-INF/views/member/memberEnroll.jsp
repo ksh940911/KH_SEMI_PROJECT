@@ -12,6 +12,9 @@
 <script src="<%= request.getContextPath() %>/js/jquery-3.6.0.js"></script>
 </head>
 <body>
+<br />
+<br />
+<br />
 <section id=enroll-container>
 	<!-- 여기요 로고 삽입 -->
 	<img src="<%= request.getContextPath() %>/images/logo.png"
