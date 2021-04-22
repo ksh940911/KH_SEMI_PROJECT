@@ -3,6 +3,9 @@
     
  <%@ include file="/WEB-INF/views/common/header.jsp" %>
     
+    
+    <div class="recommendList">
+    
   		<div class="restaurant-categori-menu" >
 
 			<ul>
@@ -50,4 +53,4 @@
 			</ul>
 
 
-</div>
+	</div>
