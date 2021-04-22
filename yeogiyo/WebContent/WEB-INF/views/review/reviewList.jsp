@@ -59,7 +59,7 @@
 			<td><%= r.getReviewStar() %></td>
 			<td>
 				<% if(r.getReviewphoto() != null){ %>
-				<img src="<%= request.getContextPath() %>/images/logo.png" alt="" />
+				<img src="<%= request.getContextPath() %>/upload/review/<%= r.getReviewphoto().getPhotoRenamedFilename()%> alt="" />
 				<% } %>
 			</td>
 			<td><%= r.getReviewOrder() %></td>
