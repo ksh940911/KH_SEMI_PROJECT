@@ -7,6 +7,14 @@
 	
 	
 %>    
+<<<<<<< Updated upstream
+=======
+    
+<%@ include file="/WEB-INF/views/common/headerCategory.jsp" %>
+	
+	
+		
+>>>>>>> Stashed changes
 
 <%@ include file="/WEB-INF/views/common/headerCategory.jsp" %>
     		
