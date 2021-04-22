@@ -22,6 +22,7 @@ public class MemberService {
 	public static final String ADMIN_ROLE = "A";
 	
 	
+	//회원가입
 	public int insertMember(Member member) {
 		Connection conn = getConnection();
 		int result = memberDao.insertMember(conn, member);
@@ -29,6 +30,30 @@ public class MemberService {
 			commit(conn);
 		else
 			rollback(conn);
+		return result;
+	}
+	
+	//마이페이지 정보 변경
+	public int updateMember(Member member) {
+		Connection conn = getConnection();
+		int result = memberDao.updateMember(conn, member);
+		if(result > 0)
+			commit(conn);
+		else
+			rollback(conn);
+		close(conn);
+		return result;
+	}
+	
+	//마이페이지 휴대폰 번호 변경
+	public int updatePhone(String phone, String memberId) {
+		Connection conn = getConnection();
+		int result = memberDao.updatePhone(conn, phone, memberId);
+		if(result > 0)
+			commit(conn);
+		else
+			rollback(conn);
+		close(conn);
 		return result;
 	}
 
@@ -118,6 +143,5 @@ public class MemberService {
 
 
 
-	
 
 }

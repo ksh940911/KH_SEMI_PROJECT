@@ -30,6 +30,7 @@ function reviewValidate(){
 	action="<%=request.getContextPath() %>/review/reviewEnroll" 
 	method="post"
 	enctype="multipart/form-data">
+	<input type="hidden" name="resId" value="<%= request.getAttribute("resId") %>" />
 	<table id="tbl-review-view">
 	<tr>
 		<th colspan="5">별점을 선택해주세요.</th>
@@ -47,6 +48,11 @@ function reviewValidate(){
 		<td colspan="5"><textarea rows="5" cols="40" name="content" placeholder="여기요를 통해 음식을 주문해주셔서 감사합니다.&#13;&#10;더 좋은 서비스를 위해 별점과 리뷰를 등록해주세요."></textarea></td>
 	</tr>
 	<br><hr><br>
+	<tr>
+		<td>
+			<input type="text" name="writer" value="<%= loginMember.getMemberId() %>" hidden/>
+		</td>
+	</tr>
 	<tr>
 		<td>
 			<input type='file' id='reviewphotofile' name='reviewphoto' style='display: none;'>

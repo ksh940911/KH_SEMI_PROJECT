@@ -4,6 +4,7 @@
     pageEncoding="UTF-8"%>
 <%
 	List<Review> list = (List<Review>) request.getAttribute("list");
+
 %>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/review.css" />
@@ -12,9 +13,11 @@
 	<%
 		//if(loginMember != null){
 	%>
-	<input 
-		type="button" value="리뷰작성" id="btn-add" 
-		onclick="location.href='<%=request.getContextPath()%>/review/reviewForm';"/>
+	<input type="button" id="review-add-btn" value="리뷰등록">
+  		<form id="review-add-frm" action="<%=request.getContextPath()%>/review/reviewForm">
+
+        	<input type="hidden" name="resId" value="<%= request.getAttribute("resId")%>">
+        </form>
 	<%
 		//}
 	%>
@@ -74,5 +77,14 @@
 
 	<div id='pageBar'><%= request.getAttribute("pageBar") %></div>
 </section>
+<script>
+   
+     $("#review-add-btn").click(function(){
+     	var $frm = $("#review-add-frm");
+     	console.log($("[name=resId]").val());
+     	//
+        	$frm.submit();
+     });
+</script>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 

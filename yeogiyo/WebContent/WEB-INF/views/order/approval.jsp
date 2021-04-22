@@ -76,7 +76,7 @@
                     <%  for(SelectedMenu sm : smArr){ %>
                  	    <tr>
                             <td class="sub-tb-menu-header"><%= sm.getMenuName() %> x <%= sm.getAmount() %>개</td>
-                            <td class="sub-tb-menu-body"><%= sm.getPrice() %>원</td>
+                            <td class="sub-tb-menu-body"><%= (sm.getPrice() * sm.getAmount()) %>원</td>
                         </tr>
                     
                     <% } %>
@@ -99,13 +99,16 @@
                             <td class="sub-tb-menu-body"><%= order.getTotalPrice() %>원</td>
                         </tr>
                     </table>
-    
                 </td>
             </tr>
         </table>
+        <form action="<%= request.getContextPath() %>/member/orderList"> <%-- 주문내역페이지 서블릿 url --%>
+        <input type="hidden" name="memberId" value="<%= loginMember.getMemberId() %>" />
+     	 <input type="submit" id="btn-ok" value="주문 내역 확인" style="width: 669px; height: 50px; font-size: 120%; background-color: #fa0050;  color: #fff;  border: none;" >
+        </form>
     </div>
     
-    <<script>
+    <script>
     //주문표 삭제
     sessionStorage.removeItem("selectedMenuArr");
     </script>

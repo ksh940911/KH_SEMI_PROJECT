@@ -9,14 +9,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.google.gson.Gson;
 import com.oreilly.servlet.MultipartRequest;
-import com.oreilly.servlet.multipart.FileRenamePolicy;
 
 import common.YeogiyoFileRenamePolicy;
+import order.model.service.OrderService;
+import order.model.vo.Order;
+import order.model.vo.SelectedMenu;
 import review.model.service.ReviewService;
-import review.model.vo.ReviewPhoto;
 import review.model.vo.Review;
-import common.YeogiyoFileRenamePolicy;
+import review.model.vo.ReviewPhoto;
 
 
 /**
@@ -26,6 +28,7 @@ import common.YeogiyoFileRenamePolicy;
 public class ReviewEnrollServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private ReviewService reviewService = new ReviewService();
+	private OrderService orderService = new OrderService();
 	
 	/**
 	 * 0. form의 속성 enctype="multipart/form-data" 추가
@@ -74,10 +77,16 @@ public class ReviewEnrollServlet extends HttpServlet {
 								);
 			
 			//2. db에 게시글/첨부파일 정보 저장
-			
 			//2-1. 사용자 입력값처리
 			String reviewstar = multipartRequest.getParameter("star");
 			String content = multipartRequest.getParameter("content");
+			String memberId = multipartRequest.getParameter("writer");
+			int resId = Integer.parseInt(multipartRequest.getParameter("resId"));
+			System.out.println("resID@reviewEnroll=" + resId);
+			Order order = orderService.selectLastOrderById(memberId);
+			int orderId = order.getOrderId();
+			System.out.println(orderId);
+			String reviewOrder = multipartRequest.getParameter("writer");
 			
 			//업로드한 파일명
 			String originalFileName = multipartRequest.getOriginalFileName("upFile");
@@ -85,8 +94,28 @@ public class ReviewEnrollServlet extends HttpServlet {
 			
 	//		Board board = new Board(0, title, writer, content, null, 0, null);
 			Review review = new Review();
-			review.setReviewStar(Integer.parseInt("reviewstar"));
+			review.setMemberId(memberId);
+			review.setReviewStar(Integer.parseInt(reviewstar));
 			review.setReviewContent(content);
+			review.setOrderId(orderId);
+			
+			
+			String jsonOrderMenu = order.getOrderMenu();
+			System.out.println("jsonOrderMenu@ReviewEnrollServlet = " + jsonOrderMenu);
+			
+			//JSON -> Object
+			Gson gson = new Gson();
+			SelectedMenu[] pResult = gson.fromJson(jsonOrderMenu, SelectedMenu[].class);
+			
+			StringBuilder sb = new StringBuilder();
+			String menuSum = "";
+			for(SelectedMenu sm : pResult) {
+				sb.append(sm.getMenuName() + ",");
+			}
+			sb.substring(0, sb.length()-2);
+			menuSum = sb.toString();
+			System.out.println(menuSum);
+			review.setReviewOrder(menuSum);
 			
 			//첨부파일이 있는 경우
 			//multipartRequest.getFile("upFile"):File != null
@@ -94,6 +123,7 @@ public class ReviewEnrollServlet extends HttpServlet {
 				ReviewPhoto reviewphoto = new ReviewPhoto();
 				reviewphoto.setPhotoOriginalFilename(originalFileName);
 				reviewphoto.setPhotoRenamedFilename(renamedFileName);
+				
 				review.setReviewphoto(reviewphoto);
 			}
 			
@@ -102,15 +132,18 @@ public class ReviewEnrollServlet extends HttpServlet {
 			String msg = (result > 0) ? 
 							"게시글 등록 성공!" :
 								"게시글 등록 실패!";
-			String location = request.getContextPath();
-			location += (result > 0) ?
-							"/review/reviewView?no=" + review.getReviewNo() : 
-								"/review/reviewList";
+			String location = request.getContextPath()+ "/review/reviewList?res_id=" + resId;
+			//http://localhost:9090/yeogiyo/review/reviewList?resId=1
 			
+			
+								
+			System.out.println("review.getReviewNo" + review.getReviewNo());
 			//3. DML요청 : 리다이렉트 & 사용자피드백
 			// /mvc/review/reviewList로 리다이렉트
 			HttpSession session = request.getSession();
 			session.setAttribute("msg", msg);
+			request.setAttribute("resId", resId);
+			System.out.println("resId@EnrollServlet = " + resId);
 			response.sendRedirect(location);
 		} catch (Exception e) {
 			e.printStackTrace();

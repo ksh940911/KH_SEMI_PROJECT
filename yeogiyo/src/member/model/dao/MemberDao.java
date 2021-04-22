@@ -194,7 +194,56 @@ public class MemberDao {
 		return result;
 	}
 
+  public int updateMember(Connection conn, Member member) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String query = prop.getProperty("updateMember");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, member.getMemberName());
+			pstmt.setDate(2, member.getBirthday());
+			pstmt.setString(3, member.getGender());
+			pstmt.setString(4, member.getAddress());
+			pstmt.setString(5, member.getAddressSub());
+			pstmt.setString(6, member.getEmail());
+			//pstmt.setString(6, member.getPhone());
+			pstmt.setString(7, member.getMemberId());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+
+public int updatePhone(Connection conn, String phone, String memberId) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String query = prop.getProperty("updateMemberPhone");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, phone);
+			pstmt.setString(2, memberId);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+}
 	
+  
+  
+  
 	// 전체 회원조회-리스트_페이징 (회원관리용)
 	public List<Member> selectList(Connection conn, Map<String, String> param) {
 		List<Member> list = new ArrayList<Member>();
@@ -264,12 +313,11 @@ public class MemberDao {
 			pstmt.setString(1, member.getMemberRole());
 			pstmt.setString(2, member.getMemberId());
 			result = pstmt.executeUpdate();
-		} catch (SQLException e) {
+    } catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			close(pstmt);
-		}
-
+    }
 		return result;
 	}
 
@@ -347,6 +395,6 @@ public class MemberDao {
 			break;
 		}
 		return query;
-	}
+  }
 
 }

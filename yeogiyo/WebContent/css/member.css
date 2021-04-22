@@ -1,10 +1,28 @@
 @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap');
+body{
+color:  #333333;
+font-size:15px;
+font-family: 'Nanum Gothic', sans-serif;
+}
 
 /**
 * 마이페이지 관련 css
 */
 
+section#memberView-container {
+	text-align: center;
+}
+
+section#memberView-container table, th, td {
+	margin: 0 auto;
+	text-align: left;
+	border-collapse: collapse; 
+	border : 1px solid black;
+}
+
+
 /* 회원 탈퇴 버튼 */
 #deletMemberBtn {
 	color : red;
 }
+

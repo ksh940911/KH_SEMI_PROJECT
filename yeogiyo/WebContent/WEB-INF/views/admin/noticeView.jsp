@@ -47,6 +47,7 @@
 <script>
 $("#notice-add-btn").click(function(){
 	var $frm = $("#notice-add-frm");
+	console.log($("[name=resId]").val());
    	$frm.submit();
 });
 </script>
