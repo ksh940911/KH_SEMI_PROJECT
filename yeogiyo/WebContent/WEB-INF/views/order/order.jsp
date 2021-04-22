@@ -3,7 +3,6 @@
     pageEncoding="UTF-8"%>
     <%
     Restaurant r = (Restaurant) request.getAttribute("restaurant");
-    
     %>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <div class="wrapper">
@@ -115,9 +114,9 @@
     var totalPrice = 0;
     $.each(selectedMenuArr, function(i, menu){
     	console.log(menu);
-    	var $html = '<li class="cart-li"><div class="left">'+menu["menuName"]+'x'+menu["amount"]+'개</div><div class="right">'+(Number(menu["totalPrice"]) * Number(menu["amount"]))+'원</div></li>';
+    	var $html = '<li class="cart-li"><div class="left">'+menu["menuName"]+'x'+menu["amount"]+'개</div><div class="right">'+(Number(menu["price"]) * Number(menu["amount"]))+'원</div></li>';
     	$("#cart-ul").append($html);
-    	totalPrice += (Number(menu["totalPrice"]) * Number(menu["amount"]));
+    	totalPrice += (Number(menu["price"]) * Number(menu["amount"]));
     	
     });
     

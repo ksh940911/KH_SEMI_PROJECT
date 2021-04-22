@@ -26,6 +26,7 @@
 <link rel="stylesheet" href="<%=request.getContextPath() %>/css/footer_style.css">
 <link rel="stylesheet" href="<%=request.getContextPath() %>/css/login_style.css">
 <link rel="stylesheet" href="<%=request.getContextPath() %>/css/search_style.css">
+<link rel="stylesheet" href="<%=request.getContextPath() %>/css/restaurantList.css" /> 
 <link rel="stylesheet" href="<%=request.getContextPath() %>/css/menuList.css">
 <link rel="stylesheet" href="<%=request.getContextPath() %>/css/order.css">
 <link rel="stylesheet" href="<%=request.getContextPath() %>/css/notice.css">

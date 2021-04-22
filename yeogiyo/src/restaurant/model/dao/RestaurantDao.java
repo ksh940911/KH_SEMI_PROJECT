@@ -12,13 +12,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-
 import common.JDBCTemplate;
+import order.model.service.OrderService;
 import restaurant.model.exception.RestaurantException;
 import restaurant.model.vo.Menu;
 import restaurant.model.vo.Restaurant;
 
 public class RestaurantDao {
+	
+	private OrderService orderService = new OrderService();
 	
 	private Properties prop = new Properties();
 	
@@ -56,7 +58,7 @@ public class RestaurantDao {
 				restaurant.setMinPrice(rset.getInt("min_price"));
 				restaurant.setLogoImg(rset.getString("logo_img"));
 				restaurant.setRateAvg(rset.getDouble("rate_avg"));
-				restaurant.setReviewCnt(rset.getInt("review_cnt"));
+				restaurant.setReviewCnt(orderService.selectReviewCntByResId(restaurant.getResId()));
 				list.add(restaurant);
 			}
 			
@@ -121,7 +123,7 @@ public class RestaurantDao {
 				restaurant.setMinPrice(rset.getInt("min_price"));
 				restaurant.setLogoImg(rset.getString("logo_img"));
 				restaurant.setRateAvg(rset.getDouble("rate_avg"));
-				restaurant.setReviewCnt(rset.getInt("review_cnt"));
+				restaurant.setReviewCnt(orderService.selectReviewCntByResId(restaurant.getResId()));
 			}
 			
 		} catch (Exception e) {
@@ -164,5 +166,7 @@ public class RestaurantDao {
 		
 		return menu;
 	}
+	
+	
 
 }

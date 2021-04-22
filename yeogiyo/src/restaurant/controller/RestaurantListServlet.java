@@ -25,7 +25,6 @@ public class RestaurantListServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		List<Restaurant> list = new RestaurantService().selectRestaurantList();
-		
 	
 		
 		System.out.println("list@servlet = " + list);
