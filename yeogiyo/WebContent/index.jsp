@@ -7,7 +7,7 @@
         <div class="row">
             <!-- ngRepeat: banner in banner_list -->
             <div class="col-xs-6 col-sm-4 col-md-3 category-banner ng-scope" ng-repeat="banner in banner_list"
-                on-finish-render="completeBannerListRender()"><a href="" class="thumbnail"
+                on-finish-render="completeBannerListRender()"><a href="<%= request.getContextPath() %>/restaurant/randomList" class="thumbnail"
                     ng-click="setEvent($index, banner)" ng-style="{'background': banner.background_color}"
                     style="background: rgb(255, 255, 255);">
 

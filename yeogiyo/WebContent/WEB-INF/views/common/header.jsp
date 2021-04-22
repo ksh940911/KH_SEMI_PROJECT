@@ -31,6 +31,10 @@
 <link rel="stylesheet" href="<%=request.getContextPath() %>/css/order.css">
 <link rel="stylesheet" href="<%=request.getContextPath() %>/css/notice.css">
 <link rel="stylesheet" href="<%=request.getContextPath() %>/css/aproval.css">
+<link rel="stylesheet" href="<%=request.getContextPath() %>/css/random_style.css">
+
+
+
 
 
 <!-- script 선언 -->
