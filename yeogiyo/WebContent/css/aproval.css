@@ -78,3 +78,11 @@ font-family: 'Nanum Gothic', sans-serif;
     font-size: 110%;
     font-weight: bolder;
 }
+#btn-ok{
+    width: 669px;
+    height: 50px;
+    font-size: 120%;
+    background-color: #fa0050;
+    color: #fff;
+    border: none;
+}
