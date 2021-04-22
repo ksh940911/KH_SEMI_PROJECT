@@ -34,8 +34,6 @@ public class ReviewListServlet extends HttpServlet {
 		
 		int resId = Integer.parseInt(request.getParameter("resId"));
 		
-
-		
 		try {
 			cPage = Integer.parseInt(request.getParameter("cPage"));			
 		} catch(NumberFormatException e) {

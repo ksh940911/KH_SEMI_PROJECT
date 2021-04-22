@@ -56,6 +56,16 @@ public class ReviewDao {
 				review.setReviewOrder(rset.getString("review_order"));
 				review.setReviewContent(rset.getString("review_content"));
 				
+				//첨부파일이 있는 경우
+				if(rset.getInt("photo_no") != 0) {
+					ReviewPhoto reviewphoto = new ReviewPhoto();
+					reviewphoto.setPhotoNo(rset.getInt("photo_no"));
+					reviewphoto.setReviewNo(rset.getInt("review_no"));
+					reviewphoto.setPhotoOriginalFilename(rset.getString("photo_originalfilename"));
+					reviewphoto.setPhotoRenamedFilename(rset.getString("photo_renamedfilename"));
+					reviewphoto.setPhotoStatus("Y".equals(rset.getString("photo_status")) ? true : false);
+					review.setReviewphoto(reviewphoto);
+				}
 				list.add(review);
 			}
 		} catch (SQLException e) {
@@ -118,14 +128,14 @@ public class ReviewDao {
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
-			//throw new ReviewException("리뷰 등록 오류", e);
+			throw new ReviewException("리뷰 등록 오류", e);
 		} finally {
 			close(pstmt);
 		}
 		return result;
 	}
 	
-	public int selectLastReviewNo(Connection conn, String memberId) {
+	public int selectLastReviewNo(Connection conn) {
 		int reviewNo = 0;
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -133,8 +143,6 @@ public class ReviewDao {
 		//selectLastReviewNo = select seq_review_review_no.currval review_no from dual
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, memberId);
-			
 			rset = pstmt.executeQuery();
 			while(rset.next()) {
 				reviewNo = rset.getInt("review_no");
@@ -158,6 +166,7 @@ public class ReviewDao {
 			pstmt.setString(2, reviewphoto.getPhotoOriginalFilename());
 			pstmt.setString(3, reviewphoto.getPhotoRenamedFilename());
 			result = pstmt.executeUpdate();
+			System.out.println(result);
 		} catch (SQLException e) {
 			throw new ReviewException("리뷰 첨부파일 등록 오류", e);
 		} finally {
@@ -166,8 +175,3 @@ public class ReviewDao {
 		return result;
 	}
 }
-
-
-
-
-
