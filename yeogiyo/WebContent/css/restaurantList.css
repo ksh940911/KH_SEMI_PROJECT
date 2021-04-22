@@ -1,0 +1,173 @@
+/* 가게리스트 */
+    div.item.clearfix {
+      cursor: pointer;
+    }
+    .content {
+      padding-bottom: 10px;
+    }
+    tbody {
+      display: table-row-group;
+      vertical-align: middle;
+      border-color: inherit;
+    }
+    table {
+      border-spacing: 0;
+      border-collapse: collapse;
+      border-collapse: separate;
+      text-indent: initial;
+      border-spacing: 6px;
+      border-color: grey; 	
+      display: block;
+    }
+
+    div {
+      display: block;
+      box-sizing: border-box;
+      margin: 0px;
+    }
+
+    tr {
+      display: table-row;
+      vertical-align: inherit;
+      border-color: inherit;
+    }
+
+    td {
+      display: table-cell;
+      vertical-align: inherit;
+    }
+
+    td, th {
+      padding: 0;
+    }
+
+    td,
+    tr {
+      padding: 0;
+      border: 1px solid  #ffffff;
+    }
+
+    ul {
+      display: block;
+      list-style-type: disc;
+      margin-block-start: 1em;
+      margin-block-end: 1em;
+      margin-inline-start: 0px;
+      margin-inline-end: 0px;
+      padding-inline-start: 40px;
+    } 
+    ul, ol {
+      margin-top: 0;
+      margin-bottom: 10px;
+    }
+    li {
+      display: list-item;
+      text-align: -webkit-match-parent;
+    }
+
+    .restaurant-list {
+      overflow: hidden;
+    }
+
+    .category-btn,
+    .restaurant-list {
+      max-width: 1020px;
+      margin: 7% auto;
+    }
+
+    @media (min-width: 768px) {
+      .col-sm-6 {
+        width: 50%;
+      }
+    }
+
+    @media (min-width: 768px) {
+      .col-sm-6 {
+        float: left;
+      }
+    }
+
+    .col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, .col-xs-3, .col-sm-3, .col-md-3, .col-lg-3, .col-xs-4, .col-sm-4, .col-md-4, .col-lg-4, .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, .col-xs-6, .col-sm-6, .col-md-6, .col-lg-6, .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, .col-xs-8, .col-sm-8, .col-md-8, .col-lg-8, .col-xs-9, .col-sm-9, .col-md-9, .col-lg-9, .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12 {
+      position: relative;
+      min-height: 1px;
+      padding-right: 15px;
+      padding-left: 15px;
+    }
+
+    .restaurant-list .item {
+      position: relative;
+      border: 1px solid #fff;
+      background: #fff;
+      padding: 0 8px;
+      margin-bottom: 10px;
+      height: 108px;
+      box-sizing: border-box;
+    }
+
+    .clearfix:after, .dl-horizontal dd:after, .container:after, .container-fluid:after, .row:after, .form-horizontal .form-group:after, .btn-toolbar:after, .btn-group-vertical > .btn-group:after, .nav:after, .navbar:after, .navbar-header:after, .navbar-collapse:after, .pager:after, .panel-body:after, .modal-footer:after {
+      clear: both;
+    }
+
+    .clearfix:after, .dl-horizontal dd:before, .dl-horizontal dd:after, .container:before, .container:after, .container-fluid:before, .container-fluid:after, .row:after, .form-horizontal .form-group:before, .form-horizontal .form-group:after, .btn-toolbar:before, .btn-toolbar:after, .btn-group-vertical > .btn-group:before, .btn-group-vertical > .btn-group:after, .nav:before, .nav:after, .navbar:before, .navbar:after, .navbar-header:before, .navbar-header:after, .navbar-collapse:before, .navbar-collapse:after, .pager:before, .pager:after, .panel-body:before, .panel-body:after, .modal-footer:before, .modal-footer:after {
+      display: table;
+      content: " ";
+    }
+
+    .restaurant-list table {
+      height: 108px;
+    }
+
+    /* 사진 */
+    .restaurant-list .logo {
+      width: 70px;
+      height: 70px;
+    }
+
+    .restaurant-content .logo,
+    .restaurant-list .logo {
+      border: 1px solid #d9d9d9;
+      background-size: cover;
+      background-image: url();
+    }
+
+    /* 가게이름 */
+    .restaurants-info {
+      padding-left: 10px;
+    }
+
+    .restaurant-name {
+      padding-top: 3px;
+    }
+
+    .restaurants-info .restaurant-name {
+      font-size: 120%;
+      width: 100%;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+
+    /* 가게주소,가격 */
+    .restaurant-list ul {
+      border-top: none;
+      margin-top: 0;
+      padding-top: 0;
+    }
+
+    .restaurants-info ul {
+      padding-top: 10px;
+      padding-left: 0;
+      margin-top: 5px;
+      padding-left: 0;
+    }
+    .sold_out_pop .out-of-stock-list ul, li {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .restaurants-info .min-price:before {
+      padding: 0 5px;
+      color: #d9d9d9;
+      content: "￦";
+    }
+    
