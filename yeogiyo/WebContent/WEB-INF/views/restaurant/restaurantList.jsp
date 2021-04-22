@@ -4,7 +4,7 @@
     pageEncoding="UTF-8"%>
     <% List<Restaurant> list = (List<Restaurant>)request.getAttribute("list"); %>
     
-<%@ include file="/WEB-INF/views/common/header.jsp" %>
+<%@ include file="/WEB-INF/views/common/headerCategory.jsp" %>
 
   <div ng-repeat="(key, list) in section_list" class="ng-scope">
     <div ng-show="list.length &gt; 0" class="">
@@ -12,6 +12,12 @@
       <!-- ngIf: key === 'hotdeal' -->
       <!-- ngIf: key === 'contract' -->
       <div class="restaurant-list">
+      
+      <% if(list.isEmpty() == true){ %>
+      
+      <% }  else {%>
+      
+      
    <%   for(Restaurant r : list){ %>
         <!-- ngRepeat: restaurant in list -->
         <div class="col-sm-6 contract" ng-repeat="restaurant in list">
@@ -42,6 +48,7 @@
             </table>
           </div>
         </div><!-- end ngRepeat: restaurant in list -->
+  	      <% } %>
         <% } %>
         
       </div>
@@ -52,7 +59,9 @@
 <script>
 $(".restaurants-info").click(function(){
 	console.log("click");
-	console.log($(this).find("[name=resId]").val());
+	var resId = $(this).find("[name=resId]").val();
+	console.log(resId);
+	location.href = '<%= request.getContextPath() %>/restaurant/menuList.do?res_id=' + resId;
 });
 
 
