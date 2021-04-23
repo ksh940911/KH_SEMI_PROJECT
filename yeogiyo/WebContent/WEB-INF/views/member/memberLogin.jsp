@@ -10,7 +10,7 @@
                 <div class="title"><img src="<%= request.getContextPath() %>/images/logo.png" alt="로고" width="150" height="50"></div>
                 <ul>
                     <li>
-                        <input type="text" name="memberId" id="memberId" placeholder="아이디" required="required">
+                        <input type="text" name="memberId" id="memberId" placeholder="아이디" required="required" value="<%= saveId != null ? saveId : ""%>">
                         <span class="err-msg">유효한 아이디 형식이 아닙니다.</span>
 		    		</li>
                     <li>
@@ -19,7 +19,7 @@
                     
                 </ul>
                 <div class="checkbox">
-                    <input type="checkbox" name="saveId" id="saveId">
+                    <input type="checkbox" name="saveId" id="saveId" <%= saveId != null ? "checked" : "" %>>
                     <label for="saveId">아이디저장</label>
                     <span><a href="<%= request.getContextPath() %>/member/searchId">아이디찾기</a> | <a href="<%= request.getContextPath() %>/member/searchPwd">비밀번호찾기</a></span>
                 </div>
