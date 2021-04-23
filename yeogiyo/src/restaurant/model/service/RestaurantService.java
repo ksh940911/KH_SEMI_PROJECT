@@ -5,6 +5,7 @@ import static common.JDBCTemplate.getConnection;
 
 import java.sql.Connection;
 import java.util.List;
+import java.util.Map;
 
 import restaurant.model.dao.RestaurantDao;
 import restaurant.model.vo.Menu;
@@ -42,11 +43,17 @@ public class RestaurantService {
 		return menu;
 	}
 
-	public List<Restaurant> selectRestaurantListByCategory(String category) {
+	// 전체 가게조회-리스트_페이징 (가게관리용)
+	public List<Restaurant> selectResList(Map<String, String> param) {
 		Connection conn = getConnection();
-		List<Restaurant> list = restaurantDao.selectRestaurantListByCategory(conn, category);
-		close(conn);
+		List<Restaurant> list = restaurantDao.selectResList(conn, param);
 		return list;
+	}
+	// 전체 가게수 조회
+	public int selectResCount() {
+		Connection conn = getConnection();
+		int result = restaurantDao.selectResCount(conn);
+		return result;
 	}
 
 }

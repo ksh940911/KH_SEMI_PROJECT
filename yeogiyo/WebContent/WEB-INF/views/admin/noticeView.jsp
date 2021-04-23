@@ -74,7 +74,7 @@ $("#notice-add-btn").click(function(){
 		};
 		
 		function deleteNotice(){
-			if(confirm("공지를  ㄹㅇ 삭제 하시겠습니까?")){
+			if(confirm("공지를 삭제 하시겠습니까?")){
 				var $frm = $("#notice-del-frm");
 				$frm.submit();
 			}

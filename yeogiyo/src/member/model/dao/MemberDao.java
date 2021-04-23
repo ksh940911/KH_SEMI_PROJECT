@@ -8,6 +8,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import member.model.vo.Member;
@@ -190,5 +193,208 @@ public class MemberDao {
 
 		return result;
 	}
+
+  public int updateMember(Connection conn, Member member) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String query = prop.getProperty("updateMember");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, member.getMemberName());
+			pstmt.setDate(2, member.getBirthday());
+			pstmt.setString(3, member.getGender());
+			pstmt.setString(4, member.getAddress());
+			pstmt.setString(5, member.getAddressSub());
+			pstmt.setString(6, member.getEmail());
+			//pstmt.setString(6, member.getPhone());
+			pstmt.setString(7, member.getMemberId());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+
+public int updatePhone(Connection conn, String phone, String memberId) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String query = prop.getProperty("updateMemberPhone");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, phone);
+			pstmt.setString(2, memberId);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+}
+	
+  
+  
+  
+	// 전체 회원조회-리스트_페이징 (회원관리용)
+	public List<Member> selectList(Connection conn, Map<String, String> param) {
+		List<Member> list = new ArrayList<Member>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = prop.getProperty("selectPagedMember");
+//		select * from ( select row_number() over(order by enroll_date desc) rnum, M.* from member M ) M where rnum between ? and ?
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, param.get("start"));
+			pstmt.setString(2, param.get("end"));
+			rset = pstmt.executeQuery();
+			while (rset.next()) {
+				Member member = new Member();
+				member.setMemberId(rset.getString("member_id"));
+				member.setMemberName(rset.getString("member_name"));
+				member.setPassword(rset.getString("password"));
+				member.setBirthday(rset.getDate("birthday"));
+				member.setGender(rset.getString("gender")); // char
+				member.setAddress(rset.getString("address"));
+				member.setAddressSub(rset.getString("address_sub"));
+				member.setPhone(rset.getString("phone"));
+				member.setEmail(rset.getString("email"));
+				member.setMemberEnroll(rset.getDate("enroll_date"));
+				member.setMemberRole(rset.getString("member_role")); // char
+				list.add(member);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+
+	// 전체 회원수 조회 (회원관리용)
+	public int selectMemberCount(Connection conn) {
+		int totalContents = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = prop.getProperty("selectMemberCount");
+//		select count(*) cnt from member
+		try {
+			pstmt = conn.prepareStatement(query);
+			rset = pstmt.executeQuery();
+			if (rset.next()) {
+				totalContents = rset.getInt("cnt");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return totalContents;
+	}
+
+	// 회원 권한 관리 (회원관리용)
+	public int updateMemberRole(Connection conn, Member member) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String query = prop.getProperty("updateMemberRole");
+//		update member set member_role = ? where member_id = ?
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, member.getMemberRole());
+			pstmt.setString(2, member.getMemberId());
+			result = pstmt.executeUpdate();
+    } catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+    }
+		return result;
+	}
+
+	// 회원 선택 조회 회원수 (회원관리용)
+	public int searchMemberCount(Connection conn, Map<String, String> param) {
+		int totalContents = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = prop.getProperty("searchMemberCount");
+//		select count(*) cnt from member M where #
+		query = setQuery(query, param.get("searchType"), param.get("searchKeyword"));
+		try {
+			pstmt = conn.prepareStatement(query);
+			rset = pstmt.executeQuery();
+			if (rset.next()) {
+				totalContents = rset.getInt("cnt");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return totalContents;
+	}
+
+	// 회원 선택 조회_페이징 (회원관리용)
+	public List<Member> searchMember(Connection conn, Map<String, String> param) {
+		List<Member> list = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = prop.getProperty("searchPagedMember");
+//		select * from ( select row_number() over( order by enroll_date desc ) rnum, M.* from member M where # ) M where rnum between ? and ?
+		query = setQuery(query, param.get("searchType"), param.get("searchKeyword"));
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, param.get("start"));
+			pstmt.setString(2, param.get("end"));
+			rset = pstmt.executeQuery();
+			list = new ArrayList<Member>();
+			while (rset.next()) {
+				Member member = new Member();
+				member.setMemberId(rset.getString("member_id"));
+				member.setMemberName(rset.getString("member_name"));
+				member.setPassword(rset.getString("password"));
+				member.setBirthday(rset.getDate("birthday"));
+				member.setGender(rset.getString("gender")); // char
+				member.setAddress(rset.getString("address"));
+				member.setAddressSub(rset.getString("address_sub"));
+				member.setPhone(rset.getString("phone"));
+				member.setEmail(rset.getString("email"));
+				member.setMemberEnroll(rset.getDate("enroll_date"));
+				member.setMemberRole(rset.getString("member_role")); // char
+				list.add(member);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+
+	public String setQuery(String query, String searchType, String searchKeyword) {
+		switch (searchType) {
+		case "memberId":
+			query = query.replace("#", " member_id like '%" + searchKeyword + "%'");
+			break;
+		case "memberName":
+			query = query.replace("#", " member_name like '%" + searchKeyword + "%'");
+			break;
+		case "gender":
+			query = query.replace("#", " gender = '" + searchKeyword + "'");
+			break;
+		}
+		return query;
+  }
 
 }

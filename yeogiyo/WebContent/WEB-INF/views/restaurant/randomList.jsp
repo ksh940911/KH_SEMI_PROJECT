@@ -7,16 +7,12 @@
 	
 	
 %>    
+
     
 <%@ include file="/WEB-INF/views/common/headerCategory.jsp" %>
 	
 	
-	
-	
-	
-	<div class="recommendList">
-		
-
+    		
 		<div class="recommendlogo">
 			<div class="logo">
 				<img src="<%= request.getContextPath() %>/images/random_bottom_logo.png" alt="오늘뭐먹지로고" />
@@ -64,17 +60,5 @@
 	</div>
 	
 	
-<script>
-	
-/* $(".recommend-item").click(function(){
-	
-	
-	
-	
-	
-}); */
-
-
-</script>	
 
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>

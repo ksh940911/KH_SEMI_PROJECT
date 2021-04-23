@@ -89,8 +89,8 @@ public class ReviewEnrollServlet extends HttpServlet {
 			String reviewOrder = multipartRequest.getParameter("writer");
 			
 			//업로드한 파일명
-			String originalFileName = multipartRequest.getOriginalFileName("upFile");
-			String renamedFileName = multipartRequest.getFilesystemName("upFile");
+			String originalFileName = multipartRequest.getOriginalFileName("reviewphoto");
+			String renamedFileName = multipartRequest.getFilesystemName("reviewphoto");
 			
 	//		Board board = new Board(0, title, writer, content, null, 0, null);
 			Review review = new Review();
@@ -109,7 +109,7 @@ public class ReviewEnrollServlet extends HttpServlet {
 			
 			StringBuilder sb = new StringBuilder();
 			String menuSum = "";
-			for(SelectedMenu sm : pResult) {
+			for(SelectedMenu sm : pResult) { 
 				sb.append(sm.getMenuName() + ",");
 			}
 			sb.substring(0, sb.length()-2);
@@ -117,6 +117,7 @@ public class ReviewEnrollServlet extends HttpServlet {
 			System.out.println(menuSum);
 			review.setReviewOrder(menuSum);
 			
+			System.out.println("filename@" + originalFileName);
 			//첨부파일이 있는 경우
 			//multipartRequest.getFile("upFile"):File != null
 			if(originalFileName != null) {
@@ -132,7 +133,7 @@ public class ReviewEnrollServlet extends HttpServlet {
 			String msg = (result > 0) ? 
 							"게시글 등록 성공!" :
 								"게시글 등록 실패!";
-			String location = request.getContextPath()+ "/review/reviewList?res_id=" + resId;
+			String location = request.getContextPath()+ "/review/reviewList?resId=" + resId;
 			//http://localhost:9090/yeogiyo/review/reviewList?resId=1
 			
 			
