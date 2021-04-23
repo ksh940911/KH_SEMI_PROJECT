@@ -1,10 +1,39 @@
-@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap');
-
-/**
-* 마이페이지 관련 css
-*/
-
-/* 회원 탈퇴 버튼 */
-#deletMemberBtn {
-	color : red;
+/* 마이페이지 관련 css */
+/* 중앙정렬 */
+.content-wrapper {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+/* 	height: 300px; */
+	margin: 80px 0;
 }
+
+.button-class {
+	text-align: center;
+}
+
+.content-wrapper table {
+	height: 250px;
+	text-align: left;
+/* 	border : 1px solid #D9D9D9; */
+	border-spacing: 25px 1rem;
+}
+
+
+/* .memberView-container th { */
+/* 	width: 120px; */
+/* 	background-color : #333333; */
+/* 	color : white; */
+	
+/* } */
+
+.memberView-title {
+	text-align : center;
+	font-size : 15px;
+	padding : 10px;
+	margin-bottom : 5px;
+	border-bottom : 1px solid #E6E6E6;
+}
+
+
+

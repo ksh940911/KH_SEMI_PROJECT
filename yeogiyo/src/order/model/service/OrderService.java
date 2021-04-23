@@ -41,8 +41,6 @@ public class OrderService {
 		close(conn);
 		return order;
 	}
-<<<<<<< Updated upstream
-=======
 	
 	public Order selectLastOrderMenuById(String memberId) {
 		Connection conn = getConnection();
@@ -57,6 +55,4 @@ public class OrderService {
 		close(conn);
 		return reviewCnt;
 	}
->>>>>>> Stashed changes
-
 }

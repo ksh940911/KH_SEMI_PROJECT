@@ -129,21 +129,48 @@ create table tb_order (
     
 );
 
+select * from restaurant;
+select * from menu;
 select * from member;
+select * from tb_order order by order_date desc;
 
 create sequence seq_tb_order_id;
 
 select count(*)count from tb_order;
-select * from tb_order;
+select * from tb_order where res_id = 1; --order_id
+select * from review; --order_id
+select * from reviewphoto;
+
+update restaurant
+set res_address = '서울 강남구 테헤란로 124'
+where res_id = 3;
+
+commit;
+
+--selectRestaurantListByCategory
+--select * from restaurant where category = ?
+
+
+
+--res_id로 리뷰 갯수 조회 selectReviewCntByResId
+/*
+select count(*) count
+from tb_order O join review R
+    on O.order_id = R.order_id
+where res_id = ?
+*/
+
+
+
 --insertOrder
 --order_id, member_id, res_id, order_date, address, address_sub, phone, order_comment, payment_way, 
 --payment_place, order_menu, total_price
 --insert into tb_order values(seq_tb_order_id.nextval, ?, ?, sysdate, ?, ?, ?, ?, ?, ?, ?, ?)
 
 insert into tb_order
-values(seq_tb_order_id.nextval, 1, 'honggd', 1, sysdate, '서울시 강남구', '테헤란로', '01099999999', null, 'K', 'N', '[{"resId":1,"menuId":1,"menuName":"크래미키토","amount":1,"price":7000,"totalPrice":7000},{"resId":1,"menuId":3,"menuName":"트러플키토마요","amount":1,"price":7000,"totalPrice":7000}]', 14000);
+values(seq_tb_order_id.nextval, 'honggd', 1, sysdate, '서울시 강남구', '테헤란로', '01099999999', null, 'K', 'N', '[{"resId":1,"menuId":1,"menuName":"크래미키토","amount":1,"price":7000,"totalPrice":7000},{"resId":1,"menuId":3,"menuName":"트러플키토마요","amount":1,"price":7000,"totalPrice":7000}]', 14000);
 
-insert into tb_order(order_id) values(seq_tb_order_id.nextval);
+commit;
 
 --selectLastOrderById
 /*
@@ -156,7 +183,7 @@ from(
         where member_id = ?
         order by order_date desc
         )M
-    )M
+    )M'[{"resId":1,"menuId":1,"menuName":"크래미키토","amount":2,"price":7000,"totalPrice":14000},{"resId":1,"menuId":2,"menuName":"베이컨키토마요","amount":1,"price":7000,"totalPrice":7000}]'
 where rnum = 1
 */
 

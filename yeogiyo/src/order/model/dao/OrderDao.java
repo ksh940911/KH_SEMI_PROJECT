@@ -183,4 +183,28 @@ public class OrderDao {
 		return order;
 	}
 
+	public int selectReviewCntByResId(Connection conn, int resId) {
+		String sql = prop.getProperty("selectReviewCntByResId");
+		int reviewCnt = 0;
+		ResultSet rset = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, resId);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				reviewCnt = rset.getInt("count");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return reviewCnt;
+	}
+
 }

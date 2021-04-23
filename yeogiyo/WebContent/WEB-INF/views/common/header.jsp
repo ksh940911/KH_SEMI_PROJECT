@@ -10,6 +10,17 @@
 	
 	Member loginMember = (Member)session.getAttribute("loginMember");
 
+	
+	String saveId = null;
+	Cookie[] cookies = request.getCookies();
+	if(cookies != null){
+		for(Cookie c : cookies){
+			String name = c.getName();
+			String value = c.getValue();  
+			if("saveId".equals(name))
+				saveId = value;
+		}
+	}
 %>    
     
 <!DOCTYPE html>
@@ -26,10 +37,15 @@
 <link rel="stylesheet" href="<%=request.getContextPath() %>/css/footer_style.css">
 <link rel="stylesheet" href="<%=request.getContextPath() %>/css/login_style.css">
 <link rel="stylesheet" href="<%=request.getContextPath() %>/css/search_style.css">
+<link rel="stylesheet" href="<%=request.getContextPath() %>/css/restaurantList.css" /> 
 <link rel="stylesheet" href="<%=request.getContextPath() %>/css/menuList.css">
 <link rel="stylesheet" href="<%=request.getContextPath() %>/css/order.css">
 <link rel="stylesheet" href="<%=request.getContextPath() %>/css/notice.css">
 <link rel="stylesheet" href="<%=request.getContextPath() %>/css/aproval.css">
+<link rel="stylesheet" href="<%=request.getContextPath() %>/css/random_style.css">
+
+
+
 
 
 <!-- script 선언 -->
@@ -65,9 +81,11 @@ alert("<%= msg %>");
 				<table id="admin">
 					<tr>
 						<td>관리자님, 반갑습니다</td>
+						<td><input type="button" value="회원관리" onclick="location.href='<%= request.getContextPath() %>/admin/memberManage';" /></td>
 					</tr>
 					<tr>
-						<td><input type="button" value="로그아웃" onclick="location.href='<%= request.getContextPath()%>/member/logout';"/></td>
+						<td><input type="button" value="로그아웃" onclick="location.href='<%= request.getContextPath() %>/member/logout';"/></td>
+						<td><input type="button" value="가게관리" onclick="location.href='<%= request.getContextPath() %>/admin/resManage';"/></td>
 					</tr>
 				</table>
 			<% } else {%>
