@@ -35,7 +35,7 @@
                 <tr>
                     <td class="panel-body" style="text-align: right;">
                         <textarea class="form-control" name="order-comment" id="order-comment" cols="30" rows="3" maxlength="100" placeholder='코로나19 예방을 위해 비대면 배달 권장드립니다. 요기서 결제 선택 후, "문 앞 배달"을 요청사항에 남겨주세요.'></textarea>
-                        <span>1</span><span>/100</span>
+                        <span id="counter">1</span><span>/100</span>
                     </td>
                 </tr>
                 <tr>
@@ -104,6 +104,24 @@
     //아임포트 초기화
 	var IMP = window.IMP;
 	IMP.init('imp32692513'); //가맹점 식별코드
+	
+	
+	/*
+		주문시 요청사항 입력 글자수 제한
+	*/
+	$("#order-comment").keyup(function(){
+		var content = $(this).val();
+		var $counter = $("#counter");
+		
+		//실시간 입력 글자수 표시
+		$counter.text(content.length);
+		
+		//100자 도달 시 빨간색으로 표시
+		if(content.length >= 100){
+			$counter.css("color", "red");
+		}
+	});
+	
     
     /*
     	주문표 html

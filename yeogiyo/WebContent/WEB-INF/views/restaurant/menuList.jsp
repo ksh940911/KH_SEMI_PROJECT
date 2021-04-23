@@ -11,7 +11,7 @@
     Restaurant r = (Restaurant) request.getAttribute("restaurant");
     %>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
-    <div class="wrapper">
+    <div class="menu-wrapper">
     <table class="tb-menuList" id="restaurant-info">
         <tr>
             <td colspan="2" id="res_name"><b><%= r.getResName() %></b></td>
