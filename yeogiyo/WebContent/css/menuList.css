@@ -4,9 +4,8 @@ color:  #333333;
 font-size:15px;
 font-family: 'Nanum Gothic', sans-serif;
 }
-.wrapper{
+.menu-wrapper{
 margin: 0 auto;
-/* border: 1px solid black; */
 width: 1020px;
 }
 .tb-menuList{
@@ -180,7 +179,7 @@ font-size: 16px;
 /* 카테고리 누르면 나타날 메뉴의 리스트 */
 .ul-menu-list{
 margin : 0;
-display:none;
+/* display:none; */
 }
 /* 카테고리 누르면 나타날 메뉴 */
 .li-menu{
