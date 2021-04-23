@@ -1,9 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/WEB-INF/views/common/header.jsp" %>
+<%@ include file="/WEB-INF/views/common/headerMemberView.jsp" %>
 <%
 	String oldphone = loginMember.getPhone();
 %>
+<link rel="stylesheet" href="<%= request.getContextPath() %>/css/member.css" />
 <section id=updatePhone-container>
 	<h3>전화번호 변경</h3>
 	<form 

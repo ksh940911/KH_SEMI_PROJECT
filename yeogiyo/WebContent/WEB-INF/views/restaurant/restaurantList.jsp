@@ -2,7 +2,7 @@
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <% List<Restaurant> list = (List<Restaurant>)request.getAttribute("list"); %>
+<% List<Restaurant> list = (List<Restaurant>)request.getAttribute("list"); %>
     
 <%@ include file="/WEB-INF/views/common/headerCategory.jsp" %>
 

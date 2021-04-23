@@ -1,7 +1,7 @@
 <%@page import="java.sql.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/WEB-INF/views/common/header.jsp" %>
+<%@ include file="/WEB-INF/views/common/headerMemberView.jsp" %>
 <%
 	
 	String memberId = loginMember.getMemberId();
@@ -16,53 +16,62 @@
 	
 %>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<form id="memberUpdateFrm" method="POST">
-	<table>
-		<tr>
-			<th>아이디</th>
-			<td>
-				<input type="text"  name="memberId" id="memberId" value="<%= memberId %>"  readonly><br>
-			</td>
-		</tr>
-		<tr>
-			<th>이름</th>
-			<td>
-				<input type="text"  name="memberName" id="memberName" value="<%= memberName %>"  required><br>
-			</td>
-		</tr>
-		<tr>
-			<th>생년월일</th>
-			<td>
-				<input type="date" name="birthday" id="birthday" value="<%= birthday %>"><br>
-			</td>
-		</tr>
-		<tr>
-			<th>성별</th>
-			<td>
-				<input type="radio" name="gender" id="gender0" value="M" <%= gender.equals("M") ? "checked" : "" %>>
-					<label for="gender0">남자</label>
-				<input type="radio" name="gender" id="gender1" value="F" <%= gender.equals("F") ? "checked" : "" %>>
-					<label for="gender1">여자</label>
+<link rel="stylesheet" href="<%= request.getContextPath() %>/css/member.css" />
+<div class="content-wrapper">
+<section class=memberView-container>
+	<form class="memberUpdateFrm" id="memberUpdateFrm" method="POST">
+		<div class="memberView-title">
+			<p>내 정보 수정</p>
+		</div>
+		<table>
+			<tr>
+				<th>아이디</th>
+				<td>
+					<input type="text"  name="memberId" id="memberId" value="<%= memberId %>"  readonly><br>
 				</td>
-		</tr>
-		<tr>
-			<th>주소</th>
-			<td>
-				<input type="text" id="postcode" placeholder="우편번호" required><br>
-				<input type="button" onclick="execDaumPostcode()" value="우편번호 찾기"><br>
-				<input type="text" name="address" id="address" placeholder="주소" value="<%= address %>"><br>
-				<input type="text" name="addressSub" id="addressSub" placeholder="상세주소" value="<%= addressSub %>"><br>
-			</td>
-		</tr>
-		<tr>
-			<th>이메일</th>
-			<td><input type="email" placeholder="abc@xyz.com" name="email" id="email" value="<%= email%>"><br></td>
-		</tr>
-	</table>
-	<input type="button" value="정보수정" onclick="updateMember();" />
-	<input type="button" value="취소" onclick="history.back()" />
-</form>
-
+			</tr>
+			<tr>
+				<th>이름</th>
+				<td>
+					<input type="text"  name="memberName" id="memberName" value="<%= memberName %>"  required><br>
+				</td>
+			</tr>
+			<tr>
+				<th>생년월일</th>
+				<td>
+					<input type="date" name="birthday" id="birthday" value="<%= birthday %>"><br>
+				</td>
+			</tr>
+			<tr>
+				<th>성별</th>
+				<td>
+					<input type="radio" name="gender" id="gender0" value="M" <%= gender.equals("M") ? "checked" : "" %>>
+						<label for="gender0">남자</label>
+					<input type="radio" name="gender" id="gender1" value="F" <%= gender.equals("F") ? "checked" : "" %>>
+						<label for="gender1">여자</label>
+					</td>
+			</tr>
+			<tr>
+				<th>주소</th>
+				<td>
+					<input type="text" id="postcode" placeholder="우편번호" required><br>
+					<input type="button" onclick="execDaumPostcode()" value="우편번호 찾기"><br>
+					<input type="text" name="address" id="address" placeholder="주소" value="<%= address %>"><br>
+					<input type="text" name="addressSub" id="addressSub" placeholder="상세주소" value="<%= addressSub %>"><br>
+				</td>
+			</tr>
+			<tr>
+				<th>이메일</th>
+				<td><input type="email" placeholder="abc@xyz.com" name="email" id="email" value="<%= email%>"><br></td>
+			</tr>
+		</table>
+		<div class="button-class">
+			<input type="button" value="정보수정" onclick="updateMember();" />
+			<input type="button" value="취소" onclick="history.back()" />
+		</div>
+	</form>
+</section>
+</div>
 <script>
 
 function updateMember() {

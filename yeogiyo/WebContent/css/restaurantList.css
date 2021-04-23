@@ -5,7 +5,8 @@
     .content {
       padding-bottom: 10px;
     }
-    tbody {
+/*
+   tbody {
       display: table-row-group;
       vertical-align: middle;
       border-color: inherit;
@@ -64,7 +65,7 @@
       display: list-item;
       text-align: -webkit-match-parent;
     }
-
+*/
     .restaurant-list {
       overflow: hidden;
     }
