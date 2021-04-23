@@ -2,12 +2,15 @@
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<% List<Restaurant> list = (List<Restaurant>)request.getAttribute("list"); %>
+<% 
+	List<Restaurant> list = (List<Restaurant>)request.getAttribute("list"); 
+	/* String category = (String)request.getAttribute("category"); */
+%>
     
 <%@ include file="/WEB-INF/views/common/headerCategory.jsp" %>
 
       <div class="restaurant-list">
-      
+      <input class="cliked-category" type="hidden" value="<%= category %>"></input>
       <% if(list.isEmpty() == true){ %>
       
      	<p style="text-align: center;">조회된 가게가 없습니다.</p>
@@ -24,10 +27,12 @@
               <tbody>
                 <tr>
                   <td id="atd1">
-                    <img src="<%= r.getLogoImg() %>" alt="가게사진" />
+                  	<div class="logo">
+	                    <img src="<%= r.getLogoImg() %>" alt="가게사진" />                  	
+                  	</div>
                   </td>
                   <td id="atd2">
-                    <div class="restaurants-info">
+                    
                       <div class="restaurant-name"><%= r.getResName() %></div>
                       <input type="hidden" name="resId" value="<%= r.getResId() %>" />
                       <div class="stars">
@@ -38,7 +43,7 @@
 						 <span class="payment-method">요기서 결제</span>
 						 <span class="min-price"> <%= r.getMinPrice() %>원 이상 배달</span>
 					  </div>
-                    </div>
+              
                   </td>
                 </tr>
               </tbody>
@@ -61,18 +66,15 @@
 
 
 <script>
-$(".logo").click(function(){
-	var resId = $(this).parent().parent().find("[name=resId]").val();
-	console.log(resId);
+
+$(".item-clearfix").click(function(){
+	var resId = $(this).find("[name=resId]").val();
+	//console.log(resId);
 	location.href = '<%= request.getContextPath() %>/restaurant/menuList.do?res_id=' + resId;
 });
 
-$(".restaurants-info").click(function(){
-	console.log("click");
-	var resId = $(this).find("[name=resId]").val();
-	console.log(resId);
-	location.href = '<%= request.getContextPath() %>/restaurant/menuList.do?res_id=' + resId;
-});
+//console.log($(".cliked-category").val());
+//console.log($(".category-name"));
 
 
 </script>

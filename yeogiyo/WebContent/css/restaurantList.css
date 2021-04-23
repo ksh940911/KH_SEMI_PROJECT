@@ -1,7 +1,5 @@
 /* 가게리스트 */
 
-   
-
     .restaurant-list {
       overflow: hidden;
       max-width: 1020px;
@@ -10,18 +8,19 @@
     
      .col-sm-6 {
       position: relative;
-      min-height: 1px;
+     /*  min-height: 1px; */
       padding-right: 15px;
       padding-left: 15px;
+      height:108px;
+      margin-bottom: 10px;
     }
     
     .item-clearfix {
       position: relative;
       cursor: pointer;
       border: 1px solid #d9d9d9;
-      background: #fff;
+      background-color: #fff;
       padding: 0 8px;
-      margin-bottom: 10px;
       height: 108px;
       box-sizing: border-box;
       
@@ -45,28 +44,44 @@
 
   
     .item-clearfix table {
-      height: 108px;
+      	height: 108px;
+      	border-spacing: 0;
+    	border-collapse: collapse;
     }
-
-    /* 사진 */
-    .item-clearfix td#atd1 img {
+    .item-clearfix table tbody {
+		display: table-row-group;
+	    vertical-align: middle;
+	}
+	.item-clearfix table tr {
+		display: table-row;
+	    vertical-align: inherit;
+	}
+	.item-clearfix table td {
+		display: table-cell;
+	    vertical-align: inherit;
+	    padding: 0;
+	}
+    /* table td#atd1 {
+    	width: 60px;
+    } */
+    table td#atd1 .logo {
+		width: 70px;
+	    height: 70px;
+	}
+    table td#atd1 .logo img {
       width: 70px;
       height: 70px;
-      border: 1px solid #d9d9d9;
     }
 
-    /* 가게이름 */
-    td#atd2 .restaurants-info {
-      padding-left: 10px;
+  
+    table td#atd2 {
+    	padding-left:10px;
+    	font-size: 90%;
     }
 
-    .restaurants-info .restaurant-name {
+    .restaurant-name {
       padding-top: 3px;
-      font-size: 100%;
       width: 100%;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      overflow: hidden;
     }
     
     .item-clearfix span.delivery-time {
@@ -74,31 +89,8 @@
 		right:10px;
 		bottom:12px;
 		color: #999 !important;
-		font-size: 12px !important;
+		font-size: 90% !important;
 	}
     
 
-    /* 가게주소,가격 */
-    /* .restaurant-list ul {
-      border-top: none;
-      margin-top: 0;
-      padding-top: 0;
-    }
-
-    .restaurants-info ul {
-      padding-top: 10px;
-      padding-left: 0;
-      margin-top: 5px;
-      padding-left: 0;
-    }
-    .sold_out_pop .out-of-stock-list ul, li {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-    .restaurants-info .min-price:before {
-      padding: 0 5px;
-      color: #d9d9d9;
-      content: "￦";
-    } */
     
