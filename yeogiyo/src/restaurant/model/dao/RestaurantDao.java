@@ -167,6 +167,41 @@ public class RestaurantDao {
 		
 		return menu;
 	}
+
+	public List<Restaurant> selectRestaurantListByCategory(Connection conn, String category) {
+		List<Restaurant> list = new ArrayList<>();
+		Restaurant restaurant = null;
+		String sql = prop.getProperty("selectRestaurantListByCategory");
+		ResultSet rset = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, category);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				restaurant = new Restaurant();
+				restaurant.setResId(rset.getInt("res_id"));
+				restaurant.setResName(rset.getString("res_name"));
+				restaurant.setResAddress(rset.getString("res_address"));
+				restaurant.setCategory(rset.getString("category"));
+				restaurant.setMinPrice(rset.getInt("min_price"));
+				restaurant.setLogoImg(rset.getString("logo_img"));
+				restaurant.setRateAvg(rset.getDouble("rate_avg"));
+				restaurant.setReviewCnt(orderService.selectReviewCntByResId(restaurant.getResId()));
+				list.add(restaurant);
+			}
+			
+		} catch (Exception e) {
+			throw new RestaurantException("가게 리스트 조회 오류", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
 	
 	
 

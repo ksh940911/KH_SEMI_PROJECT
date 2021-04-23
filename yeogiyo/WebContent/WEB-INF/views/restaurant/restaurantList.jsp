@@ -15,6 +15,9 @@
       
       <% if(list.isEmpty() == true){ %>
       
+     <p style="text-align: center;">조회된 가게가 없습니다.</p>
+      
+      
       <% }  else {%>
       
       

@@ -139,6 +139,17 @@ create sequence seq_tb_order_id;
 select count(*)count from tb_order;
 select * from tb_order where res_id = 1; --order_id
 select * from review; --order_id
+select * from reviewphoto;
+
+update restaurant
+set res_address = '서울 강남구 테헤란로 124'
+where res_id = 3;
+
+commit;
+
+--selectRestaurantListByCategory
+--select * from restaurant where category = ?
+
 
 
 --res_id로 리뷰 갯수 조회 selectReviewCntByResId
