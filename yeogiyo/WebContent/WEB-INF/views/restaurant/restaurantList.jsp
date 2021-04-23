@@ -61,6 +61,12 @@
 
 
 <script>
+$(".logo").click(function(){
+	var resId = $(this).parent().parent().find("[name=resId]").val();
+	console.log(resId);
+	location.href = '<%= request.getContextPath() %>/restaurant/menuList.do?res_id=' + resId;
+});
+
 $(".restaurants-info").click(function(){
 	console.log("click");
 	var resId = $(this).find("[name=resId]").val();

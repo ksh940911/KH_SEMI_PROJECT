@@ -1,27 +1,28 @@
 <%@page import="java.sql.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/WEB-INF/views/common/headerMemberView.jsp" %>
+<%@ include file="/WEB-INF/views/common/header.jsp" %>
 <%
-	
-	String memberId = loginMember.getMemberId();
-	String memberName = loginMember.getMemberName();
-	Date birthday = loginMember.getBirthday() != null? loginMember.getBirthday() : null;
-	String gender = loginMember.getGender();
-	String address = loginMember.getAddress();
-	String addressSub = loginMember.getAddressSub() != null? loginMember.getAddressSub() : "";
-	String phone = loginMember.getPhone();
-	String email = loginMember.getEmail();
-	Date memberEnroll = loginMember.getMemberEnroll();
-	
+	Member member = (Member)request.getAttribute("member");
+	String memberId = member.getMemberId();
+	String memberName = member.getMemberName();
+	String password = member.getPassword();
+	Date birthday = member.getBirthday() != null? loginMember.getBirthday() : null;
+	String gender = member.getGender();
+	String address = member.getAddress();
+	String addressSub = member.getAddressSub() != null? loginMember.getAddressSub() : "";
+	String phone = member.getPhone();
+	String email = member.getEmail();
+	Date memberEnroll = member.getMemberEnroll();
+	String memberRole = member.getMemberRole();
 %>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<link rel="stylesheet" href="<%= request.getContextPath() %>/css/member.css" />
+<link rel="stylesheet" href="<%= request.getContextPath() %>/css/adminMember.css" />
 <div class="content-wrapper">
 <section class=memberView-container>
 	<form class="memberUpdateFrm" id="memberUpdateFrm" method="POST">
 		<div class="memberView-title">
-			<p>내 정보 수정</p>
+			<p><%= memberName %>(<%= memberId %>) 회원 정보 수정</p>
 		</div>
 		<table>
 			<tr>
@@ -29,6 +30,31 @@
 				<td>
 					<input type="text"  name="memberId" id="memberId" value="<%= memberId %>"  readonly><br>
 				</td>
+			</tr>
+			<tr>
+				<th>비밀번호</th>
+					<td>
+					<input type="text"  name="password" id="password" value="********"  readonly><br>
+					</td>
+			</tr>
+			<tr>
+				<th>권한</th>
+				
+					<%-- <select class="member-role" data-member-id="<%= memberRole %>">
+						<option 
+							value="<%= MemberService.ADMIN_ROLE %>"
+							<%=	MemberService.ADMIN_ROLE.equals(memberRole) ? "selected" : "" %>>관리자</option>
+						<option 
+							value="<%= MemberService.MEMBER_ROLE %>"
+							<%= MemberService.MEMBER_ROLE.equals(memberRole) ? "selected" : "" %>>일반</option>
+					</select> --%>
+					<td>
+					<input type="radio" name="memberRole" id="U" value="U" <%= memberRole.equals("U") ? "checked" : "" %>>
+						<label for="U">일반사용자</label>
+					<input type="radio" name="memberRole" id="A" value="A" <%= memberRole.equals("A") ? "checked" : "" %>>
+						<label for="A">관리자</label>
+					</td>
+				
 			</tr>
 			<tr>
 				<th>이름</th>
@@ -49,7 +75,7 @@
 						<label for="gender0">남자</label>
 					<input type="radio" name="gender" id="gender1" value="F" <%= gender.equals("F") ? "checked" : "" %>>
 						<label for="gender1">여자</label>
-					</td>
+				</td>
 			</tr>
 			<tr>
 				<th>주소</th>
@@ -66,7 +92,8 @@
 			</tr>
 		</table>
 		<div class="button-class">
-			<input type="button" value="정보수정" onclick="updateMember();" />
+			<input type="button" value="수정" onclick="updateMember();" />
+			<input type="button" value="삭제" onclick="deleteMember();" />
 			<input type="button" value="취소" onclick="history.back()" />
 		</div>
 	</form>
@@ -75,7 +102,7 @@
 <script>
 
 function updateMember() {
-	$("#memberUpdateFrm").attr("action", "<%= request.getContextPath()%>/member/memberUpdate")
+	$("#memberUpdateFrm").attr("action", "<%= request.getContextPath()%>/admin/memberUpdate")
 						 .submit();
 }
 
@@ -152,7 +179,7 @@ $("#phone").change(function() {
              document.getElementById("addressSub").focus();
          }
      }).open();
- }
+ };
  
 </script>
 
