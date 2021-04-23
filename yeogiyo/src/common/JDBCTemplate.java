@@ -25,7 +25,7 @@ public class JDBCTemplate {
 		String filename = JDBCTemplate.class //클래스 객체
 										.getResource("/data-source.properties") //url객체
 										.getPath(); //String객체 : 절대경로
-		System.out.println("fileName@JDBCTemplate = " + filename);
+		//System.out.println("fileName@JDBCTemplate = " + filename);
 		
 		try {
 			prop.load(new FileReader(filename));
