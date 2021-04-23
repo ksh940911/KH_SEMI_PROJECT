@@ -41,5 +41,22 @@ public class OrderService {
 		close(conn);
 		return order;
 	}
+<<<<<<< Updated upstream
+=======
+	
+	public Order selectLastOrderMenuById(String memberId) {
+		Connection conn = getConnection();
+		Order order = orderDao.selectLastOrderMenuById(conn, memberId);
+		close(conn);
+		return order;
+	}
+	
+	public int selectReviewCntByResId(int resId) {
+		Connection conn = getConnection();
+		int reviewCnt = orderDao.selectReviewCntByResId(conn, resId);
+		close(conn);
+		return reviewCnt;
+	}
+>>>>>>> Stashed changes
 
 }
