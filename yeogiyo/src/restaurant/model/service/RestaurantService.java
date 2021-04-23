@@ -42,4 +42,11 @@ public class RestaurantService {
 		return menu;
 	}
 
+	public List<Restaurant> selectRestaurantListByCategory(String category) {
+		Connection conn = getConnection();
+		List<Restaurant> list = restaurantDao.selectRestaurantListByCategory(conn, category);
+		close(conn);
+		return list;
+	}
+
 }
