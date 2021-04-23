@@ -98,7 +98,7 @@
 .recommend-item table tbody {
 	display: table-row-group;
     vertical-align: middle;
-    transform:translateY(20px);
+    /* transform:translateY(20px); */
 }
 .recommend-item table tr {
 	display: table-row;
@@ -125,7 +125,7 @@ table td#td1 .logo img {
 table td#td2 {
 	width: 200px;
 	height:110px;
-	padding-left: 10px;
+	/* padding-left: 10px; */
 }
 table td#td2 .restaurant-name {
 	font-size: 100%;
