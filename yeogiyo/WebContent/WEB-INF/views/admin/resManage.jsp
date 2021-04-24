@@ -17,8 +17,9 @@
 		<div id="search-container">
 	
 			<div id="search-resId" class="search-type">
-	            <form action="<%=request.getContextPath()%>/admin/restaurantFinder">
-	               가게 조회 : <input type="text" name="searchResId"  size="25" placeholder="검색할 가게명을 입력하세요."/>
+	            <form action="<%=request.getContextPath()%>/admin/resFinder">
+	               가게 조회 : <input type="text" name="searchResName"  size="25" placeholder="검색할 가게명을 입력하세요."/>
+	       
 	                <button type="submit">검색</button>			
 	            </form>	
 	        </div>
