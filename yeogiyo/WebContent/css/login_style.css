@@ -1,9 +1,9 @@
 @charset "UTF-8";
 /* 로그인 페이지 css */
 
-section#content .content-wrap{ margin: 10px; height: 800px; } 
+section#content-wrapper .content-wrap{ margin: 10px; height: 800px; } 
 /* .content-wrap{ margin: 10px; height: 800px; } */ 
-section#content .login-container{width:500px; margin: 0 auto; }
+section#content-wrapper .login-container{width:500px; margin: 0 auto; }
 /* .login-container{width:500px; margin: 0 auto; } */
 .login-container .title { width:100%; margin-top:30px;}
 .login-container ul {text-align: center; padding: 0; margin-top: 50px;}
