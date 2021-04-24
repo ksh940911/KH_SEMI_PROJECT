@@ -164,7 +164,7 @@ $("#phone").change(function() {
  * ++++++++++++++++++++++++++++++++++
  */
  
-// 업데이트 함수에 이름, 휴대폰 번호 유효성 검사 추가
+// 업데이트 함수에 이름, 휴대폰 번호, 비밀번호 유효성 검사 추가
 function updateMember() {
 	
 	 //이름 유효성 검사
@@ -178,6 +178,14 @@ function updateMember() {
 			alert("사용할 수 없는 휴대폰 번호입니다. 다시 입력하세요.");
 			$("#phone").select();
 			return;
+	}
+	 
+	var $password = $("#password");
+	
+	if(!$password == "****" && /^[a-zA-Z0-9]{4,12}$/.test($password.val()) == false) {
+			 alert("패스워드는 4~12자리의 영문자, 숫자만 가능합니다.");
+			 $password.select();
+			 return false;
 	}
 	 
 	$("#memberUpdateFrm").attr("action", "<%=request.getContextPath()%>/admin/memberUpdate")
