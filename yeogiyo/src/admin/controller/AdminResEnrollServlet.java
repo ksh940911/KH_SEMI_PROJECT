@@ -12,10 +12,15 @@ import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.FileRenamePolicy;
 
 import common.YeogiyoFileRenamePolicy;
+<<<<<<< Updated upstream
 import notice.model.sevice.NoticeService;
 import notice.model.vo.Notice;
 import notice.model.vo.NoticeImg;
 import restaurant.model.service.RestaurantService;
+=======
+import restaurant.model.service.RestaurantService;
+import restaurant.model.vo.ResImg;
+>>>>>>> Stashed changes
 import restaurant.model.vo.Restaurant;
 
 /**
@@ -37,12 +42,10 @@ public class AdminResEnrollServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
-			// 저장 파일 셋팅
-			String saveDirectory = getServletContext().getRealPath("/upload/"); // 업로드 파일 저장폴더
-			int maxPostSize = 10 * 1024 * 1024; // 파일 최대 허용 크기 10MB?
-			String encoding = "utf-8"; // 인코딩
+			String saveDirectory = getServletContext().getRealPath("/upload/res");
+			int maxPostSize = 10 * 1024 * 1024; 
+			String encoding = "utf-8";
 	
-			// 파일명 변경정책 객체 : 중복파일인 경우 넘버링처리
 			FileRenamePolicy policy = new YeogiyoFileRenamePolicy();
 								  
 			MultipartRequest multipartRequest = 
@@ -53,7 +56,6 @@ public class AdminResEnrollServlet extends HttpServlet {
 							encoding, 
 							policy);
 			
-			// 입력값
 			String resName = multipartRequest.getParameter("resName");
 			String category = multipartRequest.getParameter("category");
 			String resAddress = 
@@ -70,21 +72,19 @@ public class AdminResEnrollServlet extends HttpServlet {
 			res.setResAddress(resAddress);
 			res.setMinPrice(minPrice);
 			
-			// 첨부이미지 있는경우
 			if(originalFileName != null) {
 				ResImg resImg = new ResImg();
 				resImg.setOriginalFilname(originalFileName);
 				resImg.setRenamedFilename(renamedFileName);
 				res.setResImg(resImg);
 			}
+
+			int result = new RestaurantService().insertRes(res);
+			String msg = (result > 0) ? "가게 등록 완료." : "가게 등록 실패";
+			String location = request.getContextPath() + "/admin/resManage";
 			
-			// 업무로직
-//			int result = new RestaurantService().insertRes(res);
-//			String msg = (result > 0) ? "가게 등록 완료." : "가게 등록 실패";
-//			String location = request.getContextPath() + "admin/resManage";
-//			
-//			request.getSession().setAttribute("msg", msg);
-//			response.sendRedirect(location);
+			request.getSession().setAttribute("msg", msg);
+			response.sendRedirect(location);
 		} catch(Exception e) {
 			e.printStackTrace();
 			throw e;

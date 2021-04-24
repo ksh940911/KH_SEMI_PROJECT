@@ -17,7 +17,13 @@
             <td colspan="2" id="res_name"><b><%= r.getResName() %></b></td>
         </tr>
         <tr>
-            <td id="logo-img"><img src="<%= r.getLogoImg() %>" alt=""></td>
+			<td id="logo-img">
+			<% if(r.getResImg() != null && r.getResImg().getImgResStatus()) { %>
+				<img src="<%= request.getContextPath() %>/upload/res/<%= r.getResImg().getRenamedFilename() %>" class="resList-img"/>	
+			<% } else { %>
+				<img src="<%= request.getContextPath() %>/images/logo.png" class="resList-img" style="width:50px;"/>	
+			<% } %>
+			</td>
             <td id="res-info-sub">
                 <span class="star-fill" id="star1">★</span>
                 <span class="star-fill" id="star2">★</span>
