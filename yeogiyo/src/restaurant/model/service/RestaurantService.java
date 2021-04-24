@@ -89,8 +89,7 @@ public class RestaurantService {
 		}
 		return result;
 	}
-<<<<<<< Updated upstream
-=======
+
 
 	// 가게 정보 수정 (가게관리용)
 	public int updateRes(Restaurant res) {
@@ -112,12 +111,6 @@ public class RestaurantService {
 	
 	}
 
-	// 메뉴조회-리스트_페이징 (메뉴관리용)
-	public List<Menu> selectMenuList(Map<String, String> param) {
-		Connection conn = getConnection();
-		List<Menu> list = restaurantDao.selectMenuList(conn, param);
-		return list;
-	}
 	
 	// 메뉴조회-리스트_페이징 (메뉴관리용)
 	public List<Menu> selectMenuList(Map<String, String> param) {
@@ -126,12 +119,6 @@ public class RestaurantService {
 		return list;
 	}
 
-	// 메뉴 개수 조회 (메뉴관리용)
-	public int selectMenuCount(String resId) {
-		Connection conn = getConnection();
-		int totalContents = restaurantDao.selectMenuCount(conn, resId);
-		return totalContents;
-	}
 
 	// 메뉴 개수 조회 (메뉴관리용)
 	public int selectMenuCount(String resId) {
@@ -139,7 +126,7 @@ public class RestaurantService {
 		int totalContents = restaurantDao.selectMenuCount(conn, resId);
 		return totalContents;
 	}
->>>>>>> Stashed changes
+
 
 	public int deleteRes(int resId) {
 		Connection conn = getConnection();
