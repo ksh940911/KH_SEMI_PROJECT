@@ -8,15 +8,18 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
 import common.JDBCTemplate;
+import notice.model.exception.NoticeException;
 import order.model.service.OrderService;
 import restaurant.model.exception.RestaurantException;
 import restaurant.model.vo.Menu;
+import restaurant.model.vo.ResImg;
 import restaurant.model.vo.Restaurant;
 
 
@@ -58,7 +61,7 @@ public class RestaurantDao {
 				restaurant.setResAddress(rset.getString("res_address"));
 				restaurant.setCategory(rset.getString("category"));
 				restaurant.setMinPrice(rset.getInt("min_price"));
-				restaurant.setLogoImg(rset.getString("logo_img"));
+//				restaurant.setLogoImg(rset.getString("logo_img"));
 				restaurant.setRateAvg(rset.getDouble("rate_avg"));
 				restaurant.setReviewCnt(orderService.selectReviewCntByResId(restaurant.getResId()));
 				list.add(restaurant);
@@ -123,7 +126,7 @@ public class RestaurantDao {
 				restaurant.setResAddress(rset.getString("res_address"));
 				restaurant.setCategory(rset.getString("category"));
 				restaurant.setMinPrice(rset.getInt("min_price"));
-				restaurant.setLogoImg(rset.getString("logo_img"));
+//				restaurant.setLogoImg(rset.getString("logo_img"));
 				restaurant.setRateAvg(rset.getDouble("rate_avg"));
 				restaurant.setReviewCnt(orderService.selectReviewCntByResId(restaurant.getResId()));
 			}
@@ -188,7 +191,10 @@ public class RestaurantDao {
 				restaurant.setResAddress(rset.getString("res_address"));
 				restaurant.setCategory(rset.getString("category"));
 				restaurant.setMinPrice(rset.getInt("min_price"));
-				//restaurant.setLogoImg(rset.getString("logo_img"));
+
+
+			 //restaurant.setLogoImg(rset.getString("logo_img"));
+
 				restaurant.setRateAvg(rset.getDouble("rate_avg"));
 				restaurant.setReviewCnt(orderService.selectReviewCntByResId(restaurant.getResId()));
 				list.add(restaurant);
@@ -227,7 +233,7 @@ public class RestaurantDao {
 				restaurant.setResAddress(rset.getString("res_address"));
 				restaurant.setCategory(rset.getString("category"));
 				restaurant.setMinPrice(rset.getInt("min_price"));
-				restaurant.setLogoImg(rset.getString("logo_img"));
+//				restaurant.setLogoImg(rset.getString("logo_img"));
 				restaurant.setRateAvg(rset.getDouble("rate_avg"));
 				restaurant.setReviewCnt(rset.getInt("review_cnt"));
 				list.add(restaurant);
@@ -255,13 +261,14 @@ public class RestaurantDao {
 				totalContents = rset.getInt("cnt");
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new RestaurantException("전체 가게수 조회 오류", e);
 		} finally {
 			close(rset);
 			close(pstmt);
 		}
 		return totalContents;
 	}
+
 
 	// 메뉴조회-리스트_페이징
 	public List<Menu> selectMenuList(Connection conn, Map<String, String> param) {
@@ -311,12 +318,115 @@ public class RestaurantDao {
 				totalContents = rset.getInt("cnt");
 			}
 		} catch (Exception e) {
+			throw new RestaurantException("메뉴 개수 조회 오류", e);
 			e.printStackTrace();
 		} finally {
 			close(rset);
 			close(pstmt);
 		}
 		return totalContents;
+	}
+
+
+	// 가게 신규 등록 (가게관리용)
+	public int insertRes(Connection conn, Restaurant res) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("insertRes");
+//		insert into restaurant(res_id, res_name, res_address, category, min_price) values(seq_tb_res_id.nextval, ?, ?, ?, ?)
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, res.getResName());
+			pstmt.setString(2, res.getResAddress());
+			pstmt.setString(3, res.getCategory());
+			pstmt.setInt(4, res.getMinPrice());
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			throw new RestaurantException("가게 등록 오류", e);
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	// 가게 마지막 번호 조회 (가게관리용)
+	public int selectLastResId(Connection conn) {
+		int resId = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectLastResId");
+//		select seq_tb_res_id.currval res_id from dual	
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			while (rset.next()) {
+				resId = rset.getInt("res_id");
+			}
+		} catch (SQLException e) {
+			throw new RestaurantException("가게등록 번호 조회 오류", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return resId;
+	}
+
+	// 가게 이미지 등록 (가게관리용)
+	public int insertResImg(Connection conn, ResImg resImg) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("insertNoticeImg");
+//		insert into res_img(img_res_no, img_res_id, img_originalfile, img_renamedfile) values(seq_tb_res_img_no.nextval, ?, ?, ?)
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, resImg.getImgResId() );
+			pstmt.setString(2, resImg.getOriginalFilname());
+			pstmt.setString(3, resImg.getRenamedFilename());
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			throw new RestaurantException("가게 이미지 등록 오류", e);
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int updateRes(Connection conn, Restaurant res) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("updateRes");
+//		update restaurant set res_name = ?, res_address = ?, category = ?, min_price =? where res_id = ?
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, res.getResName());
+			pstmt.setString(2, res.getResAddress());
+			pstmt.setString(3, res.getCategory());			
+			pstmt.setInt(4, res.getMinPrice());
+			pstmt.setInt(5, res.getResId());
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			throw new RestaurantException("가게 수정 오류", e);
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int deleteRes(Connection conn, int resId) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("deleteRes");
+//		delete from restaurant where res_id = ?
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, resId);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			throw new RestaurantException("가게 삭제 오류", e);
+		} finally {
+			close(pstmt);
+		}
+		return result;
 	}
 
 }
