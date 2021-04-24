@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+import member.model.exception.MemberException;
 import member.model.vo.Member;
 
 public class MemberDao {
@@ -56,6 +57,7 @@ public class MemberDao {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+			throw new MemberException("로그인 오류",e);
 		} finally {
 			close(rset);
 			close(pstmt);
@@ -91,6 +93,7 @@ public class MemberDao {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
+			throw new MemberException("회원가입 오류",e);
 		} finally {
 			close(pstmt);
 		}
@@ -126,6 +129,7 @@ public class MemberDao {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+			throw new MemberException("아이디찾기 오류",e);
 		} finally {
 			close(rset);
 			close(pstmt);
@@ -162,6 +166,7 @@ public class MemberDao {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+			throw new MemberException("비밀번호찾기 오류",e);
 		} finally {
 			close(rset);
 			close(pstmt);
@@ -184,6 +189,7 @@ public class MemberDao {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
+			throw new MemberException("비밀번호찾기 오류",e);
 		} finally {
 			close(pstmt);
 		}
@@ -211,6 +217,7 @@ public class MemberDao {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
+			throw new MemberException("회원정보수정 오류",e);
 		} finally {
 			close(pstmt);
 		}
@@ -231,6 +238,7 @@ public class MemberDao {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
+			throw new MemberException("전화번호 수정 오류",e);
 		} finally {
 			close(pstmt);
 		}
@@ -251,6 +259,7 @@ public class MemberDao {
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
+			throw new MemberException("회원탈퇴 오류",e);
 		} finally {
 			close(pstmt);
 		}
@@ -286,6 +295,7 @@ public class MemberDao {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+			throw new MemberException("전체 회원조회 오류",e);
 		} finally {
 			close(rset);
 			close(pstmt);
@@ -328,6 +338,7 @@ public class MemberDao {
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
+			throw new MemberException("회원권한 수정 오류(관리자용)",e);
 		} finally {
 			close(pstmt);
 		}
@@ -388,6 +399,7 @@ public class MemberDao {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+			throw new MemberException("회원조회 오류(관리자용)",e);
 		} finally {
 			close(rset);
 			close(pstmt);
@@ -433,6 +445,7 @@ public class MemberDao {
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
+			throw new MemberException("회원 수정 오류(관리자용)",e);
 		} finally {
 			close(pstmt);
 		}

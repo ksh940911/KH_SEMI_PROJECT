@@ -25,35 +25,49 @@ public class MemberService {
 	//회원가입
 	public int insertMember(Member member) {
 		Connection conn = getConnection();
-		int result = memberDao.insertMember(conn, member);
-		if(result > 0)
-			commit(conn);
-		else
+		int result = 0;
+		try {
+			result = memberDao.insertMember(conn, member);
+			commit(conn);			
+		} catch(Exception e) {
 			rollback(conn);
+			throw e;
+		} finally {
+			close(conn);
+		}
 		return result;
 	}
 	
 	//마이페이지 정보 변경
 	public int updateMember(Member member) {
 		Connection conn = getConnection();
-		int result = memberDao.updateMember(conn, member);
-		if(result > 0)
-			commit(conn);
-		else
+		int result = 0;
+		try {
+			result = memberDao.updateMember(conn, member);
+			commit(conn);			
+		} catch(Exception e) {
 			rollback(conn);
-		close(conn);
+			throw e;
+		} finally {
+			close(conn);			
+		}
 		return result;
 	}
 	
 	//마이페이지 휴대폰 번호 변경
 	public int updatePhone(String phone, String memberId) {
 		Connection conn = getConnection();
-		int result = memberDao.updatePhone(conn, phone, memberId);
-		if(result > 0)
+		int result = 0;
+		try {
+			result = memberDao.updatePhone(conn, phone, memberId);			
 			commit(conn);
-		else
+		}catch(Exception e) {
 			rollback(conn);
-		close(conn);
+			throw e;
+		}finally {
+			close(conn);			
+		}
+	
 		return result;
 	}
 
@@ -86,12 +100,17 @@ public class MemberService {
 	//임시비밀번호로 비밀번호 수정(비밀번호찾기)
 	public int updateMemberPassword(Member member) {
 		Connection conn = getConnection();
-		int result = memberDao.updateMemberPassword(conn, member);
-		if(result>0)
-			commit(conn);
-		else 
+		int result = 0;
+		try {
+			result = memberDao.updateMemberPassword(conn, member);
+			commit(conn);			
+		}catch(Exception e) {
 			rollback(conn);
-		close(conn);
+			throw e;
+		}finally {
+			close(conn);			
+		}
+		
 		return result;
 	}
 
@@ -113,10 +132,17 @@ public class MemberService {
 	// 회원권한 변경 (회원관리용)
 	public int updateMemberRole(Member member) {
 		Connection conn = getConnection();
-		int result = memberDao.updateMemberRole(conn, member);
-		if(result > 0) commit(conn);
-		else rollback(conn);
-		close(conn);
+		int result = 0;
+		try {
+			result = memberDao.updateMemberRole(conn, member);
+			commit(conn);
+		}catch(Exception e) {
+			rollback(conn);
+			throw e;
+		}finally {
+			close(conn);			
+		}
+		
 		return result;
 	}
 
@@ -139,32 +165,50 @@ public class MemberService {
 	//회원 삭제
 	public int deleteMember(String memberId) {
 		Connection conn = getConnection();
-		int result = memberDao.deleteMember(conn, memberId);
-		if(result > 0) 
-			commit(conn);
-		else
+		int result = 0;
+		try {
+			result = memberDao.deleteMember(conn, memberId);
+			commit(conn);			
+		}catch(Exception e) {
 			rollback(conn);
-		close(conn);
+			throw e;
+		}finally {
+			close(conn);			
+		}
+		
 		return result;
 	}
 
 	// 회원 선택 수정 (회원관리용)
 	public int adminUpdateMember(Member member) {
 		Connection conn = getConnection();
-		int result = memberDao.adminUpdateMember(conn, member);
-		if(result > 0) commit(conn);
-		else rollback(conn);
-		close(conn);
+		int result = 0;
+		try {
+			result = memberDao.adminUpdateMember(conn, member);
+			commit(conn);
+		}catch(Exception e) {
+			rollback(conn);
+			throw e;
+		}finally {
+			close(conn);			
+		}
 		return result;
 	}
 
 	// 회원 선택 삭제 (회원관리용)
 	public int adminMemberDelete(String memberId) {
 		Connection conn = getConnection();
-		int result = memberDao.deleteMember(conn, memberId);
-		if(result > 0) commit(conn);
-		else rollback(conn);
-		close(conn);
+		int result = 0;
+		try {
+			result = memberDao.deleteMember(conn, memberId);
+			commit(conn);
+		}catch(Exception e) {
+			rollback(conn);
+			throw e;
+		}finally {
+			close(conn);			
+		}
+		 
 		return result;
 	}
 	
