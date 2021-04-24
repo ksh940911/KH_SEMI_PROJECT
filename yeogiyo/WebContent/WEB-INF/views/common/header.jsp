@@ -55,6 +55,14 @@
 <% if(msg != null) { %>
 alert("<%= msg %>");
 <% } %>
+
+$(function(){
+	
+//var membercart = JSON.parse(sessionStorage.getItem("selectedMenuArr"));
+var membercart = sessionStorage.getItem("selectedMenuArr");
+console.log("membercart : " + membercart);
+	
+});
 </script>
 
 
@@ -93,7 +101,7 @@ alert("<%= msg %>");
 				<table id="login">
 					<tr>
 						<td><%= loginMember.getMemberName() %>님, 반갑습니다</td>
-						<td><input type="button" value="장바구니" name="basket"/></td>
+						<td><input type="button" value="장바구니" name="basket" onclick="location.href='<%= request.getContextPath() %>/member/memberBasket';"/></td>
 					</tr>
 					<tr>
 						<td>
@@ -109,4 +117,4 @@ alert("<%= msg %>");
 	</header>
 	
 	
-	<section id="content">
+	<section id="content-wrapper">
