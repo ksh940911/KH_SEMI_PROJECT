@@ -5,9 +5,9 @@
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <%
 	List<Restaurant> list = (List<Restaurant>)request.getAttribute("list");
-	int resId = 0;
+	
 %>
-<link rel="stylesheet" href="<%= request.getContextPath() %>/css/admin.css" />
+<link rel="stylesheet" href="<%= request.getContextPath() %>/css/adminRes.css" />
 <style>
 	div#search-container {margin:0 0 10px 0; padding:3px; background-color: rgba(250, 0, 80, 0.7);}
 </style>
@@ -48,7 +48,14 @@
 		<tr onmouseover="this.style.background='rgba(250, 0, 80, 0.2)'" onmouseout="this.style.background='white'">
 			<td><%= res.getResId() %></td>
 			<td><%= res.getCategory() %></td>
-			<td><img style="width: 50px; height:50px;" src="<%= res.getLogoImg() %>" alt=""></td>
+			<td>
+			<% if(res.getResImg() != null && res.getResImg().getImgResStatus()) { %>
+				<img src="<%= request.getContextPath() %>/upload/res/<%= res.getResImg().getRenamedFilename() %>" class="resList-img"/>	
+			<% } else { %>
+				<img src="<%= request.getContextPath() %>/images/logo.png" class="resList-img" style="width:50px;"/>	
+			<% } %> 
+			
+			</td>
 			<td><%= res.getResName() %></td>
 			<td><%= res.getResAddress() %></td>
 			<td><%= res.getMinPrice() %></td>
@@ -66,16 +73,13 @@
 </div>
 </section>
 
-<%-- <form action="<%= request.getContextPath() %>/admin/resDelete" id="res-del-frm" method="POST">
-	<input type="hidden" name="resId" value="<%= %>" />
-
-</form> --%>
 <form 
 	action="<%= request.getContextPath() %>/admin/resUpdate"
 	name="resUpdateFrm"
 	method="GET">
 	<input type="hidden" name="resId" />
 </form>
+
 <script>
 $("#tbl-resList tr").click(function(){
 	var tr = $(this);
@@ -87,25 +91,5 @@ $("#tbl-resList tr").click(function(){
 	$frm.submit();
 });
 
-function updateRes(){
-	
-	
-}
-
-function deleteRes(){
-	if(confirm("가게를 삭제 하시겠습니까?")){
-		var $frm = $("#res-del-frm");
-		$frm.submit();
-	}
-	
-}
-
 </script>
-
-<%-- 	<input type="button" value="신규등록" />
-	<input type="button" value="가게찾기(가게명)" /><!-- 텍스트박스 검색?  -->
-	
-	 <input type="button" id="noticeMamage" onclick="location.href='<%= request.getContextPath() %>/notice/noticeManage';">공지관리</button>
-	 <input type="button" id="reviewMamage" onclick="location.href='<%= request.getContextPath() %>/notice/reviewManage';">리뷰관리</button>
- --%>	 
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
