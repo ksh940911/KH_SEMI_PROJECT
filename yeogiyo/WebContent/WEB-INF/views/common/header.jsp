@@ -77,7 +77,7 @@ alert("<%= msg %>");
 						<button type="button" id="loginBtn" onclick="location.href='<%= request.getContextPath() %>/member/memberlogin';" >로그인</button>
 					</ul>
 				</div>
-			<% } else if("A".equals(loginMember.getMemberRole())) { %>
+			<% } else if(MemberService.ADMIN_ROLE.equals(loginMember.getMemberRole())) { %>
 				<table id="admin">
 					<tr>
 						<td>관리자님, 반갑습니다</td>
