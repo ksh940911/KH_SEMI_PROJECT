@@ -319,7 +319,7 @@ public class RestaurantDao {
 			}
 		} catch (Exception e) {
 			throw new RestaurantException("메뉴 개수 조회 오류", e);
-			e.printStackTrace();
+			
 		} finally {
 			close(rset);
 			close(pstmt);
