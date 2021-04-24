@@ -19,6 +19,7 @@ import restaurant.model.exception.RestaurantException;
 import restaurant.model.vo.Menu;
 import restaurant.model.vo.Restaurant;
 
+
 public class RestaurantDao {
 	
 	private OrderService orderService = new OrderService();
@@ -187,10 +188,12 @@ public class RestaurantDao {
 				restaurant.setResAddress(rset.getString("res_address"));
 				restaurant.setCategory(rset.getString("category"));
 				restaurant.setMinPrice(rset.getInt("min_price"));
-				restaurant.setLogoImg(rset.getString("logo_img"));
+				//restaurant.setLogoImg(rset.getString("logo_img"));
 				restaurant.setRateAvg(rset.getDouble("rate_avg"));
 				restaurant.setReviewCnt(orderService.selectReviewCntByResId(restaurant.getResId()));
 				list.add(restaurant);
+				
+				
 			}
 			
 		} catch (Exception e) {

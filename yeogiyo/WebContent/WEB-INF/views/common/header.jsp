@@ -56,13 +56,13 @@
 alert("<%= msg %>");
 <% } %>
 
-$(function(){
+/* $(function(){
 	
 //var membercart = JSON.parse(sessionStorage.getItem("selectedMenuArr"));
 var membercart = sessionStorage.getItem("selectedMenuArr");
 console.log("membercart : " + membercart);
 	
-});
+}); */
 </script>
 
 
