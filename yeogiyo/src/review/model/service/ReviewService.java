@@ -65,4 +65,53 @@ public class ReviewService {
 		}
 		return result;
 	}
+	
+	public int deleteReview(int review_no) {
+		Connection conn = getConnection();
+		int result = 0;
+		try {
+			result = reviewDao.deleteReview(conn, review_no);
+			if(result == 0)
+				throw new IllegalArgumentException("해당 리뷰가 존재하지 않습니다. : " + review_no );
+			commit(conn);
+		} catch(Exception e) {
+			rollback(conn);
+			throw e; //controller가 예외처리를 결정할 수 있도록 넘김.
+		} finally {
+			close(conn);
+		}
+		return result;
+	}
+	
+	public int updateBoard(Review review) {
+		Connection conn = getConnection(); 
+		int result = 0;
+		try {
+			//1.review update
+			result = reviewDao.updateReview(conn, review);
+			//2.reviewphoto insert
+			if(review.getReviewphoto() != null)
+				result = reviewDao.insertReviewPhoto(conn, review.getReviewphoto());
+
+			commit(conn);
+		} catch(Exception e) {
+			rollback(conn);
+			throw e;
+		}
+		return result;
+	}
+	
+	public int deleteReviewPhoto(String photo_no) {
+		Connection conn = getConnection(); 
+		int result = 0;
+		try {
+			result = reviewDao.deleteReviewPhoto(conn, photo_no);
+			commit(conn);
+		} catch(Exception e) {
+			rollback(conn);
+			throw e;
+		}
+		return result;
+	}
+
 }

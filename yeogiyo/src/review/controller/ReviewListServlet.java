@@ -10,7 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import common.MvcUtils;
-import notice.model.exception.NoticeException;
+import order.model.service.OrderService;
+import order.model.vo.Order;
 import review.model.service.ReviewService;
 import review.model.vo.Review;
 
@@ -28,6 +29,7 @@ public class ReviewListServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//0. 인코딩처리는 EncodingFilter가 선처리 
 		//1. 사용자 입력값
+		Order order = (Order)request.getSession().getAttribute("order");
 		final int numPerPage = 10;
 		System.out.println("resId@listServlet=" + request.getParameter("resId"));
 		int cPage = 1;
@@ -56,7 +58,7 @@ public class ReviewListServlet extends HttpServlet {
 		//3. 응답 html처리 jsp에 위임.
 		request.setAttribute("list", list);
 		request.setAttribute("resId", resId);
-
+		
 		System.out.println("resId@ViewServlet = "+resId);
 		request.setAttribute("pageBar", pageBar);
 		request.getRequestDispatcher("/WEB-INF/views/review/reviewList.jsp")

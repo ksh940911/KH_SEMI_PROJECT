@@ -49,7 +49,7 @@
         </div>
     </div>
 
-<table id="tbl-member">
+<table id="tbl-memberList">
 		<thead>
 			<tr>
 				<th>아이디</th>
@@ -58,15 +58,15 @@
 				<th>생년월일</th>
 				<th>성별</th>
 				<th>주소</th>
-				<th>전화번호</th>
+				<th>휴대폰번호</th>
 				<th>이메일</th>
-				<th>가입일</th>
+				<th>회원가입일</th>
 			</tr>
 		</thead>
 		<tbody>
 			<% if(list == null || list.isEmpty()) {%>
 				<tr>
-					<td colspan="10" style="text-align:center;"> 조회된 회원이 없습니다. </td>
+					<td colspan="9" style="text-align:center;"> 조회된 회원이 없습니다. </td>
 				</tr>
 			<% 
 				} else {
@@ -75,23 +75,13 @@
 				<tr onmouseover="this.style.background='rgba(250, 0, 80, 0.2)'" onmouseout="this.style.background='white'">
 					<td><%= m.getMemberId() %></td>
 					<td><%= m.getMemberName() %></td>
-					<td>
-						<select class="member-role" data-member-id="<%= m.getMemberId() %>">
-							<option 
-								value="<%= MemberService.ADMIN_ROLE %>"
-								<%= MemberService.ADMIN_ROLE.equals(m.getMemberRole()) ? "selected" : "" %>>관리자</option>
-							<option 
-								value="<%= MemberService.MEMBER_ROLE %>"
-								<%= MemberService.MEMBER_ROLE.equals(m.getMemberRole()) ? "selected" : "" %>>일반</option>
-						</select>
-					</td>
+					<td style="text-align:center;"><%= m.getMemberRole().equals("U") ? "일반" : "관리자" %></td>
 					<td><%= m.getBirthday() != null ? m.getBirthday() : ""%></td>
 					<td><%= "M".equals(m.getGender()) ? "남" : "여" %></td>
-					<td><%= m.getAddress() != null ? m.getAddress() : ""%></td>
+					<td><%= m.getAddress() != null ? m.getAddress() : "" %> <%= m.getAddressSub() != null ? m.getAddressSub() : "" %></td>
 					<td><%= m.getPhone() %></td>
 					<td><%= m.getEmail() != null ? m.getEmail() : "" %></td>
 					<td><%= m.getMemberEnroll() %></td>
-					<%-- <td><input type="button" value="수정" onclick="location.href='<%= request.getContextPath() %>/member/memberUpdate'" /></td> --%>
 				</tr>
 			<% 
 					}
@@ -104,37 +94,30 @@
 	</div>
 </section>
 <form 
-	action="<%= request.getContextPath() %>/admin/memberRoleUpdate" 
-	name="memberRoleUpdateFrm" 
-	method="POST">
+	action="<%= request.getContextPath() %>/admin/memberUpdate"
+	name="memberUpdateFrm"
+	method="GET">
 	<input type="hidden" name="memberId" />
-	<input type="hidden" name="memberRole" />
 </form>
 <script>
-$("#tbl-member tr").click(function({
-	
+$("#tbl-memberList tr").click(function(){
+	var tr = $(this);
+	var td = tr.children();
+	var memberId = td.eq(0).text();
+
+	var $frm = $(document.memberUpdateFrm);
+	$frm.find("[name=memberId]").val(memberId);
+	$frm.submit();
 });
 
-<%-- 
+
 $(searchType).change(function(){
 	var searchTypeVal = $(this).val();
 	$(".search-type")
 		.hide()
 		.filter("#search-" + searchTypeVal)
 		.css("display", "inline-block");
-})
-
-	$(".member-role").on("change", function(){
-		var memberId = $(this).data("memberId");
-		var memberRole = $(this).val();
-		var memberRoleStr = memberRole == "<%= MemberService.ADMIN_ROLE %>" ? "관리자" : "일반";
-		if(confirm("[" + memberId + "] 회원의 권한을 [" + memberRoleStr + "]로 변경하시겠습니까?")){
-			var $frm = $(document.memberRoleUpdateFrm);
-			$frm.find("[name=memberId]").val(memberId);
-			$frm.find("[name=memberRole]").val(memberRole);
-			$frm.submit();
-		}
-	}) --%>
+});
 </script>
 
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>

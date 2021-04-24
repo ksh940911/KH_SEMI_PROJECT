@@ -142,6 +142,46 @@ public class OrderDao {
 		
 		return order;
 	}
+	
+	public Order selectLastOrderMenuById(Connection conn, String memberId) {
+		Order order = new Order();
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String query = prop.getProperty("selectLastOrderMenuById");
+		
+		try{
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, memberId);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				/*
+				 * order_id, member_id, res_id, order_date, address, address_sub, phone, order_comment, payment_way, 
+					payment_place, order_menu, total_price
+				 * */
+				order.setOrderId(rset.getInt("order_id"));
+				order.setMemberId(rset.getString("member_id"));
+				order.setResId(rset.getInt("res_id"));
+				order.setOrderDate(rset.getDate("order_date"));
+				order.setAddress(rset.getString("address"));
+				order.setAddressSub(rset.getString("address_sub"));
+				order.setPhone(rset.getString("phone"));
+				order.setOrderComment(rset.getString("order_comment"));
+				order.setPaymentWay(rset.getString("payment_way"));
+				order.setPaymentPlace(rset.getString("payment_place"));
+				order.setOrderMenu(rset.getString("order_menu"));
+				order.setTotalPrice(rset.getInt("total_price"));
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			close(rset);
+			close(pstmt);
+		}
+		return order;
+	}
 
 	public int selectReviewCntByResId(Connection conn, int resId) {
 		String sql = prop.getProperty("selectReviewCntByResId");

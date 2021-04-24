@@ -17,6 +17,7 @@
   		<form id="review-add-frm" action="<%=request.getContextPath()%>/review/reviewForm">
 
         	<input type="hidden" name="resId" value="<%= request.getAttribute("resId")%>">
+        	<input type="hidden" name="orderMenu" value="<%= request.getAttribute("orderMenu")%>">
         </form>
 	<%
 		//}
@@ -59,7 +60,7 @@
 			<td><%= r.getReviewStar() %></td>
 			<td>
 				<% if(r.getReviewphoto() != null){ %>
-				<img src="<%= request.getContextPath() %>/upload/review/<%= r.getReviewphoto().getPhotoRenamedFilename()%> alt="" />
+				<img src="<%= request.getContextPath() %>/upload/review/<%= r.getReviewphoto().getPhotoRenamedFilename()%>" width="16px"/>
 				<% } %>
 			</td>
 			<td><%= r.getReviewOrder() %></td>

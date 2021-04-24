@@ -11,6 +11,6 @@
 		<li class="member-menu mm3" onclick="location.href='<%= request.getContextPath()%>/member/updatePhone';"/>전화번호 변경</li>
 		<li class="member-menu mm4" onclick="location.href='<%= request.getContextPath()%>/member/orderList';"/>주문 내역</li>
 		<li class="member-menu deco"> | </li>
-		<li class="member-menu mm5" onclick="location.href='';"/>회원탈퇴</li>
+		<li class="member-menu mm5" onclick="location.href='<%= request.getContextPath()%>/member/memberDelete';"/>회원탈퇴</li>
 	</ul>
 </nav>

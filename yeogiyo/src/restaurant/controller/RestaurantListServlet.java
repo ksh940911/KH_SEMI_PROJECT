@@ -35,8 +35,9 @@ public class RestaurantListServlet extends HttpServlet {
 			//카테고리별 보기
 			
 			switch(category) {
-				case "franchise" : category = "프렌차이즈"; break;
+				case "franchise" : category = "프랜차이즈"; break;
 				case "chicken" : category = "치킨"; break;
+				case "pizza" : category = "피자/양식"; break;
 				case "chinese" : category = "중국집"; break;
 				case "korean" : category = "한식"; break;
 				case "japanese" : category = "일식/돈까스"; break;
@@ -51,13 +52,14 @@ public class RestaurantListServlet extends HttpServlet {
 		}else {
 			//전체보기
 			list = new RestaurantService().selectRestaurantList();
-			
+			category = "전체보기";
 		}
 	
-		System.out.println("category@restaurantServlet = " + category);
+		//System.out.println("category@restaurantListServlet = " + category);
 		
 		
-		System.out.println("list@servlet = " + list);
+		//System.out.println("list@servlet = " + list);
+		request.setAttribute("category", category);
 		request.setAttribute("list", list);
 		request.getRequestDispatcher("/WEB-INF/views/restaurant/restaurantList.jsp").forward(request, response);
 

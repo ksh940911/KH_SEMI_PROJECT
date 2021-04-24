@@ -16,7 +16,7 @@
 		</tr>
 		<tr>
 			<th>이미지추가</th>
-			<td><input type="file" name="upImgFile" /></td>
+			<td><input type="file" name="upImgFile" accept="image/*"/></td>
 		</tr>
 		<tr>
 			<th>내용</th>
