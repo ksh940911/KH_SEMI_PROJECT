@@ -34,32 +34,22 @@
 			<tr>
 				<th>비밀번호</th>
 					<td>
-					<input type="text"  name="password" id="password" value="********"  readonly><br>
+					<input type="password"  name="password" id="password" value="****"><br>
 					</td>
 			</tr>
 			<tr>
 				<th>권한</th>
-				
-					<%-- <select class="member-role" data-member-id="<%= memberRole %>">
-						<option 
-							value="<%= MemberService.ADMIN_ROLE %>"
-							<%=	MemberService.ADMIN_ROLE.equals(memberRole) ? "selected" : "" %>>관리자</option>
-						<option 
-							value="<%= MemberService.MEMBER_ROLE %>"
-							<%= MemberService.MEMBER_ROLE.equals(memberRole) ? "selected" : "" %>>일반</option>
-					</select> --%>
 					<td>
-					<input type="radio" name="memberRole" id="U" value="U" <%= memberRole.equals("U") ? "checked" : "" %>>
+						<input type="radio" name="memberRole" id="U" value="U" <%= memberRole.equals("U") ? "checked" : "" %>>
 						<label for="U">일반사용자</label>
-					<input type="radio" name="memberRole" id="A" value="A" <%= memberRole.equals("A") ? "checked" : "" %>>
+						<input type="radio" name="memberRole" id="A" value="A" <%= memberRole.equals("A") ? "checked" : "" %>>
 						<label for="A">관리자</label>
 					</td>
-				
 			</tr>
 			<tr>
 				<th>이름</th>
 				<td>
-					<input type="text"  name="memberName" id="memberName" value="<%= memberName %>"  required><br>
+					<input type="text"  name="memberName" id="memberName" placeholder="한글 2~5글자" value="<%= memberName %>"  required><br>
 				</td>
 			</tr>
 			<tr>
@@ -87,6 +77,12 @@
 				</td>
 			</tr>
 			<tr>
+				<th>핸드폰</th>
+				<td>
+					<input type="tel" placeholder="(-없이)01012345678" name="phone" id="phone" maxlength="11" value="<%= phone%>"required><br>
+				</td>
+			</tr>
+			<tr>
 				<th>이메일</th>
 				<td><input type="email" placeholder="abc@xyz.com" name="email" id="email" value="<%= email%>"><br></td>
 			</tr>
@@ -94,41 +90,29 @@
 		<div class="button-class">
 			<input type="button" value="수정" onclick="updateMember();" />
 			<input type="button" value="삭제" onclick="deleteMember();" />
-			<input type="button" value="취소" onclick="history.back()" />
+			<input type="button" value="취소" onclick="location.href='<%= request.getContextPath() %>/admin/memberManage';" />
 		</div>
 	</form>
 </section>
 </div>
 <script>
+function deleteMember(){
+	var memberId = "<%= memberId %>";
+	console.log("id=" + memberId);
+	var memberName = "<%= memberName %>";
+	console.log("name=" + memberName);
+	
+	if(confirm(memberName+"("+memberId+")회원을 삭제하시겠습니까?")){
+		$("#memberUpdateFrm")
+			.attr("action", "<%= request.getContextPath()%>/admin/memberDelete")
+			.submit();	
+	}
+};
 
 function updateMember() {
 	$("#memberUpdateFrm").attr("action", "<%= request.getContextPath()%>/admin/memberUpdate")
 						 .submit();
 }
-
-
-/**
- * 중복검사 이후 전화번호를 변경하는 것을 방지
- */
-$("#phone").change(function() {
-	$("#phoneValid").val(0);
-});
-
-
-/**
- * 회원가입 유효성 검사
- */
- $(document.memberUpdateFrm).submit(function(){
-	 //이름 유효성 검사
-	 var $memberName = $("#memberName");
-	 if(/^[가-힣]{2,5}/.test($memberName.val()) == false) {
-		 alert("이름은 한글 2~5글자 사이로 입력해주세요.");
-		 $memberName.select();
-		 return false;
-	 }
-	 return true;
- });
-
 
 /*
  * 다음 카카오 주소 API 스크립트

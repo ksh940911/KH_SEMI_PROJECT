@@ -12,25 +12,33 @@
     box-shadow: 2px 2px 3px 0px rgb(0 0 0 / 25%);
     z-index: 900; 
     background-color:#fff;
-    
+    position:relative;
+    text-align:center;
 }
 .restaurant-categori-menu ul {
-	text-align:center;
+	margin: 0 auto;
+	display:inline-block;
+	/* position: relative; */
 }
 .restaurant-categori-menu li {
-	/* float: left; */
-	display: inline-block;
+	float: left;
+	/* display: inline-block; */
     font-size: 12px;
     text-align: center;
     list-style: none;
-    /* list-style-type: none; */
+    margin:0;
     border-right: 0;
     border-bottom: 0;
     /* padding: 22px 0; */
     padding: 22px 10px;
     cursor:pointer;
-    /* width:70px; */
 }
+
+.restaurant-categori-menu li#selected {
+	background-color:black;
+	color:#fff;
+}
+
 .restaurant-categori-menu li a {
 	/* background: url(../images/sprite-icon2.png) no-repeat 50% 50% / 100% 100%;
 	background-size:30px;
@@ -89,7 +97,6 @@
     cursor:pointer;
 }
 .recommend-item table {
-	width:50%;
 	height: 150px;
 	border-spacing: 0;
     border-collapse: collapse;
@@ -98,7 +105,6 @@
 .recommend-item table tbody {
 	display: table-row-group;
     vertical-align: middle;
-    /* transform:translateY(20px); */
 }
 .recommend-item table tr {
 	display: table-row;
@@ -109,34 +115,27 @@
     vertical-align: inherit;
     padding: 0;
 }
-table td#td1 {
-	width: 80px;
-}
 table td#td1 .logo {
 	width: 90px;
     height: 90px;
-    border: 1px solid #d9d9d9;
 }
 table td#td1 .logo img {
 	width: 90px;
     height: 90px;
 }
-
 table td#td2 {
 	width: 200px;
 	height:110px;
-	/* padding-left: 10px; */
+	padding-left:10px;
 }
-table td#td2 .restaurant-name {
-	font-size: 100%;
+table td#td2 {
+	font-size: 120%;
     width: 100%;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
 }
-table td#td2 .stars {
-	font-size: 12px;
-}
+
 .stars span.ico-star {
 	color: #ffa800;
 }
@@ -145,9 +144,6 @@ table td#td2 .stars {
     color: #d9d9d9;
 }
 
-table td#td2 .info {
-	font-size: 12px;
-}
 .info span.payment-method {
 	color: #fa0050;
 }
@@ -163,7 +159,7 @@ table td#td2 .info {
 	right:10px;
 	bottom:12px;
 	color: #999 !important;
-	font-size: 12px !important;
+	font-size: 120% !important;
 }
 
 
