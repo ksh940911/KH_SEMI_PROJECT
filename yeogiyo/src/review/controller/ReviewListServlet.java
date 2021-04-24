@@ -39,7 +39,7 @@ public class ReviewListServlet extends HttpServlet {
 		} catch(NumberFormatException e) {
 			
 		}
-		
+
 		//2. 업무로직
 		//a. contents영역 : start ~ end
 		int start = (cPage - 1) * numPerPage + 1;
@@ -56,6 +56,7 @@ public class ReviewListServlet extends HttpServlet {
 		//3. 응답 html처리 jsp에 위임.
 		request.setAttribute("list", list);
 		request.setAttribute("resId", resId);
+
 		System.out.println("resId@ViewServlet = "+resId);
 		request.setAttribute("pageBar", pageBar);
 		request.getRequestDispatcher("/WEB-INF/views/review/reviewList.jsp")
