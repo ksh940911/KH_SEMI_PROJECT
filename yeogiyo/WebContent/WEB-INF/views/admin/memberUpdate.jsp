@@ -79,9 +79,8 @@ String memberRole = member.getMemberRole();
 					<th>핸드폰</th>
 					<td><input type="tel" placeholder="(-없이)01012345678"
 						name="phone" id="phone" maxlength="11" value="<%=phone%>" required><br>
-						<input type="hidden" id="phoneValid" value="1" />
-						<span id="phoneResult"></span>
-						</td>
+						<input type="hidden" id="phoneValid" value="1" /> <span
+						id="phoneResult"></span></td>
 				</tr>
 				<tr>
 					<th>이메일</th>
@@ -90,10 +89,9 @@ String memberRole = member.getMemberRole();
 				</tr>
 			</table>
 			<div class="button-class">
-				<input type="button" value="수정" onclick="updateMember();" /> <input
-					type="button" value="삭제" onclick="deleteMember();" /> <input
-					type="button" value="취소"
-					onclick="location.href='<%=request.getContextPath()%>/admin/memberManage';" />
+				<input type="button" value="수정" onclick="updateMember();" />
+				<input type="button" value="삭제" onclick="deleteMember();" />
+				<input type="button" value="취소" onclick="location.href='<%=request.getContextPath()%>/admin/memberManage';" />
 			</div>
 		</form>
 	</section>
@@ -119,12 +117,12 @@ function deleteMember(){
 //휴대폰 유효성 검사 phoneValid의 값이 1일 경우에만 통과
 $("#phone").keyup(function(){
  	$.ajax({
- 		url: "<%= request.getContextPath() %>/member/memberPhoneCheck",
+ 		url: "<%=request.getContextPath()%>/member/memberPhoneCheck",
  		method : "POST",
  		data : {
- 			id : "<%= memberId %>",
+ 			id : "<%=memberId%>",
  			newPhone : $("#phone").val(),
- 			oldPhone : "<%= phone %>"
+ 			oldPhone : "<%=phone%>"
  		},
  		success : function(result) {
  			 //휴대폰번호
@@ -157,9 +155,6 @@ $("#phone").change(function() {
 	$("#phoneValid").val(0);
 });
  
-
-
-
 /**
  * ++++++++++++++++++++++++++++++++++
  */
@@ -182,10 +177,10 @@ function updateMember() {
 	 
 	var $password = $("#password");
 	
-	if(!$password == "****" && /^[a-zA-Z0-9]{4,12}$/.test($password.val()) == false) {
-			 alert("패스워드는 4~12자리의 영문자, 숫자만 가능합니다.");
-			 $password.select();
-			 return false;
+	if(/^[a-zA-Z0-9]{4,12}$/.test($password.val()) == false && !($password.val() == "****")) {
+		alert("패스워드는 4~12자리의 영문자, 숫자만 가능합니다.");
+		$password.select();
+		return;
 	}
 	 
 	$("#memberUpdateFrm").attr("action", "<%=request.getContextPath()%>/admin/memberUpdate")
