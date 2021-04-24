@@ -136,6 +136,41 @@ public class MemberService {
 		return totalContents;
 	}
 
+<<<<<<< Updated upstream
+=======
+	//회원 삭제
+	public int deleteMember(String memberId) {
+		Connection conn = getConnection();
+		int result = memberDao.deleteMember(conn, memberId);
+		if(result > 0) 
+			commit(conn);
+		else
+			rollback(conn);
+		close(conn);
+		return result;
+	}
+
+	// 회원 선택 수정 (회원관리용)
+	public int adminUpdateMember(Member member) {
+		Connection conn = getConnection();
+		int result = memberDao.adminUpdateMember(conn, member);
+		if(result > 0) commit(conn);
+		else rollback(conn);
+		close(conn);
+		return result;
+	}
+
+	// 회원 선택 삭제 (회원관리용)
+	public int adminMemberDelete(String memberId) {
+		Connection conn = getConnection();
+		int result = memberDao.deleteMember(conn, memberId);
+		if(result > 0) commit(conn);
+		else rollback(conn);
+		close(conn);
+		return result;
+	}
+
+>>>>>>> Stashed changes
 
 	
 

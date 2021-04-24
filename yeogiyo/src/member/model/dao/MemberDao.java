@@ -239,11 +239,37 @@ public int updatePhone(Connection conn, String phone, String memberId) {
 			close(pstmt);
 		}
 		return result;
+<<<<<<< Updated upstream
 }
 	
   
   
   
+=======
+	}
+	
+	public int deleteMember(Connection conn, String memberId) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String query = prop.getProperty("deleteMember");
+
+		try {
+			// 미완성 쿼리문 객체에 대입
+			pstmt = conn.prepareStatement(query);
+			// 쿼리문 완성시키기
+			pstmt.setString(1, memberId);
+			// 쿼리문 실행
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+
+>>>>>>> Stashed changes
 	// 전체 회원조회-리스트_페이징 (회원관리용)
 	public List<Member> selectList(Connection conn, Map<String, String> param) {
 		List<Member> list = new ArrayList<Member>();
@@ -395,6 +421,39 @@ public int updatePhone(Connection conn, String phone, String memberId) {
 			break;
 		}
 		return query;
+<<<<<<< Updated upstream
   }
+=======
+	}
+
+	
+	// 회원 선택 수정 (회원관리용)
+	public int adminUpdateMember(Connection conn, Member member) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String query = prop.getProperty("AdminUpdateMember");
+//		update member set member_name = ?, password = ?, birthday = ?,  gender = ?, address = ?, 
+//			   address_sub = ?, phone = ?, email = ?, member_role = ? where member_id = ?
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, member.getMemberName());
+			pstmt.setString(2, member.getPassword());
+			pstmt.setDate(3, member.getBirthday());
+			pstmt.setString(4, member.getGender());
+			pstmt.setString(5, member.getAddress());
+			pstmt.setString(6, member.getAddressSub());
+			pstmt.setString(7, member.getPhone());
+			pstmt.setString(8, member.getEmail());
+			pstmt.setString(9, member.getMemberRole());
+			pstmt.setString(10, member.getMemberId());
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+>>>>>>> Stashed changes
 
 }

@@ -49,7 +49,7 @@
         </div>
     </div>
 
-<table id="tbl-member">
+<table id="tbl-memberList">
 		<thead>
 			<tr>
 				<th>아이디</th>
@@ -58,15 +58,15 @@
 				<th>생년월일</th>
 				<th>성별</th>
 				<th>주소</th>
-				<th>전화번호</th>
+				<th>휴대폰번호</th>
 				<th>이메일</th>
-				<th>가입일</th>
+				<th>회원가입일</th>
 			</tr>
 		</thead>
 		<tbody>
 			<% if(list == null || list.isEmpty()) {%>
 				<tr>
-					<td colspan="10" style="text-align:center;"> 조회된 회원이 없습니다. </td>
+					<td colspan="9" style="text-align:center;"> 조회된 회원이 없습니다. </td>
 				</tr>
 			<% 
 				} else {
@@ -78,12 +78,10 @@
 					<td style="text-align:center;"><%= m.getMemberRole().equals("U") ? "일반" : "관리자" %></td>
 					<td><%= m.getBirthday() != null ? m.getBirthday() : ""%></td>
 					<td><%= "M".equals(m.getGender()) ? "남" : "여" %></td>
-					<td><%= m.getAddress() != null ? m.getAddress() : ""%></td>
+					<td><%= m.getAddress() != null ? m.getAddress() : "" %> <%= m.getAddressSub() != null ? m.getAddressSub() : "" %></td>
 					<td><%= m.getPhone() %></td>
 					<td><%= m.getEmail() != null ? m.getEmail() : "" %></td>
 					<td><%= m.getMemberEnroll() %></td>
-					<td style="display:none;"><%= m.getPassword() %> </td>
-					<%-- <td><input type="button" value="수정" onclick="location.href='<%= request.getContextPath() %>/member/memberUpdate'" /></td> --%>
 				</tr>
 			<% 
 					}
@@ -102,7 +100,7 @@
 	<input type="hidden" name="memberId" />
 </form>
 <script>
-$("#tbl-member tr").click(function(){
+$("#tbl-memberList tr").click(function(){
 	var tr = $(this);
 	var td = tr.children();
 	var memberId = td.eq(0).text();
