@@ -12,8 +12,10 @@ import java.util.List;
 import java.util.Map;
 
 import notice.model.exception.NoticeException;
+import notice.model.vo.NoticeImg;
 import restaurant.model.dao.RestaurantDao;
 import restaurant.model.vo.Menu;
+import restaurant.model.vo.ResImg;
 import restaurant.model.vo.Restaurant;
 
 public class RestaurantService {
@@ -37,6 +39,10 @@ public class RestaurantService {
 	public Restaurant selectRestaurant(int resId) {
 		Connection conn = getConnection();
 		Restaurant restaurant = restaurantDao.selectRestaurant(conn, resId);
+		if(restaurant != null) {
+			ResImg resImg = restaurantDao.selectOneResImg(conn, restaurant);
+			restaurant.setResImg(resImg);
+		}
 		close(conn);
 		return restaurant;
 	}
@@ -62,6 +68,7 @@ public class RestaurantService {
 		List<Restaurant> list = restaurantDao.selectResList(conn, param);
 		return list;
 	}
+	
 	// 전체 가게수 조회 (가게관리용)
 	public int selectResCount() {
 		Connection conn = getConnection();
@@ -90,7 +97,6 @@ public class RestaurantService {
 		return result;
 	}
 
-
 	// 가게 정보 수정 (가게관리용)
 	public int updateRes(Restaurant res) {
 		Connection conn = getConnection();
@@ -111,23 +117,7 @@ public class RestaurantService {
 	
 	}
 
-	
-	// 메뉴조회-리스트_페이징 (메뉴관리용)
-	public List<Menu> selectMenuList(Map<String, String> param) {
-		Connection conn = getConnection();
-		List<Menu> list = restaurantDao.selectMenuList(conn, param);
-		return list;
-	}
-
-
-	// 메뉴 개수 조회 (메뉴관리용)
-	public int selectMenuCount(String resId) {
-		Connection conn = getConnection();
-		int totalContents = restaurantDao.selectMenuCount(conn, resId);
-		return totalContents;
-	}
-
-
+	// 가게 삭제 (가게관리용)
 	public int deleteRes(int resId) {
 		Connection conn = getConnection();
 		int result = 0;
@@ -145,5 +135,35 @@ public class RestaurantService {
 		return result;
 	}
 
+	// 가게 이미지 삭제 (가게관리용)
+	public int deleteResImg(String imgResNo) {
+		Connection conn = getConnection();
+		int result = 0;
+		try {
+			result = restaurantDao.deleteResImg(conn, imgResNo);
+			commit(conn);
+		} catch (Exception e) {
+			rollback(conn);
+			throw e;
+		} finally {
+			close(conn);
+		}
+		return result;
+	}
+	
+  
+	// 메뉴조회-리스트_페이징 (메뉴관리용)
+	public List<Menu> selectMenuList(Map<String, String> param) {
+		Connection conn = getConnection();
+		List<Menu> list = restaurantDao.selectMenuList(conn, param);
+		return list;
+	}
+
+	// 메뉴 개수 조회 (메뉴관리용)
+	public int selectMenuCount(String resId) {
+		Connection conn = getConnection();
+		int totalContents = restaurantDao.selectMenuCount(conn, resId);
+		return totalContents;
+	}
 
 }
