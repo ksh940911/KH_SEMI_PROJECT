@@ -13,8 +13,6 @@ import java.util.Properties;
 
 import review.model.exception.ReviewException;
 import review.model.vo.ReviewPhoto;
-import review.model.exception.ReviewException;
-import review.model.vo.ReviewPhoto;
 import review.model.vo.Review;
 
 public class ReviewDao {
@@ -35,7 +33,7 @@ public class ReviewDao {
 	}
 
 	public List<Review> selectList(Connection conn, int start, int end) {
-		List<Review> list = null;
+		List<Review> list = new ArrayList<>();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		String sql = prop.getProperty("selectReviewList");
@@ -45,8 +43,9 @@ public class ReviewDao {
 			pstmt.setInt(1, start);
 			pstmt.setInt(2, end);
 			rset = pstmt.executeQuery();
-			list = new ArrayList<>();
+			System.out.println("여기"+rset);
 			while(rset.next()) {
+				System.out.println("여기123"+rset.getInt("review_no"));
 				Review review = new Review();
 				review.setReviewNo(rset.getInt("review_no"));
 				review.setMemberId(rset.getString("member_id"));
@@ -56,6 +55,16 @@ public class ReviewDao {
 				review.setReviewOrder(rset.getString("review_order"));
 				review.setReviewContent(rset.getString("review_content"));
 				
+				//첨부파일이 있는 경우
+				if(rset.getInt("reviewphoto_no") != 0) {
+					ReviewPhoto reviewphoto = new ReviewPhoto();
+					reviewphoto.setPhotoNo(rset.getInt("reviewphoto_no"));
+					reviewphoto.setReviewNo(rset.getInt("review_no"));
+					reviewphoto.setPhotoOriginalFilename(rset.getString("photo_originalfilename"));
+					reviewphoto.setPhotoRenamedFilename(rset.getString("photo_renamedfilename"));
+					reviewphoto.setPhotoStatus("Y".equals(rset.getString("photo_status")) ? true : false);
+					review.setReviewphoto(reviewphoto);
+				}
 				list.add(review);
 			}
 		} catch (SQLException e) {
@@ -93,22 +102,6 @@ public class ReviewDao {
 		int result = 0;
 		String sql = prop.getProperty("insertReview");
 		try {
-			
-		//	insertReview = insert into review (review_no, member_id, order_id, review_time, 
-		//			review_star, review_order, review_content) values(seq_review_review_no, ?, ?, sysdate, ?, ?, ?)
-			
-			/**
-			 * 
-				member_id varchar2(100) not null, 
-				order_id number not null,
-				
-				review_star number default 5, 
-				review_order varchar2(100),
-				review_content varchar2(200) not null,
-			 */
-			
-			System.out.println("review@reviewDao = " + review);
-			
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1,  review.getMemberId());
 			pstmt.setInt(2, review.getOrderId());
@@ -118,14 +111,14 @@ public class ReviewDao {
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
-			//throw new ReviewException("리뷰 등록 오류", e);
+			throw new ReviewException("리뷰 등록 오류", e);
 		} finally {
 			close(pstmt);
 		}
 		return result;
 	}
 	
-	public int selectLastReviewNo(Connection conn, String memberId) {
+	public int selectLastReviewNo(Connection conn) {
 		int reviewNo = 0;
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -133,8 +126,6 @@ public class ReviewDao {
 		//selectLastReviewNo = select seq_review_review_no.currval review_no from dual
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, memberId);
-			
 			rset = pstmt.executeQuery();
 			while(rset.next()) {
 				reviewNo = rset.getInt("review_no");
@@ -158,6 +149,7 @@ public class ReviewDao {
 			pstmt.setString(2, reviewphoto.getPhotoOriginalFilename());
 			pstmt.setString(3, reviewphoto.getPhotoRenamedFilename());
 			result = pstmt.executeUpdate();
+			System.out.println(result);
 		} catch (SQLException e) {
 			throw new ReviewException("리뷰 첨부파일 등록 오류", e);
 		} finally {
@@ -165,9 +157,55 @@ public class ReviewDao {
 		}
 		return result;
 	}
+	
+	public int deleteReview(Connection conn, int review_no) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("deleteReview");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, review_no);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			throw new ReviewException("리뷰 삭제 오류", e);
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int updateReview(Connection conn, Review review) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("updateReview");
+		//updateReview = update review set review_star = ?, review_content = ? where review_no = ?
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, review.getReviewStar());
+			pstmt.setString(2, review.getReviewContent());
+			pstmt.setInt(3, review.getReviewNo());
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			throw new ReviewException("리뷰 수정 오류", e);
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int deleteReviewPhoto(Connection conn, String photo_no) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("deleteReviewPhoto");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, photo_no);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			throw new ReviewException("리뷰사진 삭제 오류", e);
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
 }
-
-
-
-
-

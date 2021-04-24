@@ -1,0 +1,49 @@
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap');
+body{
+color:  #333333;
+font-size:15px;
+font-family: 'Nanum Gothic', sans-serif;
+}
+
+/* memberView 메뉴바 */
+.member-menu-ul {
+	list-style-type: none;
+	margin: 0 auto;
+	padding: 0;
+}
+
+.member-menu-nav {
+	height: 40px;
+	background-color: #fff;
+	padding: 5px 0 0 0;
+	margin: 10px 0;
+	box-shadow : 0 2px 2px -2px rgba(0,0,0,.2);
+	border-bottom: 1px solid #E6E6E6; 
+}
+
+ul .member-menu {
+	float: left;
+	text-align: center;
+	margin-right: 25px;
+}
+
+.member-menu.mm0 {
+	margin-left : 15px;
+}
+
+.member-menu:hover:not(.mm4) {
+	color : #FA0050;
+}
+
+/* 회원 탈퇴  */
+
+.member-menu.deco {
+	color : #A5A5A5;
+}
+
+.member-menu.mm5 {
+	color : #A5A5A5;
+	font-size : 13px;
+	margin-top: 2px;
+}
+

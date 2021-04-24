@@ -2,7 +2,7 @@
 <%@page import="java.sql.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/WEB-INF/views/common/header.jsp" %>
+<%@ include file="/WEB-INF/views/common/headerMemberView.jsp" %>
 <%
 	
 	SimpleDateFormat transFormat = new SimpleDateFormat("yyyy/MM/dd");
@@ -19,10 +19,11 @@
 	
 %>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/member.css" />
-<title>내 정보 보기</title>
 <div class="content-wrapper">
-	<section id=memberView-container>
-		<h1>내 정보</h1>
+		<section class=memberView-container>
+		<div class="memberView-title">
+			<p>내 정보</p>
+		</div>
 			<table>
 				<tr>
 					<th>아이디</th>
@@ -58,11 +59,6 @@
 					<td><%= memberEnroll %></td>
 				</tr>
 			</table>
-		<input type="button" value="내 정보 수정" onclick="location.href='<%= request.getContextPath()%>/member/memberUpdate';"/>
-		<input type="button" value="비밀번호 변경" onclick="location.href='<%= request.getContextPath()%>/member/updatePassword';"/>
-		<input type="button" value="전화번호 변경" onclick="location.href='<%= request.getContextPath()%>/member/updatePhone';"/>
-		<input type="button" value="주문내역" onclick="location.href='<%= request.getContextPath()%>/member/orderList';"/>
-		<input type="button" id="deletMemberBtn" value="회원탈퇴" onclick="location.href='';"/><br>
-	</section>
+		</section>
 </div>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>

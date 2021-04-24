@@ -136,8 +136,6 @@ public class MemberService {
 		return totalContents;
 	}
 
-<<<<<<< Updated upstream
-=======
 	//회원 삭제
 	public int deleteMember(String memberId) {
 		Connection conn = getConnection();
@@ -169,9 +167,6 @@ public class MemberService {
 		close(conn);
 		return result;
 	}
-
->>>>>>> Stashed changes
-
 	
 
 

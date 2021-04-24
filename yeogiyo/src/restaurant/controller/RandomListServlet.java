@@ -42,8 +42,8 @@ public class RandomListServlet extends HttpServlet {
 			}
 			
 		}
-		
-		
+		String category = "오늘뭐먹지";
+		request.setAttribute("category", category);
 		request.setAttribute("restaurant", choiceRes);
 		request.getRequestDispatcher("/WEB-INF/views/restaurant/randomList.jsp").forward(request, response);
 	}
