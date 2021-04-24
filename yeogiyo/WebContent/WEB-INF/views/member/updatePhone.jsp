@@ -3,6 +3,7 @@
 <%@ include file="/WEB-INF/views/common/headerMemberView.jsp" %>
 <%
 	String oldphone = loginMember.getPhone();
+	String memberId = loginMember.getMemberId();
 %>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/member.css" />
 <section id=updatePhone-container>
@@ -31,36 +32,41 @@
 </section>
 <script>
 
-
 $("#phone").blur(function(){
  	$.ajax({
  		url: "<%= request.getContextPath() %>/member/memberPhoneCheck",
  		method : "POST",
  		data : {
- 			phone : $("#phone").val()
+ 			id : "<%= memberId %>",
+ 			newPhone : $("#phone").val(),
+ 			oldPhone : "<%= oldphone %>"
  		},
  		success : function(result) {
  			 //휴대폰번호
- 			 var $phone = $("#phone");
- 			 var $oldPhone = <%= oldphone %>;
+ 			 var $phone = $("#phone").val();
  			 //숫자가 아닌 문자 제거
- 			 $phone.val($phone.val().replace(/[^0-9]/g, ""))
+//  		 $phone.val($phone.val().replace(/[^0-9]/g, ""))
+ 			 console.log(result);
  			 
- 			 if(/^01[0-9][0-9]{8}/.test($phone.val()) == false) {
+ 			 if(/^01[0-9][0-9]{8}/.test($phone) == false) {
+ 				 console.log("유효성 검사 테스트");
  				 $("#phoneResult").html("<p style='color:red'>유효한 휴대폰 번호를 입력하세요</p>");
  				 $("#phoneValid").val(0);
  				 return false;
- 			 } else if($phone.val() == $oldPhone) {
- 				$("#phoneResult").html("<p style='color:red'>동일한 휴대폰 번호입니다.</p>");
- 				$("#phoneValid").val(0);
  			 } else if (result == 0) {
+ 				 console.log("이미 가입");
  				 $("#phoneResult").html("<p style='color:red'>이미 회원가입된 휴대폰 번호입니다.</p>");
  				 $("#phoneValid").val(0);
  			 } else if (result == 1) {
+ 				 console.log("사용 가능");
  				 $("#phoneResult").html("<p style='color:blue'>사용 가능한 휴대폰 번호입니다.</p>");
  				 $("#phoneValid").val(1);
  			 }
- 		}
+ 		},
+ 		
+		error: function(xhr, staus, err){
+			console.log(xhr, staus, err);
+		}
  	})
  });
 
