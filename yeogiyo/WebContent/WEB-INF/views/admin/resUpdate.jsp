@@ -7,9 +7,11 @@
 <%
 	ResImg resImg = new ResImg();
 	Restaurant res = (Restaurant)request.getAttribute("res");
+	System.out.println("resImg@ 1 ="+resImg);
 	if(res.getResImg() == null){
 		resImg.setImgResStatus(false);
 		res.setResImg(resImg);
+		System.out.println("resImg@ 2 ="+resImg);
 	}
 		
 	String[] categorys ={
@@ -84,7 +86,7 @@
 				<th>최소주문금액</th>
 				<td>
 
-				<input type="text" name="minPrice" id="minPrice" placeholder="0" value="<%= minPrice %>"/>
+				<input type="text" name="minPrice" id="minPrice" placeholder="0" value="<%= res.getMinPrice() %>"/>
 					<input type="range" name="minPrice" id="minPrice" min="0" max="20000" step="100" value="<%= res.getMinPrice() %>"
 								oninput="document.getElementById('mPval').innerHTML=this.value;"/><span id="mPval"><%= res.getMinPrice() %></span>원
 
@@ -113,6 +115,19 @@
 </div>
 
 <script>
+$("[name=upImgFile]").change(function(){
+	if($(this).val() != ""){
+		// 파일 선택
+		$("delImgFile").prop("checked", true)
+					   .on("click", function(){
+							return false; });
+	} else {
+		// 파일 선택 취소
+		$("#delImgFile").prop("checked", false)
+						.off("click");
+	}
+});	
+
 function menuManage(){
 	$("#menuManageFrm").submit();
 };

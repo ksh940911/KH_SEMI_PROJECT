@@ -60,9 +60,19 @@ public class RestaurantDao {
 				restaurant.setResAddress(rset.getString("res_address"));
 				restaurant.setCategory(rset.getString("category"));
 				restaurant.setMinPrice(rset.getInt("min_price"));
-//				restaurant.setLogoImg(rset.getString("logo_img"));
 				restaurant.setRateAvg(rset.getDouble("rate_avg"));
 				restaurant.setReviewCnt(orderService.selectReviewCntByResId(restaurant.getResId()));
+				
+				if(rset.getInt("img_res_no") != 0) {
+					ResImg resImg = new ResImg();
+					resImg.setImgResNo(rset.getInt("img_res_no"));
+					resImg.setImgResId(rset.getInt("res_id"));
+					resImg.setOriginalFilname(rset.getString("img_originalfile"));
+					resImg.setRenamedFilename(rset.getString("img_renamedfile"));
+					resImg.setImgResStatus("Y".equals(rset.getString("img_res_status"))? true : false);
+					restaurant.setResImg(resImg);
+				}
+				
 				list.add(restaurant);
 			}
 			
@@ -125,9 +135,18 @@ public class RestaurantDao {
 				restaurant.setResAddress(rset.getString("res_address"));
 				restaurant.setCategory(rset.getString("category"));
 				restaurant.setMinPrice(rset.getInt("min_price"));
-//				restaurant.setLogoImg(rset.getString("logo_img"));
 				restaurant.setRateAvg(rset.getDouble("rate_avg"));
 				restaurant.setReviewCnt(orderService.selectReviewCntByResId(restaurant.getResId()));
+				
+				if(rset.getInt("img_res_no") != 0) {
+					ResImg resImg = new ResImg();
+					resImg.setImgResNo(rset.getInt("img_res_no"));
+					resImg.setImgResId(rset.getInt("res_id"));
+					resImg.setOriginalFilname(rset.getString("img_originalfile"));
+					resImg.setRenamedFilename(rset.getString("img_renamedfile"));
+					resImg.setImgResStatus("Y".equals(rset.getString("img_res_status"))? true : false);
+					restaurant.setResImg(resImg);
+				}
 			}
 			
 		} catch (Exception e) {
@@ -190,9 +209,23 @@ public class RestaurantDao {
 				restaurant.setResAddress(rset.getString("res_address"));
 				restaurant.setCategory(rset.getString("category"));
 				restaurant.setMinPrice(rset.getInt("min_price"));
+<<<<<<< Updated upstream
 //				restaurant.setLogoImg(rset.getString("logo_img"));
+=======
+>>>>>>> Stashed changes
 				restaurant.setRateAvg(rset.getDouble("rate_avg"));
 				restaurant.setReviewCnt(orderService.selectReviewCntByResId(restaurant.getResId()));
+
+				if(rset.getInt("img_res_no") != 0) {
+					ResImg resImg = new ResImg();
+					resImg.setImgResNo(rset.getInt("img_res_no"));
+					resImg.setImgResId(rset.getInt("res_id"));
+					resImg.setOriginalFilname(rset.getString("img_originalfile"));
+					resImg.setRenamedFilename(rset.getString("img_renamedfile"));
+					resImg.setImgResStatus("Y".equals(rset.getString("img_res_status"))? true : false);
+					restaurant.setResImg(resImg);
+				}
+				
 				list.add(restaurant);
 			}
 			
@@ -214,23 +247,41 @@ public class RestaurantDao {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		String sql = prop.getProperty("selectResList");
-//		select * from ( select row_number() over(order by res_id desc) rnum, R.* from restaurant R ) M where rnum between ? and ?
+//		select * from 
+//		    (select row_number() over(order by R.res_id desc) rnum,
+//		            R.*, 
+//		            I.img_res_no, 
+//		            I.img_originalfile, 
+//		            I.img_renamedfile, 
+//		            I.img_res_status 
+//		    from restaurant R left join res_img I 
+//		                on R.res_id = I.img_res_id and I.img_res_status = 'Y' ) R 
+//		    where rnum between ? and ?
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, param.get("start"));
 			pstmt.setString(2, param.get("end"));
 			rset = pstmt.executeQuery();
 			while (rset.next()) {
-				Restaurant restaurant = new Restaurant();
-				restaurant.setResId(rset.getInt("res_id"));
-				restaurant.setResName(rset.getString("res_name"));
-				restaurant.setResAddress(rset.getString("res_address"));
-				restaurant.setCategory(rset.getString("category"));
-				restaurant.setMinPrice(rset.getInt("min_price"));
-//				restaurant.setLogoImg(rset.getString("logo_img"));
-				restaurant.setRateAvg(rset.getDouble("rate_avg"));
-				restaurant.setReviewCnt(rset.getInt("review_cnt"));
-				list.add(restaurant);
+				Restaurant res = new Restaurant();
+				res.setResId(rset.getInt("res_id"));
+				res.setResName(rset.getString("res_name"));
+				res.setResAddress(rset.getString("res_address"));
+				res.setCategory(rset.getString("category"));
+				res.setMinPrice(rset.getInt("min_price"));
+				res.setRateAvg(rset.getDouble("rate_avg"));
+				res.setReviewCnt(rset.getInt("review_cnt"));
+				
+				if(rset.getInt("img_res_no") != 0) {
+					ResImg resImg = new ResImg();
+					resImg.setImgResNo(rset.getInt("img_res_no"));
+					resImg.setImgResId(rset.getInt("res_id"));
+					resImg.setOriginalFilname(rset.getString("img_originalfile"));
+					resImg.setRenamedFilename(rset.getString("img_renamedfile"));
+					resImg.setImgResStatus("Y".equals(rset.getString("img_res_status"))? true : false);
+					res.setResImg(resImg);
+				}
+				list.add(res);
 			}
 		} catch (Exception e) {
 			throw new RestaurantException("가게관리 -> 가게 리스트 조회 오류", e);
@@ -313,14 +364,12 @@ public class RestaurantDao {
 			}
 		} catch (Exception e) {
 			throw new RestaurantException("메뉴 개수 조회 오류", e);
-			e.printStackTrace();
 		} finally {
 			close(rset);
 			close(pstmt);
 		}
 		return totalContents;
 	}
-
 
 	// 가게 신규 등록 (가게관리용)
 	public int insertRes(Connection conn, Restaurant res) {
@@ -369,7 +418,7 @@ public class RestaurantDao {
 	public int insertResImg(Connection conn, ResImg resImg) {
 		int result = 0;
 		PreparedStatement pstmt = null;
-		String sql = prop.getProperty("insertNoticeImg");
+		String sql = prop.getProperty("insertResImg");
 //		insert into res_img(img_res_no, img_res_id, img_originalfile, img_renamedfile) values(seq_tb_res_img_no.nextval, ?, ?, ?)
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -385,6 +434,7 @@ public class RestaurantDao {
 		return result;
 	}
 
+	// 가게 정보 수정 (가게관리용)
 	public int updateRes(Connection conn, Restaurant res) {
 		int result = 0;
 		PreparedStatement pstmt = null;
@@ -406,6 +456,7 @@ public class RestaurantDao {
 		return result;
 	}
 
+	// 가게 삭제 (가게관리용)
 	public int deleteRes(Connection conn, int resId) {
 		int result = 0;
 		PreparedStatement pstmt = null;
@@ -417,6 +468,53 @@ public class RestaurantDao {
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			throw new RestaurantException("가게 삭제 오류", e);
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	// 가게 객체 이미지 연결 (가게관리용)
+	public ResImg selectOneResImg(Connection conn, Restaurant res) {
+		ResImg resImg  = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectOneResImg");
+//		select * from res_img where img_res_id = ? and img_res_status = 'Y' order by img_no desc
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, res.getResId());
+			rset = pstmt.executeQuery();
+
+			if (rset.next()) {
+				resImg = new ResImg();
+				resImg.setImgResNo(rset.getInt("img_res_no"));
+				resImg.setImgResId(rset.getInt("img_res_id"));
+				resImg.setOriginalFilname(rset.getString("img_originalfile"));
+				resImg.setRenamedFilename(rset.getString("img_renamedfile"));
+				resImg.setImgResStatus("Y".equals(rset.getString("img_res_status")) ? true : false);
+			}
+		} catch (Exception e) {
+			throw new RestaurantException("가게 이미지 첨부파일 조회오류", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return resImg;
+	}
+
+	// 가게 이미지 삭제 (가게관리용)
+	public int deleteResImg(Connection conn, String imgResNo) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("deleteResImg");
+//		update res_img set img_res_status = 'N' where img_res_no = ? 
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, imgResNo);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			throw new RestaurantException("가게 이미지 첨부파일 삭제 오류", e);
 		} finally {
 			close(pstmt);
 		}

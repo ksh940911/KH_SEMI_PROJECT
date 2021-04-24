@@ -50,7 +50,7 @@
 			<td><%= res.getCategory() %></td>
 			<td>
 			<% if(res.getResImg() != null && res.getResImg().getImgResStatus()) { %>
-				<img src="<%= request.getContextPath() %>/upload/res/<%= res.getResImg().getRenamedFilename() %>" class="resList-img"/>	
+				<img src="<%= request.getContextPath() %>/upload/res/<%= res.getResImg().getRenamedFilename() %>" class="resList-img" style="width:50px;"/>	
 			<% } else { %>
 				<img src="<%= request.getContextPath() %>/images/logo.png" class="resList-img" style="width:50px;"/>	
 			<% } %> 

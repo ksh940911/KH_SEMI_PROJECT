@@ -31,7 +31,7 @@ public class AdminResManageServlet extends HttpServlet {
 		final int numPerPage = 10;
 		int cPage = 1;
 		try {
-		cPage = Integer.parseInt(request.getParameter("cPage"));
+			cPage = Integer.parseInt(request.getParameter("cPage"));
 		}catch(NumberFormatException e) {}
 		
 		
@@ -46,6 +46,7 @@ public class AdminResManageServlet extends HttpServlet {
 		String pageBar = MvcUtils.getPageBar(cPage, numPerPage, totalContents, url);
 		
 		request.setAttribute("pageBar", pageBar);
+		System.out.println("list = "+list);
 		request.setAttribute("list", list);
 		request.getRequestDispatcher("/WEB-INF/views/admin/resManage.jsp").forward(request, response);
 	}

@@ -49,7 +49,7 @@ public class AdminResUpdateServlet extends HttpServlet {
 			throws ServletException, IOException { 
 		
 		try {
-			String saveDirectory = getServletContext().getRealPath("/upload/notice");
+			String saveDirectory = getServletContext().getRealPath("/upload/res");
 			int maxPostSize = 10 * 1024 * 1024;
 			String encoding = "utf-8";
 			FileRenamePolicy policy = new YeogiyoFileRenamePolicy();
@@ -67,6 +67,9 @@ public class AdminResUpdateServlet extends HttpServlet {
 			String originalFileName = multipartRequest.getOriginalFileName("upImgFile");
 			String renamedFileName = multipartRequest.getFilesystemName("upImgFile");
 					
+			String imgResNo = multipartRequest.getParameter("delImgFile");
+			
+			
 			Restaurant res = new Restaurant();
 			res.setResId(resId);
 			res.setResName(resName);
@@ -82,8 +85,12 @@ public class AdminResUpdateServlet extends HttpServlet {
 				res.setResImg(resImg);
 				
 			}
+			int result = 0;
+			if(imgResNo != null) {
+				result = resService.deleteResImg(imgResNo); 
+			}
 			
-			int result = new RestaurantService().updateRes(res);
+			result = resService.updateRes(res);
 	
 			String msg = result > 0 ? "가게 정보 수정 성공." : "가게 정보 수정 실패.";
 	
