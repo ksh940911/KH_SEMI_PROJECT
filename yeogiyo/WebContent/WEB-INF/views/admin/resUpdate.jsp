@@ -72,12 +72,14 @@
 			<tr>
 				<th>최소주문금액</th>
 				<td>
-				<input type="text" name="minPrice" id="minPrice" placeholder="0" value="<%= minPrice %>"/>
+					<input type="range" name="minPrice" id="minPrice" min="0" max="20000" step="100" value="<%= minPrice %>"
+								oninput="document.getElementById('mPval').innerHTML=this.value;"/><span id="mPval"><%= minPrice %></span>원
 				</td>
 			</tr>
 		</table>
 		<div class="button-class">
 			<input type="button" value="메뉴관리" onclick="menuManage();" />
+			<br />
 			<input type="button" value="수정" onclick="updateRes();" />
 			<input type="button" value="삭제" onclick="deleteRes();" />
 			<input type="button" value="취소" onclick="location.href='<%= request.getContextPath() %>/admin/resManage';" />

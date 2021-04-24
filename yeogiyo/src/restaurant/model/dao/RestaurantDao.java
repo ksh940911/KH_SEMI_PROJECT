@@ -260,4 +260,60 @@ public class RestaurantDao {
 		return totalContents;
 	}
 
+	// 메뉴조회-리스트_페이징
+	public List<Menu> selectMenuList(Connection conn, Map<String, String> param) {
+		List<Menu> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectMenuList");
+//	    select * from ( select row_number() over(order by menu_id desc) rnum, M.* from menu M where res_id = ? ) M where rnum between ? and ?
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, param.get("resId"));
+			pstmt.setString(2, param.get("start"));
+			pstmt.setString(3, param.get("end"));
+			rset = pstmt.executeQuery();
+			while (rset.next()) {
+				Menu menu = new Menu();
+				menu.setMenuId(rset.getInt("menu_id"));
+				menu.setResId(rset.getInt("res_id"));
+				menu.setMenuName(rset.getString("menu_name"));
+				menu.setDescription(rset.getString("description"));
+				menu.setMenuCategory(rset.getString("menu_category"));
+				menu.setPrice(rset.getInt("price"));
+				menu.setMenuImg(rset.getString("menu_img"));
+				list.add(menu);
+			}
+		} catch (Exception e) {
+			throw new RestaurantException("메뉴관리 -> 메뉴 리스트 조회 오류", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+
+	// 메뉴 개수 조회 (메뉴관리용)
+	public int selectMenuCount(Connection conn, String resId) {
+		int totalContents = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = prop.getProperty("selectMenuCount");
+//		select count(*) cnt from menu where res_id = ?
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, resId);
+			rset = pstmt.executeQuery();
+			if (rset.next()) {
+				totalContents = rset.getInt("cnt");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return totalContents;
+	}
+
 }

@@ -177,6 +177,7 @@ function updateMember() {
 	 
 	var $password = $("#password");
 	
+
 	if(/^[a-zA-Z0-9]{4,12}$/.test($password.val()) == false && !($password.val() == "****")) {
 		alert("패스워드는 4~12자리의 영문자, 숫자만 가능합니다.");
 		$password.select();
