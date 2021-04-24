@@ -29,7 +29,7 @@ public class NoticeViewServlet extends HttpServlet {
 
 		try {
 			int resId = 0;
-			System.out.println(request.getParameter("resId"));
+			
 			// 공지찾기용 가게번호 참조
 			try {
 				resId = Integer.parseInt(request.getParameter("resId"));
@@ -50,9 +50,7 @@ public class NoticeViewServlet extends HttpServlet {
 			}
 			
 			request.setAttribute("notice", notice);
-//			System.out.println("notice@ViewServlet = "+notice);
 			request.setAttribute("resId", resId);
-//			System.out.println("resId@ViewServlet = "+resId);
 			request.getRequestDispatcher("/WEB-INF/views/admin/noticeView.jsp").forward(request, response);
 		} catch (Exception e) {
 			e.printStackTrace();

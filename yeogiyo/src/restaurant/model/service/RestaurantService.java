@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
+import member.model.vo.Member;
 import notice.model.exception.NoticeException;
 import notice.model.vo.NoticeImg;
 import restaurant.model.dao.RestaurantDao;
@@ -151,6 +152,22 @@ public class RestaurantService {
 		return result;
 	}
 	
+	// 가게 이름 조회 (가게관리)
+	public List<Restaurant> searchResName(Map<String, String> param) {
+		Connection conn = getConnection();
+		List<Restaurant> list = restaurantDao.searchResName(conn, param);
+		close(conn);
+		return list;
+	}
+	
+	// 가게 이름 조회 결과 수 (가게관리)
+	public int searchResNameCount(Map<String, String> param) {
+		Connection conn = getConnection();
+		int totalContents = restaurantDao.searchResNameCount(conn, param);
+		close(conn);
+		return totalContents;
+	}
+	
   
 	// 메뉴조회-리스트_페이징 (메뉴관리용)
 	public List<Menu> selectMenuList(Map<String, String> param) {
@@ -165,5 +182,9 @@ public class RestaurantService {
 		int totalContents = restaurantDao.selectMenuCount(conn, resId);
 		return totalContents;
 	}
+
+	
+
+	
 
 }

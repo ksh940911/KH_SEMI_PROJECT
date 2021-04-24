@@ -16,39 +16,41 @@ import restaurant.model.service.RestaurantService;
 import restaurant.model.vo.Restaurant;
 
 /**
- * Servlet implementation class AdminRestaurantManageServlet
+ * Servlet implementation class AdminResFinderServlet
  */
-@WebServlet("/admin/resManage")
-public class AdminResManageServlet extends HttpServlet {
+@WebServlet("/admin/resFinder")
+public class AdminResFinderServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private RestaurantService resService = new RestaurantService();
-	
+
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+		String searchResName = request.getParameter("searchResName");
 		final int numPerPage = 10;
 		int cPage = 1;
+
 		try {
 			cPage = Integer.parseInt(request.getParameter("cPage"));
-		}catch(NumberFormatException e) {}
-		
-		
+		} catch (NumberFormatException e) {
+		}
+
 		Map<String, String> param = new HashMap<>();
-		param.put("start", String.valueOf((cPage -1) * numPerPage -1));
+		param.put("searchResName", searchResName);
+		param.put("start", String.valueOf((cPage - 1) * numPerPage + 1));
 		param.put("end", String.valueOf(cPage * numPerPage));
-				
-		List<Restaurant> list = resService.selectResList(param);		
-		int totalContents = resService.selectResCount();
-		
+
+		List<Restaurant> list = resService.searchResName(param);
+		int totalContents = resService.searchResNameCount(param);
+
 		String url = request.getRequestURI();
 		String pageBar = MvcUtils.getPageBar(cPage, numPerPage, totalContents, url);
-		
-		request.setAttribute("pageBar", pageBar);
+
 		request.setAttribute("list", list);
+		request.setAttribute("pageBar", pageBar);
 		request.getRequestDispatcher("/WEB-INF/views/admin/resManage.jsp").forward(request, response);
 	}
-
 
 }

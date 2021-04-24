@@ -15,6 +15,8 @@ import java.util.Map;
 import java.util.Properties;
 
 import common.JDBCTemplate;
+import member.model.exception.MemberException;
+import member.model.vo.Member;
 import notice.model.exception.NoticeException;
 import order.model.service.OrderService;
 import restaurant.model.exception.RestaurantException;
@@ -518,6 +520,82 @@ public class RestaurantDao {
 			close(pstmt);
 		}
 		return result;
+	}
+
+	// 가게 이름 조회 (가게관리용)
+	public List<Restaurant> searchResName(Connection conn, Map<String, String> param) {
+		List<Restaurant> list = new ArrayList<Restaurant>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = prop.getProperty("searchPagedResName");
+//		select * from 
+//	    (select row_number() over(order by R.res_id desc) rnum,
+//	            R.*, 
+//	            I.img_res_no, 
+//	            I.img_originalfile, 
+//	            I.img_renamedfile, 
+//	            I.img_res_status 
+//	    from restaurant R left join res_img I 
+//	                on R.res_id = I.img_res_id and I.img_res_status = 'Y'
+//        where R.res_name like '%'||?||'%') R 
+//	    where rnum between ? and ?
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, param.get("searchResName"));
+			pstmt.setString(2, param.get("start"));
+			pstmt.setString(3, param.get("end"));
+			rset = pstmt.executeQuery();
+			while (rset.next()) {
+				Restaurant res = new Restaurant();
+				res.setResId(rset.getInt("res_id"));
+				res.setResName(rset.getString("res_name"));
+				res.setResAddress(rset.getString("res_address"));
+				res.setCategory(rset.getString("category"));
+				res.setMinPrice(rset.getInt("min_price"));
+				res.setRateAvg(rset.getDouble("rate_avg"));
+				res.setReviewCnt(rset.getInt("review_cnt"));
+				
+				if(rset.getInt("img_res_no") != 0) {
+					ResImg resImg = new ResImg();
+					resImg.setImgResNo(rset.getInt("img_res_no"));
+					resImg.setImgResId(rset.getInt("res_id"));
+					resImg.setOriginalFilname(rset.getString("img_originalfile"));
+					resImg.setRenamedFilename(rset.getString("img_renamedfile"));
+					resImg.setImgResStatus("Y".equals(rset.getString("img_res_status"))? true : false);
+					res.setResImg(resImg);
+				}
+				list.add(res);
+				System.out.println("daoList = "+list);
+			}
+		} catch (Exception e) {
+			throw new RestaurantException("가게 이름 조회 오류(관리자용)", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+	// 가게 이름 조회 결과 수 (가게관리용)
+	public int searchResNameCount(Connection conn, Map<String, String> param) {
+		int totalContents = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = prop.getProperty("searchResNameCount");
+//		select count(*) cnt from restaurant where res_name like '%'||?||'%'
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, param.get("searchResName"));
+			rset = pstmt.executeQuery();
+			if (rset.next()) {
+				totalContents = rset.getInt("cnt");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return totalContents;
 	}
 
 }
