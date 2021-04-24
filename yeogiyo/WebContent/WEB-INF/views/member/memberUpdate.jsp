@@ -91,7 +91,7 @@ $("#phone").change(function() {
 /**
  * 회원가입 유효성 검사
  */
- $(document.memberEnrollFrm).submit(function(){
+ $(document.memberUpdateFrm).submit(function(){
 	 //이름 유효성 검사
 	 var $memberName = $("#memberName");
 	 if(/^[가-힣]{2,5}/.test($memberName.val()) == false) {

@@ -405,6 +405,11 @@
 	    	var selectedMenu = {
 					
 					resId : <%= r.getResId() %>,
+					<% if(loginMember != null){ %>
+					memberId : <%= loginMember.getMemberId() %>,
+					<% }else{ %>
+					memberId : null,
+					<% } %>
 	    			menuId : Number($popupLayer.find(".detail-menu-id").text()),
 	    			menuName : $popupLayer.find(".detail-menu-name").text(),
 	    			amount : Number($popupLayer.find("#popup-amount").text()),
@@ -438,6 +443,11 @@
 				var selectedMenu = {
 						
 						resId : <%= r.getResId() %>,
+						<% if(loginMember != null){ %>
+						memberId : <%= loginMember.getMemberId() %>,
+						<% }else{ %>
+						memberId : null,
+						<% } %>
 		    			menuId : Number($popupLayer.find(".detail-menu-id").text()),
 		    			menuName : $popupLayer.find(".detail-menu-name").text(),
 		    			amount : Number($popupLayer.find("#popup-amount").text()),

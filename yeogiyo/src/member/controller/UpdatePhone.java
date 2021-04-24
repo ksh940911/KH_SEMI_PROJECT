@@ -31,30 +31,37 @@ public class UpdatePhone extends HttpServlet {
 	 * 휴대폰 번호 업데이트
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String location = request.getContextPath();
-		String msg = null;
-		int result = 0;
 		
-		//로그인 중인 멤버 가져오기
-		HttpSession session = request.getSession();
-		Member member = (Member)session.getAttribute("loginMember");
-		
-		String phone = request.getParameter("phone");
-		String memberId = member.getMemberId();
-		
-		result = memberService.updatePhone(phone, memberId);
-		if(result > 0) {
-			msg = "성공적으로 전화번호를 수정했습니다.";
-			//세션 정보도 같이 갱신
-			session.setAttribute("loginMember", memberService.selectMemberById(member.getMemberId()));
+		try {
+			String location = request.getContextPath();
+			String msg = null;
+			int result = 0;
+			
+			//로그인 중인 멤버 가져오기
+			HttpSession session = request.getSession();
+			Member member = (Member)session.getAttribute("loginMember");
+			
+			String phone = request.getParameter("phone");
+			String memberId = member.getMemberId();
+			
+			result = memberService.updatePhone(phone, memberId);
+			if(result > 0) {
+				msg = "성공적으로 전화번호를 수정했습니다.";
+				//세션 정보도 같이 갱신
+				session.setAttribute("loginMember", memberService.selectMemberById(member.getMemberId()));
+			}
+			
+			else {
+				msg = "전화번호 수정에 실패했습니다.";
+			}
+			
+			session.setAttribute("msg", msg);
+			response.sendRedirect(location + "/member/memberView");
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+			throw e;
 		}
-		
-		else {
-			msg = "전화번호 수정에 실패했습니다.";
-		}
-		
-		session.setAttribute("msg", msg);
-		response.sendRedirect(location + "/member/memberView");
 		
 	}
 	

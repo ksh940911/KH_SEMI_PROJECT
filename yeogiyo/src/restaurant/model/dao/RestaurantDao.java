@@ -263,8 +263,7 @@ public class RestaurantDao {
 		return totalContents;
 	}
 
-<<<<<<< Updated upstream
-=======
+
 	// 메뉴조회-리스트_페이징
 	public List<Menu> selectMenuList(Connection conn, Map<String, String> param) {
 		List<Menu> list = new ArrayList<>();
@@ -314,12 +313,14 @@ public class RestaurantDao {
 			}
 		} catch (Exception e) {
 			throw new RestaurantException("메뉴 개수 조회 오류", e);
+			e.printStackTrace();
 		} finally {
 			close(rset);
 			close(pstmt);
 		}
 		return totalContents;
 	}
+
 
 	// 가게 신규 등록 (가게관리용)
 	public int insertRes(Connection conn, Restaurant res) {
@@ -422,5 +423,4 @@ public class RestaurantDao {
 		return result;
 	}
 
->>>>>>> Stashed changes
 }

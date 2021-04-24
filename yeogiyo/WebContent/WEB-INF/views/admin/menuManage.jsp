@@ -6,10 +6,10 @@
 <%
 	List<Menu> list = (List<Menu>)request.getAttribute("list"); 
 %>
-<link rel="stylesheet" href="<%= request.getContextPath() %>/css/admin.css" />
+<link rel="stylesheet" href="<%= request.getContextPath() %>/css/adminMenu.css" />
 <section id="restaurantList-container">
 	<h2>메뉴관리</h2>
-	<input type="button" value="메뉴추가" onclick="location.href='<%= request.getContextPath() %>/admin/menuEnroll';"/>
+	<input type="button" value="메뉴추가" onclick="menuEnroll();"/>
 	<table id="tbl-menuList">
 	<thead>
 		<tr>
@@ -37,6 +37,8 @@
 			<td><%= menu.getDescription() %></td>
 			<td><%= menu.getPrice() %></td>
 			<td><img style="width: 50px; height:50px;" src="<%= menu.getMenuImg() %>" alt=""></td>
+			<td id="resId" style="display:none" ><%= menu.getResId() %></td>
+
 		</tr>
 	<% 
 			}
@@ -48,47 +50,35 @@
 	<%= request.getAttribute("pageBar") %>
 </div>
 </section>
-
-<%-- <form action="<%= request.getContextPath() %>/admin/resDelete" id="res-del-frm" method="POST">
-	<input type="hidden" name="resId" value="<%= %>" />
-
-</form> --%>
 <form 
-	action="<%= request.getContextPath() %>/admin/resUpdate"
-	name="resUpdateFrm"
+	action="<%= request.getContextPath() %>/admin/menuEnroll"
+	name="menuEnrollFrm"
 	method="GET">
 	<input type="hidden" name="resId" />
 </form>
+<form 
+	action="<%= request.getContextPath() %>/admin/menuUpdate"
+	name="menuUpdateFrm"
+	method="GET">
+	<input type="hidden" name="menuId" />
+</form>
 <script>
-$("#tbl-resList tr").click(function(){
+function menuEnroll(){
+	var resId = $("#resId").text();
+	var $frm = $(document.menuEnrollFrm);
+	$frm.find("[name=resId]").val(resId);
+	$frm.submit();
+};
+
+$("#tbl-menuList tr").click(function(){
 	var tr = $(this);
 	var td = tr.children();
-	var resId = td.eq(0).text();
+	var menuId = td.eq(1).text();
 
-	var $frm = $(document.resUpdateFrm);
-	$frm.find("[name=resId]").val(resId);
+	var $frm = $(document.menuUpdateFrm);
+	$frm.find("[name=menuId]").val(menuId);
 	$frm.submit();
 });
 
-function updateRes(){
-	
-	
-}
-
-function deleteRes(){
-	if(confirm("가게를 삭제 하시겠습니까?")){
-		var $frm = $("#res-del-frm");
-		$frm.submit();
-	}
-	
-}
-
-</script>
-
-<%-- 	<input type="button" value="신규등록" />
-	<input type="button" value="가게찾기(가게명)" /><!-- 텍스트박스 검색?  -->
-	
-	 <input type="button" id="noticeMamage" onclick="location.href='<%= request.getContextPath() %>/notice/noticeManage';">공지관리</button>
-	 <input type="button" id="reviewMamage" onclick="location.href='<%= request.getContextPath() %>/notice/reviewManage';">리뷰관리</button>
- --%>	 
+</script> 
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
