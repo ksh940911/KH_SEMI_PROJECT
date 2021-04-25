@@ -271,7 +271,7 @@
     			
     			//json data반영한 팝업레이어 html 삽입
     			if(data.menuImg != null){
-    			var $popupHtml = $('<div class="dimBg"></div><div id="layer2"class="pop-layer"><div class="detail-header"><div class="title">메뉴상세</div><input type="button"class="btn-layerClose"value="X"></div><div class="pop-container"><div class="pop-conts"><div class="detail-image"><img src="' + data.menuImg + '"alt=""></div><div class="detail-menu-id" style="display:none;">' + data.menuId + '</div><div class="detail-text"><div class="detail-menu-name">' + data.menuName + '</div><div class="menu-description">' + data.description + '</div></div><div class="detail-price"><strong>가격</strong><div class="detail-price-price"><span class="price" id="popup-price">' + data.price + '</span>원</div></div><div class="quantity-control"><strong>수량</strong><div><input type="button" id="popup-btn-minus" value="-"><span id="popup-amount">1</span><input type="button" id="popup-btn-plus" value="+"></div></div><div class="detail-total-wrap"><strong>총주문금액</strong><div class="total"><strong><span id="popup-total-price">4500</span>원</strong></div></div></div><div class="detail-btn-wrap"><button class="btn-add-cart"onclick="add_to_cart();">주문표에추가</button><button class="btn-order"onclick="checkout()">주문하기</button><div class="message ng-binding"></div></div></div></div>');
+    			var $popupHtml = $('<div class="dimBg"></div><div id="layer2"class="pop-layer"><div class="detail-header"><div class="title">메뉴상세</div><input type="button"class="btn-layerClose"value="X"></div><div class="pop-container"><div class="pop-conts"><div class="detail-image"><img src="' + data.menuImg + '"alt=""></div><div class="detail-menu-id" style="display:none;">' + data.menuId + '</div><div class="detail-text"><div class="detail-menu-name">' + data.menuName + '</div><div class="menu-description">' + data.description + '</div></div><div class="detail-price"><strong>가격</strong><div class="detail-price-price"><span class="price" id="popup-price">' + data.price + '</span>원</div></div><div class="quantity-control"><strong>수량</strong><div><input type="button" id="popup-btn-minus" value="-"><span id="popup-amount">1</span><input type="button" id="popup-btn-plus" value="+"></div></div><div class="detail-total-wrap"><strong>총주문금액</strong><div class="total"><strong><span id="popup-total-price">4500</span>원</strong></div></div></div><div class="detail-btn-wrap"><button class="btn-add-cart"onclick="addCartById();">주문표에추가</button><button class="btn-order"onclick="checkout()">주문하기</button><div class="message ng-binding"></div></div></div></div>');
     				
     			} else{
     			var $popupHtml = $('<div class="dimBg"></div><div id="layer2"class="pop-layer"><div class="detail-header"><div class="title">메뉴상세</div><input type="button"class="btn-layerClose"value="X"></div><div class="pop-container"><div class="pop-conts"><div class="detail-image"><img src="<%= request.getContextPath() %>/images/defaultMenu.png" alt=""></div><div class="detail-menu-id" style="display:none;">' + data.menuId + '</div><div class="detail-text"><div class="detail-menu-name">' + data.menuName + '</div><div class="menu-description">' + data.description + '</div></div><div class="detail-price"><strong>가격</strong><div class="detail-price-price"><span class="price" id="popup-price">' + data.price + '</span>원</div></div><div class="quantity-control"><strong>수량</strong><div><input type="button" id="popup-btn-minus" value="-"><span id="popup-amount">1</span><input type="button" id="popup-btn-plus" value="+"></div></div><div class="detail-total-wrap"><strong>총주문금액</strong><div class="total"><strong><span id="popup-total-price">4500</span>원</strong></div></div></div><div class="detail-btn-wrap"><button class="btn-add-cart"onclick="add_to_cart();">주문표에추가</button><button class="btn-order"onclick="checkout()">주문하기</button><div class="message ng-binding"></div></div></div></div>');
@@ -392,112 +392,106 @@
     }
     //---------------------------------------
     
-    //메뉴 상세 레이어 팝업에서 '주문표에 추가' 버튼 클릭 시
-    function add_to_cart(){
-    	//session storage로 주문내용을 js object로 만들어서 json에 담기 
+   function addCartById(){
     	
-    	//1. selectedMenuArr 초기화
-    	//sessionStorage에 selectedMenuArr배열이 없는 경우 : 생성
-    	//sessionStorage에 selectedMenuArr배열이 있는 경우 : getItem 후 parsing	
-    	var selectedMenuArr = JSON.parse(sessionStorage.getItem('selectedMenuArr')) || [];
-    	 //짧은조건식. A || B
-        //A가 true일 경우 A값을 대입. 아니면 B대입.
+    	//1. 로그인 여부 확인
+    	<% if(loginMember != null){ %>
     	
-		//2. selectedMenuArr 배열에 selectedMenu 객체 추가
-	    var $popupLayer = $("#layer2");
-		
-		if(!selectedMenuArr.length){
-			
-			//2-1. 객체배열 비어있으면 배열에 객체 바로 추가
-	    	
-	    	var selectedMenu = createNewObj();
-	    	selectedMenuArr.push(selectedMenu);
-			
-		}else{
-			
-			
-		//if A가게에서 주문표에 담은 후 B가게에 주문표를 담으려고 할 경우
-		if(selectedMenuArr[0]["resId"] != <%= r.getResId() %> ) {
-			if(confirm('다른 음식점에서 이미 담은 메뉴가 있습니다. 담긴 메뉴를 취소하고 새로운 음식점에서 메뉴를 담을까요?')){
-				
-				//세션스토리지 삭제
-				sessionStorage.removeItem("selectedMenuArr");
-				
-				//객체배열 새로 생성
-				var selectedMenuArr = [];				
-				//객체 생성
-				var selectedMenu = createNewObj();
-				
-				//객체를 객체배열에 담기
-				selectedMenuArr.push(selectedMenu);
-				
-				setArrayToSession(selectedMenuArr);
-			}
-		}
-		
-			//2-2. 배열에 객체가 있을 경우, 중복되는 메뉴아이디가 있을 경우 수량만 추가  or 객체 추가 
-			var isSame = false;
-			$.each(selectedMenuArr, function(i, menu){
-				
-				//2-2-1. 아이디 일치하는 객체에 수량만 추가
-				if(menu["menuId"] === Number($popupLayer.find(".detail-menu-id").text()) ){
-					selectedMenuArr[i]['amount'] += Number($popupLayer.find("#popup-amount").text());
-					isSame = true;
-					
-					//수량 추가하면서 가격도 변경
-					selectedMenuArr[i]['totalPrice'] = Number(selectedMenuArr[i]["price"]) * Number(selectedMenuArr[i]['amount']);
-				}
-			});
-			
-				//2-2-2. 아이디 일치하는 객체 없으면 객체 새로 추가
-			if(!isSame){
-				var selectedMenu = createNewObj();
-		    	selectedMenuArr.push(selectedMenu);
-			}
-			
-		}
-    	
-		setArrayToSession(selectedMenuArr);
-    	
-    	//주문표 최신화
-    	showCart();
-    	
-       dim_layer_hide();
-    }
-    //add_to_cart 함수 끝
-    
-    function createNewObj(){
-    	
+    	var memberId = '<%= loginMember.getMemberId() %>';
+    	var resId = <%= r.getResId() %>;
     	var $popupLayer = $("#layer2");
     	
-    	var selectedMenu = {
+		//2. 회원 아이디와 일치하는 세션 불러오기
+		var selectedMenuArr = JSON.parse(sessionStorage.getItem(memberId));
+		
+		//3. 회원 아이디와 일치하는 세션 있을 경우
+		if(selectedMenuArr != null){
+			
+			//4. 새로 담으려는 가게와 일치할 경우
+			if(Number(selectedMenuArr[0]["resId"]) === resId){
+				console.log('가게 일치');
+				//var selectedMenu = null; //obj init
+				var isContained = false;
+				$.each(selectedMenuArr, function(i, menu){
+					//5. 메뉴가 일치하는 경우 ->
+					if(menu["menuId"] === Number($popupLayer.find(".detail-menu-id").text()) ){
+						console.log('메뉴 일치');
+						//객체의 수량/총금액 속성 수정
+						selectedMenuArr[i]['amount'] += Number($popupLayer.find("#popup-amount").text());
+						selectedMenuArr[i]['totalPrice'] = Number(selectedMenuArr[i]["price"]) * Number(selectedMenuArr[i]['amount']);
+						isContained = true; //다음 조건문이 실행되지 않도록 true처리
+						//selectedMenu = menu;
+					}
+					
+					//5-1. 메뉴가 일치하지 않는 경우
+					if(!isContained){
+						console.log('메뉴 불일치');
+						//객체를 배열에 추가
+						var selectedMenu = createNewObj();
+						selectedMenuArr.push(selectedMenu);
+					}
+				});
 				
-				resId : <%= r.getResId() %>,
-				<% if(loginMember != null){ %>
-				memberId : '<%= loginMember.getMemberId() %>',
-				<% }else{ %>
-				memberId : null,
-				<% } %>
-    			menuId : Number($popupLayer.find(".detail-menu-id").text()),
-    			menuName : $popupLayer.find(".detail-menu-name").text(),
-    			amount : Number($popupLayer.find("#popup-amount").text()),
-    			price : Number($popupLayer.find("#popup-price").text()),
-    			totalPrice : Number($popupLayer.find("#popup-total-price").text())
-    			
-    	};
+			}else{
+				
+				if(confirm('다른 음식점에서 이미 담은 메뉴가 있습니다. 담긴 메뉴를 취소하고 새로운 음식점에서 메뉴를 담을까요?')){
+					//기존 가게 세션 삭제
+					sessionStorage.removeItem(memberId);
+					
+					//새로운 객체배열 생성, JSON.stringify
+					selectedMenuArr = createNewArr();
+				}
+			}
+		}else{
+			//3-1. 회원 아이디와 일치하는 세션이 없을 경우
+		
+			//배열 초기화
+			selectedMenuArr = createNewArr();
+		}
+		var jsonSelectedMenuArr = JSON.stringify(selectedMenuArr);
+		sessionStorage.setItem('<%= loginMember.getMemberId() %>', jsonSelectedMenuArr);	
+		
+    	showCart();
+    	dim_layer_hide();
     	
-    	return selectedMenu;
+    	<% } else { %>
+    	alert('로그인이 필요합니다.');
+    	
+    	<% } %>
     	
     }
     
-
+	
+    function createNewArr(){
+    	var selectedMenuArr = [];
+    	
+    	var selectedMenu = createNewObj();
+    	
+    	selectedMenuArr.push(selectedMenu);
+    	
+    	return selectedMenuArr;
+    	
+    }
+    
+    function createNewObj(){
+    	var $popupLayer = $("#layer2");
+    	var selectedMenu = {
+    			resId : <%= r.getResId() %>,
+       			menuId : Number($popupLayer.find(".detail-menu-id").text()),
+       			menuName : $popupLayer.find(".detail-menu-name").text(),
+       			amount : Number($popupLayer.find("#popup-amount").text()),
+       			price : Number($popupLayer.find("#popup-price").text()),
+       			totalPrice : Number($popupLayer.find("#popup-total-price").text())
+        	};
+    	return selectedMenu;
+    }
 	
 	function setArrayToSession(selectedMenuArr){
 		  //4. selectedMenuArr배열을 JSON으로 변환
 		var jsonSelectedMenuArr = JSON.stringify(selectedMenuArr);
 		
 		//3. sessionStorage에 저장
-		sessionStorage.setItem("selectedMenuArr", jsonSelectedMenuArr);
+		sessionStorage.setItem("<%= loginMember.getMemberId() %>", jsonSelectedMenuArr);
 	}
     
     
@@ -517,7 +511,9 @@
     */
     function showCart(){
     	//1. selectedMenuArr 객체배열 가져오기
-     	var selectedMenuArr = JSON.parse(sessionStorage.getItem("selectedMenuArr"));
+    	var memberId = '<%= loginMember.getMemberId() %>';
+//      	var selectedMenuArr = JSON.parse(sessionStorage.getItem("selectedMenuArr"));
+     	var selectedMenuArr = JSON.parse(sessionStorage.getItem(memberId));
 		console.log(selectedMenuArr);
     	
 		//2. 세션이 비어있지 않다면 
@@ -572,6 +568,10 @@
     			
     			if(selectedMenuArr.length == 0){
     				$(".cart-empty").show();
+    			}
+    			
+    			if(sessionStorage.getItem('<%= loginMember.getMemberId() %>') === '[]'){
+    				sessionStorage.removeItem('<%= loginMember.getMemberId() %>');
     			}
 	        	
 	    	});
@@ -631,7 +631,7 @@
 				
 				//arr
 				//선택한 메뉴의 수량 수정
-				var selectedMenuArr = JSON.parse(sessionStorage.getItem('selectedMenuArr'));
+				var selectedMenuArr = JSON.parse(sessionStorage.getItem('<%= loginMember.getMemberId() %>'));
 				$.each(selectedMenuArr, function(i, menu){
 					
 					if(Number(menu["menuId"]) === Number($this.parent().parent().find(".cart-menu-id").text()) ){
@@ -676,7 +676,8 @@
 			//arr
 			
 			//session
-    		sessionStorage.removeItem("selectedMenuArr");
+//     		sessionStorage.removeItem("selectedMenuArr");
+    		sessionStorage.removeItem('<%= loginMember.getMemberId() %>');
     	
         	
     	}
@@ -705,11 +706,10 @@
     function checkout(){
     	
 		//주문표에 추가한 후, 바로 결제페이지로 넘어간다.
-      	add_to_cart();
+//       	add_to_cart();
+		addCartById();
 		
 		$("#orderFrm").submit();
-
-
     }
 
     /*
