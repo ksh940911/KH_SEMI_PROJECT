@@ -177,13 +177,13 @@ public class ReviewDao {
 			
 			if(rset.next()){
 				review = new Review();
-				review.setReviewNo(rset.getInt("reviewNo"));
-				review.setMemberId(rset.getString("memberId"));
-				review.setOrderId(rset.getInt("orderId"));
-				review.setReviewTime(rset.getDate("reviewTime"));
-				review.setReviewStar(rset.getInt("reviewStar"));
-				review.setReviewOrder(rset.getString("reviewOrder"));
-				review.setReviewContent(rset.getString("reviewContent"));
+				review.setReviewNo(rset.getInt("review_no"));
+				review.setMemberId(rset.getString("member_id"));
+				review.setOrderId(rset.getInt("order_id"));
+				review.setReviewTime(rset.getDate("review_time"));
+				review.setReviewStar(rset.getInt("review_star"));
+				review.setReviewOrder(rset.getString("review_order"));
+				review.setReviewContent(rset.getString("review_content"));
 			}
 		}catch(Exception e){
 			e.printStackTrace();
@@ -194,7 +194,7 @@ public class ReviewDao {
 		return review;
 	}
 	
-	public ReviewPhoto selectOneReviewPhoto(Connection conn, int reveiwNo) {
+	public ReviewPhoto selectOneReviewPhoto(Connection conn, int reviewNo) {
 		ReviewPhoto reviewPhoto = null;
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -204,18 +204,18 @@ public class ReviewDao {
 			//미완성쿼리문을 가지고 객체생성.
 			pstmt = conn.prepareStatement(query);
 			//쿼리문미완성
-			pstmt.setInt(1, reveiwNo);
+			pstmt.setInt(1, reviewNo);
 			//쿼리문실행
 			//완성된 쿼리를 가지고 있는 pstmt실행(파라미터 없음)
 			rset = pstmt.executeQuery();
 			
 			if(rset.next()){
 				reviewPhoto = new ReviewPhoto();
-				reviewPhoto.setPhotoNo(rset.getInt("photoNo"));
-				reviewPhoto.setReviewNo(rset.getInt("reviewNo"));
-				reviewPhoto.setPhotoOriginalFilename(rset.getString("photoOriginalFilename"));
-				reviewPhoto.setPhotoRenamedFilename(rset.getString("photoRenamedFilename"));
-				reviewPhoto.setPhotoStatus("Y".equals(rset.getString("photoStatus")) ?  true : false);
+				reviewPhoto.setPhotoNo(rset.getInt("photo_no"));
+				reviewPhoto.setReviewNo(rset.getInt("review_no"));
+				reviewPhoto.setPhotoOriginalFilename(rset.getString("photo_originalFilename"));
+				reviewPhoto.setPhotoRenamedFilename(rset.getString("photo_renamedFilename"));
+				reviewPhoto.setPhotoStatus("Y".equals(rset.getString("photo_status")) ?  true : false);
 			}
 		}catch(Exception e){
 			throw new ReviewException("첨부파일 조회 오류", e);
@@ -226,13 +226,13 @@ public class ReviewDao {
 		return reviewPhoto;
 	}
 	
-	public int deleteReview(Connection conn, int review_no) {
+	public int deleteReview(Connection conn, int reviewNo) {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		String sql = prop.getProperty("deleteReview");
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, review_no);
+			pstmt.setInt(1, reviewNo);
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			throw new ReviewException("리뷰 삭제 오류", e);

@@ -10,8 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import common.MvcUtils;
-import order.model.service.OrderService;
-import order.model.vo.Order;
 import review.model.service.ReviewService;
 import review.model.vo.Review;
 
@@ -50,7 +48,6 @@ public class ReviewListServlet extends HttpServlet {
 		System.out.println("totalContents= " + totalContents);
 		String url = request.getRequestURI() + "?resId=" + request.getParameter("resId");
 		String pageBar = MvcUtils.getPageBar(cPage, numPerPage, totalContents, url);
-		
 		
 		//3. 응답 html처리 jsp에 위임.
 		request.setAttribute("list", list);
