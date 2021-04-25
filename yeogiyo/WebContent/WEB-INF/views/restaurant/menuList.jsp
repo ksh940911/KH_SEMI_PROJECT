@@ -498,6 +498,8 @@
 		
 		//3. sessionStorage에 저장
 		sessionStorage.setItem(memberIdJAVA, jsonSelectedMenuArr);
+		
+		refreshCart();
 	}
     
     
@@ -521,7 +523,8 @@
 //      	var selectedMenuArr = JSON.parse(sessionStorage.getItem("selectedMenuArr"));
      	var selectedMenuArr = JSON.parse(sessionStorage.getItem(memberId));
 		console.log(selectedMenuArr);
-    	
+		refreshCart();
+		
 		//2. 세션이 비어있지 않다면 
 		if(selectedMenuArr != null){ 
 			
@@ -579,7 +582,7 @@
     			if(sessionStorage.getItem(memberIdJAVA) === '[]'){
     				sessionStorage.removeItem(memberIdJAVA);
     			}
-	        	
+    			refreshCart();
 	    	});
 			
 			//주문표의 수량 증가
@@ -685,7 +688,7 @@
 //     		sessionStorage.removeItem("selectedMenuArr");
     		sessionStorage.removeItem(memberIdJAVA);
     	
-        	
+        	refreshCart();
     	}
     	
     });
