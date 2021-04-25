@@ -1,10 +1,6 @@
-﻿<%@page import="order.model.vo.Order"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
-<%
-   	Order order = (Order) request.getAttribute("order");
-    %>    
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/review.css" />
 
 <script>
@@ -28,7 +24,7 @@ function reviewValidate(){
 }
 </script>
 <section id="review-container">
-<h2><%= order.getOrderMenu() %></h2>
+<h2>리뷰</h2>
 <form
 	name="reviewEnrollFrm"
 	action="<%=request.getContextPath() %>/review/reviewEnroll" 

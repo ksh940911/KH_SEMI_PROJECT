@@ -16,16 +16,16 @@ public class ReviewService {
 
 	private ReviewDao reviewDao = new ReviewDao();
 
-	public List<Review> selectList(int start, int end) {
+	public List<Review> selectList(int resId, int start, int end) {
 		Connection conn = getConnection();
-		List<Review> list = reviewDao.selectList(conn, start, end);
+		List<Review> list = reviewDao.selectList(conn, resId, start, end);
 		close(conn);
 		return list;
 	}
 
-	public int selectReviewCount() {
+	public int selectReviewCount(int resId) {
 		Connection conn = getConnection();
-		int totalContents = reviewDao.selectReviewCount(conn);
+		int totalContents = reviewDao.selectReviewCount(conn, resId);
 		close(conn);
 		return totalContents;
 	}
@@ -64,6 +64,22 @@ public class ReviewService {
 			close(conn);
 		}
 		return result;
+	}
+	
+	public Review selectOne(int reviewNo) {
+		Connection conn = getConnection();
+		Review review = reviewDao.selectOne(conn, reviewNo);
+		ReviewPhoto reviewPhoto = reviewDao.selectOneReviewPhoto(conn, reviewNo);
+		review.setReviewphoto(reviewPhoto);
+		close(conn);
+		return review;
+	}
+
+	public ReviewPhoto selectOneReviewPhoto(int reviewNo) {
+		Connection conn = getConnection();
+		ReviewPhoto reviewPhoto = reviewDao.selectOneReviewPhoto(conn, reviewNo);
+		close(conn);
+		return reviewPhoto;
 	}
 	
 	public int deleteReview(int review_no) {
