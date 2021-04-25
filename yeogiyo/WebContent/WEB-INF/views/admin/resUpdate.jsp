@@ -88,15 +88,15 @@
 			</tr>
 		</table>
 		<div class="button-class">
-			<input type="button" value="메뉴관리" onclick="menuManage();" />
+			<input type="button" value="공지관리" onclick="noticeManage();" />
 			<br />
 			<input type="button" value="수정" onclick="updateRes();" />
 			<input type="button" value="삭제" onclick="deleteRes();" />
 			<input type="button" value="취소" onclick="location.href='<%= request.getContextPath() %>/admin/resManage';" />
 		</div>
 	</form>
-	<form action="<%= request.getContextPath() %>/admin/menuManage"
-		id="menuManageFrm"
+	<form action="<%= request.getContextPath() %>/notice/noticeView?resId=<%= res.getResId() %>"
+		id="noticeManageFrm"
 		method="GET">
 		<input type="hidden" name="resId" value="<%= res.getResId() %>" />
 	</form>
@@ -121,8 +121,8 @@ $("[name=upImgFile]").change(function(){
 	}
 });	
 
-function menuManage(){
-	$("#menuManageFrm").submit();
+function noticeManage(){
+	$("#noticeManageFrm").submit();
 };
 
 function updateRes() {
