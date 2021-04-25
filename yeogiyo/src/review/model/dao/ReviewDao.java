@@ -32,7 +32,7 @@ public class ReviewDao {
 		}
 	}
 
-	public List<Review> selectList(Connection conn, int start, int end) {
+	public List<Review> selectList(Connection conn, int resId, int start, int end) {
 		List<Review> list = new ArrayList<>();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -40,8 +40,9 @@ public class ReviewDao {
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, start);
-			pstmt.setInt(2, end);
+			pstmt.setInt(1, resId);
+			pstmt.setInt(2, start);
+			pstmt.setInt(3, end);
 			rset = pstmt.executeQuery();
 			System.out.println("여기"+rset);
 			while(rset.next()) {
@@ -76,7 +77,7 @@ public class ReviewDao {
 		return list;
 	}
 
-	public int selectReviewCount(Connection conn) {
+	public int selectReviewCount(Connection conn, int resId) {
 		int totalContents = 0;
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -84,6 +85,7 @@ public class ReviewDao {
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, resId);
 			rset = pstmt.executeQuery();
 			while(rset.next()) {
 				totalContents = rset.getInt("cnt");

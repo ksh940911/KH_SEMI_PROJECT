@@ -28,7 +28,7 @@ function reviewValidate(){
 }
 </script>
 <section id="review-container">
-<h2><%= order.getOrderMenu() %></h2>
+<h2>리뷰</h2>
 <form
 	name="reviewEnrollFrm"
 	action="<%=request.getContextPath() %>/review/reviewEnroll" 
