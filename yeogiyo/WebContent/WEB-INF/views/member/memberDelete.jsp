@@ -3,7 +3,7 @@
     
 <%@ include file="/WEB-INF/views/common/headerMemberView.jsp" %>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/member.css" />
-<div class="content-wrapper">
+<div class="content-wrapper" >
 
 	<form action="<%= request.getContextPath() %>/member/memberDelete" method="post" onsubmit="return deleteConfirm()">
 	<div class="memberView-title">

@@ -3,7 +3,7 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/headerMemberView.jsp"%>
 <%
-	String memberId = loginMember.getMemberId();
+String memberId = loginMember.getMemberId();
 String memberName = loginMember.getMemberName();
 Date birthday = loginMember.getBirthday() != null ? loginMember.getBirthday() : null;
 String gender = loginMember.getGender();
@@ -94,8 +94,7 @@ $("#phone").keyup(function(){
  		success : function(result) {
  			 //휴대폰번호
  			 var $phone = $("#phone").val();
- 			 //숫자가 아닌 문자 제거
- 			 
+
  			 if(/^01[0-9][0-9]{8}/.test($phone) == false) {
  				 $("#phoneResult").html("<p style='color:red'>유효한 휴대폰 번호를 입력하세요</p>");
  				 $("#phoneValid").val(0);

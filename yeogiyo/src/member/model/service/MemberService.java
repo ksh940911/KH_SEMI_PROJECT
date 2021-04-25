@@ -1,8 +1,10 @@
 package member.model.service;
 
 
-import static common.JDBCTemplate.*;
-
+import static common.JDBCTemplate.close;
+import static common.JDBCTemplate.commit;
+import static common.JDBCTemplate.getConnection;
+import static common.JDBCTemplate.rollback;
 
 import java.sql.Connection;
 import java.util.List;
@@ -10,6 +12,8 @@ import java.util.Map;
 
 import member.model.dao.MemberDao;
 import member.model.vo.Member;
+import member.model.vo.MemberOrderList;
+import order.model.vo.Order;
 
 
 
@@ -210,6 +214,14 @@ public class MemberService {
 		}
 		 
 		return result;
+	}
+
+	public List<MemberOrderList> selectRestaurantListByMeberId(String memberId) {
+		Connection conn = getConnection();
+		List<MemberOrderList> list = null;
+		list = memberDao.selectRestaurantListByMeberId(conn, memberId);
+		close(conn);
+		return list;
 	}
 	
 
