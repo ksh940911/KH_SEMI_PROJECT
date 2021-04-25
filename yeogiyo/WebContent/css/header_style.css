@@ -79,6 +79,7 @@ table#login input[name=basket] {
 	border: 1px solid #ea7266;
 	cursor:pointer;
 	border-radius: 2px;
+	font-size:10px;
 }
 
 
