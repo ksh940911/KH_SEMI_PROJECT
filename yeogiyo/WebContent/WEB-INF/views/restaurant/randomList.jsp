@@ -35,7 +35,7 @@
 									<% if(cRes.getResImg() != null && cRes.getResImg().getImgResStatus()) { %>
 										<img src="<%= request.getContextPath() %>/upload/res/<%= cRes.getResImg().getRenamedFilename() %>" class="resList-img"/>	
 									<% } else { %>
-										<img src="<%= request.getContextPath() %>/images/logo.png" class="resList-img" style="width:50px;"/>	
+										<img src="<%= request.getContextPath() %>/images/logo.png" class="resList-img"/>	
 									<% } %>
 									</div>
 								</td>
