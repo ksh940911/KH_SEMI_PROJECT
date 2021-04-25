@@ -18,7 +18,6 @@
 	<input type="button" id="review-add-btn" value="리뷰등록">
   		<form id="review-add-frm" action="<%=request.getContextPath()%>/review/reviewForm">
         	<input type="hidden" name="resId" value="<%= request.getAttribute("resId")%>">
-        	<input type="hidden" name="orderMenu" value="<%= request.getAttribute("orderMenu")%>">
         </form>
 	<%
 		}
@@ -44,6 +43,15 @@
 			</td>
 			<td><%= r.getReviewOrder() %></td>
 			<td><%= r.getReviewContent() %></td>
+			<td>
+			<input type="button" id="review-update-btn" value="리뷰수정">
+				<form id="review-update-frm" action="<%=request.getContextPath()%>/review/reviewUpdate">
+					<input type="hidden" name="resId" value="<%= request.getAttribute("resId")%>">
+				</form>
+			</td>
+			<td>
+			<input type="button" value="리뷰삭제" onclick="deleteReview()">
+			</td>
 		</tr>
 	<%
 		   }
@@ -63,37 +71,29 @@ $("#review-add-btn").click(function(){
 	console.log($("[name=resId]").val());
     $frm.submit();
 });
+
+$("#review-update-btn").click(function(){
+	var $frm = $("#review-update-frm");
+	console.log($("[name=resId]").val());
+    $frm.submit();
+});
 </script>
 	<% if (editable) { %>
-		
-		<form 
-			id="review-update-frm" 
-			action="<%= request.getContextPath() %>/review/reviewUpdate?resId=<%= request.getAttribute("resId") %>">
-        	<input type="hidden" name="resId" value="<%= request.getAttribute("resId")%>">
-        </form>
-		
-		<form 
-			action="<%= request.getContextPath() %>/review/reviewDelete"
-			id="review-del-frm"
-			method="POST">
-				<input type="hidden" name="noticeNo" value="<%= review.getReviewNo() %>" />
-				<input type="hidden" name="resId" value="<%= request.getAttribute("resId")%>">
-		</form>
-					
-		<script>
-		function updateReview(){
-			var $frm = $("#review-update-frm");
-			$frm.submit();
-		};
-		
-		function deleteReview(){
-			if(confirm("리뷰를 삭제 하시겠습니까?")){
-				var $frm = $("#review-del-frm");
-				$frm.submit();
-			}
-		};
-		</script>
+	<form 
+		action="<%= request.getContextPath() %>/review/reviewDelete"
+		id="review-del-frm"
+		method="POST">
+			<input type="hidden" name="reviewNo" value="<%= review.getReviewNo() %>" />
+			<input type="hidden" name="resId" value="<%= request.getAttribute("resId")%>">
+	</form>
+<script>
+function deleteReview(){
+	if(confirm("리뷰를 삭제 하시겠습니까?")){
+		var $frm = $("#review-del-frm");
+		$frm.submit();
+	}
+};
+</script>
 	<% } %>
-
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 

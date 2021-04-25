@@ -160,6 +160,72 @@ public class ReviewDao {
 		return result;
 	}
 	
+	public Review selectOne(Connection conn, int reviewNo) {
+		Review review = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String query = prop.getProperty("selectOne");
+		try{
+			//미완성쿼리문을 가지고 객체생성.
+			pstmt = conn.prepareStatement(query);
+			//쿼리문미완성
+			pstmt.setInt(1, reviewNo);
+			//쿼리문실행
+			//완성된 쿼리를 가지고 있는 pstmt실행(파라미터 없음)
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()){
+				review = new Review();
+				review.setReviewNo(rset.getInt("reviewNo"));
+				review.setMemberId(rset.getString("memberId"));
+				review.setOrderId(rset.getInt("orderId"));
+				review.setReviewTime(rset.getDate("reviewTime"));
+				review.setReviewStar(rset.getInt("reviewStar"));
+				review.setReviewOrder(rset.getString("reviewOrder"));
+				review.setReviewContent(rset.getString("reviewContent"));
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			close(rset);
+			close(pstmt);
+		}
+		return review;
+	}
+	
+	public ReviewPhoto selectOneReviewPhoto(Connection conn, int reveiwNo) {
+		ReviewPhoto reviewPhoto = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String query = prop.getProperty("selectOneReviewPhoto");
+		try{
+			//미완성쿼리문을 가지고 객체생성.
+			pstmt = conn.prepareStatement(query);
+			//쿼리문미완성
+			pstmt.setInt(1, reveiwNo);
+			//쿼리문실행
+			//완성된 쿼리를 가지고 있는 pstmt실행(파라미터 없음)
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()){
+				reviewPhoto = new ReviewPhoto();
+				reviewPhoto.setPhotoNo(rset.getInt("photoNo"));
+				reviewPhoto.setReviewNo(rset.getInt("reviewNo"));
+				reviewPhoto.setPhotoOriginalFilename(rset.getString("photoOriginalFilename"));
+				reviewPhoto.setPhotoRenamedFilename(rset.getString("photoRenamedFilename"));
+				reviewPhoto.setPhotoStatus("Y".equals(rset.getString("photoStatus")) ?  true : false);
+			}
+		}catch(Exception e){
+			throw new ReviewException("첨부파일 조회 오류", e);
+		}finally{
+			close(rset);
+			close(pstmt);
+		}
+		return reviewPhoto;
+	}
+	
 	public int deleteReview(Connection conn, int review_no) {
 		PreparedStatement pstmt = null;
 		int result = 0;

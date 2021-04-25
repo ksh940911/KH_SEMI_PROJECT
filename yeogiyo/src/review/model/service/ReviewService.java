@@ -66,6 +66,22 @@ public class ReviewService {
 		return result;
 	}
 	
+	public Review selectOne(int reviewNo) {
+		Connection conn = getConnection();
+		Review review = reviewDao.selectOne(conn, reviewNo);
+		ReviewPhoto reviewPhoto = reviewDao.selectOneReviewPhoto(conn, reviewNo);
+		review.setReviewphoto(reviewPhoto);
+		close(conn);
+		return review;
+	}
+
+	public ReviewPhoto selectOneReviewPhoto(int reviewNo) {
+		Connection conn = getConnection();
+		ReviewPhoto reviewPhoto = reviewDao.selectOneReviewPhoto(conn, reviewNo);
+		close(conn);
+		return reviewPhoto;
+	}
+	
 	public int deleteReview(int review_no) {
 		Connection conn = getConnection();
 		int result = 0;
