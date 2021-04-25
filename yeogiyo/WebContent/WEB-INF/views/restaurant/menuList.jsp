@@ -10,7 +10,7 @@
     List<Menu> list = (List<Menu>)request.getAttribute("list");
     Restaurant r = (Restaurant) request.getAttribute("restaurant");
     %>
-<%@ include file="/WEB-INF/views/common/header.jsp" %>
+<%@ include file="/WEB-INF/views/common/headerCategory.jsp" %>
     <div class="menu-wrapper">
     <table class="tb-menuList" id="restaurant-info">
         <tr>
@@ -96,8 +96,8 @@
             <div id="slide">
             <% for(int i = 0; i < list.size(); i++){ %>
                 <div class="hori-menu btn-layer-popup">
-                <% if(list.get(i).getMenuImg()!= null){ %>
                 	<div class="menu-id" style="display : none;"><%= list.get(i).getMenuId() %></div>
+                <% if(list.get(i).getMenuImg()!= null){ %>
                     <div class="hori-photo"><img src="<%= list.get(i).getMenuImg() %>" alt=""></div>
                     <% } else{ %>
                     <div class="hori-photo"><img src="<%= request.getContextPath() %>/images/defaultMenu.png" alt=""></div>
@@ -212,6 +212,7 @@
 <!-- 레이어 팝업 끝 -->
 
  <script>
+ 
    
    
      /*
@@ -257,7 +258,7 @@
      $('.btn-layer-popup').click(function(){
     	console.log("popup");
     	var $clickedMenuId = $(this).find(".menu-id").text();
-    	//console.log($clickedMenuId);
+    	console.log("$clickedMenuId = " + $clickedMenuId);
     	
     	//ajax로 menu id 보내고 메뉴객체 json받기 
     	$.ajax({
@@ -269,7 +270,14 @@
     			//console.log(data);
     			
     			//json data반영한 팝업레이어 html 삽입
+    			if(data.menuImg != null){
     			var $popupHtml = $('<div class="dimBg"></div><div id="layer2"class="pop-layer"><div class="detail-header"><div class="title">메뉴상세</div><input type="button"class="btn-layerClose"value="X"></div><div class="pop-container"><div class="pop-conts"><div class="detail-image"><img src="' + data.menuImg + '"alt=""></div><div class="detail-menu-id" style="display:none;">' + data.menuId + '</div><div class="detail-text"><div class="detail-menu-name">' + data.menuName + '</div><div class="menu-description">' + data.description + '</div></div><div class="detail-price"><strong>가격</strong><div class="detail-price-price"><span class="price" id="popup-price">' + data.price + '</span>원</div></div><div class="quantity-control"><strong>수량</strong><div><input type="button" id="popup-btn-minus" value="-"><span id="popup-amount">1</span><input type="button" id="popup-btn-plus" value="+"></div></div><div class="detail-total-wrap"><strong>총주문금액</strong><div class="total"><strong><span id="popup-total-price">4500</span>원</strong></div></div></div><div class="detail-btn-wrap"><button class="btn-add-cart"onclick="add_to_cart();">주문표에추가</button><button class="btn-order"onclick="checkout()">주문하기</button><div class="message ng-binding"></div></div></div></div>');
+    				
+    			} else{
+    			var $popupHtml = $('<div class="dimBg"></div><div id="layer2"class="pop-layer"><div class="detail-header"><div class="title">메뉴상세</div><input type="button"class="btn-layerClose"value="X"></div><div class="pop-container"><div class="pop-conts"><div class="detail-image"><img src="<%= request.getContextPath() %>/images/defaultMenu.png" alt=""></div><div class="detail-menu-id" style="display:none;">' + data.menuId + '</div><div class="detail-text"><div class="detail-menu-name">' + data.menuName + '</div><div class="menu-description">' + data.description + '</div></div><div class="detail-price"><strong>가격</strong><div class="detail-price-price"><span class="price" id="popup-price">' + data.price + '</span>원</div></div><div class="quantity-control"><strong>수량</strong><div><input type="button" id="popup-btn-minus" value="-"><span id="popup-amount">1</span><input type="button" id="popup-btn-plus" value="+"></div></div><div class="detail-total-wrap"><strong>총주문금액</strong><div class="total"><strong><span id="popup-total-price">4500</span>원</strong></div></div></div><div class="detail-btn-wrap"><button class="btn-add-cart"onclick="add_to_cart();">주문표에추가</button><button class="btn-order"onclick="checkout()">주문하기</button><div class="message ng-binding"></div></div></div></div>');
+    				
+    			}
+    			
     			$(".dim-layer").html($popupHtml);
     			
     			//팝업 컨트롤
@@ -402,31 +410,35 @@
 			
 			//2-1. 객체배열 비어있으면 배열에 객체 바로 추가
 	    	
-	    	var selectedMenu = {
-					
-					resId : <%= r.getResId() %>,
-					<% if(loginMember != null){ %>
-					memberId : <%= loginMember.getMemberId() %>,
-					<% }else{ %>
-					memberId : null,
-					<% } %>
-	    			menuId : Number($popupLayer.find(".detail-menu-id").text()),
-	    			menuName : $popupLayer.find(".detail-menu-name").text(),
-	    			amount : Number($popupLayer.find("#popup-amount").text()),
-	    			price : Number($popupLayer.find("#popup-price").text()),
-	    			totalPrice : Number($popupLayer.find("#popup-total-price").text())
-	    			
-	    	};
-    	
+	    	var selectedMenu = createNewObj();
 	    	selectedMenuArr.push(selectedMenu);
 			
 		}else{
 			
+			
+		//if A가게에서 주문표에 담은 후 B가게에 주문표를 담으려고 할 경우
+		if(selectedMenuArr[0]["resId"] != <%= r.getResId() %> ) {
+			if(confirm('다른 음식점에서 이미 담은 메뉴가 있습니다. 담긴 메뉴를 취소하고 새로운 음식점에서 메뉴를 담을까요?')){
+				
+				//세션스토리지 삭제
+				sessionStorage.removeItem("selectedMenuArr");
+				
+				//객체배열 새로 생성
+				var selectedMenuArr = [];				
+				//객체 생성
+				var selectedMenu = createNewObj();
+				
+				//객체를 객체배열에 담기
+				selectedMenuArr.push(selectedMenu);
+				
+				setArrayToSession(selectedMenuArr);
+			}
+		}
+		
 			//2-2. 배열에 객체가 있을 경우, 중복되는 메뉴아이디가 있을 경우 수량만 추가  or 객체 추가 
 			var isSame = false;
-	
 			$.each(selectedMenuArr, function(i, menu){
-				 
+				
 				//2-2-1. 아이디 일치하는 객체에 수량만 추가
 				if(menu["menuId"] === Number($popupLayer.find(".detail-menu-id").text()) ){
 					selectedMenuArr[i]['amount'] += Number($popupLayer.find("#popup-amount").text());
@@ -439,39 +451,56 @@
 			
 				//2-2-2. 아이디 일치하는 객체 없으면 객체 새로 추가
 			if(!isSame){
-				
-				var selectedMenu = {
-						
-						resId : <%= r.getResId() %>,
-						<% if(loginMember != null){ %>
-						memberId : <%= loginMember.getMemberId() %>,
-						<% }else{ %>
-						memberId : null,
-						<% } %>
-		    			menuId : Number($popupLayer.find(".detail-menu-id").text()),
-		    			menuName : $popupLayer.find(".detail-menu-name").text(),
-		    			amount : Number($popupLayer.find("#popup-amount").text()),
-		    			price : Number($popupLayer.find("#popup-price").text()),
-		    			totalPrice : Number($popupLayer.find("#popup-total-price").text())
-		    			
-		    	};
-	    	
+				var selectedMenu = createNewObj();
 		    	selectedMenuArr.push(selectedMenu);
 			}
 			
 		}
     	
-    	//4. selectedMenuArr배열을 JSON으로 변환
-    	var jsonSelectedMenuArr = JSON.stringify(selectedMenuArr);
-    	
-    	//3. sessionStorage에 저장
-    	sessionStorage.setItem("selectedMenuArr", jsonSelectedMenuArr);
+		setArrayToSession(selectedMenuArr);
     	
     	//주문표 최신화
     	showCart();
     	
        dim_layer_hide();
     }
+    //add_to_cart 함수 끝
+    
+    function createNewObj(){
+    	
+    	var $popupLayer = $("#layer2");
+    	
+    	var selectedMenu = {
+				
+				resId : <%= r.getResId() %>,
+				<% if(loginMember != null){ %>
+				memberId : '<%= loginMember.getMemberId() %>',
+				<% }else{ %>
+				memberId : null,
+				<% } %>
+    			menuId : Number($popupLayer.find(".detail-menu-id").text()),
+    			menuName : $popupLayer.find(".detail-menu-name").text(),
+    			amount : Number($popupLayer.find("#popup-amount").text()),
+    			price : Number($popupLayer.find("#popup-price").text()),
+    			totalPrice : Number($popupLayer.find("#popup-total-price").text())
+    			
+    	};
+    	
+    	return selectedMenu;
+    	
+    }
+    
+
+	
+	function setArrayToSession(selectedMenuArr){
+		  //4. selectedMenuArr배열을 JSON으로 변환
+		var jsonSelectedMenuArr = JSON.stringify(selectedMenuArr);
+		
+		//3. sessionStorage에 저장
+		sessionStorage.setItem("selectedMenuArr", jsonSelectedMenuArr);
+	}
+    
+    
     
     $(document).ready(function(){
     
@@ -479,6 +508,8 @@
     	showCart();
     	
     });
+    
+    
     
 
     /*
@@ -537,8 +568,7 @@
 	        	$this.parent().parent().remove();
 	        		
 	        	//변경된 객체배열 다시 세션에 담기
-	        	var jsonSelectedMenuArr = JSON.stringify(selectedMenuArr);
-    			sessionStorage.setItem("selectedMenuArr", jsonSelectedMenuArr);
+	        	setArrayToSession(selectedMenuArr);
     			
     			if(selectedMenuArr.length == 0){
     				$(".cart-empty").show();
@@ -549,7 +579,7 @@
 			//주문표의 수량 증가
 			$("[value='+'").on('click', function(){
 				
-				
+			
 				//html
 				//선택한 버튼에 해당하는 메뉴의 수량 증가
 				var $this = $(this);
@@ -557,43 +587,7 @@
 				amount += 1;
 				$this.parent().find(".amnt").text(amount);
 				
-				//html 수량 증가한 메뉴의 가격 증가 표시
-				//태그에서 단가 가져오기
-				var eachPrice = Number($this.parent().parent().find(".each-price").text());
-				eachPrice *= amount;
-				$this.parent().parent().find(".span-order-price").text(eachPrice);
-				
-				
-				//html 총 금액 증가
-				//총 금액은 주문표 전체를 순회해서 계산
-				var $liArr = $(".li-order");
-				var sum = 0;
-				$.each($liArr, function(i, li){
-					//각 li에서 (메뉴가격 x 수량)을 총액 변수에 담기
-					sum += Number($(li).find(".span-order-price").text());
-					
-				});
-				$("#total-price").text(sum);
-				
-				//arr
-				//선택한 메뉴의 수량 수정
-				var selectedMenuArr = JSON.parse(sessionStorage.getItem('selectedMenuArr'));
-				$.each(selectedMenuArr, function(i, menu){
-					
-					if(Number(menu["menuId"]) === Number($this.parent().parent().find(".cart-menu-id").text()) ){
-					menu["amount"] = amount;
-					
-					//수량 변경에 따른 totalPrice변경
-					menu["totalPrice"] = Number(menu["price"]) * Number(menu["amount"]);
-					return false;
-					}
-				});
-				
-				
-				//session
-				//객체배열 다시 담기
-				var jsonSelectedMenuArr = JSON.stringify(selectedMenuArr);
-	    			sessionStorage.setItem("selectedMenuArr", jsonSelectedMenuArr);
+				changeAmount($this, amount)
 				
 				
 			});
@@ -610,6 +604,13 @@
 					$this.parent().find(".amnt").text(amount);
 				}
 
+				changeAmount($this, amount)
+				
+				
+			});
+			
+			
+			function changeAmount($this, amount){
 				//html 수량 증가한 메뉴의 가격 증가 표시
 				//태그에서 단가 가져오기
 				var eachPrice = Number($this.parent().parent().find(".each-price").text());
@@ -645,11 +646,8 @@
 				
 				//session
 				//객체배열 다시 담기
-				var jsonSelectedMenuArr = JSON.stringify(selectedMenuArr);
-	    			sessionStorage.setItem("selectedMenuArr", jsonSelectedMenuArr);
-				
-				
-			});
+				setArrayToSession(selectedMenuArr);
+			}
 			
 			
 			
@@ -701,8 +699,6 @@
     	}
     	<% } %>
     });
-    
-    
     
     
     //레이어 팝업에서 '주문하기' 버튼 클릭 시
