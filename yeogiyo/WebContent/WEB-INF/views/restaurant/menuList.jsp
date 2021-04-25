@@ -239,7 +239,7 @@
      
 		 console.log("notice!");
     	 
-	     var servletUrl = "<%= request.getContextPath() %>/admin/noticeView"; //<-여기에 이동할 서블릿 url작성
+	     var servletUrl = "<%= request.getContextPath() %>/notice/noticeView"; //<-여기에 이동할 서블릿 url작성
 	     var $frm = $("#frm-notice");
 	     //폼에 hidden input으로 가게아이디 담아놨어요. 서블릿에서 파라미터명 "res_id"로 꺼내세요 
 	    	 

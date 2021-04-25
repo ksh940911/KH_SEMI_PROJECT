@@ -47,7 +47,7 @@
 		<tr>
 			<th colspan="2">
 				<input type="submit" value="수정" />
-				<input type="button" value="취소" onclick="location.href='<%= request.getContextPath() %>/admin/noticeView?resId=<%= notice.getResId() %>'" />
+				<input type="button" value="취소" onclick="location.href='<%= request.getContextPath() %>/notice/noticeView?resId=<%= notice.getResId() %>'" />
 			</th>
 		</tr>
 	</table>
@@ -57,12 +57,10 @@
 <script>
 $("[name=upImgFile]").change(function(){
 	if($(this).val() != ""){
-		// 파일 선택
 		$("delImgFile").prop("checked", true)
 					   .on("click", function(){
 							return false; });
 	} else {
-		// 파일 선택 취소
 		$("#delImgFile").prop("checked", false)
 						.off("click");
 	}

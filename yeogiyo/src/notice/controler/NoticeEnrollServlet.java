@@ -70,7 +70,7 @@ public class NoticeEnrollServlet extends HttpServlet {
 			// 업무로직
 			int result = new NoticeService().insertNotice(notice);
 			String msg = (result > 0) ? "공지 등록 완료." : "공지 등록 실패";
-			String location = request.getContextPath() + "/admin/noticeView?resId=" + notice.getResId();
+			String location = request.getContextPath() + "/notice/noticeView?resId=" + notice.getResId();
 			
 			HttpSession session = request.getSession();
 			session.setAttribute("msg", msg);
