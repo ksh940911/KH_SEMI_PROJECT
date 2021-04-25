@@ -23,6 +23,7 @@ public class ReviewFormServlet extends HttpServlet {
 		int resId = Integer.parseInt(request.getParameter("resId"));
 		System.out.println("resId@formService = " + resId);
 		request.setAttribute("resId", resId);
+		
 		String orderMenu = request.getParameter("orderMenu");
 		request.setAttribute("orderMenu", orderMenu);
 		System.out.println("orderMenu@formService = " + orderMenu);

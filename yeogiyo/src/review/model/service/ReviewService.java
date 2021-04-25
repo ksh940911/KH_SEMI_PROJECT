@@ -82,13 +82,13 @@ public class ReviewService {
 		return reviewPhoto;
 	}
 	
-	public int deleteReview(int review_no) {
+	public int deleteReview(int reviewNo) {
 		Connection conn = getConnection();
 		int result = 0;
 		try {
-			result = reviewDao.deleteReview(conn, review_no);
+			result = reviewDao.deleteReview(conn, reviewNo);
 			if(result == 0)
-				throw new IllegalArgumentException("해당 리뷰가 존재하지 않습니다. : " + review_no );
+				throw new IllegalArgumentException("해당 리뷰가 존재하지 않습니다. : " + reviewNo );
 			commit(conn);
 		} catch(Exception e) {
 			rollback(conn);
@@ -99,7 +99,7 @@ public class ReviewService {
 		return result;
 	}
 	
-	public int updateBoard(Review review) {
+	public int updateReview(Review review) {
 		Connection conn = getConnection(); 
 		int result = 0;
 		try {
