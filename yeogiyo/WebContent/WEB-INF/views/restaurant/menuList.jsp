@@ -213,6 +213,12 @@
 
  <script>
  
+	var resIdJAVA = <%= r.getResId() %>;
+	<% if(loginMember != null){ %>
+	var memberIdJAVA = '<%= loginMember.getMemberId() %>';
+ 	<% } else { %>
+ 	var memberIdJAVA = "";
+ 	<% } %>
    
    
      /*
@@ -221,7 +227,7 @@
      $("#btn-review").click(function(){
     	 
     	 console.log("review!");
-    	 console.log("resId@menulist="+<%= r.getResId()%>)
+    	 console.log("resId@menulist="+resIdJAVA)
 	     var servletUrl = "<%= request.getContextPath() %>/review/reviewList"; //<-여기에 이동할 서블릿 url작성
 	     var $frm = $("#frm-review");
 	     //폼에 hidden input으로 가게아이디 담아놨어요. 서블릿에서 파라미터명 "res_id"로 꺼내세요 
@@ -397,8 +403,8 @@
     	//1. 로그인 여부 확인
     	<% if(loginMember != null){ %>
     	
-    	var memberId = '<%= loginMember.getMemberId() %>';
-    	var resId = <%= r.getResId() %>;
+    	var memberId = memberIdJAVA;
+    	var resId = resIdJAVA;
     	var $popupLayer = $("#layer2");
     	
 		//2. 회원 아이디와 일치하는 세션 불러오기
@@ -449,7 +455,7 @@
 			selectedMenuArr = createNewArr();
 		}
 		var jsonSelectedMenuArr = JSON.stringify(selectedMenuArr);
-		sessionStorage.setItem('<%= loginMember.getMemberId() %>', jsonSelectedMenuArr);	
+		sessionStorage.setItem(memberIdJAVA, jsonSelectedMenuArr);	
 		
     	showCart();
     	dim_layer_hide();
@@ -476,7 +482,7 @@
     function createNewObj(){
     	var $popupLayer = $("#layer2");
     	var selectedMenu = {
-    			resId : <%= r.getResId() %>,
+    			resId : resIdJAVA,
        			menuId : Number($popupLayer.find(".detail-menu-id").text()),
        			menuName : $popupLayer.find(".detail-menu-name").text(),
        			amount : Number($popupLayer.find("#popup-amount").text()),
@@ -491,7 +497,7 @@
 		var jsonSelectedMenuArr = JSON.stringify(selectedMenuArr);
 		
 		//3. sessionStorage에 저장
-		sessionStorage.setItem("<%= loginMember.getMemberId() %>", jsonSelectedMenuArr);
+		sessionStorage.setItem(memberIdJAVA, jsonSelectedMenuArr);
 	}
     
     
@@ -511,7 +517,7 @@
     */
     function showCart(){
     	//1. selectedMenuArr 객체배열 가져오기
-    	var memberId = '<%= loginMember.getMemberId() %>';
+    	var memberId = memberIdJAVA;
 //      	var selectedMenuArr = JSON.parse(sessionStorage.getItem("selectedMenuArr"));
      	var selectedMenuArr = JSON.parse(sessionStorage.getItem(memberId));
 		console.log(selectedMenuArr);
@@ -570,8 +576,8 @@
     				$(".cart-empty").show();
     			}
     			
-    			if(sessionStorage.getItem('<%= loginMember.getMemberId() %>') === '[]'){
-    				sessionStorage.removeItem('<%= loginMember.getMemberId() %>');
+    			if(sessionStorage.getItem(memberIdJAVA) === '[]'){
+    				sessionStorage.removeItem(memberIdJAVA);
     			}
 	        	
 	    	});
@@ -631,7 +637,7 @@
 				
 				//arr
 				//선택한 메뉴의 수량 수정
-				var selectedMenuArr = JSON.parse(sessionStorage.getItem('<%= loginMember.getMemberId() %>'));
+				var selectedMenuArr = JSON.parse(sessionStorage.getItem(memberIdJAVA));
 				$.each(selectedMenuArr, function(i, menu){
 					
 					if(Number(menu["menuId"]) === Number($this.parent().parent().find(".cart-menu-id").text()) ){
@@ -677,7 +683,7 @@
 			
 			//session
 //     		sessionStorage.removeItem("selectedMenuArr");
-    		sessionStorage.removeItem('<%= loginMember.getMemberId() %>');
+    		sessionStorage.removeItem(memberIdJAVA);
     	
         	
     	}
@@ -689,7 +695,7 @@
     <% if(loginMember == null){ %>
     alert("로그인이 필요합니다.");
     <% } else { %>
-    	var selectedMenuArr = JSON.parse(sessionStorage.getItem('selectedMenuArr'));
+    	var selectedMenuArr = JSON.parse(sessionStorage.getItem(memberIdJAVA));
     	
     	if( selectedMenuArr[0].menuName === ""){
     		alert("메뉴를 선택해주세요.");
