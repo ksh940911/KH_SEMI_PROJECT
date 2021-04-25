@@ -32,7 +32,11 @@
 							<tr>
 								<td id="td1">
 									<div class="logo">
-										<img src="<%= cRes.getLogoImg() %>" alt="가게사진" />
+									<% if(cRes.getResImg() != null && cRes.getResImg().getImgResStatus()) { %>
+										<img src="<%= request.getContextPath() %>/upload/res/<%= cRes.getResImg().getRenamedFilename() %>" class="resList-img"/>	
+									<% } else { %>
+										<img src="<%= request.getContextPath() %>/images/logo.png" class="resList-img"/>	
+									<% } %>
 									</div>
 								</td>
 								<td id="td2">

@@ -3,7 +3,9 @@
     .restaurant-list {
       overflow: hidden;
       max-width: 1020px;
-      margin: 5% auto;
+     /*  margin: 5% auto; */
+      margin : 5% auto 0 auto;
+      padding-bottom: 5%;
     }
     
      .col-sm-6 {

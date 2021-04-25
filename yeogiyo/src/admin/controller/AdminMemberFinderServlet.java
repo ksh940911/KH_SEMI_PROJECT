@@ -19,7 +19,7 @@ import member.model.vo.Member;
  * Servlet implementation class AdminMemberFindetServlet
  */
 @WebServlet("/admin/memberFinder")
-public class AdminMemberFindetServlet extends HttpServlet {
+public class AdminMemberFinderServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private MemberService memberService = new MemberService();
 

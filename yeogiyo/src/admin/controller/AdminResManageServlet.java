@@ -31,7 +31,7 @@ public class AdminResManageServlet extends HttpServlet {
 		final int numPerPage = 10;
 		int cPage = 1;
 		try {
-		cPage = Integer.parseInt(request.getParameter("cPage"));
+			cPage = Integer.parseInt(request.getParameter("cPage"));
 		}catch(NumberFormatException e) {}
 		
 		

@@ -14,7 +14,7 @@
 	<div class="enroll-title">
 		<img src="<%= request.getContextPath() %>/images/logo.png" alt="로고" width="150" height="50">
 	</div>
-	<form name="resEnrollFrm" action="<%= request.getContextPath() %>/admin/resEnroll" method="POST">
+	<form name="resEnrollFrm" action="<%= request.getContextPath() %>/admin/resEnroll" method="POST" enctype="multipart/form-data">
 		<div id="contentBox">
 			<table>
 				<tr>
@@ -60,7 +60,7 @@
 					<th>최소주문금액</th>
 					<td>
 						<input type="range" name="minPrice" id="minPrice" min="0" max="20000" step="100" value="0"
-								oninput="document.getElementById('mPval').innerHTML=this.value;"/><span id="mPval"></span>원
+								oninput="document.getElementById('mPval').innerHTML=this.value;"/><span id="mPval">0</span>원
 					</td>
 				</tr>
 				<tr>

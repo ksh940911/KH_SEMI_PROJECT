@@ -191,6 +191,44 @@ where rnum = 1
 
 --delete from member where member_id = 'test';
 
+--set define off;
+
+insert into restaurant (res_id, res_name, res_address, category, logo_img) 
+values(seq_tb_res_id.nextval,		'짬뽕지존 역삼점'	,	'서울 강남구 테헤란로10길 21 세명프라자 B동 205호 짬뽕지존'	,		'중국집'	,	'https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w750&src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMTAzMjZfMjE4%2FMDAxNjE2NzQ5ODA5MjU2.0AFgeocdzyFnyZeQoR0oV_nyhPu8iDywOACz-mEna7gg.OTWbS5iWXYlXlrnmqqtfMqv6nWaaLyQXm36GTP1PK7Qg.JPEG.ribon907%2FKakaoTalk_20210326_174825698_02.jpg'	);																		insert into restaurant (res_id, res_name, res_address, category, logo_img) values(seq_tb_res_id.nextval,		'짬뽕지존 역삼점'	,	'서울 강남구 테헤란로10길 21 세명프라자 B동 205호 짬뽕지존'	,		'중국집'	,	'https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w750&src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMTAzMjZfMjE4%2FMDAxNjE2NzQ5ODA5MjU2.0AFgeocdzyFnyZeQoR0oV_nyhPu8iDywOACz-mEna7gg.OTWbS5iWXYlXlrnmqqtfMqv6nWaaLyQXm36GTP1PK7Qg.JPEG.ribon907%2FKakaoTalk_20210326_174825698_02.jpg'	);																		
+
+select * from restaurant;
+
+--현재 시퀀스가 몇인지 조회 : 21
+select seq_tb_res_id.currval from dual;
+
+
+insert into yeogiyo.menu(menu_id, res_id, menu_name, menu_category, price) values(seq_tb_menu_id.nextval,			4	,'	지존/지옥 짜장	','			대표메뉴	',	6500			);																			
+insert into yeogiyo.menu(menu_id, res_id, menu_name, menu_category, price) values(seq_tb_menu_id.nextval,			4	,'	지존/지옥 짬뽕	','			대표메뉴	',	8500			);																			
+insert into yeogiyo.menu(menu_id, res_id, menu_name, menu_category, price) values(seq_tb_menu_id.nextval,			4	,'	지존/지옥 짬짜면	','			대표메뉴	',	9000			);																			
+insert into yeogiyo.menu(menu_id, res_id, menu_name, menu_category, price) values(seq_tb_menu_id.nextval,			4	,'	지존/지옥 순두부짬뽕	','			대표메뉴	',	9000			);																			
+insert into yeogiyo.menu(menu_id, res_id, menu_name, menu_category, price) values(seq_tb_menu_id.nextval,			4	,'	지존/지옥 쌀국수짬뽕	','			대표메뉴	',	9000			);																			
+insert into yeogiyo.menu(menu_id, res_id, menu_name, menu_category, price) values(seq_tb_menu_id.nextval,			4	,'	지존/지옥 수제비짬뽕	','			대표메뉴	',	9000			);																			
+insert into yeogiyo.menu(menu_id, res_id, menu_name, menu_category, price) values(seq_tb_menu_id.nextval,			4	,'	수제만두	','			대표메뉴	',	6000			);																			
+insert into yeogiyo.menu(menu_id, res_id, menu_name, menu_category, price) values(seq_tb_menu_id.nextval,			4	,'	찹쌀/사천 탕수육	','			대표메뉴	',	13000			);																			
+insert into yeogiyo.menu(menu_id, res_id, menu_name, menu_category, price) values(seq_tb_menu_id.nextval,			4	,'	게살/새우 볶음밥	','			대표메뉴	',	8500			);																			
+
+commit;
+
+
+--update restaurant set res_id = 4 where res_name ='짬뽕지존 역삼점';
+
+select * from restaurant;
+select * from menu;
+
+insert into restaurant (res_id, res_name, res_address, category, logo_img) values(	5	,	'Chai797 역삼GFC점'	,	'서울 강남구 테헤란로 152 강남파이낸스센터 B1'	,		'중국집'	,	'http://www.chai797.co.kr/chai/images/sub/brand_1.png'	);																		insert into restaurant (res_id, res_name, res_address, category, logo_img) values(	5	,	'Chai797 역삼GFC점'	,	'서울 강남구 테헤란로 152 강남파이낸스센터 B1'	,		'중국집'	,	'http://www.chai797.co.kr/chai/images/sub/brand_1.png'	);																		
+
+insert into yeogiyo.menu(menu_id, res_id, menu_name, menu_category, price) values(seq_tb_menu_id.nextval,			5	,	'24시간 숙성 탕수육'	,			'대표메뉴'	,	28000			);																			
+insert into yeogiyo.menu(menu_id, res_id, menu_name, menu_category, price) values(seq_tb_menu_id.nextval,			5	,	'호두 꿀크림 중새우'	,			'대표메뉴'	,	29000			);																			
+insert into yeogiyo.menu(menu_id, res_id, menu_name, menu_category, price) values(seq_tb_menu_id.nextval,			5	,	'전남 무안 양파 삼선짜장면'	,			'대표메뉴'	,	9000			);																			
+insert into yeogiyo.menu(menu_id, res_id, menu_name, menu_category, price) values(seq_tb_menu_id.nextval,			5	,	'국내산 통전복 해물짬뽕'	,			'대표메뉴'	,	16000			);																			
+insert into yeogiyo.menu(menu_id, res_id, menu_name, menu_category, price) values(seq_tb_menu_id.nextval,			5	,	'황금비율 마늘 볶음밥'	,			'대표메뉴'	,	11500			);																			
+
+
 --=========================
 --=========================
 --                   김상훈                    --

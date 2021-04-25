@@ -7,15 +7,14 @@ public class Restaurant {
 	private String resAddress;
 	private String category;
 	private int minPrice;
-	private String logoImg;
+	private ResImg resImg;
 	private double rateAvg;
 	private int reviewCnt;
 	private Menu menu;
 	public Restaurant() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
-	public Restaurant(int resId, String resName, String resAddress, String category, int minPrice, String logoImg,
+	public Restaurant(int resId, String resName, String resAddress, String category, int minPrice, ResImg resImg,
 			double rateAvg, int reviewCnt, Menu menu) {
 		super();
 		this.resId = resId;
@@ -23,7 +22,7 @@ public class Restaurant {
 		this.resAddress = resAddress;
 		this.category = category;
 		this.minPrice = minPrice;
-		this.logoImg = logoImg;
+		this.resImg = resImg;
 		this.rateAvg = rateAvg;
 		this.reviewCnt = reviewCnt;
 		this.menu = menu;
@@ -58,11 +57,11 @@ public class Restaurant {
 	public void setMinPrice(int minPrice) {
 		this.minPrice = minPrice;
 	}
-	public String getLogoImg() {
-		return logoImg;
+	public ResImg getResImg() {
+		return resImg;
 	}
-	public void setLogoImg(String logoImg) {
-		this.logoImg = logoImg;
+	public void setResImg(ResImg resImg) {
+		this.resImg = resImg;
 	}
 	public double getRateAvg() {
 		return rateAvg;
@@ -85,7 +84,7 @@ public class Restaurant {
 	@Override
 	public String toString() {
 		return "Restaurant [resId=" + resId + ", resName=" + resName + ", resAddress=" + resAddress + ", category="
-				+ category + ", minPrice=" + minPrice + ", logoImg=" + logoImg + ", rateAvg=" + rateAvg + ", reviewCnt="
+				+ category + ", minPrice=" + minPrice + ", resImg=" + resImg + ", rateAvg=" + rateAvg + ", reviewCnt="
 				+ reviewCnt + ", menu=" + menu + "]";
 	}
 	
