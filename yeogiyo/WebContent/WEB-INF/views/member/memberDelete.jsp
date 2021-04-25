@@ -2,27 +2,30 @@
     pageEncoding="UTF-8"%>
     
 <%@ include file="/WEB-INF/views/common/headerMemberView.jsp" %>
-<div>
-<p>회원 탈퇴</p>
-<p>아이디 패스워드를 입력하세요.</p>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/css/member.css" />
+<div class="content-wrapper">
+
 	<form action="<%= request.getContextPath() %>/member/memberDelete" method="post" onsubmit="return deleteConfirm()">
+	<div class="memberView-title">
+		<p>회원 탈퇴</p>
+	</div>
 		<table>
 			<tr>
-				<td>아이디</td>
+				<td>아이디 확인</td>
 				<td>
 					<input type="text" placeholder="ID를 입력하세요." name="memberId" id="memberId" required>
 				</td>
 			</tr>
 			<tr>
-				<td>패스워드</td>
+				<td>패스워드 확인</td>
 				<td>
 					<input type="password" placeholder="비밀번호를 입력하세요." name="password" id="password" required>
 				</td>
 			</tr>
-			<tr>
-				<td><input type="submit" value="회원 탈퇴"/></td>
-			</tr>
 		</table>
+		<div class="button-class">
+			<input type="submit" value="회원 탈퇴"/>
+		</div>
 	</form>
 </div>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>

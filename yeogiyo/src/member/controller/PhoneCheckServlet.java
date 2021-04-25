@@ -41,8 +41,6 @@ public class PhoneCheckServlet extends HttpServlet {
         	out.print(0);
         }
         
-        System.out.println("새 휴대폰 번호 : " + newPhone + ", 예전 휴대폰 번호 : " + oldPhone + "사용 가능 여부 : " + available);
-        
 	}
 
 }
