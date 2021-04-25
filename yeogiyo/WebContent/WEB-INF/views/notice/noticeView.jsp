@@ -38,7 +38,7 @@
 	        	<input type="hidden" name="resId" value="<%= request.getAttribute("resId")%>">
 	        </form>
 			<% } %>
-			<input type="button" value="이전으로" class="notice-btn" onclick="location.href='<%= request.getContextPath() %>/restaurant/menuList.do?res_id=<%= request.getAttribute("resId")%>'" />
+			<input type="button" value="가게보기" class="notice-btn" onclick="location.href='<%= request.getContextPath() %>/restaurant/menuList.do?res_id=<%= request.getAttribute("resId")%>'" />
 		</div>
 	</div>
 </section>

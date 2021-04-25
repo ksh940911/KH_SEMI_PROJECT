@@ -90,7 +90,7 @@ public class NoticeUpdateServlet extends HttpServlet {
 
 			result = noticeService.updateNotice(notice);
 			String msg = (result > 0) ? "공지  수정 완료" : "공지 수정 실패";
-			String location = request.getContextPath() + "/admin/noticeView?resId=" + notice.getResId();
+			String location = request.getContextPath() + "/notice/noticeView?resId=" + notice.getResId();
 
 			request.getSession().setAttribute("msg", msg);
 			response.sendRedirect(location);
