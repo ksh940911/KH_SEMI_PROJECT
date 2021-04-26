@@ -1,0 +1,98 @@
+/* 가게리스트 */
+
+    .restaurant-list {
+      overflow: hidden;
+      max-width: 1020px;
+     /*  margin: 5% auto; */
+      margin : 5% auto 0 auto;
+      padding-bottom: 5%;
+    }
+    
+     .col-sm-6 {
+      position: relative;
+     /*  min-height: 1px; */
+      padding-right: 15px;
+      padding-left: 15px;
+      height:108px;
+      margin-bottom: 10px;
+    }
+    
+    .item-clearfix {
+      position: relative;
+      cursor: pointer;
+      border: 1px solid #d9d9d9;
+      background-color: #fff;
+      padding: 0 8px;
+      height: 108px;
+      box-sizing: border-box;
+      
+    }
+    
+    
+/********************************************/
+    @media (min-width: 768px) {
+      .col-sm-6 {
+        width: 50%;
+      }
+    }
+
+    @media (min-width: 768px) {
+      .col-sm-6 {
+        float: left;
+      }
+    }
+/********************************************/
+   
+
+  
+    .item-clearfix table {
+      	height: 108px;
+      	border-spacing: 0;
+    	border-collapse: collapse;
+    }
+    .item-clearfix table tbody {
+		display: table-row-group;
+	    vertical-align: middle;
+	}
+	.item-clearfix table tr {
+		display: table-row;
+	    vertical-align: inherit;
+	}
+	.item-clearfix table td {
+		display: table-cell;
+	    vertical-align: inherit;
+	    padding: 0;
+	}
+    /* table td#atd1 {
+    	width: 60px;
+    } */
+    table td#atd1 .logo {
+		width: 70px;
+	    height: 70px;
+	}
+    table td#atd1 .logo img {
+      width: 70px;
+      height: 70px;
+    }
+
+  
+    table td#atd2 {
+    	padding-left:10px;
+    	font-size: 90%;
+    }
+
+    .restaurant-name {
+      padding-top: 3px;
+      width: 100%;
+    }
+    
+    .item-clearfix span.delivery-time {
+		position: absolute;
+		right:10px;
+		bottom:12px;
+		color: #999 !important;
+		font-size: 90% !important;
+	}
+    
+
+    

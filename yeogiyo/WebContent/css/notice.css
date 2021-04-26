@@ -1,0 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap');
+
+div#view-info{
+    background: #fff;
+    margin: 10px;
+    padding: 10px 10px 10px 10px;
+    text-align: center;
+    width: 800px;
+    
+}
+
+img.notice-view-img{
+	width: 200px;
+	height: 200px;
+}
+
+input.notice-btn {
+    width: 100px;
+    height: 30px;
+    border: none;
+    color: white;
+    font-size: 18px;
+    background-color: #FA0050;
+}

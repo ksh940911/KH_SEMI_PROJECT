@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>여기요</title>
+    <link rel="stylesheet" href="./../../../css/aproval.css">
+</head>
+<body>
+    <div class="wrappers">
+        <table class="tb-approval">
+            <tr>
+                <td class="sub-title">주문완료</td>
+            </tr>
+            <tr>
+                <td style="text-align: center">
+                    <h2 style="color:  #fa0050; margin: 15px 0 5px 0">주문 감사합니다</h2>
+                    <hr>
+                    <p>주문 요청이 완료되었습니다.</p>
+                </td>
+            </tr>
+            <tr>
+                <td class="panel-head">배달정보</td>
+            </tr>
+            <tr>
+                <td class="panel-body">
+                    <table class="sub-table">
+                        <tr>
+                            <td class="sub-table-header">주문식당</td>
+                            <td class="sub-table-body">{가게명}</td>
+                        </tr>
+                        <tr>
+                            <td class="sub-table-header">결제수단</td>
+                            <td class="sub-table-body"><span class="sp-payment-place">현장결제</span> - <span class="sp-payment-way">현금결제</span></td>
+                        </tr>
+                        <tr>
+                            <td class="sub-table-header">주문자 정보</td>
+                            <td class="sub-table-body"><span class="sp-member-name">홍길동</span> / <span class="sp-address">서울특별시 강남구</span> <span class="sp-address-sub">테헤란로</span> / <span class="sp-phone">01099999999</span></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td class="panel-head">주문내역</td>
+            </tr>
+            <tr>
+                <td class="panel-body">
+                    <table class="sub-table">
+                        <!-- 반복 시작 -->
+                        <tr>
+                            <td class="sub-tb-menu-header">김치볶음밥 x 1개</td>
+                            <td class="sub-tb-menu-body">7000원</td>
+                        </tr>
+                        <tr>
+                            <td class="sub-tb-menu-header">계란말이 x 2개</td>
+                            <td class="sub-tb-menu-body"> 10000원</td>
+                        </tr>
+                        <!-- 반복 끝 -->
+                        <tr id="hr"> <!-- $(A).before(B) / A의 형제요소로 B를 직전에 추가 -->
+                            <td colspan="2"><hr style="margin: 3px 0;"></td>
+                        </tr>
+                        <tr class="tr-total">
+                            <td class="sub-tb-menu-header">총 결제 금액</td>
+                            <td class="sub-tb-menu-body">17000원</td>
+                        </tr>
+                    </table>
+    
+                </td>
+            </tr>
+        </table>
+        <input type="button" id="btn-ok" value="확인">
+    </div>
+   
+</body>
+</html>

@@ -1,0 +1,58 @@
+/* 마이페이지 관련 css */
+/* 중앙정렬 */
+.content-wrapper {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: 80px 0;
+	padding: 0;
+}
+
+.button-class {
+	text-align: center;
+}
+
+.content-wrapper table {
+	height: 100px;
+	text-align: left;
+/* 	border : 1px solid #D9D9D9; */
+	border-spacing: 25px 1rem;
+}
+
+.content-wrapper input  {
+	border : solid 1px #B7B7B7;
+	padding : 4px;
+}
+
+.content-wrapper #postCodebtn {
+	height: 26px;
+	padding: 0;
+}
+
+.button-class input[type=button] {
+	width: 150px;
+	height: 40px;
+	background-color: #fa0050;
+	color: white;
+	border: 0;
+}
+
+#postCodebtn {
+	margin: 5px 0;
+}
+
+.memberView-title {
+	text-align : center;
+	font-size : 15px;
+	padding : 10px;
+	margin-bottom : 5px;
+	border-bottom : 1px solid #E6E6E6;
+}
+
+.orderList-table  {
+	border : 1px solid #E6E6E6;
+	background-color : #E6E6E6;
+}
+
+
+

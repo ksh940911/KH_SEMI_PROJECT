@@ -11,6 +11,7 @@ header {
 	padding: 10px 0 0 0;
 }
 
+
 .login_container #loginBtn {
 	color:white;
 	background: #fa0050;
@@ -30,10 +31,13 @@ table#admin {
 	position: absolute;
 	width: 150px;
 	height: 30px;
-	top: 21px;
-	right: 150px;
+	top: 0px;
+	right: 250px;
 	
 }
+/* table#admin tr,td {
+	border:0;
+}  */
 table#admin input {
 	color:white;
 	background: #fa0050;
@@ -54,6 +58,10 @@ table#login {
 	right: 150px;
 	
 }
+/* table#login tr,td {
+	border:1px solid #fa0050;
+} */
+
 table#login input {
 	color:white;
 	background: #fa0050;
@@ -71,6 +79,7 @@ table#login input[name=basket] {
 	border: 1px solid #ea7266;
 	cursor:pointer;
 	border-radius: 2px;
+	font-size:10px;
 }
 
 

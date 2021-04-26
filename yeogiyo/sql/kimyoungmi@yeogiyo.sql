@@ -110,22 +110,6 @@ insert into yeogiyo.menu(menu_id, res_id, menu_name, description, menu_category,
 --                   김영미                    --
 --=========================
 --=========================
-CREATE TABLE menu (
-	menu_id	number	NOT NULL,
-    res_id number not null,
-	menu_name	varchar2(100)	NOT NULL,
-	description	varchar2(1000),
-	menu_category	varchar2(100) DEFAULT '대표메뉴' not null,
-	price	number DEFAULT 0 not null,
-	menu_img	varchar2(2000),
-    constraints pk_menu_id primary key(menu_id),
-    constraints fk_menu_res_id foreign key(res_id) 
-                            references restaurant(res_id)
-                            on delete cascade
-);
-
-
-
 create table tb_order (
     order_id number not null,
     member_id varchar2(100) not null,
@@ -145,7 +129,104 @@ create table tb_order (
     
 );
 
+select * from restaurant;
+select * from menu;
+select * from member;
+select * from tb_order order by order_date desc;
 
+create sequence seq_tb_order_id;
+
+select count(*)count from tb_order;
+select * from tb_order where res_id = 1; --order_id
+select * from review; --order_id
+select * from reviewphoto;
+
+update restaurant
+set res_address = '서울 강남구 테헤란로 124'
+where res_id = 3;
+
+commit;
+
+--selectRestaurantListByCategory
+--select * from restaurant where category = ?
+
+
+
+--res_id로 리뷰 갯수 조회 selectReviewCntByResId
+/*
+select count(*) count
+from tb_order O join review R
+    on O.order_id = R.order_id
+where res_id = ?
+*/
+
+
+
+--insertOrder
+--order_id, member_id, res_id, order_date, address, address_sub, phone, order_comment, payment_way, 
+--payment_place, order_menu, total_price
+--insert into tb_order values(seq_tb_order_id.nextval, ?, ?, sysdate, ?, ?, ?, ?, ?, ?, ?, ?)
+
+insert into tb_order
+values(seq_tb_order_id.nextval, 'honggd', 1, sysdate, '서울시 강남구', '테헤란로', '01099999999', null, 'K', 'N', '[{"resId":1,"menuId":1,"menuName":"크래미키토","amount":1,"price":7000,"totalPrice":7000},{"resId":1,"menuId":3,"menuName":"트러플키토마요","amount":1,"price":7000,"totalPrice":7000}]', 14000);
+
+commit;
+
+--selectLastOrderById
+/*
+select *
+from(
+    select rownum rnum, M.*
+    from (
+        select M.*
+        from tb_order M
+        where member_id = ?
+        order by order_date desc
+        )M
+    )M'[{"resId":1,"menuId":1,"menuName":"크래미키토","amount":2,"price":7000,"totalPrice":14000},{"resId":1,"menuId":2,"menuName":"베이컨키토마요","amount":1,"price":7000,"totalPrice":7000}]'
+where rnum = 1
+*/
+
+
+
+--delete from member where member_id = 'test';
+
+--set define off;
+
+insert into restaurant (res_id, res_name, res_address, category, logo_img) 
+values(seq_tb_res_id.nextval,		'짬뽕지존 역삼점'	,	'서울 강남구 테헤란로10길 21 세명프라자 B동 205호 짬뽕지존'	,		'중국집'	,	'https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w750&src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMTAzMjZfMjE4%2FMDAxNjE2NzQ5ODA5MjU2.0AFgeocdzyFnyZeQoR0oV_nyhPu8iDywOACz-mEna7gg.OTWbS5iWXYlXlrnmqqtfMqv6nWaaLyQXm36GTP1PK7Qg.JPEG.ribon907%2FKakaoTalk_20210326_174825698_02.jpg'	);																		insert into restaurant (res_id, res_name, res_address, category, logo_img) values(seq_tb_res_id.nextval,		'짬뽕지존 역삼점'	,	'서울 강남구 테헤란로10길 21 세명프라자 B동 205호 짬뽕지존'	,		'중국집'	,	'https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w750&src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMTAzMjZfMjE4%2FMDAxNjE2NzQ5ODA5MjU2.0AFgeocdzyFnyZeQoR0oV_nyhPu8iDywOACz-mEna7gg.OTWbS5iWXYlXlrnmqqtfMqv6nWaaLyQXm36GTP1PK7Qg.JPEG.ribon907%2FKakaoTalk_20210326_174825698_02.jpg'	);																		
+
+select * from restaurant;
+
+--현재 시퀀스가 몇인지 조회 : 21
+select seq_tb_res_id.currval from dual;
+
+
+insert into yeogiyo.menu(menu_id, res_id, menu_name, menu_category, price) values(seq_tb_menu_id.nextval,			4	,'	지존/지옥 짜장	','			대표메뉴	',	6500			);																			
+insert into yeogiyo.menu(menu_id, res_id, menu_name, menu_category, price) values(seq_tb_menu_id.nextval,			4	,'	지존/지옥 짬뽕	','			대표메뉴	',	8500			);																			
+insert into yeogiyo.menu(menu_id, res_id, menu_name, menu_category, price) values(seq_tb_menu_id.nextval,			4	,'	지존/지옥 짬짜면	','			대표메뉴	',	9000			);																			
+insert into yeogiyo.menu(menu_id, res_id, menu_name, menu_category, price) values(seq_tb_menu_id.nextval,			4	,'	지존/지옥 순두부짬뽕	','			대표메뉴	',	9000			);																			
+insert into yeogiyo.menu(menu_id, res_id, menu_name, menu_category, price) values(seq_tb_menu_id.nextval,			4	,'	지존/지옥 쌀국수짬뽕	','			대표메뉴	',	9000			);																			
+insert into yeogiyo.menu(menu_id, res_id, menu_name, menu_category, price) values(seq_tb_menu_id.nextval,			4	,'	지존/지옥 수제비짬뽕	','			대표메뉴	',	9000			);																			
+insert into yeogiyo.menu(menu_id, res_id, menu_name, menu_category, price) values(seq_tb_menu_id.nextval,			4	,'	수제만두	','			대표메뉴	',	6000			);																			
+insert into yeogiyo.menu(menu_id, res_id, menu_name, menu_category, price) values(seq_tb_menu_id.nextval,			4	,'	찹쌀/사천 탕수육	','			대표메뉴	',	13000			);																			
+insert into yeogiyo.menu(menu_id, res_id, menu_name, menu_category, price) values(seq_tb_menu_id.nextval,			4	,'	게살/새우 볶음밥	','			대표메뉴	',	8500			);																			
+
+commit;
+
+
+--update restaurant set res_id = 4 where res_name ='짬뽕지존 역삼점';
+
+select * from restaurant;
+select * from menu;
+
+insert into restaurant (res_id, res_name, res_address, category, logo_img) values(	5	,	'Chai797 역삼GFC점'	,	'서울 강남구 테헤란로 152 강남파이낸스센터 B1'	,		'중국집'	,	'http://www.chai797.co.kr/chai/images/sub/brand_1.png'	);																		insert into restaurant (res_id, res_name, res_address, category, logo_img) values(	5	,	'Chai797 역삼GFC점'	,	'서울 강남구 테헤란로 152 강남파이낸스센터 B1'	,		'중국집'	,	'http://www.chai797.co.kr/chai/images/sub/brand_1.png'	);																		
+
+insert into yeogiyo.menu(menu_id, res_id, menu_name, menu_category, price) values(seq_tb_menu_id.nextval,			5	,	'24시간 숙성 탕수육'	,			'대표메뉴'	,	28000			);																			
+insert into yeogiyo.menu(menu_id, res_id, menu_name, menu_category, price) values(seq_tb_menu_id.nextval,			5	,	'호두 꿀크림 중새우'	,			'대표메뉴'	,	29000			);																			
+insert into yeogiyo.menu(menu_id, res_id, menu_name, menu_category, price) values(seq_tb_menu_id.nextval,			5	,	'전남 무안 양파 삼선짜장면'	,			'대표메뉴'	,	9000			);																			
+insert into yeogiyo.menu(menu_id, res_id, menu_name, menu_category, price) values(seq_tb_menu_id.nextval,			5	,	'국내산 통전복 해물짬뽕'	,			'대표메뉴'	,	16000			);																			
+insert into yeogiyo.menu(menu_id, res_id, menu_name, menu_category, price) values(seq_tb_menu_id.nextval,			5	,	'황금비율 마늘 볶음밥'	,			'대표메뉴'	,	11500			);																			
 
 
 --=========================

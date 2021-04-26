@@ -23,10 +23,11 @@
                 <input type="tel" name="telephone" placeholder="(-없이)휴대폰 전화번호 입력">
                 <button type="button" class="sms-verify-btn" onclick="sms_verify()">인증</button>
                 <input type="hidden" id="verifyid" value="0" />
+                <input type="hidden" id="rndNum" value="0"/>
               </li>
               <li>
                 <!-- <input type="tel" placeholder="휴대폰 전화번호 입력"> -->
-                <input type="tel" name="verifycode" placeholder="인증번호 입력">
+                <input type="text" name="verifycode" placeholder="인증번호 입력">
               </li>
             </ul>
           </div>    
@@ -84,6 +85,8 @@
 				console.log(data);
 				//alert(data);
 				$("#verifyid").val(1); //성공시
+				$("#rndNum").val(data);
+				
 			},
 			error:function(xhr,status,err){
 				console.log(xhr,status,err);
@@ -101,7 +104,7 @@
 		if($("[name=telephone]").val() == "" ||  $("[name=verifycode]").val() == "" || $("#verifyid").val() == "0"){
 			$(".modal-body").html("먼저 인증을 진행해주세요");
 		}
-		else if($("[name=verifycode]").val() == "1004"){
+		else if($("[name=verifycode]").val() == $("#rndNum").val()){
 			
 			$.ajax({
 				url: "<%= request.getContextPath() %>/member/searchId",
@@ -124,6 +127,8 @@
 				}
 			});
 			
+			$("[name=telephone]").val("");
+			$("[name=verifycode]").val("");
 			
 		}else {
 			$(".modal-body").html("잘못된 인증번호입니다.");
@@ -144,7 +149,7 @@
 		if(modal == "modal-wrapper"){
 			$modal.css("display","none");	
 		}
-	})
+	});
 
 </script>
 

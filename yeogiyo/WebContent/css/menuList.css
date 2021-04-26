@@ -4,16 +4,15 @@ color:  #333333;
 font-size:15px;
 font-family: 'Nanum Gothic', sans-serif;
 }
-.wrapper{
+.menu-wrapper{
 margin: 0 auto;
-/* border: 1px solid black; */
 width: 1020px;
 }
-table{
+.tb-menuList{
 border-collapse: collapse;
 border: 1px solid  #D9D9D9;
 }
-tr, td{
+.tb-menuList>tr, .tb-menuList>tr>td{
 border: 1px solid  #D9D9D9;
 }
 /* 가게정보테이블 */
@@ -180,7 +179,7 @@ font-size: 16px;
 /* 카테고리 누르면 나타날 메뉴의 리스트 */
 .ul-menu-list{
 margin : 0;
-display:none;
+/* display:none; */
 }
 /* 카테고리 누르면 나타날 메뉴 */
 .li-menu{

@@ -8,8 +8,14 @@
 			ng-show="is_yogiyo &amp;&amp; !session_storage.oauth_next">
 			<div class="footer-menu">
 				<ul>
+					<li class="mb ng-hide" ng-show="is_mobile_device"><a
+						ng-bind="check_login() ? '로그아웃' : '로그인'" ng-click="login()"
+						class="ng-binding">로그인</a></li>
+					<li class="mb cscenter ng-hide" ng-show="is_mobile_device"><a
+						href="#/contact/">고객만족센터</a></li>
+					<li class="mb notice"><a href="#/notice/">공지사항</a></li>
 					<li class="sns-link"><a
-						href="https://www.iei.or.kr/main/main.kh" class="facebook"
+						href="https://www.facebook.com/Yogiyokorea/" class="facebook"
 						target="_blank"><span></span>KH_정보교육원</a></li>
 				</ul>
 			</div>
