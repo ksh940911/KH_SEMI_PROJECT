@@ -53,7 +53,8 @@ border-left: none;
 #cart{
 float:right;
 width: 330px;
-margin : 10px;
+/* margin : 10px; */
+margin-top : 10px;
 }
 #cart-title{
 height: 42px;
@@ -300,7 +301,7 @@ object-fit: cover;
 .detail-total-wrap {
     padding: 20px 15px 15px 15px;
     border-top: 1px solid #f0f0f0;
-    overflow: hidden;
+/*     overflow: hidden; */
     background-color: #EFEFEF;
 }
 .total{
@@ -343,7 +344,7 @@ width: 460px;
 height: auto;
 background-color: #fff;
 /* border: 5px solid #3571B5; */
-z-index: 10;
+z-index: 100;
 }
 
 .dim-layer {

@@ -220,7 +220,7 @@
         		if(paymentWay === 'C' && paymentPlace === 'N'){
         			//아임포트 결제 api작동
         			
-        			var name = ($(".cart-li:eq(1)").find(".left").text()) + " 외"; //주문명
+        			var name = ($(".cart-li:eq(0)").find(".left").text()) + " 외"; //주문명
         			var amount = Number($("#total-price").text()); //결제 금액
         			
         			
@@ -229,8 +229,8 @@
         			    pay_method : 'card',
         			    merchant_uid : 'merchant_' + new Date().getTime(),
         			    name : name,
-        			   //amount : amount
-        			   amount : 10 //테스트용 10원 설정
+        			   amount : amount
+//         			   amount : 10 //테스트용 10원 설정
         			}, function(rsp) {
         				 if ( rsp.success ) {
         				    	//[1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
