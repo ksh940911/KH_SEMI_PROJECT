@@ -1,7 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.net.URLEncoder" %>
+<%@ page import="java.security.SecureRandom" %>
+<%@ page import="java.math.BigInteger" %>
     
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
+<!-- 네이버 로그인 api -->
 
 
 	<div class="content-wrap">
@@ -26,7 +30,9 @@
             </div>
             <div class="login-submit">
                 <input type="submit" value="로그인" name="loginbtn" disabled="disabled">
-            </div>    
+            </div>
+            <!-- 네이버 아이디로 로그인하기 버튼 -->
+ 
         </form>
         <div class="join-container">
             <a href="<%= request.getContextPath() %>/member/memberEnroll">
@@ -90,8 +96,6 @@ $("#password").keyup(function(){
 	
 });  */
 
-
-</script>
 
 
 
