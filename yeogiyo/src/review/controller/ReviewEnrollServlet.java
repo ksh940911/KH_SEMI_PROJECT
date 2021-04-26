@@ -11,8 +11,8 @@ import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 import com.oreilly.servlet.MultipartRequest;
-
 import common.YeogiyoFileRenamePolicy;
+
 import order.model.service.OrderService;
 import order.model.vo.Order;
 import order.model.vo.SelectedMenu;
@@ -131,8 +131,8 @@ public class ReviewEnrollServlet extends HttpServlet {
 			//2-2. 업무로직 : db에 insert
 			int result = reviewService.insertReview(review);
 			String msg = (result > 0) ? 
-							"게시글 등록 성공!" :
-								"게시글 등록 실패!";
+							"리뷰 등록 성공!" :
+								"리뷰 등록 실패!";
 			String location = request.getContextPath()+ "/review/reviewList?resId=" + resId;
 			//http://localhost:9090/yeogiyo/review/reviewList?resId=1
 			

@@ -12,7 +12,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+import member.model.exception.MemberException;
 import member.model.vo.Member;
+import member.model.vo.MemberOrderList;
+import order.model.vo.Order;
 
 public class MemberDao {
 
@@ -56,6 +59,7 @@ public class MemberDao {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+			throw new MemberException("로그인 오류",e);
 		} finally {
 			close(rset);
 			close(pstmt);
@@ -91,6 +95,7 @@ public class MemberDao {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
+			throw new MemberException("회원가입 오류",e);
 		} finally {
 			close(pstmt);
 		}
@@ -126,6 +131,7 @@ public class MemberDao {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+			throw new MemberException("아이디찾기 오류",e);
 		} finally {
 			close(rset);
 			close(pstmt);
@@ -162,6 +168,7 @@ public class MemberDao {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+			throw new MemberException("비밀번호찾기 오류",e);
 		} finally {
 			close(rset);
 			close(pstmt);
@@ -184,6 +191,7 @@ public class MemberDao {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
+			throw new MemberException("비밀번호찾기 오류",e);
 		} finally {
 			close(pstmt);
 		}
@@ -203,14 +211,15 @@ public class MemberDao {
 			pstmt.setString(3, member.getGender());
 			pstmt.setString(4, member.getAddress());
 			pstmt.setString(5, member.getAddressSub());
-			pstmt.setString(6, member.getEmail());
-			// pstmt.setString(6, member.getPhone());
-			pstmt.setString(7, member.getMemberId());
+			pstmt.setString(6, member.getPhone());
+			pstmt.setString(7, member.getEmail());
+			pstmt.setString(8, member.getMemberId());
 
 			result = pstmt.executeUpdate();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
+			throw new MemberException("회원정보수정 오류",e);
 		} finally {
 			close(pstmt);
 		}
@@ -231,6 +240,7 @@ public class MemberDao {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
+			throw new MemberException("전화번호 수정 오류",e);
 		} finally {
 			close(pstmt);
 		}
@@ -251,11 +261,56 @@ public class MemberDao {
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
+			throw new MemberException("회원탈퇴 오류",e);
 		} finally {
 			close(pstmt);
 		}
 		return result;
 	}
+	
+	//마이페이지 - 주문 조회
+	public List<MemberOrderList> selectRestaurantListByMeberId(Connection conn, String memberId) {
+		List<MemberOrderList> list = new ArrayList<>();
+		MemberOrderList order = null;
+		String query = prop.getProperty("selectOrderList");
+		ResultSet rset = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, memberId);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				order = new MemberOrderList();
+				order.setOrderId(rset.getInt("order_id"));
+				order.setMemberId(rset.getString("member_id"));
+				order.setResId(rset.getInt("res_id"));
+				order.setOrderDate(rset.getDate("order_date"));
+				order.setAddress(rset.getString("address"));
+				order.setAddressSub(rset.getString("address_sub"));
+				order.setPhone(rset.getString("phone"));
+				order.setOrderComment(rset.getString("order_comment"));
+				order.setPaymentWay(rset.getString("payment_way"));
+				order.setPaymentPlace(rset.getString("payment_place"));
+				order.setOrderMenu(rset.getString("order_menu")); //json
+				order.setTotalPrice(rset.getInt("total_price"));
+				order.setResName(rset.getString("res_name"));
+				
+				list.add(order);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		
+		return list;
+	}
+
 	
 	// 전체 회원조회-리스트_페이징 (회원관리용)
 	public List<Member> selectList(Connection conn, Map<String, String> param) {
@@ -286,6 +341,7 @@ public class MemberDao {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+			throw new MemberException("전체 회원조회 오류",e);
 		} finally {
 			close(rset);
 			close(pstmt);
@@ -328,6 +384,7 @@ public class MemberDao {
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
+			throw new MemberException("회원권한 수정 오류(관리자용)",e);
 		} finally {
 			close(pstmt);
 		}
@@ -388,6 +445,7 @@ public class MemberDao {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+			throw new MemberException("회원조회 오류(관리자용)",e);
 		} finally {
 			close(rset);
 			close(pstmt);
@@ -433,10 +491,12 @@ public class MemberDao {
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
+			throw new MemberException("회원 수정 오류(관리자용)",e);
 		} finally {
 			close(pstmt);
 		}
 		return result;
 	}
+
 
 }

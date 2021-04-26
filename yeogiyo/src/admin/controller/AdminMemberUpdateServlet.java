@@ -27,10 +27,7 @@ public class AdminMemberUpdateServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String memberId = request.getParameter("memberId");
-		System.out.println("memberId@servlet = " + memberId);
-		
 		Member member = memberService.selectMemberById(memberId);
-		System.out.println("member@get = " + member);
 		
 		request.setAttribute("member", member);
 		request.getRequestDispatcher("/WEB-INF/views/admin/memberUpdate.jsp").forward(request, response);
@@ -43,7 +40,6 @@ public class AdminMemberUpdateServlet extends HttpServlet {
 		// 수정 회원 기존 정보 조회
 		String memberId = request.getParameter("memberId");
 		Member oriMember = memberService.selectMemberById(memberId);
-		System.out.println("oriMember = " + oriMember);
 		
 		// 비밀번호변경여부 확인 및 설정
 		String password = request.getParameter("password");
@@ -70,8 +66,6 @@ public class AdminMemberUpdateServlet extends HttpServlet {
 		member.setPhone(request.getParameter("phone"));
 		member.setEmail(request.getParameter("email"));
 		member.setMemberRole(request.getParameter("memberRole"));
-		
-		System.out.println("upMember= " + member);
 		
 		int result = memberService.adminUpdateMember(member);
 		

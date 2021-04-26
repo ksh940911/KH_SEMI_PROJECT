@@ -8,10 +8,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class AdminResMenuManage
+ * Servlet implementation class AdminMenuEnrollServlet
  */
-@WebServlet("/admin/menuManage")
-public class AdminResMenuManage extends HttpServlet {
+@WebServlet("/admin/menuEnroll")
+public class AdminMenuEnrollServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -20,18 +20,18 @@ public class AdminResMenuManage extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		request.setAttribute("resId", request.getParameter("resId"));
-		request.getRequestDispatcher("/WEB-INF/views/admin/menuManage.jsp").forward(request, response);
+//		int resId = Integer.parseInt(request.getParameter("resId"));
+//		request.setAttribute("resId", resId);
+		request.getRequestDispatcher("/WEB-INF/views/admin/menuEnroll.jsp").forward(request, response);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		int resId = Integer.parseInt(request.getParameter("resId"));
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+		
 	}
 
 }

@@ -110,7 +110,7 @@
     
     <script>
     //주문표 삭제
-    sessionStorage.removeItem("selectedMenuArr");
+    sessionStorage.removeItem('<%= loginMember.getMemberId() %>');
     </script>
     
     <%

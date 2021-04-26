@@ -9,13 +9,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.google.gson.Gson;
 import com.oreilly.servlet.MultipartRequest;
-import com.oreilly.servlet.multipart.FileRenamePolicy;
-
-import review.model.service.ReviewService;
-import review.model.vo.ReviewPhoto;
-import review.model.vo.Review;
 import common.YeogiyoFileRenamePolicy;
+
+import order.model.service.OrderService;
+import order.model.vo.Order;
+import order.model.vo.SelectedMenu;
+import review.model.service.ReviewService;
+import review.model.vo.Review;
+import review.model.vo.ReviewPhoto;
+
 
 /**
  * Servlet implementation class ReviewUpdateServlet
@@ -24,22 +28,24 @@ import common.YeogiyoFileRenamePolicy;
 public class ReviewUpdateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private ReviewService reviewService = new ReviewService();
+	private OrderService orderService = new OrderService();
 	
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//1.사용자 입력값 
-		int no = Integer.parseInt(request.getParameter("no"));
+		int resId = Integer.parseInt(request.getParameter("resId"));
+		System.out.println("resId@formService = " + resId);
+		request.setAttribute("resId", resId);
 		
-		//2.업무로직
-		Board board = boardService.selectOne(no);
+		int reviewNo = Integer.parseInt(request.getParameter("reviewNo"));
+		System.out.println("reviewNo@listServlet = " + request.getParameter("reviewNo"));
+		Review review = reviewService.selectOne(reviewNo);
+		System.out.println("review= " + review);
+		request.setAttribute("review", review);
 		
-		//3.jsp포워딩
-		request.setAttribute("board", board);
-		request.getRequestDispatcher("/WEB-INF/views/board/boardUpdateForm.jsp")
+		request.getRequestDispatcher("/WEB-INF/views/review/reviewUpdateForm.jsp")
 			   .forward(request, response);
-	
 	}
 
 	/**
@@ -51,7 +57,7 @@ public class ReviewUpdateServlet extends HttpServlet {
 			//1. MultipartRequest객체 생성
 			// /WebContent/upload/board/업로드파일명.jpg 
 			// web rool dir를 절대경로로 반환
-			String saveDirectory = getServletContext().getRealPath("/upload/board");
+			String saveDirectory = getServletContext().getRealPath("/upload/review");
 			System.out.println("saveDirectory@servlet = " + saveDirectory);
 			
 			//최대파일허용크기 10mb = 10 * 1kb * 1kb
@@ -64,7 +70,7 @@ public class ReviewUpdateServlet extends HttpServlet {
 			//중복파일인 경우, numbering처리
 			//filerename : 20210406191919_123.jpg
 	//		FileRenamePolicy policy = new DefaultFileRenamePolicy();
-			FileRenamePolicy policy = new MvcFileRenamePolicy();
+			YeogiyoFileRenamePolicy policy = new YeogiyoFileRenamePolicy();
 			
 			MultipartRequest multipartRequest = 
 					new MultipartRequest(
@@ -76,62 +82,81 @@ public class ReviewUpdateServlet extends HttpServlet {
 								);
 			
 			//2. db에 게시글/첨부파일 정보 저장
-			
 			//2-1. 사용자 입력값처리
-			int no = Integer.parseInt(multipartRequest.getParameter("no"));
-			String title = multipartRequest.getParameter("title");
-			String  writer = multipartRequest.getParameter("writer");
+			int reviewNo = Integer.parseInt(multipartRequest.getParameter("reviewNo"));
+			String reviewstar = multipartRequest.getParameter("star");
 			String content = multipartRequest.getParameter("content");
+			String memberId = multipartRequest.getParameter("writer");
+			int resId = Integer.parseInt(multipartRequest.getParameter("resId"));
+			System.out.println("resID@reviewEnroll=" + resId);
+			Order order = orderService.selectLastOrderById(memberId);
+			int orderId = order.getOrderId();
+			System.out.println(orderId);
+			String reviewOrder = multipartRequest.getParameter("writer");
 			
 			//업로드한 파일명
-			String originalFileName = multipartRequest.getOriginalFileName("upFile");
-			String renamedFileName = multipartRequest.getFilesystemName("upFile");
-			
-			//삭제할 첨부파일번호
-			String attachNo = multipartRequest.getParameter("delFile");
-			System.out.println("attachNo@servlet = " + attachNo);
+			String originalFileName = multipartRequest.getOriginalFileName("reviewphoto");
+			String renamedFileName = multipartRequest.getFilesystemName("reviewphoto");
 			
 	//		Board board = new Board(0, title, writer, content, null, 0, null);
-			Board board = new Board();
-			board.setNo(no);
-			board.setTitle(title);
-			board.setWriter(writer);
-			board.setContent(content);
+			Review review = new Review();
+			review.setReviewNo(reviewNo);
+			review.setMemberId(memberId);
+			review.setReviewStar(Integer.parseInt(reviewstar));
+			review.setReviewContent(content);
+			review.setOrderId(orderId);
 			
+			
+			String jsonOrderMenu = order.getOrderMenu();
+			System.out.println("jsonOrderMenu@ReviewEnrollServlet = " + jsonOrderMenu);
+			
+			//JSON -> Object
+			Gson gson = new Gson();
+			SelectedMenu[] pResult = gson.fromJson(jsonOrderMenu, SelectedMenu[].class);
+			
+			StringBuilder sb = new StringBuilder();
+			String menuSum = "";
+			for(SelectedMenu sm : pResult) { 
+				sb.append(sm.getMenuName() + ",");
+			}
+			sb.substring(0, sb.length()-2);
+			menuSum = sb.toString();
+			System.out.println(menuSum);
+			review.setReviewOrder(menuSum);
+			
+			System.out.println("filename@" + originalFileName);
 			//첨부파일이 있는 경우
 			//multipartRequest.getFile("upFile"):File != null
 			if(originalFileName != null) {
-				Attachment attach = new Attachment();
-				attach.setBoardNo(no);
-				attach.setOriginalFileName(originalFileName);
-				attach.setRenamedFileName(renamedFileName);
-				board.setAttach(attach);
+				ReviewPhoto reviewphoto = new ReviewPhoto();
+				reviewphoto.setReviewNo(reviewNo);
+				reviewphoto.setPhotoOriginalFilename(originalFileName);
+				reviewphoto.setPhotoRenamedFilename(renamedFileName);
+				
+				review.setReviewphoto(reviewphoto);
 			}
 			
-			//2. 업무로직 : 
-			//첨부파일
-			int result = 0;
-			if(attachNo != null)
-				result = boardService.deleteAttachment(attachNo);
-			
-			//db에 update
-			result = boardService.updateBoard(board);
+			//2-2. 업무로직 : db에 insert
+			int result = reviewService.updateReview(review);
 			String msg = (result > 0) ? 
-							"게시글 수정 성공!" :
-								"게시글 수정 실패!";
-			String location = request.getContextPath()
-							+ "/board/boardView?no=" + board.getNo(); 
+							"리뷰 수정 성공!" :
+								"리뷰 수정 실패!";
+			String location = request.getContextPath()+ "/review/reviewList?resId=" + resId;
+			//http://localhost:9090/yeogiyo/review/reviewList?resId=1
 			
+			
+								
+			System.out.println("review.getReviewNo" + review.getReviewNo());
 			//3. DML요청 : 리다이렉트 & 사용자피드백
-			// /mvc/board/boardList
+			// /mvc/review/reviewList로 리다이렉트
 			HttpSession session = request.getSession();
 			session.setAttribute("msg", msg);
+			request.setAttribute("resId", resId);
+			System.out.println("resId@EnrollServlet = " + resId);
 			response.sendRedirect(location);
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e; // was한테 다시 던져서 에러페이지로 전환함.
 		}
 	}
-
 }

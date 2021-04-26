@@ -1,3 +1,12 @@
+
+
+section#content-wrapper {
+	height:100%;
+}
+
+
+
+
 .img-responsive,
 .thumbnail>img,
 .thumbnail a>img,
@@ -141,7 +150,8 @@ a.thumbnail.active {
 
 .category-list .row {
 	padding: 5px;
-	max-width: 1020px;
+	/* max-width: 1020px; */
+	max-width: 930px;
 	margin: 0 auto;
 }
 

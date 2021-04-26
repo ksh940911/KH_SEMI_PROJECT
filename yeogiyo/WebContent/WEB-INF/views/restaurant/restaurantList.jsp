@@ -28,7 +28,11 @@
                 <tr>
                   <td id="atd1">
                   	<div class="logo">
-	                    <img src="<%= r.getLogoImg() %>" alt="가게사진" />                  	
+	                <% if(r.getResImg() != null && r.getResImg().getImgResStatus()) { %>
+						<img src="<%= request.getContextPath() %>/upload/res/<%= r.getResImg().getRenamedFilename() %>" class="resList-img"/>	
+					<% } else { %>
+						<img src="<%= request.getContextPath() %>/images/defaultMenu.png" class="resList-img" />	
+					<% } %> 
                   	</div>
                   </td>
                   <td id="atd2">

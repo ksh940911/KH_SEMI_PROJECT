@@ -2,12 +2,15 @@
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/headerMemberView.jsp" %>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/member.css" />
-<section id=updatePwd-container>
-	<h3>비밀번호 변경</h3>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/css/member.css" />
+<section class="content-wrapper" id=updatePwd-container>
 	<form 
 		name="updatePwdFrm" 
 		action="<%=request.getContextPath()%>/member/updatePassword" 
 		method="post" >
+		<div class="memberView-title">
+			<p>비밀번호 변경</p>
+		</div>
 		<table>
 			<tr>
 				<th>현재 비밀번호</th>
@@ -25,16 +28,12 @@
 					<input type="password" id="passwordCheck" required><br>
 				</td>
 			</tr>
-			<tr>
-				<td>
-					<input type="submit" value="변경" />
-					<input type="submit" value="취소 " onclick="history.back()" />
-				</td>
-			</tr>
-			<tr>
-				<td><a href="<%= request.getContextPath() %>/member/searchPwd">비밀번호를 잊으셨나요?</a></td>
-			</tr>
 		</table>
+		<div class="button-class">
+			<input type="submit" value="변경" />
+			<input type="submit" value="취소 " onclick="history.back()" /><br><br>
+			<a href="<%= request.getContextPath() %>/member/searchPwd">비밀번호를 잊으셨나요?</a>
+		</div>
 	</form>
 </section>
 

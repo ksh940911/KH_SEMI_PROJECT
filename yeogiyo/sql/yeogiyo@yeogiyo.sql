@@ -176,6 +176,7 @@ insert into yeogiyo.menu(menu_id, res_id, menu_name, description, menu_category,
 --=========================
 select * from member;
 select * from restaurant;
+select * from res_img;
 desc member;
 select * from member where phone='01095959595';
 --insert into member(member_id, member_name, password, address, phone, email, member_role) 

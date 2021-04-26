@@ -38,6 +38,7 @@ public class MemberUpdateServlet extends HttpServlet {
 		String memberName = request.getParameter("memberName");
 		String _birthday = request.getParameter("birthday");
 		String gender = request.getParameter("gender");
+		String phone = request.getParameter("phone");
 		String address = request.getParameter("address");
 		String addressSub = request.getParameter("addressSub");
 		String email = request.getParameter("email");
@@ -48,7 +49,7 @@ public class MemberUpdateServlet extends HttpServlet {
 			birthday = Date.valueOf(_birthday);
 		}
 		
-		Member member = new Member(memberId, memberName, null, birthday, gender, address, addressSub, null, email, null, MemberService.MEMBER_ROLE);
+		Member member = new Member(memberId, memberName, null, birthday, gender, address, addressSub, phone, email, null, MemberService.MEMBER_ROLE);
 		
 		//업무 로직
 		int result = memberService.updateMember(member);

@@ -31,7 +31,7 @@ public class NoticeDeleteServlet extends HttpServlet {
 			String msg = result > 0 ? "공지 삭제 완료" : "공지 삭제 실패";
 
 			request.getSession().setAttribute("msg", msg);
-			response.sendRedirect(request.getContextPath() + "/admin/noticeView?resId=" + resId);
+			response.sendRedirect(request.getContextPath() + "/notice/noticeView?resId=" + resId);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;

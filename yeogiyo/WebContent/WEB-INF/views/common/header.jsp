@@ -9,7 +9,7 @@
 		session.removeAttribute("msg");
 	
 	Member loginMember = (Member)session.getAttribute("loginMember");
-
+	
 	
 	String saveId = null;
 	Cookie[] cookies = request.getCookies();
@@ -55,6 +55,54 @@
 <% if(msg != null) { %>
 alert("<%= msg %>");
 <% } %>
+
+<% if(loginMember != null) { %>
+
+$(function(){
+
+	refreshCart();
+	
+	
+	$("[name=basket]").click(function(){
+		var resId = $("[name=resInfo]").val();
+		if(resId != "0"){
+			location.href = '<%= request.getContextPath() %>/restaurant/menuList.do?res_id=' + resId;
+		}else {
+			alert("장바구니가 비어있습니다.");
+		}
+		
+	});
+	
+	
+});
+	
+function refreshCart() {
+	var membercart = JSON.parse(sessionStorage.getItem("<%= loginMember.getMemberId() %>"));
+	if(membercart != null){
+		var count = 0;
+		$.each(membercart,function(index,item){
+			count = index;
+			$.each(item,function(key,value){				
+				if(key == "resId"){
+					$("[name=resInfo]").val(value);
+				}
+				
+			});
+			
+		});
+		$("[name=menuCount]").val(count+1);
+	}else {
+		$("[name=resInfo]").val(0);
+		$("[name=menuCount]").val(0);
+	}
+	
+	$("[name=basket]").val("장바구니(" + $("[name=menuCount]").val() + ")");
+}
+
+<% } %>
+
+
+
 </script>
 
 
@@ -77,7 +125,7 @@ alert("<%= msg %>");
 						<button type="button" id="loginBtn" onclick="location.href='<%= request.getContextPath() %>/member/memberlogin';" >로그인</button>
 					</ul>
 				</div>
-			<% } else if("A".equals(loginMember.getMemberRole())) { %>
+			<% } else if(MemberService.ADMIN_ROLE.equals(loginMember.getMemberRole())) { %>
 				<table id="admin">
 					<tr>
 						<td>관리자님, 반갑습니다</td>
@@ -93,7 +141,12 @@ alert("<%= msg %>");
 				<table id="login">
 					<tr>
 						<td><%= loginMember.getMemberName() %>님, 반갑습니다</td>
-						<td><input type="button" value="장바구니" name="basket"/></td>
+						<td>
+							<input type="button" value="장바구니" name="basket"/>
+							<input type="hidden" name="resInfo" value="0" />
+							<input type="hidden" name="menuCount" value="0" />
+							<input type="hidden" name="loginId" value="<%= loginMember.getMemberId() %>"/>
+						</td>
 					</tr>
 					<tr>
 						<td>
@@ -109,4 +162,4 @@ alert("<%= msg %>");
 	</header>
 	
 	
-	<section id="content">
+	<section id="content-wrapper">
