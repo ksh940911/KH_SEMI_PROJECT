@@ -15,8 +15,8 @@ import member.model.vo.Member;
 /**
  * Servlet implementation class UpdatePhone
  */
-@WebServlet("/member/updatePhone")
-public class UpdatePhone extends HttpServlet {
+@WebServlet("/member/enrollPhoneCheck")
+public class EnrollPhoneCheck extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)

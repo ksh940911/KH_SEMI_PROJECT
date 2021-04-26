@@ -141,6 +141,38 @@ $("#memberId").blur(function(){
 });
 
 $("#phone").blur(function(){
+ 	$.ajax({
+ 		url: "<%= request.getContextPath() %>/member/enrollPhoneCheck",
+ 		method : "POST",
+ 		data : {
+ 			phone : $("#phone").val()
+ 		},
+ 		success : function(result) {
+ 			console.log($("#phone").val());
+ 			 //휴대폰번호
+ 			 var $phone = $("#phone");
+ 			 //숫자가 아닌 문자 제거
+ 			 $phone.val($phone.val().replace(/[^0-9]/g, ""))
+ 			 
+ 			 if(/^01[0-9][0-9]{8}/.test($phone.val()) == false) {
+ 				 $("#phoneResult").html("<p style='color:red'>유효한 휴대폰 번호를 입력하세요</p>");
+ 				 $("#phoneValid").val(0);
+ 				 return;
+ 			 } else if (result == 0) {
+ 				 $("#phoneResult").html("<p style='color:red'>이미 회원가입된 휴대폰 번호입니다.</p>");
+ 				 $("#phoneValid").val(0);
+ 			 } else if (result == 1) {
+ 				 $("#phoneResult").html("<p style='color:blue'>사용 가능한 휴대폰 번호입니다.</p>");
+ 				 $("#phoneValid").val(1);
+ 			 }
+ 
+ 		}
+ 	})
+});
+
+
+/**
+$("#phone").blur(function(){
 	$phone = $("#phone");
 	
 	 if(/^01[0-9][0-9]{8}/.test($phone.val()) == false) {
@@ -152,6 +184,7 @@ $("#phone").blur(function(){
 	}
 	 
 });
+**/
 
 $("#memberId").change(function() {
 		$("#idValid").val(0);
