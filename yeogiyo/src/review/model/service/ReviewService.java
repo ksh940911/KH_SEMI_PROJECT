@@ -20,6 +20,7 @@ public class ReviewService {
 		Connection conn = getConnection();
 		List<Review> list = reviewDao.selectList(conn, resId, start, end);
 		close(conn);
+		System.out.println("service@list = " + list);
 		return list;
 	}
 

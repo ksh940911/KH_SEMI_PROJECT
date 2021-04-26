@@ -253,20 +253,30 @@ select r.*
 from ( 
     select row_number() over(order by r.review_no desc) rnum, o.res_id, r.*, p.photo_no reviewphoto_no, p.photo_originalfilename, p.photo_renamedfilename, p.photo_status 
     from reviewphoto p right join review r on p.review_no = r.review_no left join tb_order o on r.order_id = o.order_id ) r 
-    where rnum between 1 and 10 and res_id=2;
+    where rnum between 1 and 10 and res_id=1;
+
+
 
 --주문내역 조회    
 select * from tb_order o, restaurant r where o.res_id = r.res_id and o.member_id = 'honggd' order by order_date desc;
 
---가게별 별점 보는 쿼리 selectReviewStarByResId
-select review_star
+--가게별 별점 평균 조회 쿼리 selectAvgReviewStarByResId
+select round(avg(review_star), 1) avg
 from review r join tb_order o
 on r.order_id = o.order_id
-where res_id = 1;
+where res_id = ?;
 
+select * from restaurant;
 
 --updateReviewCountByResId
+update restaurant 
+set review_cnt = ?
+where res_id = ?
 
+--updateAvgReviewStarByResId
+update restaurant
+set rate_avg = ?
+where res_id = ?
 
 
 
