@@ -60,10 +60,10 @@
 					<td><%= payWay %></td>
 					<td><%=order.getTotalPrice()%></td>
 					<td>
-					<input type="button" value="리뷰 쓰기" onclick="location.href='<%= request.getContextPath() %>/review/reviewForm?resId=<%= order.getResId()%>';"/>
+					<input type="submit" value="리뷰 쓰기">
 					<input type="hidden" name="resId" id="resId" value="<%= order.getResId()%>"/>
 					<input type="hidden" name="orderMenu" id="orderMenu" value="<%= jsonObj.get("menuName")%>"/>
-					<input type="hidden" name="menuCnt" id="menuCnt" value="<%= menuCnt%>"/>
+					<input type="hidden" name="menuCnt" id="menuCnt" value="<%= menuCnt-1 %>"/>
 				</form>
 				</td>
 			</tr>

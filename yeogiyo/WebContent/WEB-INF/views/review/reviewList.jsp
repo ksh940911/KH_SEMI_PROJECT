@@ -13,15 +13,17 @@
 <div class="content-wrapper">
 	<section id="review-container">
 		<h2 id=reviewh2>클린리뷰</h2>
-		<%
-			if(loginMember != null){
+		<% 
+			//if(loginMember != null){
 		%>
+		<!-- 
 		<input type="button" id="review-add-btn" value="리뷰등록">
 	  		<form id="review-add-frm" action="<%=request.getContextPath()%>/review/reviewForm">
 	        	<input type="hidden" name="resId" value="<%= request.getAttribute("resId")%>">
 	        </form>
+	    -->    
 		<%
-			}
+			//}
 		%>
 		<table class="tbl-review">
 			<tr>
@@ -109,11 +111,13 @@
 	</section>
 	
 	<script>
+	/*
 	$("#review-add-btn").click(function(){
 		var $frm = $("#review-add-frm");
 		console.log($("[name=resId]").val());
 	    $frm.submit();
 	});
+	*/
 	
 	$("#review-update-btn").click(function(){
 		var $frm = $("#review-update-frm");

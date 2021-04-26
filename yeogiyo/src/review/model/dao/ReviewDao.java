@@ -111,6 +111,7 @@ public class ReviewDao {
 			pstmt.setInt(3, review.getReviewStar());
 			pstmt.setString(4, review.getReviewOrder());
 			pstmt.setString(5, review.getReviewContent());
+			pstmt.setInt(6, review.getResId());
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();

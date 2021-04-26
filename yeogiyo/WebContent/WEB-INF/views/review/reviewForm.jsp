@@ -25,13 +25,15 @@ function reviewValidate(){
 </script>
 <div class="content-wrapper">
 	<section id="review-container">
-	<h2 id=reviewh2>리뷰작성</h2>
+	<h2 id=reviewh2><strong><%= request.getAttribute("orderMenu") %></strong> 리뷰 작성</h2>
 	<form
 		name="reviewEnrollFrm"
 		action="<%=request.getContextPath() %>/review/reviewEnroll" 
 		method="post"
 		enctype="multipart/form-data">
 		<input type="hidden" name="resId" value="<%= request.getAttribute("resId") %>" />
+		<input type="hidden" name="orderMenu" value="<%= request.getAttribute("orderMenu") %>" />
+		<input type="hidden" name="menuCnt" value="<%= request.getAttribute("menuCnt") %>" />
 		<table id="tbl-review-view">
 		<tr>
 			<th colspan="5">별점을 선택해주세요.</th>

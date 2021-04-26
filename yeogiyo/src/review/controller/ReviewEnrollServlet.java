@@ -87,12 +87,13 @@ public class ReviewEnrollServlet extends HttpServlet {
 			System.out.println("resID@reviewEnroll=" + resId);
 			Order order = orderService.selectLastOrderById(memberId);
 			int orderId = order.getOrderId();
-			System.out.println(orderId);
+			System.out.println("orderId@reviewEnroll=" + orderId);
 			String reviewOrder = multipartRequest.getParameter("writer");
 			
 			//업로드한 파일명
 			String originalFileName = multipartRequest.getOriginalFileName("reviewphoto");
 			String renamedFileName = multipartRequest.getFilesystemName("reviewphoto");
+			System.out.println("filename@reviewEnroll=" + originalFileName);
 			
 	//		Board board = new Board(0, title, writer, content, null, 0, null);
 			Review review = new Review();
@@ -100,8 +101,17 @@ public class ReviewEnrollServlet extends HttpServlet {
 			review.setReviewStar(Integer.parseInt(reviewstar));
 			review.setReviewContent(content);
 			review.setOrderId(orderId);
+			review.setResId(resId);
 			
+			//order테이블에 있는 주문내역 가져와서 세팅
+			String orderMenu = multipartRequest.getParameter("orderMenu");
+			System.out.println("orderMenu@reviewEnroll=" + orderMenu);
+			review.setReviewOrder(orderMenu);
 			
+//			int menuCnt = Integer.parseInt(multipartRequest.getParameter("menuCnt"));
+//			System.out.println("menuCnt@reviewEnroll=" + menuCnt);
+			
+			/*
 			String jsonOrderMenu = order.getOrderMenu();
 			System.out.println("jsonOrderMenu@ReviewEnrollServlet = " + jsonOrderMenu);
 			
@@ -118,6 +128,7 @@ public class ReviewEnrollServlet extends HttpServlet {
 			menuSum = sb.toString();
 			System.out.println(menuSum);
 			review.setReviewOrder(menuSum);
+			*/
 			
 			System.out.println("filename@" + originalFileName);
 			//첨부파일이 있는 경우

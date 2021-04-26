@@ -11,6 +11,7 @@ public class Review {
 	private int reviewStar;
 	private String reviewOrder;
 	private String reviewContent;
+	private int resId;
 	private ReviewPhoto reviewphoto;
 	
 	public Review() {
@@ -19,7 +20,7 @@ public class Review {
 	}
 
 	public Review(int reviewNo, String memberId, int orderId, Date reviewTime, int reviewStar, String reviewOrder,
-			String reviewContent, ReviewPhoto reviewphoto) {
+			String reviewContent, int resId, ReviewPhoto reviewphoto) {
 		super();
 		this.reviewNo = reviewNo;
 		this.memberId = memberId;
@@ -28,6 +29,7 @@ public class Review {
 		this.reviewStar = reviewStar;
 		this.reviewOrder = reviewOrder;
 		this.reviewContent = reviewContent;
+		this.resId = resId;
 		this.reviewphoto = reviewphoto;
 	}
 
@@ -86,6 +88,14 @@ public class Review {
 	public void setReviewContent(String reviewContent) {
 		this.reviewContent = reviewContent;
 	}
+	
+	public int getResId() {
+		return resId;
+	}
+
+	public void setResId(int resId) {
+		this.resId = resId;
+	}
 
 	public ReviewPhoto getReviewphoto() {
 		return reviewphoto;
@@ -99,6 +109,6 @@ public class Review {
 	public String toString() {
 		return "Review [reviewNo=" + reviewNo + ", memberId=" + memberId + ", orderId=" + orderId + ", reviewTime="
 				+ reviewTime + ", reviewStar=" + reviewStar + ", reviewOrder=" + reviewOrder + ", reviewContent="
-				+ reviewContent + ", reviewphoto=" + reviewphoto + "]";
+				+ reviewContent + ", resId=" + resId + ", reviewphoto=" + reviewphoto + "]";
 	}
 }
