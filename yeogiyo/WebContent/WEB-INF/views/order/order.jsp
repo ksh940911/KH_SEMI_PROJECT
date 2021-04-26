@@ -106,6 +106,8 @@
 	IMP.init('imp32692513'); //가맹점 식별코드
 	
 	
+	var memberIdJAVA = '<%= loginMember.getMemberId() %>';
+	
 	/*
 		주문시 요청사항 입력 글자수 제한
 	*/
@@ -127,7 +129,7 @@
     	주문표 html
     */
     //세션에서 주문내용 가져오기
-    var selectedMenuArr = JSON.parse(sessionStorage.getItem('selectedMenuArr'));
+    var selectedMenuArr = JSON.parse(sessionStorage.getItem(memberIdJAVA));
     
     var totalPrice = 0;
     $.each(selectedMenuArr, function(i, menu){
@@ -218,7 +220,7 @@
         		if(paymentWay === 'C' && paymentPlace === 'N'){
         			//아임포트 결제 api작동
         			
-        			var name = ($(".cart-li:eq(1)").find(".left").text()) + " 외"; //주문명
+        			var name = ($(".cart-li:eq(0)").find(".left").text()) + " 외"; //주문명
         			var amount = Number($("#total-price").text()); //결제 금액
         			
         			
@@ -227,8 +229,8 @@
         			    pay_method : 'card',
         			    merchant_uid : 'merchant_' + new Date().getTime(),
         			    name : name,
-        			   //amount : amount
-        			   amount : 10 //테스트용 10원 설정
+        			   amount : amount
+//         			   amount : 10 //테스트용 10원 설정
         			}, function(rsp) {
         				 if ( rsp.success ) {
         				    	//[1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
@@ -259,7 +261,7 @@
         				    <%-- 	location.href="<%= request.getContextPath() %>/order/approval.do"; --%>
         				    	
         				    	//hidden input에 메뉴 json값 담기
-        		            	var json = sessionStorage.getItem("selectedMenuArr");
+        		            	var json = sessionStorage.getItem(memberIdJAVA);
         		            	$("#order_menu").val(json);
         				    	
         		            	
@@ -282,7 +284,7 @@
         			//신용카드 결제가 아닐 경우
         			
             		//hidden input에 메뉴 json값 담기
-                	var json = sessionStorage.getItem("selectedMenuArr");
+                	var json = sessionStorage.getItem(memberIdJAVA);
                 	$("#order_menu").val(json);
                 	
                 	console.log($("#order_menu").val());

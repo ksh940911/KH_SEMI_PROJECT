@@ -16,6 +16,7 @@ import common.YeogiyoFileRenamePolicy;
 import order.model.service.OrderService;
 import order.model.vo.Order;
 import order.model.vo.SelectedMenu;
+import restaurant.model.service.RestaurantService;
 import review.model.service.ReviewService;
 import review.model.vo.Review;
 import review.model.vo.ReviewPhoto;
@@ -29,6 +30,7 @@ public class ReviewEnrollServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private ReviewService reviewService = new ReviewService();
 	private OrderService orderService = new OrderService();
+	private RestaurantService restaurantService = new RestaurantService();
 	
 	/**
 	 * 0. form의 속성 enctype="multipart/form-data" 추가
@@ -131,11 +133,18 @@ public class ReviewEnrollServlet extends HttpServlet {
 			//2-2. 업무로직 : db에 insert
 			int result = reviewService.insertReview(review);
 			String msg = (result > 0) ? 
-							"게시글 등록 성공!" :
-								"게시글 등록 실패!";
+							"리뷰 등록 성공!" :
+								"리뷰 등록 실패!";
 			String location = request.getContextPath()+ "/review/reviewList?resId=" + resId;
 			//http://localhost:9090/yeogiyo/review/reviewList?resId=1
 			
+			//가게테이블에 리뷰 갯수 추가
+			int reviewCount = reviewService.selectReviewCount(resId);
+			int updateReviewCntResult = restaurantService.updateReviewCountByResId(resId, reviewCount);
+			
+			//가게 테이블에 별점 평균 추가
+			int avgReviewStar = reviewService.selectAvgReviewStarByResId(resId);
+			int updateAvgReviewStarResult = restaurantService.updateAvgReviewStarByResId(resId, avgReviewStar);
 			
 								
 			System.out.println("review.getReviewNo" + review.getReviewNo());

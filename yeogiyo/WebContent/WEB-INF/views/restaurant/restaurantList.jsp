@@ -41,7 +41,7 @@
 	                <% if(r.getResImg() != null && r.getResImg().getImgResStatus()) { %>
 						<img src="<%= request.getContextPath() %>/upload/res/<%= r.getResImg().getRenamedFilename() %>" class="resList-img"/>	
 					<% } else { %>
-						<img src="<%= request.getContextPath() %>/images/logo.png" class="resList-img" style="width:50px;"/>	
+						<img src="<%= request.getContextPath() %>/images/defaultMenu.png" class="resList-img" />	
 					<% } %> 
                   	</div>
                   </td>
@@ -99,6 +99,9 @@ $(".item-clearfix").click(function(){
 //console.log($(".cliked-category").val());
 //console.log($(".category-name"));
 
+$(".search-category-btn").click(function(){
+	$(".main-search").css("display","block");
+});
 
 </script>
       

@@ -21,20 +21,24 @@ public class ReviewDeleteServlet extends HttpServlet {
     /**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		int resId = Integer.parseInt(request.getParameter("resId"));
+		System.out.println("resId@deleteServlet = " + resId);
+		request.setAttribute("resId", resId);
+		
 		try {
 			//1.사용자 입력값
-			int review_no = Integer.parseInt(request.getParameter("review_no"));
+			int reviewNo = Integer.parseInt(request.getParameter("reviewNo"));
 			
 			//2.업무로직
-			int result = reviewService.deleteReview(review_no);
+			int result = reviewService.deleteReview(reviewNo);
 			String msg = result > 0 ?
-							"게시글 삭제 성공!" :
-								"게시글 삭제 실패!";
+							"리뷰 삭제 성공!" :
+								"리뷰 삭제 실패!";
 			
 			//3.리다이렉트 & 사용자피드백
 			request.getSession().setAttribute("msg", msg);
-			response.sendRedirect(request.getContextPath() + "/review/reviewList");
+			response.sendRedirect(request.getContextPath() + "/review/reviewList?resId=" + resId);
 		} catch (Exception e) {
 			//예외 로깅
 			e.printStackTrace();

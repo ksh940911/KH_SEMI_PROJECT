@@ -106,7 +106,7 @@ public class OrderServlet extends HttpServlet {
 				System.out.println("created_at = " + kakao.getCreatedAt());
 				
 				response.sendRedirect(kakao.getNextRedirectPcUrl());
-				//결제 성공 시, approvalServlet.java로 이동
+				
 			}
 		}else if(OrderService.OFFLINE.equals(paymentPlace)) {
 			System.out.println("오프라인.현장결제");

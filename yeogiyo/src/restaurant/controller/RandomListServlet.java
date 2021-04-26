@@ -26,16 +26,15 @@ public class RandomListServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String align = "default";
 		
-<<<<<<< Updated upstream
-		List<Restaurant> list = new RestaurantService().selectRestaurantList();
+
+	//	List<Restaurant> list = new RestaurantService().selectRestaurantList();
+
 		//System.out.println("list@RandomListServlet = " + list);
-		
-=======
+
 		List<Restaurant> list = new RestaurantService().selectRestaurantList(align);
->>>>>>> Stashed changes
 		
 		Random rnd = new Random();
-		int rnum = rnd.nextInt(3) + 1; //중복처리안함
+		int rnum = rnd.nextInt(list.size()) + 1; //중복처리안함
 		//int rnum = (int)(Math.random()*3)+1;
 		//System.out.println(rnum);
         

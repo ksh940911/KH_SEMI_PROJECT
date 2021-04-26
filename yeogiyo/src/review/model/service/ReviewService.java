@@ -16,16 +16,17 @@ public class ReviewService {
 
 	private ReviewDao reviewDao = new ReviewDao();
 
-	public List<Review> selectList(int start, int end) {
+	public List<Review> selectList(int resId, int start, int end) {
 		Connection conn = getConnection();
-		List<Review> list = reviewDao.selectList(conn, start, end);
+		List<Review> list = reviewDao.selectList(conn, resId, start, end);
 		close(conn);
+		System.out.println("service@list = " + list);
 		return list;
 	}
 
-	public int selectReviewCount() {
+	public int selectReviewCount(int resId) {
 		Connection conn = getConnection();
-		int totalContents = reviewDao.selectReviewCount(conn);
+		int totalContents = reviewDao.selectReviewCount(conn, resId);
 		close(conn);
 		return totalContents;
 	}
@@ -66,13 +67,29 @@ public class ReviewService {
 		return result;
 	}
 	
-	public int deleteReview(int review_no) {
+	public Review selectOne(int reviewNo) {
+		Connection conn = getConnection();
+		Review review = reviewDao.selectOne(conn, reviewNo);
+		ReviewPhoto reviewPhoto = reviewDao.selectOneReviewPhoto(conn, reviewNo);
+		review.setReviewphoto(reviewPhoto);
+		close(conn);
+		return review;
+	}
+
+	public ReviewPhoto selectOneReviewPhoto(int reviewNo) {
+		Connection conn = getConnection();
+		ReviewPhoto reviewPhoto = reviewDao.selectOneReviewPhoto(conn, reviewNo);
+		close(conn);
+		return reviewPhoto;
+	}
+	
+	public int deleteReview(int reviewNo) {
 		Connection conn = getConnection();
 		int result = 0;
 		try {
-			result = reviewDao.deleteReview(conn, review_no);
+			result = reviewDao.deleteReview(conn, reviewNo);
 			if(result == 0)
-				throw new IllegalArgumentException("해당 리뷰가 존재하지 않습니다. : " + review_no );
+				throw new IllegalArgumentException("해당 리뷰가 존재하지 않습니다. : " + reviewNo );
 			commit(conn);
 		} catch(Exception e) {
 			rollback(conn);
@@ -83,7 +100,7 @@ public class ReviewService {
 		return result;
 	}
 	
-	public int updateBoard(Review review) {
+	public int updateReview(Review review) {
 		Connection conn = getConnection(); 
 		int result = 0;
 		try {
@@ -112,6 +129,13 @@ public class ReviewService {
 			throw e;
 		}
 		return result;
+	}
+
+	public int selectAvgReviewStarByResId(int resId) {
+		Connection conn = getConnection();
+		int avgReviewStar = reviewDao.selectAvgReviewStarByResId(conn, resId);
+		close(conn);
+		return avgReviewStar;
 	}
 
 }
