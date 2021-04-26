@@ -524,7 +524,7 @@
 //      	var selectedMenuArr = JSON.parse(sessionStorage.getItem("selectedMenuArr"));
      	var selectedMenuArr = JSON.parse(sessionStorage.getItem(memberId));
 		console.log(selectedMenuArr);
-		refreshCart();
+		
 		
 		//2. 세션이 비어있지 않다면 
 		if(selectedMenuArr != null){ 
@@ -659,7 +659,7 @@
 				setArrayToSession(selectedMenuArr);
 			}
 			
-			
+			refreshCart();
 			
 		} else{
 			//세션이 비어있는 경우
@@ -669,6 +669,7 @@
 			$(".cart-empty").show();
 		}
     	
+		
     }
     
     /*
