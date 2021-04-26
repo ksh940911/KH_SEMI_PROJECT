@@ -58,6 +58,17 @@ public class OrderService {
 		return reviewCnt;
 	}
 
+
+	public int updateReviewYNByOrderId(int orderId) {
+		Connection conn = getConnection();
+		int result = orderDao.updateReviewYNByOrderId(conn, orderId);
+		if(result > 0)
+			commit(conn);
+		else
+			rollback(conn);
+		return result;
+	}
+
 	//마이페이지 - 주문 조회
 	public List<MemberOrderList> selectRestaurantListByMeberId(String memberId) {
 		Connection conn = getConnection();
@@ -65,5 +76,6 @@ public class OrderService {
 		list = orderDao.selectRestaurantListByMeberId(conn, memberId);
 		close(conn);
 		return list;
+
 	}
 }
