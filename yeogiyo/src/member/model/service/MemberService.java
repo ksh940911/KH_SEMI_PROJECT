@@ -216,17 +216,6 @@ public class MemberService {
 		return result;
 	}
 
-	public List<MemberOrderList> selectRestaurantListByMeberId(String memberId) {
-		Connection conn = getConnection();
-		List<MemberOrderList> list = null;
-		list = memberDao.selectRestaurantListByMeberId(conn, memberId);
-		close(conn);
-		return list;
-	}
-	
-
-
-
 
 
 

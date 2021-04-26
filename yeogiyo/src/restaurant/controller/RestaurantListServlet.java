@@ -108,7 +108,7 @@ public class RestaurantListServlet extends HttpServlet {
 		
 		// 정렬이 기본이 아닌경우 정렬선택에 따라 리스트조회 order by 설정 값으로 변경
 		
-		String align = request.getParameter("alignSelect");
+		
 		//System.out.println("align@resList = "+ align);
 //		if(!(align.equals("default"))) {
 //			list = new RestaurantService().alignResList(align);

@@ -5,9 +5,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 import member.model.dao.MemberDao;
+import member.model.vo.MemberOrderList;
 import order.model.vo.Order;
 import static common.JDBCTemplate.*;
 
@@ -205,6 +208,49 @@ public class OrderDao {
 		}
 		
 		return reviewCnt;
+	}
+
+	//마이페이지 - 주문 조회
+	public List<MemberOrderList> selectRestaurantListByMeberId(Connection conn, String memberId) {
+		List<MemberOrderList> list = new ArrayList<>();
+		MemberOrderList order = null;
+		String query = prop.getProperty("selectOrderList");
+		ResultSet rset = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, memberId);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				order = new MemberOrderList();
+				order.setOrderId(rset.getInt("order_id"));
+				order.setMemberId(rset.getString("member_id"));
+				order.setResId(rset.getInt("res_id"));
+				order.setOrderDate(rset.getDate("order_date"));
+				order.setAddress(rset.getString("address"));
+				order.setAddressSub(rset.getString("address_sub"));
+				order.setPhone(rset.getString("phone"));
+				order.setOrderComment(rset.getString("order_comment"));
+				order.setPaymentWay(rset.getString("payment_way"));
+				order.setPaymentPlace(rset.getString("payment_place"));
+				order.setOrderMenu(rset.getString("order_menu")); //json
+				order.setTotalPrice(rset.getInt("total_price"));
+				order.setResName(rset.getString("res_name"));
+				
+				list.add(order);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		
+		return list;
 	}
 
 }

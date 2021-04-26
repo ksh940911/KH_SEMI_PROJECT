@@ -3,7 +3,9 @@ package order.model.service;
 import static common.JDBCTemplate.*;
 
 import java.sql.Connection;
+import java.util.List;
 
+import member.model.vo.MemberOrderList;
 import order.model.dao.OrderDao;
 import order.model.vo.Order;
 
@@ -54,5 +56,14 @@ public class OrderService {
 		int reviewCnt = orderDao.selectReviewCntByResId(conn, resId);
 		close(conn);
 		return reviewCnt;
+	}
+
+	//마이페이지 - 주문 조회
+	public List<MemberOrderList> selectRestaurantListByMeberId(String memberId) {
+		Connection conn = getConnection();
+		List<MemberOrderList> list = null;
+		list = orderDao.selectRestaurantListByMeberId(conn, memberId);
+		close(conn);
+		return list;
 	}
 }
