@@ -1,6 +1,7 @@
 package restaurant.controller;
 
 import java.io.IOException;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -8,6 +9,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils.Collections;
 
 import restaurant.model.service.RestaurantService;
 import restaurant.model.vo.Restaurant;
@@ -30,6 +33,13 @@ public class RestaurantListServlet extends HttpServlet {
 		String category = null;	
 		category = request.getParameter("category");
 	
+		// 정렬 
+		String align = null;
+		if(request.getParameter("alignSelect") == null)
+			align = "default";
+		else
+			align = request.getParameter("alignSelect");
+		System.out.println("align@resList = "+ align);	
 		
 		if(category != null) {
 			//카테고리별 보기
@@ -47,24 +57,18 @@ public class RestaurantListServlet extends HttpServlet {
 				case "convi" : category = "편의점"; break;
 			}
 			
-			list = new RestaurantService().selectRestaurantListByCategory(category);
+//			list = new RestaurantService().selectRestaurantListByCategory(category);
+			list = new RestaurantService().selectRestaurantListByCategory(category, align);
 			
 		}else {
 			//전체보기
-			list = new RestaurantService().selectRestaurantList();
+//			list = new RestaurantService().selectRestaurantList();
+			list = new RestaurantService().selectRestaurantList(align);
 			category = "전체보기";
 		}
 	
 		//System.out.println("category@restaurantListServlet = " + category);
-		
-		// 정렬이 기본이 아닌경우 정렬선택에 따라 리스트조회 order by 설정 값으로 변경
-		
-		String align = request.getParameter("alignSelect");
-		System.out.println("align@resList = "+ align);
-//		if(!(align.equals("default"))) {
-//			list = new RestaurantService().alignResList(align);
-//		}
-		
+				
 		//System.out.println("list@servlet = " + list);
 		request.setAttribute("category", category);
 		request.setAttribute("list", list);

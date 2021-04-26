@@ -24,8 +24,14 @@ public class RandomListServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String align = "default";
 		
-		List<Restaurant> list = new RestaurantService().selectRestaurantList();
+
+	//	List<Restaurant> list = new RestaurantService().selectRestaurantList();
+
+		//System.out.println("list@RandomListServlet = " + list);
+
+		List<Restaurant> list = new RestaurantService().selectRestaurantList(align);
 		
 		Random rnd = new Random();
 		int rnum = rnd.nextInt(list.size()) + 1; //중복처리안함
