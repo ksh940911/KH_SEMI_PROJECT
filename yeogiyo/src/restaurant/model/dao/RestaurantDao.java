@@ -294,7 +294,7 @@ public class RestaurantDao {
 		PreparedStatement pstmt = null;
 		
 		try {
-			pstmt = conn.prepareStatement(query);
+			pstmt = conn.prepareStatement(query);			
 			pstmt.setString(1, category);
 			rset = pstmt.executeQuery();
 			

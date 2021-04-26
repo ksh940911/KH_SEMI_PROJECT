@@ -82,7 +82,7 @@
 
 function alignChange() {
 	<% 
-	switch(category) {
+	/* switch(category) {
 		case "전체보기" : category = "all"; break;
 		case "프랜차이즈" : category = "franchise"; break;
 		case "치킨" : category = "chicken"; break;
@@ -94,17 +94,17 @@ function alignChange() {
 		case "분식" : category = "snack"; break;
 		case "카페/디저트" : category = "cafe"; break;
 		case "편의점" : category = "convi"; break;
-	};
+	}; */
 	System.out.println("category@scriptJSP = " + category);
 
 	%>
-	<% if(category.equals("all")) { %>
+	<%-- <% if(category.equals("전체보기")) { %>
 		$("#alingFrm")
 		.attr("action", "<%= request.getContextPath() %>/restaurant/restaurantList.do").submit();
-	<% } else { %>
+	<% } else { %> --%>
 		$("#alingFrm")
 		.attr("action", "<%= request.getContextPath() %>/restaurant/restaurantList.do?category=<%= category %>&alignSelect=<%= align %>").submit();
-	<% } %>
+<%-- 	<% } %> --%>
 };
 
 

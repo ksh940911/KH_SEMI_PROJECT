@@ -60,10 +60,11 @@ public class RestaurantListServlet extends HttpServlet {
 
 		}else {
 			//System.out.println("srchKeyword : " + srchKeyword);
-			
+			System.out.println("category = " +category);
 			if(category != null) {
 				//카테고리별 보기
 				switch(category) {
+					case "all": category = "전체보기"; break;
 					case "franchise" : category = "프랜차이즈"; break;
 					case "chicken" : category = "치킨"; break;
 					case "pizza" : category = "피자/양식"; break;
@@ -81,8 +82,12 @@ public class RestaurantListServlet extends HttpServlet {
 					
 			}else {
 				//전체보기
+				System.out.println("else@ cate = " + category);
+				System.out.println("else@ align = " + align);
+				
 				list = new RestaurantService().selectRestaurantList(align);
-				category = "전체보기";
+				
+//				category = "전체보기";
 			}
 
 
@@ -101,7 +106,6 @@ public class RestaurantListServlet extends HttpServlet {
 		System.out.println("list@servlet = " + list);
 		
 		request.setAttribute("align", align);
-
 		request.setAttribute("category", category);
 		request.setAttribute("list", list);
 		request.getRequestDispatcher("/WEB-INF/views/restaurant/restaurantList.jsp").forward(request, response);
