@@ -38,12 +38,10 @@ public class RestaurantListServlet extends HttpServlet {
 		// 정렬 
 		String align = null;
 		if(request.getParameter("alignSelect") == null)
-			align = "default";
+			align = "all";
 		else
 			align = request.getParameter("alignSelect");
-		System.out.println("align@resList = "+ align);	
 
-		
 		String srchKeyword = request.getParameter("category_keyword");
 		String srchCategory = request.getParameter("search_category");
 		
@@ -97,25 +95,13 @@ public class RestaurantListServlet extends HttpServlet {
 		//System.out.println("category : " + category);
 	
 		
-		
-		
-		
-		
-		
-		
-		//System.out.println("category@restaurantListServlet = " + category);
 
+		System.out.println("category@restaurantListServlet = " + category);
+		System.out.println("align@restaurantListServlet = " + align);
+		System.out.println("list@servlet = " + list);
 		
-		// 정렬이 기본이 아닌경우 정렬선택에 따라 리스트조회 order by 설정 값으로 변경
-		
-		
-		//System.out.println("align@resList = "+ align);
-//		if(!(align.equals("default"))) {
-//			list = new RestaurantService().alignResList(align);
-//		}
-		
+		request.setAttribute("align", align);
 
-		//System.out.println("list@servlet = " + list);
 		request.setAttribute("category", category);
 		request.setAttribute("list", list);
 		request.getRequestDispatcher("/WEB-INF/views/restaurant/restaurantList.jsp").forward(request, response);
