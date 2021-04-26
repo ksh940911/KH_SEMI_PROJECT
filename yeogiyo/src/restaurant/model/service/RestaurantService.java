@@ -183,8 +183,36 @@ public class RestaurantService {
 		return totalContents;
 	}
 
-	
+	public int updateReviewCountByResId(int resId, int reviewCount) {
+		Connection conn = getConnection();
+		int result = 0;
+		try {
+			result = restaurantDao.updateReviewCountByResId(conn, resId, reviewCount);
+			commit(conn);
+		} catch (Exception e) {
+			rollback(conn);
+			throw e;
+		} finally {
+			close(conn);
+		}
+		return result;
+	}
 
-	
+	public int updateAvgReviewStarByResId(int resId, int avgReviewStar) {
+		Connection conn = getConnection();
+		int result = 0;
+		try {
+			result = restaurantDao.updateAvgReviewStarByResId(conn, resId, avgReviewStar);
+			commit(conn);
+		} catch (Exception e) {
+			rollback(conn);
+			throw e;
+		} finally {
+			close(conn);
+		}
+		return result;
+	}
+
+
 
 }
