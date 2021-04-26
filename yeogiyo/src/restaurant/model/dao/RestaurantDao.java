@@ -1,6 +1,6 @@
 package restaurant.model.dao;
 
-import static common.JDBCTemplate.*;
+import static common.JDBCTemplate.close;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -15,14 +15,12 @@ import java.util.Map;
 import java.util.Properties;
 
 import common.JDBCTemplate;
-import member.model.exception.MemberException;
-import member.model.vo.Member;
-import notice.model.exception.NoticeException;
 import order.model.service.OrderService;
 import restaurant.model.exception.RestaurantException;
 import restaurant.model.vo.Menu;
 import restaurant.model.vo.ResImg;
 import restaurant.model.vo.Restaurant;
+import review.model.service.ReviewService;
 
 
 public class RestaurantDao {
@@ -44,16 +42,60 @@ public class RestaurantDao {
 			e.printStackTrace();
 		}
 	}
-
-	public List<Restaurant> selectRestaurantList(Connection conn) {
+//	public List<Restaurant> selectRestaurantList(Connection conn) {
+//		List<Restaurant> list = new ArrayList<>();
+//		Restaurant restaurant = null;
+//		String sql = prop.getProperty("selectRestaurantList");
+//		ResultSet rset = null;
+//		PreparedStatement pstmt = null;
+//		
+//		try {
+//			pstmt = conn.prepareStatement(sql);
+//			rset = pstmt.executeQuery();
+//			
+//			while(rset.next()) {
+//				restaurant = new Restaurant();
+//				restaurant.setResId(rset.getInt("res_id"));
+//				restaurant.setResName(rset.getString("res_name"));
+//				restaurant.setResAddress(rset.getString("res_address"));
+//				restaurant.setCategory(rset.getString("category"));
+//				restaurant.setMinPrice(rset.getInt("min_price"));
+//				restaurant.setRateAvg(rset.getDouble("rate_avg"));
+//				restaurant.setReviewCnt(orderService.selectReviewCntByResId(restaurant.getResId()));
+//				
+//				if(rset.getInt("img_res_no") != 0) {
+//					ResImg resImg = new ResImg();
+//					resImg.setImgResNo(rset.getInt("img_res_no"));
+//					resImg.setImgResId(rset.getInt("res_id"));
+//					resImg.setOriginalFilname(rset.getString("img_originalfile"));
+//					resImg.setRenamedFilename(rset.getString("img_renamedfile"));
+//					resImg.setImgResStatus("Y".equals(rset.getString("img_res_status"))? true : false);
+//					restaurant.setResImg(resImg);
+//				}
+//				
+//				list.add(restaurant);
+//			}
+//			
+//		} catch (Exception e) {
+//			throw new RestaurantException("가게 리스트 조회 오류", e);
+//		} finally {
+//			close(rset);
+//			close(pstmt);
+//		}
+//		
+//		return list;
+//	}
+	
+	public List<Restaurant> selectRestaurantList(Connection conn, String align) {
 		List<Restaurant> list = new ArrayList<>();
 		Restaurant restaurant = null;
-		String sql = prop.getProperty("selectRestaurantList");
+		String query = prop.getProperty("selectRestaurantList");
+		query = setQuery(query, align);
 		ResultSet rset = null;
 		PreparedStatement pstmt = null;
 		
 		try {
-			pstmt = conn.prepareStatement(sql);
+			pstmt = conn.prepareStatement(query);
 			rset = pstmt.executeQuery();
 			
 			while(rset.next()) {
@@ -193,15 +235,66 @@ public class RestaurantDao {
 		return menu;
 	}
 
-	public List<Restaurant> selectRestaurantListByCategory(Connection conn, String category) {
+//	public List<Restaurant> selectRestaurantListByCategory(Connection conn, String category) {
+//		List<Restaurant> list = new ArrayList<>();
+//		Restaurant restaurant = null;
+//		String sql = prop.getProperty("selectRestaurantListByCategory");
+//		ResultSet rset = null;
+//		PreparedStatement pstmt = null;
+//		
+//		try {
+//			pstmt = conn.prepareStatement(sql);
+//			pstmt.setString(1, category);
+//			rset = pstmt.executeQuery();
+//			
+//			while(rset.next()) {
+//				restaurant = new Restaurant();
+//				restaurant.setResId(rset.getInt("res_id"));
+//				restaurant.setResName(rset.getString("res_name"));
+//				restaurant.setResAddress(rset.getString("res_address"));
+//				restaurant.setCategory(rset.getString("category"));
+//				restaurant.setMinPrice(rset.getInt("min_price"));
+//				restaurant.setRateAvg(rset.getDouble("rate_avg"));
+//				restaurant.setReviewCnt(orderService.selectReviewCntByResId(restaurant.getResId()));
+//
+//				if(rset.getInt("img_res_no") != 0) {
+//					ResImg resImg = new ResImg();
+//					resImg.setImgResNo(rset.getInt("img_res_no"));
+//					resImg.setImgResId(rset.getInt("res_id"));
+//					resImg.setOriginalFilname(rset.getString("img_originalfile"));
+//					resImg.setRenamedFilename(rset.getString("img_renamedfile"));
+//					resImg.setImgResStatus("Y".equals(rset.getString("img_res_status"))? true : false);
+//					restaurant.setResImg(resImg);
+//				}
+//				
+//				list.add(restaurant);
+//				
+//				
+//			}
+//			
+//		} catch (Exception e) {
+//			throw new RestaurantException("가게 리스트 조회 오류", e);
+//		} finally {
+//			close(rset);
+//			close(pstmt);
+//		}
+//		
+//		return list;
+//	}
+	
+	public List<Restaurant> selectRestaurantListByCategory(Connection conn, String category, String align) {
 		List<Restaurant> list = new ArrayList<>();
 		Restaurant restaurant = null;
-		String sql = prop.getProperty("selectRestaurantListByCategory");
+		String query = prop.getProperty("selectRestaurantListByCategory");
+//		select * from restaurant R left join res_img I 
+//			on R.res_id = I.img_res_id and I.img_res_status = 'Y' where category = ? 
+//			order by #
+		query = setQuery(query, align);
 		ResultSet rset = null;
 		PreparedStatement pstmt = null;
 		
 		try {
-			pstmt = conn.prepareStatement(sql);
+			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, category);
 			rset = pstmt.executeQuery();
 			
@@ -224,22 +317,18 @@ public class RestaurantDao {
 					resImg.setImgResStatus("Y".equals(rset.getString("img_res_status"))? true : false);
 					restaurant.setResImg(resImg);
 				}
-				
-				list.add(restaurant);
-				
-				
+				list.add(restaurant);			
 			}
-			
 		} catch (Exception e) {
 			throw new RestaurantException("가게 리스트 조회 오류", e);
 		} finally {
 			close(rset);
 			close(pstmt);
 		}
-		
 		return list;
 	}
 	
+
 	//검색어+카테고리로 가게조회(해당 카테고리에서 검색시)
 	public List<Restaurant> selectRestaurantListByKeyword(Connection conn, String keyword, String category) {
 		List<Restaurant> list = new ArrayList<>();
@@ -339,6 +428,7 @@ public class RestaurantDao {
 		return list;
 	}
 	
+
 
 	// 가게조회-리스트_페이징 (가게관리용)
 	public List<Restaurant> selectResList(Connection conn, Map<String, String> param) {
@@ -696,8 +786,66 @@ public class RestaurantDao {
 		return totalContents;
 	}
 
-	
 
+
+
+	// 가게 정렬 조회 쿼리문 셋팅
+	private String setQuery(String query, String align) {
+		switch(align) {
+		case "default":
+			query = query.replace("#", "R.res_id desc");
+			break;
+		case "star":
+			query = query.replace("#", "R.rate_avg desc");
+			break;
+		case "review":
+			query = query.replace("#", "R.review_cnt desc");
+			break;
+		case "min":
+			query = query.replace("#", "R.min_price asc");
+			break;
+		}
 	
+		return query;
+	}
+
+	public int updateReviewCountByResId(Connection conn, int resId, int reviewCount) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("updateReviewCountByResId");
+		//update restaurant set review_cnt = ? where res_id = ?
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, reviewCount);
+			pstmt.setInt(2, resId);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			throw new RestaurantException("가게 리뷰갯수 업데이트 오류", e);
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int updateAvgReviewStarByResId(Connection conn, int resId, int avgReviewStar) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("updateAvgReviewStarByResId");
+		//update restaurant set rate_avg = ? where res_id = ?
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, avgReviewStar);
+			pstmt.setInt(2, resId);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			throw new RestaurantException("가게 별점평균 업데이트 오류", e);
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
 
 }

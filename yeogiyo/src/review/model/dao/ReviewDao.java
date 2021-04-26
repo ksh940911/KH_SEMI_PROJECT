@@ -44,9 +44,8 @@ public class ReviewDao {
 			pstmt.setInt(2, start);
 			pstmt.setInt(3, end);
 			rset = pstmt.executeQuery();
-			System.out.println("여기"+rset);
 			while(rset.next()) {
-				System.out.println("여기123"+rset.getInt("review_no"));
+				System.out.println("여기@리뷰번호 = "+rset.getInt("review_no"));
 				Review review = new Review();
 				review.setReviewNo(rset.getInt("review_no"));
 				review.setMemberId(rset.getString("member_id"));
@@ -58,6 +57,7 @@ public class ReviewDao {
 				
 				//첨부파일이 있는 경우
 				if(rset.getInt("reviewphoto_no") != 0) {
+					System.out.println("여기@사진번호 = "+rset.getInt("reviewphoto_no"));
 					ReviewPhoto reviewphoto = new ReviewPhoto();
 					reviewphoto.setPhotoNo(rset.getInt("reviewphoto_no"));
 					reviewphoto.setReviewNo(rset.getInt("review_no"));
@@ -74,6 +74,7 @@ public class ReviewDao {
 			close(rset);
 			close(pstmt);
 		}
+		System.out.println("dao@list = " + list);
 		return list;
 	}
 
@@ -275,5 +276,27 @@ public class ReviewDao {
 			close(pstmt);
 		}
 		return result;
+	}
+
+	public int selectAvgReviewStarByResId(Connection conn, int resId) {
+		int avgReviewStar = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectAvgReviewStarByResId");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, resId);
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				avgReviewStar = rset.getInt("avg");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return avgReviewStar;
 	}
 }

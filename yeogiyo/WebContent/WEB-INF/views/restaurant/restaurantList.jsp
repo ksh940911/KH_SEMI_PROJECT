@@ -18,7 +18,7 @@
       
       <div class="align">
 	      <form id="alingFrm">
-	     	<select name="alignSelect" onchange="alignChange()">
+	     	<select name="alignSelect" id="alignSelect" onchange="alignChange()">
 	     		<option value="default" selected>기본 정렬순</option>
 	     		<option value="star">별점순</option>
 	     		<option value="review">리뷰 많은순</option>
@@ -26,7 +26,7 @@
 	     	</select>
 	     </form> 
       </div>
-	  <hr />
+	
 	  
    <%   for(Restaurant r : list){ %>
    
@@ -80,15 +80,17 @@
 
 
 <script>
-<%-- function alignChange() {
+
+$(document).ready(function(){
+	$("#alignSelect")
+});
+
+function alignChange() {
 	$("#alingFrm")
 		.attr("action",	
-				<% if(category.equals("전체보기")) { %>
-	 				"<%= request.getContextPath() %>/restaurant/restaurantList.do").submit();
-				<% } else { %>
-					"<%= request.getContextPath() %>/restaurant/restaurantList.do?category=<%= category %>").submit();
-				<% } %>
-}; --%>
+			  "<%= request.getContextPath() %>/restaurant/restaurantList.do?category=<%= category %>").submit();
+};
+
 
 $(".item-clearfix").click(function(){
 	var resId = $(this).find("[name=resId]").val();

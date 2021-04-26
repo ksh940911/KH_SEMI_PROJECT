@@ -20,6 +20,7 @@ public class ReviewService {
 		Connection conn = getConnection();
 		List<Review> list = reviewDao.selectList(conn, resId, start, end);
 		close(conn);
+		System.out.println("service@list = " + list);
 		return list;
 	}
 
@@ -128,6 +129,13 @@ public class ReviewService {
 			throw e;
 		}
 		return result;
+	}
+
+	public int selectAvgReviewStarByResId(int resId) {
+		Connection conn = getConnection();
+		int avgReviewStar = reviewDao.selectAvgReviewStarByResId(conn, resId);
+		close(conn);
+		return avgReviewStar;
 	}
 
 }

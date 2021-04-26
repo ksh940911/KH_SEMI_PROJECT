@@ -40,24 +40,31 @@
 					JSONObject jsonObj = (JSONObject)jsonArray.get(0);
 					
 				%>
-				<%= jsonObj.get("menuName") %>
-				<% if((jsonArray.size() - 1) > 0) { %>
-				외 <%= jsonArray.size() - 1 %>개
-				<% } %>
-				</td>
-				<%
-					String payWay = "";
-					switch(order.getPaymentWay().charAt(0)){
-						case 'C': payWay = "신용카드";  break;
-						case 'K': payWay = "카카오페이"; break;
-						case 'M': payWay = "현금"; break;
-				}
-				%>
-				<td><%= payWay %></td>
-				<td><%=order.getTotalPrice()%></td>
-				<td>
-				<input type="button" value="리뷰 쓰기" onclick="location.href='<%= request.getContextPath() %>/review/reviewForm?resId=<%= order.getResId()%>';"/>
-				<input type="hidden" name="resId" id="resId" value="<%= order.getResId()%>" />
+				<form action="<%= request.getContextPath() %>/review/reviewForm?resId=<%= order.getResId()%>" method="GET">
+					<%= jsonObj.get("menuName") %>
+					<% 
+					int menuCnt = jsonArray.size();
+					if(menuCnt - 1 > 0) {
+					%>
+					외 <%= menuCnt - 1 %>개
+					<% } %>
+					</td>
+					<%
+						String payWay = "";
+						switch(order.getPaymentWay().charAt(0)){
+							case 'C': payWay = "신용카드";  break;
+							case 'K': payWay = "카카오페이"; break;
+							case 'M': payWay = "현금"; break;
+					}
+					%>
+					<td><%= payWay %></td>
+					<td><%=order.getTotalPrice()%></td>
+					<td>
+					<input type="button" value="리뷰 쓰기" onclick="location.href='<%= request.getContextPath() %>/review/reviewForm?resId=<%= order.getResId()%>';"/>
+					<input type="hidden" name="resId" id="resId" value="<%= order.getResId()%>"/>
+					<input type="hidden" name="orderMenu" id="orderMenu" value="<%= jsonObj.get("menuName")%>"/>
+					<input type="hidden" name="menuCnt" id="menuCnt" value="<%= menuCnt%>"/>
+				</form>
 				</td>
 			</tr>
 			<% } %>

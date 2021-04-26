@@ -23,9 +23,15 @@ public class RestaurantService {
 	
 	private RestaurantDao restaurantDao = new RestaurantDao();
 
-	public List<Restaurant> selectRestaurantList() {
+//	public List<Restaurant> selectRestaurantList() {
+//		Connection conn = getConnection();
+//		List<Restaurant> list = restaurantDao.selectRestaurantList(conn);
+//		close(conn);
+//		return list;
+//	}
+	public List<Restaurant> selectRestaurantList(String align) {
 		Connection conn = getConnection();
-		List<Restaurant> list = restaurantDao.selectRestaurantList(conn);
+		List<Restaurant> list = restaurantDao.selectRestaurantList(conn, align);
 		close(conn);
 		return list;
 	}
@@ -55,9 +61,16 @@ public class RestaurantService {
 		return menu;
 	}
 	
-	public List<Restaurant> selectRestaurantListByCategory(String category) {
+//	public List<Restaurant> selectRestaurantListByCategory(String category) {
+//		Connection conn = getConnection();
+//		List<Restaurant> list = restaurantDao.selectRestaurantListByCategory(conn, category);
+//		close(conn);
+//		return list;
+//	}
+	
+	public List<Restaurant> selectRestaurantListByCategory(String category, String align) {
 		Connection conn = getConnection();
-		List<Restaurant> list = restaurantDao.selectRestaurantListByCategory(conn, category);
+		List<Restaurant> list = restaurantDao.selectRestaurantListByCategory(conn, category, align);
 		close(conn);
 		return list;
 	}
@@ -197,11 +210,45 @@ public class RestaurantService {
 		return totalContents;
 	}
 
-	
+
 
 	
 	
 
 	
+
+	public int updateReviewCountByResId(int resId, int reviewCount) {
+		Connection conn = getConnection();
+		int result = 0;
+		try {
+			result = restaurantDao.updateReviewCountByResId(conn, resId, reviewCount);
+			commit(conn);
+		} catch (Exception e) {
+			rollback(conn);
+			throw e;
+		} finally {
+			close(conn);
+		}
+		return result;
+	}
+
+	public int updateAvgReviewStarByResId(int resId, int avgReviewStar) {
+		Connection conn = getConnection();
+		int result = 0;
+		try {
+			result = restaurantDao.updateAvgReviewStarByResId(conn, resId, avgReviewStar);
+			commit(conn);
+		} catch (Exception e) {
+			rollback(conn);
+			throw e;
+		} finally {
+			close(conn);
+		}
+		return result;
+	}
+
+
+
+
 
 }

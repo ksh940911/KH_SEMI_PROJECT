@@ -24,7 +24,9 @@ public class RandomListServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String align = "default";
 		
+
 		List<Restaurant> list = new RestaurantService().selectRestaurantList();
 		int chk = 0;
 		Restaurant choiceRes;
@@ -41,8 +43,7 @@ public class RandomListServlet extends HttpServlet {
 					choiceRes = r;
 					chk = 1;
 				}
-				
-			}
+      }
 		}while(chk == 0);
 		
 		String category = "오늘뭐먹지";

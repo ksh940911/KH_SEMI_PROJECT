@@ -241,7 +241,7 @@ set define off;
 select * from review;
 select * from tb_order;
 
-
+--리뷰리스트(전체)
 select r.* 
 from ( 
     select row_number() over(order by r.review_no desc) rnum, o.res_id, r.*, p.photo_no reviewphoto_no, p.photo_originalfilename, p.photo_renamedfilename, p.photo_status 
@@ -258,6 +258,14 @@ from (
 --주문내역 조회    
 select * from tb_order o, restaurant r where o.res_id = r.res_id and o.member_id = 'honggd' order by order_date desc;
 
+--가게별 별점 보는 쿼리 selectReviewStarByResId
+select review_star
+from review r join tb_order o
+on r.order_id = o.order_id
+where res_id = 1;
+
+
+--updateReviewCountByResId
 
 
 
