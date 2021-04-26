@@ -31,27 +31,29 @@ public class OrderDao {
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
-			//order_id, member_id, res_id, order_date, address, address_sub, phone, order_comment, payment_way, 
-			//payment_place, order_menu, total_price
-			//insert into tb_order values(sql_tb_order_id.nextval, ?, ?, sysdate, ?, ?, ?, ?, ?, ?, ?, ?)
 			
 			/*
 			 * 
-			    member_id varchar2(100) not null,
-			    res_id number not null,
-			    address varchar2(100) not null,
-			    address_sub varchar2(100) not null,
-			    phone char(11) not null,
-			    order_comment varchar(200),
-			    payment_way char(1) not null,
-			    payment_place char(1) not null,
-			    order_menu varchar2(2000) not null,
-			    total_price number not null, 
+			 * insert into tb_order 
+			 * (order_id, 
+			 * member_id, 1
+			 *  res_id, 2
+			 *   address,  3
+			 *   address_sub, 4
+			 *    phone,  5
+			 *    order_comment, 6
+			 *     payment_way, 7
+			 *      payment_place,  8
+			 *      order_menu, 9
+			 *      review_yn, 
+			 *      total_price)10
+			 *      values(seq_tb_order_id.nextval, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'N', ?);
+
 			 * */
 			
-			
-			pstmt.setString(1, order.getMemberId()); //honggd
-			pstmt.setInt(2, order.getResId()); //1
+			//order_id
+			pstmt.setString(1, order.getMemberId()); //kym9129
+			pstmt.setInt(2, order.getResId()); //21
 			pstmt.setString(3, order.getAddress()); //서울시 강남구
 			pstmt.setString(4, order.getAddressSub()); //테헤란로
 			pstmt.setString(5, order.getPhone()); //01099999999
@@ -205,6 +207,29 @@ public class OrderDao {
 		}
 		
 		return reviewCnt;
+	}
+
+	public int updateReviewYNByOrderId(Connection conn, int orderId) {
+		int result = 0;
+		String sql = prop.getProperty("updateReviewYNByOrderId");
+		//update tb_order set review_yn = 'Y' where order_id = ?
+		
+		PreparedStatement pstmt = null;
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+		
+			pstmt.setInt(1, orderId);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
 	}
 
 }

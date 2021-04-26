@@ -704,6 +704,7 @@ public class RestaurantDao {
 			break;
 		}
 		return query;
+	}
 
 	public int updateReviewCountByResId(Connection conn, int resId, int reviewCount) {
 		int result = 0;
@@ -742,5 +743,6 @@ public class RestaurantDao {
 		}
 		return result;
 	}
+
 
 }

@@ -55,4 +55,14 @@ public class OrderService {
 		close(conn);
 		return reviewCnt;
 	}
+
+	public int updateReviewYNByOrderId(int orderId) {
+		Connection conn = getConnection();
+		int result = orderDao.updateReviewYNByOrderId(conn, orderId);
+		if(result > 0)
+			commit(conn);
+		else
+			rollback(conn);
+		return result;
+	}
 }
