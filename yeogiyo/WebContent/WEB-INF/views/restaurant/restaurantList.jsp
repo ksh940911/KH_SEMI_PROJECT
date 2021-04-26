@@ -80,6 +80,9 @@ $(".item-clearfix").click(function(){
 //console.log($(".cliked-category").val());
 //console.log($(".category-name"));
 
+$(".search-category-btn").click(function(){
+	$(".main-search").css("display","block");
+});
 
 </script>
       
