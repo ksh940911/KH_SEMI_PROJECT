@@ -30,7 +30,7 @@ public class MvcUtils {
 		
 		//2. 문자 인코딩 처리
 		encryptedPassword = Base64.getEncoder().encodeToString(encryptedBytes);
-		System.out.println("인코딩 처리후 : " + encryptedPassword);
+//		System.out.println("인코딩 처리후 : " + encryptedPassword);
 		
 		return encryptedPassword;
 	}

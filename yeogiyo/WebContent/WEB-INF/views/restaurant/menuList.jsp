@@ -426,17 +426,18 @@
 						selectedMenuArr[i]['amount'] += Number($popupLayer.find("#popup-amount").text());
 						selectedMenuArr[i]['totalPrice'] = Number(selectedMenuArr[i]["price"]) * Number(selectedMenuArr[i]['amount']);
 						isContained = true; //다음 조건문이 실행되지 않도록 true처리
+						return false;
 						//selectedMenu = menu;
 					}
 					
-					//5-1. 메뉴가 일치하지 않는 경우
-					if(!isContained){
-						console.log('메뉴 불일치');
-						//객체를 배열에 추가
-						var selectedMenu = createNewObj();
-						selectedMenuArr.push(selectedMenu);
-					}
 				});
+				//5-1. 메뉴가 일치하지 않는 경우
+				if(!isContained){
+					console.log('메뉴 불일치');
+					//객체를 배열에 추가
+					var selectedMenu = createNewObj();
+					selectedMenuArr.push(selectedMenu);
+				}
 				
 			}else{
 				
@@ -523,7 +524,7 @@
 //      	var selectedMenuArr = JSON.parse(sessionStorage.getItem("selectedMenuArr"));
      	var selectedMenuArr = JSON.parse(sessionStorage.getItem(memberId));
 		console.log(selectedMenuArr);
-		refreshCart();
+		
 		
 		//2. 세션이 비어있지 않다면 
 		if(selectedMenuArr != null){ 
@@ -658,7 +659,7 @@
 				setArrayToSession(selectedMenuArr);
 			}
 			
-			
+			refreshCart();
 			
 		} else{
 			//세션이 비어있는 경우
@@ -668,6 +669,7 @@
 			$(".cart-empty").show();
 		}
     	
+		
     }
     
     /*

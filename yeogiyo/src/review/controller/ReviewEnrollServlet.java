@@ -157,6 +157,8 @@ public class ReviewEnrollServlet extends HttpServlet {
 			int avgReviewStar = reviewService.selectAvgReviewStarByResId(resId);
 			int updateAvgReviewStarResult = restaurantService.updateAvgReviewStarByResId(resId, avgReviewStar);
 			
+			//tb_order테이블 review_yn 컬럼 'Y'로 변경
+			int updateReviewYN = orderService.updateReviewYNByOrderId(orderId);
 								
 			System.out.println("review.getReviewNo" + review.getReviewNo());
 			//3. DML요청 : 리다이렉트 & 사용자피드백

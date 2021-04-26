@@ -2,13 +2,12 @@
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/views/common/headerCategory.jsp" %>
 <% 
 	List<Restaurant> list = (List<Restaurant>)request.getAttribute("list"); 
 	/* String category = (String)request.getAttribute("category"); */
+	String align = (String)request.getAttribute("align"); 
 %>
-    
-<%@ include file="/WEB-INF/views/common/headerCategory.jsp" %>
-
       <div class="restaurant-list">
       <input class="cliked-category" type="hidden" value="<%= category %>"></input>
      
@@ -18,15 +17,15 @@
       
       <div class="align">
 	      <form id="alingFrm">
-	     	<select name="alignSelect" onchange="alignChange()">
-	     		<option value="default" selected>기본 정렬순</option>
-	     		<option value="star">별점순</option>
-	     		<option value="review">리뷰 많은순</option>
-	     		<option value="min">최소 주문 금액순</option>
+	       <input type="hidden" name="category" value="<%= category %>"/>
+	     	<select name="alignSelect" id="alignSelect" onchange="alignChange()">
+	     		<option value="all" <%= align.equals("all")? "selected" : "" %>>기본 정렬순</option>
+	     		<option value="star" <%= align.equals("star")? "selected" : "" %>>별점순</option>
+	     		<option value="review" <%= align.equals("review")? "selected" : "" %>>리뷰 많은순</option>
+	     		<option value="min"<%= align.equals("min")? "selected" : "" %>>최소 주문 금액순</option>
 	     	</select>
 	     </form> 
       </div>
-	  <hr />
 	  
    <%   for(Restaurant r : list){ %>
    
@@ -50,7 +49,7 @@
                       <div class="restaurant-name"><%= r.getResName() %></div>
                       <input type="hidden" name="resId" value="<%= r.getResId() %>" />
                       <div class="stars">
-						 <span class="ico-star">★ 4.8</span>
+						 <span class="ico-star">★ <%=r.getRateAvg() %></span>
 						 <span class="review" id="user-review"> 리뷰 <%= r.getReviewCnt() %></span>										
 					  </div>
 					  <div class="info">
@@ -72,23 +71,13 @@
         
       </div>
 
-
-
-
-
-
-
-
 <script>
+
 function alignChange() {
 	$("#alingFrm")
-		.attr("action",	
-				<% if(category.equals("전체보기")) { %>
-	 				"<%= request.getContextPath() %>/restaurant/restaurantList.do").submit();
-				<% } else { %>
-					"<%= request.getContextPath() %>/restaurant/restaurantList.do?category=<%= category %>").submit();
-				<% } %>
+		.attr("action", "<%= request.getContextPath() %>/restaurant/restaurantList.do").submit();
 };
+
 
 $(".item-clearfix").click(function(){
 	var resId = $(this).find("[name=resId]").val();
@@ -96,12 +85,37 @@ $(".item-clearfix").click(function(){
 	location.href = '<%= request.getContextPath() %>/restaurant/menuList.do?res_id=' + resId;
 });
 
-//console.log($(".cliked-category").val());
-//console.log($(".category-name"));
+console.log($(".cliked-category").val());
+
 
 $(".search-category-btn").click(function(){
 	$(".main-search").css("display","block");
 });
+
+
+$("body").on("click",function(e){
+	
+	var $target = $(e.target);
+	console.log($target);
+	
+	
+	var $srchAreaOne = $target.hasClass("search-category-btn");
+	var $srchAreaTwo = $target.hasClass("main-search");
+	 
+	var $srchAreaThree = $target.hasClass("main-search");
+	var $srchAreaFour = $target.hasClass("category_input");
+	var $srchAreaFive = $target.hasClass("category_search_button");
+	
+	if(!$srchAreaOne && !$srchAreaTwo){
+		if($srchAreaThree || $srchAreaFour || $srchAreaFive){
+			
+		}else {
+			$(".main-search").css("display","none");
+			$("[name=category_keyword]").val("");
+		}
+	}
+});
+
 
 </script>
       

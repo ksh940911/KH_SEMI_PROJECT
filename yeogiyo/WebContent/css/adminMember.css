@@ -1,0 +1,130 @@
+div#search-container {
+	margin: 0 auto;
+    padding: 20px 0 25px 310px;
+    background-color: rgb(250, 0, 80);
+    color: beige;
+    font-size: 20px;
+}
+
+div#search-memberId {
+	display: inline-block;
+}
+
+div#search-memberName {
+	display: none;
+}
+
+div#search-gender {
+	display: none;
+}
+
+#memberManage-container {
+	margin: 0%;
+	padding: 0%;
+	width: 100%;
+	height: 100%;
+}
+
+#tbl-memberList {
+	margin: 0 auto;
+	padding: 2%;
+}
+
+#searchType {
+	width: 20%;
+	height: 30px;
+}
+
+.management {
+	font-size: 35px;
+    margin: 0 auto;
+    padding: 0 0 0 260px;
+}
+
+.serchName {
+	height: 30px;
+}
+
+.serch-Click {
+	opacity: 0.6;
+	transition: 0.3s;
+	height: 30px;
+	width: 60px;
+}
+
+.serch-Click:hover {
+	opacity: 1;
+}
+
+.table_id {
+	border: 0px solid #bcbcbc;
+	width: 100%;
+	height: 45px;
+	text-align: center;
+}
+
+.membership {
+	width: 100%;
+	height: 30px;
+	text-align: center;
+	background-color: rgb(255, 255, 255)}
+
+.img_member {
+	margin: 20%;
+	width: 50px;
+	height: 50px;
+}
+
+.memberView-title {
+	margin: 0 auto;
+	font-size: 20px;
+	padding: 0 0 0 46px;
+}
+
+.content-wrapper {
+	margin: 0 auto;
+	width: 330px;
+	height: 500px;
+}
+
+.button-class {
+	margin: 0 auto;
+	padding: 7px 0px 0 150px;
+}
+
+.naming {
+	height: 0px;
+	padding: 40px 0px 50px 0px;
+	margin: 0 auto;
+	text-align: center;
+}
+
+.table_id_up {
+	padding: 0 0 0 0;
+	margin: 0 auto;
+	width: 100px;
+	height: 35px;
+}
+
+.MUpdate {
+	padding: 28px 15px 15px 10px;
+	margin: 0 auto;
+}
+
+.table_add {
+	height: 100px;
+}
+
+#addressSub, #address, #postcode {
+	padding: 0 0 2px 0;
+	margin: 0 auto;
+}
+#pageBar {
+	text-align: center;
+	font-size: 15px;
+}
+.user_search {
+	list-style: none;
+    margin: 0 auto;
+    padding: 0 0 0 0;
+}

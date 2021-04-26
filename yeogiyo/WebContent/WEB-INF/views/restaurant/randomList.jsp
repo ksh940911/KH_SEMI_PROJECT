@@ -42,7 +42,7 @@
 								<td id="td2">
 									<div class="restaurant-name"><%= cRes.getResName() %></div>
 									<div class="stars">
-										<span class="ico-star">★ 4.8</span>
+										<span class="ico-star">★ <%=cRes.getRateAvg() %></span>
 										<span class="review" id="user-review"> 리뷰 <%= cRes.getReviewCnt() %></span>
 										<!-- <span class="review" id="ceo-review"> 사장님댓글 83</span> -->
 									</div>
@@ -59,9 +59,6 @@
 			</div>
 		</div>
 		
-		
-		
-	</div>
 
 <script>
 	
