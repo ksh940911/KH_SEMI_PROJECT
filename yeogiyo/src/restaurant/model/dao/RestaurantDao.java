@@ -703,7 +703,9 @@ public class RestaurantDao {
 			query = query.replace("#", "R.min_price asc");
 			break;
 		}
+	
 		return query;
+	}
 
 	public int updateReviewCountByResId(Connection conn, int resId, int reviewCount) {
 		int result = 0;
