@@ -17,6 +17,7 @@ public class MemberOrderList {
 	private String orderMenu; //json
 	private int totalPrice;
 	private String resName;
+	private String reviewYN;
 	
 	public MemberOrderList() {
 		super();
@@ -25,7 +26,7 @@ public class MemberOrderList {
 
 	public MemberOrderList(int orderId, String memberId, int resId, Date orderDate, String address, String addressSub,
 			String phone, String orderComment, String paymentWay, String paymentPlace, String orderMenu, int totalPrice,
-			String resName) {
+			String resName, String reviewYN) {
 		super();
 		this.orderId = orderId;
 		this.memberId = memberId;
@@ -40,6 +41,7 @@ public class MemberOrderList {
 		this.orderMenu = orderMenu;
 		this.totalPrice = totalPrice;
 		this.resName = resName;
+		this.reviewYN = reviewYN;
 	}
 
 	public int getOrderId() {
@@ -146,13 +148,24 @@ public class MemberOrderList {
 		this.resName = resName;
 	}
 
+	public String getReviewYN() {
+		return reviewYN;
+	}
+
+	public void setReviewYN(String reviewYN) {
+		this.reviewYN = reviewYN;
+	}
+
 	@Override
 	public String toString() {
 		return "MemberOrderList [orderId=" + orderId + ", memberId=" + memberId + ", resId=" + resId + ", orderDate="
 				+ orderDate + ", address=" + address + ", addressSub=" + addressSub + ", phone=" + phone
 				+ ", orderComment=" + orderComment + ", paymentWay=" + paymentWay + ", paymentPlace=" + paymentPlace
-				+ ", orderMenu=" + orderMenu + ", totalPrice=" + totalPrice + ", resName=" + resName + "]";
+				+ ", orderMenu=" + orderMenu + ", totalPrice=" + totalPrice + ", resName=" + resName + ", reviewYN="
+				+ reviewYN + "]";
 	}
+
+	
 	
 	
 }
