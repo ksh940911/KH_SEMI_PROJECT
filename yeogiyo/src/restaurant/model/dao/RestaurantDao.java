@@ -690,7 +690,7 @@ public class RestaurantDao {
 	// 가게 정렬 조회 쿼리문 셋팅
 	private String setQuery(String query, String align) {
 		switch(align) {
-		case "default":
+		case "all":
 			query = query.replace("#", "R.res_id desc");
 			break;
 		case "star":

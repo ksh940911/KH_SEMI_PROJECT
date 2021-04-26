@@ -36,10 +36,10 @@ public class RestaurantListServlet extends HttpServlet {
 		// 정렬 
 		String align = null;
 		if(request.getParameter("alignSelect") == null)
-			align = "default";
+			align = "all";
 		else
 			align = request.getParameter("alignSelect");
-		System.out.println("align@resList = "+ align);	
+		
 		
 		if(category != null) {
 			//카테고리별 보기
@@ -67,9 +67,12 @@ public class RestaurantListServlet extends HttpServlet {
 			category = "전체보기";
 		}
 	
-		//System.out.println("category@restaurantListServlet = " + category);
-				
-		//System.out.println("list@servlet = " + list);
+		
+		System.out.println("category@restaurantListServlet = " + category);
+		System.out.println("align@restaurantListServlet = " + align);
+		System.out.println("list@servlet = " + list);
+		
+		request.setAttribute("align", align);
 		request.setAttribute("category", category);
 		request.setAttribute("list", list);
 		request.getRequestDispatcher("/WEB-INF/views/restaurant/restaurantList.jsp").forward(request, response);

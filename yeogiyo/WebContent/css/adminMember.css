@@ -1,0 +1,111 @@
+div#search-container {
+	margin: 20px 0px 0px 0px;
+	padding: 20px;
+	background-color: #fa7da5;
+	color: black;
+	font-size: 20px;
+}
+
+div#search-memberId {
+	display: inline-block;
+}
+
+div#search-memberName {
+	display: none;
+}
+
+div#search-gender {
+	display: none;
+}
+
+#memberManage-container {
+	margin: 0%;
+	padding: 0%;
+	width: 100%;
+	height: 100%;
+}
+
+#tbl-memberList {
+	margin: 0%;
+	padding: 0px 0px 0 10%;
+}
+
+#searchType {
+	width: 10%;
+	height: 30px;
+	margin: 5px 0px 0px 15%;
+}
+
+.management {
+	font-size: 35px;
+	margin: 20px 0px 0px 13%;
+}
+
+.serchName {
+	height: 30px;
+}
+
+.serch-Click {
+	opacity: 0.6;
+	transition: 0.3s;
+	height: 30px;
+	width: 60px;
+}
+
+.serch-Click:hover {
+	opacity: 1;
+}
+
+.table_id {
+	border: 0px solid #bcbcbc;
+	width: 100%;
+	height: 45px;
+	text-align: center;
+	font-size: large;
+	font-size: 15px;
+}
+
+.membership {
+	width: 100%;
+	height: 40px;
+	text-align: center;
+}
+
+.user_name {
+	width: 60px;
+}
+
+.user_power {
+	width: 70px;
+}
+
+.user_id {
+	width: 15%;
+}
+
+.user_sex {
+	width: 60px;
+}
+
+.user_birth {
+	width: 10%;
+}
+
+.user_address {
+	width: 28%;
+}
+
+.address {
+	width: 20%
+}
+
+.user_search {
+	list-style: none;
+	margin: 0px 3px 0px 13%;
+	padding: 0px;
+	width: 100%;
+}
+#pageBar {
+	text-align: center;
+	font-size: 16px;
+}

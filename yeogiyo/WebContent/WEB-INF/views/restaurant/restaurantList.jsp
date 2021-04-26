@@ -2,12 +2,16 @@
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/views/common/headerCategory.jsp" %>
 <% 
 	List<Restaurant> list = (List<Restaurant>)request.getAttribute("list"); 
 	/* String category = (String)request.getAttribute("category"); */
+	String align = (String)request.getAttribute("align"); 
+	System.out.println("category@restaurantListJSP = " + category);
+
 %>
     
-<%@ include file="/WEB-INF/views/common/headerCategory.jsp" %>
+
 
       <div class="restaurant-list">
       <input class="cliked-category" type="hidden" value="<%= category %>"></input>
@@ -18,11 +22,12 @@
       
       <div class="align">
 	      <form id="alingFrm">
+	       <input type="hidden" name="category" value="<%= category %>"/>
 	     	<select name="alignSelect" id="alignSelect" onchange="alignChange()">
-	     		<option value="default" selected>기본 정렬순</option>
-	     		<option value="star">별점순</option>
-	     		<option value="review">리뷰 많은순</option>
-	     		<option value="min">최소 주문 금액순</option>
+	     		<option value="all" <%= align.equals("all")? "selected" : "" %>>기본 정렬순</option>
+	     		<option value="star" <%= align.equals("star")? "selected" : "" %>>별점순</option>
+	     		<option value="review" <%= align.equals("review")? "selected" : "" %>>리뷰 많은순</option>
+	     		<option value="min"<%= align.equals("min")? "selected" : "" %>>최소 주문 금액순</option>
 	     	</select>
 	     </form> 
       </div>
@@ -72,22 +77,33 @@
         
       </div>
 
-
-
-
-
-
-
-
 <script>
-$(document).ready(function(){
-	$("#alignSelect")
-});
 
 function alignChange() {
-	$("#alingFrm")
-		.attr("action",	
-			  "<%= request.getContextPath() %>/restaurant/restaurantList.do?category=<%= category %>").submit();
+	<% 
+	switch(category) {
+		case "전체보기" : category = "all"; break;
+		case "프랜차이즈" : category = "franchise"; break;
+		case "치킨" : category = "chicken"; break;
+		case "피자/양식" : category = "pizza"; break;
+		case "중국집" : category = "chinese"; break;
+		case "한식" : category = "korean"; break;
+		case "일식/돈까스" : category = "japanese"; break;
+		case "족발/보쌈" : category = "pork"; break;
+		case "분식" : category = "snack"; break;
+		case "카페/디저트" : category = "cafe"; break;
+		case "편의점" : category = "convi"; break;
+	};
+	System.out.println("category@scriptJSP = " + category);
+
+	%>
+	<% if(category.equals("all")) { %>
+		$("#alingFrm")
+		.attr("action", "<%= request.getContextPath() %>/restaurant/restaurantList.do").submit();
+	<% } else { %>
+		$("#alingFrm")
+		.attr("action", "<%= request.getContextPath() %>/restaurant/restaurantList.do?category=<%= category %>&alignSelect=<%= align %>").submit();
+	<% } %>
 };
 
 $(".item-clearfix").click(function(){
