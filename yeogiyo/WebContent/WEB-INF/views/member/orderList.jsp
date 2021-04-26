@@ -11,7 +11,6 @@
 <%
 	List<MemberOrderList> orderList = (List<MemberOrderList>)request.getAttribute("orderList");
 	OrderService orderService = new OrderService();
-
 %>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/member.css" />
 <section class="orderList-content">
@@ -39,6 +38,7 @@
 					JSONArray jsonArray = (JSONArray)obj;
 					
 					JSONObject jsonObj = (JSONObject)jsonArray.get(0);
+					
 				%>
 				<%= jsonObj.get("menuName") %>
 				<% if((jsonArray.size() - 1) > 0) { %>
@@ -55,7 +55,10 @@
 				%>
 				<td><%= payWay %></td>
 				<td><%=order.getTotalPrice()%></td>
-				<td><input type="button" value="리뷰 쓰기" /></td>
+				<td>
+				<input type="button" value="리뷰 쓰기" onclick="location.href='<%= request.getContextPath() %>/review/reviewForm?resId=<%= order.getResId()%>';"/>
+				<input type="hidden" name="resId" id="resId" value="<%= order.getResId()%>" />
+				</td>
 			</tr>
 			<% } %>
 		</table>
