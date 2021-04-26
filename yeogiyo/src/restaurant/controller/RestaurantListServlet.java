@@ -27,9 +27,9 @@ public class RestaurantListServlet extends HttpServlet {
 		List<Restaurant> list = null;
 		
 		//1. parameter
-		String category = null;
+		String category = null;	
 		category = request.getParameter("category");
-		
+	
 		
 		if(category != null) {
 			//카테고리별 보기
@@ -57,6 +57,13 @@ public class RestaurantListServlet extends HttpServlet {
 	
 		//System.out.println("category@restaurantListServlet = " + category);
 		
+		// 정렬이 기본이 아닌경우 정렬선택에 따라 리스트조회 order by 설정 값으로 변경
+		
+		String align = request.getParameter("alignSelect");
+		System.out.println("align@resList = "+ align);
+//		if(!(align.equals("default"))) {
+//			list = new RestaurantService().alignResList(align);
+//		}
 		
 		//System.out.println("list@servlet = " + list);
 		request.setAttribute("category", category);
