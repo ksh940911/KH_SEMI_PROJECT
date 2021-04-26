@@ -60,7 +60,11 @@
 					<td><%= payWay %></td>
 					<td><%=order.getTotalPrice()%></td>
 					<td>
-					<input type="submit" value="리뷰 쓰기"/>
+					<% if("N".equals(order.getReviewYN())){ %> 
+					<input type="submit" value="리뷰 쓰기" style="background-color : #FF8A00; color: #fff;"/>
+					<% } else{ %>
+					<input type="button" value="리뷰 보기" onclick="location.href = '<%= request.getContextPath() %>/review/reviewList?resId=<%= order.getResId() %>';" />
+					<% } %>
 					<input type="hidden" name="resId" id="resId" value="<%= order.getResId()%>"/>
 					<input type="hidden" name="orderMenu" id="orderMenu" value="<%= jsonObj.get("menuName")%>"/>
 					<input type="hidden" name="menuCnt" id="menuCnt" value="<%= menuCnt -1%>"/>

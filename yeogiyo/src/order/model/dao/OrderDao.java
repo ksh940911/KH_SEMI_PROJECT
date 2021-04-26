@@ -265,6 +265,7 @@ public class OrderDao {
 				order.setOrderMenu(rset.getString("order_menu")); //json
 				order.setTotalPrice(rset.getInt("total_price"));
 				order.setResName(rset.getString("res_name"));
+				order.setReviewYN(rset.getString("review_yn"));
 				
 				list.add(order);
 			}
