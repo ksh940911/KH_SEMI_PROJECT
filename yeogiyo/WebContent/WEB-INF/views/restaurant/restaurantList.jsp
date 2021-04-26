@@ -7,12 +7,7 @@
 	List<Restaurant> list = (List<Restaurant>)request.getAttribute("list"); 
 	/* String category = (String)request.getAttribute("category"); */
 	String align = (String)request.getAttribute("align"); 
-	System.out.println("category@restaurantListJSP = " + category);
-
 %>
-    
-
-
       <div class="restaurant-list">
       <input class="cliked-category" type="hidden" value="<%= category %>"></input>
      
@@ -31,7 +26,6 @@
 	     	</select>
 	     </form> 
       </div>
-	
 	  
    <%   for(Restaurant r : list){ %>
    
@@ -79,32 +73,9 @@
 
 <script>
 
-
 function alignChange() {
-	<% 
-	/* switch(category) {
-		case "전체보기" : category = "all"; break;
-		case "프랜차이즈" : category = "franchise"; break;
-		case "치킨" : category = "chicken"; break;
-		case "피자/양식" : category = "pizza"; break;
-		case "중국집" : category = "chinese"; break;
-		case "한식" : category = "korean"; break;
-		case "일식/돈까스" : category = "japanese"; break;
-		case "족발/보쌈" : category = "pork"; break;
-		case "분식" : category = "snack"; break;
-		case "카페/디저트" : category = "cafe"; break;
-		case "편의점" : category = "convi"; break;
-	}; */
-	System.out.println("category@scriptJSP = " + category);
-
-	%>
-	<%-- <% if(category.equals("전체보기")) { %>
-		$("#alingFrm")
+	$("#alingFrm")
 		.attr("action", "<%= request.getContextPath() %>/restaurant/restaurantList.do").submit();
-	<% } else { %> --%>
-		$("#alingFrm")
-		.attr("action", "<%= request.getContextPath() %>/restaurant/restaurantList.do?category=<%= category %>&alignSelect=<%= align %>").submit();
-<%-- 	<% } %> --%>
 };
 
 
