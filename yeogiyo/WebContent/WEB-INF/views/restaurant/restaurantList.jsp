@@ -80,6 +80,7 @@
 
 
 <script>
+
 $(document).ready(function(){
 	$("#alignSelect")
 });
@@ -90,18 +91,44 @@ function alignChange() {
 			  "<%= request.getContextPath() %>/restaurant/restaurantList.do?category=<%= category %>").submit();
 };
 
+
 $(".item-clearfix").click(function(){
 	var resId = $(this).find("[name=resId]").val();
 	//console.log(resId);
 	location.href = '<%= request.getContextPath() %>/restaurant/menuList.do?res_id=' + resId;
 });
 
-//console.log($(".cliked-category").val());
-//console.log($(".category-name"));
+console.log($(".cliked-category").val());
+
 
 $(".search-category-btn").click(function(){
 	$(".main-search").css("display","block");
 });
+
+
+$("body").on("click",function(e){
+	
+	var $target = $(e.target);
+	console.log($target);
+	
+	
+	var $srchAreaOne = $target.hasClass("search-category-btn");
+	var $srchAreaTwo = $target.hasClass("main-search");
+	 
+	var $srchAreaThree = $target.hasClass("main-search");
+	var $srchAreaFour = $target.hasClass("category_input");
+	var $srchAreaFive = $target.hasClass("category_search_button");
+	
+	if(!$srchAreaOne && !$srchAreaTwo){
+		if($srchAreaThree || $srchAreaFour || $srchAreaFive){
+			
+		}else {
+			$(".main-search").css("display","none");
+			$("[name=category_keyword]").val("");
+		}
+	}
+});
+
 
 </script>
       
