@@ -131,4 +131,11 @@ public class ReviewService {
 		return result;
 	}
 
+	public int selectAvgReviewStarByResId(int resId) {
+		Connection conn = getConnection();
+		int avgReviewStar = reviewDao.selectAvgReviewStarByResId(conn, resId);
+		close(conn);
+		return avgReviewStar;
+	}
+
 }

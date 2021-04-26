@@ -1,6 +1,6 @@
 package restaurant.model.dao;
 
-import static common.JDBCTemplate.*;
+import static common.JDBCTemplate.close;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -15,14 +15,12 @@ import java.util.Map;
 import java.util.Properties;
 
 import common.JDBCTemplate;
-import member.model.exception.MemberException;
-import member.model.vo.Member;
-import notice.model.exception.NoticeException;
 import order.model.service.OrderService;
 import restaurant.model.exception.RestaurantException;
 import restaurant.model.vo.Menu;
 import restaurant.model.vo.ResImg;
 import restaurant.model.vo.Restaurant;
+import review.model.service.ReviewService;
 
 
 public class RestaurantDao {
@@ -596,6 +594,44 @@ public class RestaurantDao {
 			close(pstmt);
 		}
 		return totalContents;
+	}
+
+	public int updateReviewCountByResId(Connection conn, int resId, int reviewCount) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("updateReviewCountByResId");
+		//update restaurant set review_cnt = ? where res_id = ?
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, reviewCount);
+			pstmt.setInt(2, resId);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			throw new RestaurantException("가게 리뷰갯수 업데이트 오류", e);
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int updateAvgReviewStarByResId(Connection conn, int resId, int avgReviewStar) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("updateAvgReviewStarByResId");
+		//update restaurant set rate_avg = ? where res_id = ?
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, avgReviewStar);
+			pstmt.setInt(2, resId);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			throw new RestaurantException("가게 별점평균 업데이트 오류", e);
+		} finally {
+			close(pstmt);
+		}
+		return result;
 	}
 
 }

@@ -277,4 +277,26 @@ public class ReviewDao {
 		}
 		return result;
 	}
+
+	public int selectAvgReviewStarByResId(Connection conn, int resId) {
+		int avgReviewStar = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectAvgReviewStarByResId");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, resId);
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				avgReviewStar = rset.getInt("avg");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return avgReviewStar;
+	}
 }
