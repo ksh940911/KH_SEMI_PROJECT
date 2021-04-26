@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <% String category = (String)request.getAttribute("category"); %>    
- <%@ include file="/WEB-INF/views/common/header.jsp" %>
+<%@ include file="/WEB-INF/views/common/header.jsp" %>
     
     
     <div class="recommendList">
@@ -9,9 +9,12 @@
   		<div class="restaurant-categori-menu" >
 
 			<ul>
-				<li class="menu search">
-					<a class="search-category-btn">검색</a>
+				<% if(category != "오늘뭐먹지") { %>
+				<li class="menu-search">
+					<!-- <a class="search-category-btn">검색</a> -->
+					<img class="search-category-btn" src="../images/sprite-icon2.png" alt="검색" />
 				</li>
+				<% } %>
 				<li class="menu m0" onclick="location.href='<%= request.getContextPath() %>/restaurant/randomList'" 
 				<% if("오늘뭐먹지".equals(category)) { %> id="selected" <% } %>>
 					<span class="category-name" >오늘뭐먹지</span>
@@ -61,11 +64,13 @@
 					<span class="category-name">편의점</span>
 				</li>
 				<li class="main-search">
-					<form action="" onsubmit="return false" name="ResSearchFrm">
+					<form name="ResSearchFrm" action="<%= request.getContextPath() %>/restaurant/restaurantList.do">
 						<div class="input-group">
-							<input type="search" name="category_keyword" placeholder="음식점을 검색해보세요." class="category_input"/>
+							<input type="search" name="category_keyword" placeholder="음식점을 검색해보세요." class="category_input" required="required"/>
+							<input type="hidden" name="search_category" value="<%= category %>" />
 							<span class="searchBtn">
-								<button type=button id="category_search_button" class="category_search_button">검색</button>
+								<!-- <button type="button" id="category_search_button" class="category_search_button" onclick="searchRes()">검색</button> -->
+								<input type="submit" id="category_search_button" class="category_search_button" value="검색"/>
 							</span>
 						</div>
 					</form>

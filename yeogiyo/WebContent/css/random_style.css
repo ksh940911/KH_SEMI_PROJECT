@@ -31,19 +31,32 @@
     border-bottom: 0;
     /* padding: 22px 0; */
     padding: 22px 10px;
-    cursor:pointer;
 }
+.restaurant-categori-menu li:not(:first-child) {
+	cursor:pointer;
+}
+
 
 .restaurant-categori-menu li#selected {
 	background-color:black;
 	color:#fff;
+	cursor:pointer;
 }
 
-.restaurant-categori-menu li a {
-	/* background: url(../images/sprite-icon2.png) no-repeat 50% 50% / 100% 100%;
-	background-size:30px;
-	border: 1px solid #d9d9d9; */
-	
+
+
+.restaurant-categori-menu li.menu-search {
+	padding: 0;
+}	
+
+
+img.search-category-btn {
+    width: 30px;
+    height: 30px;
+    border: 1px solid #d9d9d9;
+    border-radius: 10%;
+    cursor:pointer;
+    transform:translateY(15px);
 }
 
 .restaurant-categori-menu li.main-search {
@@ -77,11 +90,12 @@ li.main-search .input-group {
     white-space: nowrap;
 }
 
-span.searchBtn #category_search_button {
+span.searchBtn input#category_search_button {
 	background-color:#ff8a00;
 	border: 1px solid #ff8a00;
 	width: 30px;
     height: 30px;
+    cursor: pointer;
 }
 
 
