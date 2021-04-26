@@ -10,9 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import member.model.service.MemberService;
 import member.model.vo.Member;
 import member.model.vo.MemberOrderList;
+import order.model.service.OrderService;
 
 /**
  * Servlet implementation class OrderListServlet
@@ -20,7 +20,7 @@ import member.model.vo.MemberOrderList;
 @WebServlet("/member/orderList")
 public class OrderListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private MemberService memberService = new MemberService();
+	private OrderService orderService = new OrderService();
 
 	/**
 	 * 주문 내역 리스트
@@ -33,7 +33,7 @@ public class OrderListServlet extends HttpServlet {
 		String memberId = member.getMemberId();
 		
 		//MemberId로 tb_order불러오기
-		orderList = memberService.selectRestaurantListByMeberId(memberId);
+		orderList = orderService.selectRestaurantListByMeberId(memberId);
 		
 		request.setAttribute("orderList", orderList);
 		
