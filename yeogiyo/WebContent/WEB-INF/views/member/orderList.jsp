@@ -40,7 +40,10 @@
 					
 					JSONObject jsonObj = (JSONObject)jsonArray.get(0);
 				%>
-				<%= jsonObj.get("menuName") %> 외 <%= jsonArray.size() - 1 %>개
+				<%= jsonObj.get("menuName") %>
+				<% if((jsonArray.size() - 1) > 0) { %>
+				외 <%= jsonArray.size() - 1 %>개
+				<% } %>
 				</td>
 				<%
 					String payWay = "";
