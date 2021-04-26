@@ -426,17 +426,18 @@
 						selectedMenuArr[i]['amount'] += Number($popupLayer.find("#popup-amount").text());
 						selectedMenuArr[i]['totalPrice'] = Number(selectedMenuArr[i]["price"]) * Number(selectedMenuArr[i]['amount']);
 						isContained = true; //다음 조건문이 실행되지 않도록 true처리
+						return false;
 						//selectedMenu = menu;
 					}
 					
-					//5-1. 메뉴가 일치하지 않는 경우
-					if(!isContained){
-						console.log('메뉴 불일치');
-						//객체를 배열에 추가
-						var selectedMenu = createNewObj();
-						selectedMenuArr.push(selectedMenu);
-					}
 				});
+				//5-1. 메뉴가 일치하지 않는 경우
+				if(!isContained){
+					console.log('메뉴 불일치');
+					//객체를 배열에 추가
+					var selectedMenu = createNewObj();
+					selectedMenuArr.push(selectedMenu);
+				}
 				
 			}else{
 				

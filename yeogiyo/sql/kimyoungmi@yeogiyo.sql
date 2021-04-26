@@ -228,7 +228,7 @@ rollback;
 select * from user_tables;
 
 
-update restaurant set res_id = 19 where res_name = '두마리찜닭두찜-강남역삼점';
+update menu set res_id = 21 where res_id = 
 
 select * from restaurant order by res_id;
 select * from menu order by menu_id;
@@ -236,7 +236,7 @@ select * from menu order by menu_id;
 delete from restaurant where res_id = 31;
 
 set define off;
-
+commit;
 
 select * from review;
 select * from tb_order;
@@ -253,22 +253,65 @@ select r.*
 from ( 
     select row_number() over(order by r.review_no desc) rnum, o.res_id, r.*, p.photo_no reviewphoto_no, p.photo_originalfilename, p.photo_renamedfilename, p.photo_status 
     from reviewphoto p right join review r on p.review_no = r.review_no left join tb_order o on r.order_id = o.order_id ) r 
-    where rnum between 1 and 10 and res_id=2;
+    where rnum between 1 and 10 and res_id=1;
+    
+--tb_order에 'reviewYN' 컬럼 추가
+--alter table tb_order add review_yn char(1) default 'N' not null;
+
+select * from tb_order;
+
+select * from restaurant;
 
 --주문내역 조회    
 select * from tb_order o, restaurant r where o.res_id = r.res_id and o.member_id = 'honggd' order by order_date desc;
 
---가게별 별점 보는 쿼리 selectReviewStarByResId
-select review_star
+--가게별 별점 평균 조회 쿼리 selectAvgReviewStarByResId
+select round(avg(review_star), 1) avg
 from review r join tb_order o
 on r.order_id = o.order_id
-where res_id = 1;
+where res_id = ?;
 
+select * from restaurant;
 
 --updateReviewCountByResId
+update restaurant 
+set review_cnt = ?
+where res_id = ?
+
+--updateAvgReviewStarByResId
+update restaurant
+set rate_avg = ?
+where res_id = ?
+
+--updateReviewYNByOrderId
+update tb_order
+set review_yn = 'Y'
+where order_id = ?;
+
+--tb_order의 order_menu컬럼을 varchar2최대크기로 변경
+alter table tb_order
+modify order_menu clob;
+
+alter table tb_order add (tmp_order_menu clob);
+alter table tb_order
+modify phone varchar2(20);
+
+update tb_order set tmp_order_menu = order_menu;
+alter table tb_order drop column order_menu;
+alter table tb_order rename column tmp_order_menu to order_menu;
+
+commit;
+
+--insertOrder
+insert into tb_order
+(order_id, member_id, res_id, address, address_sub, phone, order_comment, payment_way, payment_place, eview_yn, order_menu, total_price) 
+values(seq_tb_order_id.nextval, 'kym9129', 21, '경기 안양시 동안구 관악대로 286', '버스가판대1103-2', '01075991973', null, 'M', 'F', '[{"resId":21,"menuId":164,"menuName":"블랙알리오","amount":1,"price":17900,"totalPrice":17900},{"resId":21,"menuId":165,"menuName":"고추마요 치킨","amount":1,"price":17900,"totalPrice":17900}]', 'N', 35800);
 
 
 
+select * from user_tab_columns where table_name = 'TB_ORDER';
+
+select * from tb_order order by order_id desc;
 
 insert into restaurant (res_id, res_name, res_address, category, logo_img) values(	14	,	'자다가도벌떡'	,	'서울 강남구 테헤란로 124 지하1층'	,		'분식'	,	'https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w750&src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20190519_55%2F15582467169946WXfO_PNG%2FnLARu8btaoA3ZMoljicXzjad.png'	);																		
 insert into restaurant (res_id, res_name, res_address, category, logo_img) values(	15	,	'스타벅스 역삼포스코점'	,	'서울 강남구 테헤란로 13'	,		'카페/디저트'	,	'https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w750&src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20190828_93%2F1566953601239OT9MQ_PNG%2FxX7Wv642gXMoTI0DAv0hRymS.png'	);																		

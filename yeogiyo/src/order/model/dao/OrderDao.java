@@ -5,9 +5,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 import member.model.dao.MemberDao;
+import member.model.vo.MemberOrderList;
 import order.model.vo.Order;
 import static common.JDBCTemplate.*;
 
@@ -31,35 +34,37 @@ public class OrderDao {
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
-			//order_id, member_id, res_id, order_date, address, address_sub, phone, order_comment, payment_way, 
-			//payment_place, order_menu, total_price
-			//insert into tb_order values(sql_tb_order_id.nextval, ?, ?, sysdate, ?, ?, ?, ?, ?, ?, ?, ?)
 			
 			/*
 			 * 
-			    member_id varchar2(100) not null,
-			    res_id number not null,
-			    address varchar2(100) not null,
-			    address_sub varchar2(100) not null,
-			    phone char(11) not null,
-			    order_comment varchar(200),
-			    payment_way char(1) not null,
-			    payment_place char(1) not null,
-			    order_menu varchar2(2000) not null,
-			    total_price number not null, 
+			 * insert into tb_order 
+			 * (order_id, 
+			 * member_id, 1
+			 *  res_id, 2
+			 *   address,  3
+			 *   address_sub, 4
+			 *    phone,  5
+			 *    order_comment, 6
+			 *     payment_way, 7
+			 *      payment_place,  8
+			 *      order_menu, 9
+			 *      review_yn, 
+			 *      total_price)10
+			 *      values(seq_tb_order_id.nextval, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'N', ?);
+
 			 * */
 			
-			
-			pstmt.setString(1, order.getMemberId()); //honggd
-			pstmt.setInt(2, order.getResId()); //1
-			pstmt.setString(3, order.getAddress()); //서울시 강남구
-			pstmt.setString(4, order.getAddressSub()); //테헤란로
-			pstmt.setString(5, order.getPhone()); //01099999999
-			pstmt.setString(6, order.getOrderComment()); //null
-			pstmt.setString(7, order.getPaymentWay()); //K
-			pstmt.setString(8, order.getPaymentPlace()); //N
-			pstmt.setString(9, order.getOrderMenu()); //null
-			pstmt.setInt(10, order.getTotalPrice()); //28000
+			//order_id
+			pstmt.setString(1, order.getMemberId());
+			pstmt.setInt(2, order.getResId()); 
+			pstmt.setString(3, order.getAddress());
+			pstmt.setString(4, order.getAddressSub()); 
+			pstmt.setString(5, order.getPhone());
+			pstmt.setString(6, order.getOrderComment()); 
+			pstmt.setString(7, order.getPaymentWay()); 
+			pstmt.setString(8, order.getPaymentPlace());
+			pstmt.setString(9, order.getOrderMenu()); 
+			pstmt.setInt(10, order.getTotalPrice()); 
 			
 			System.out.println("orderDao(insertOrder) = " + order);
 			
@@ -205,6 +210,74 @@ public class OrderDao {
 		}
 		
 		return reviewCnt;
+	}
+
+
+	public int updateReviewYNByOrderId(Connection conn, int orderId) {
+		int result = 0;
+		String sql = prop.getProperty("updateReviewYNByOrderId");
+		//update tb_order set review_yn = 'Y' where order_id = ?
+		
+		PreparedStatement pstmt = null;
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+		
+			pstmt.setInt(1, orderId);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+		
+	}
+
+	//마이페이지 - 주문 조회
+	public List<MemberOrderList> selectRestaurantListByMeberId(Connection conn, String memberId) {
+		List<MemberOrderList> list = new ArrayList<>();
+		MemberOrderList order = null;
+		String query = prop.getProperty("selectOrderList");
+		ResultSet rset = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, memberId);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				order = new MemberOrderList();
+				order.setOrderId(rset.getInt("order_id"));
+				order.setMemberId(rset.getString("member_id"));
+				order.setResId(rset.getInt("res_id"));
+				order.setOrderDate(rset.getDate("order_date"));
+				order.setAddress(rset.getString("address"));
+				order.setAddressSub(rset.getString("address_sub"));
+				order.setPhone(rset.getString("phone"));
+				order.setOrderComment(rset.getString("order_comment"));
+				order.setPaymentWay(rset.getString("payment_way"));
+				order.setPaymentPlace(rset.getString("payment_place"));
+				order.setOrderMenu(rset.getString("order_menu")); //json
+				order.setTotalPrice(rset.getInt("total_price"));
+				order.setResName(rset.getString("res_name"));
+				
+				list.add(order);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		
+		return list;
 	}
 
 }

@@ -27,25 +27,25 @@ public class RandomListServlet extends HttpServlet {
 		String align = "all";
 		
 
-	//	List<Restaurant> list = new RestaurantService().selectRestaurantList();
-
-		//System.out.println("list@RandomListServlet = " + list);
-
 		List<Restaurant> list = new RestaurantService().selectRestaurantList(align);
+		int chk = 0;
+		Restaurant choiceRes;
+		do {
+			Random rnd = new Random();
+			int rnum = rnd.nextInt(list.size()) + 1; //중복처리안함
+			//int rnum = (int)(Math.random()*3)+1;
+			//System.out.println(rnum);
+	        
+	        
+			choiceRes = new Restaurant();
+			for(Restaurant r : list) {
+				if(r.getResId() == rnum) {
+					choiceRes = r;
+					chk = 1;
+				}
+      }
+		}while(chk == 0);
 		
-		Random rnd = new Random();
-		int rnum = rnd.nextInt(list.size()) + 1; //중복처리안함
-		//int rnum = (int)(Math.random()*3)+1;
-		//System.out.println(rnum);
-        
-        
-		Restaurant choiceRes = new Restaurant();
-		for(Restaurant r : list) {
-			if(r.getResId() == rnum) {
-				choiceRes = r;
-			}
-			
-		}
 		String category = "오늘뭐먹지";
 		request.setAttribute("category", category);
 		request.setAttribute("restaurant", choiceRes);

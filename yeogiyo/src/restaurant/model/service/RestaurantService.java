@@ -75,6 +75,20 @@ public class RestaurantService {
 		return list;
 	}
 
+	//검색어+카테고리로 가게 조회(해당카테고리에서 검색시)
+	public List<Restaurant> selectRestaurantListByKeyword(String keyword, String category) {
+		Connection conn = getConnection();
+		List<Restaurant> list = restaurantDao.selectRestaurantListByKeyword(conn, keyword, category);
+		close(conn);
+		return list;
+	}
+	//검색어로 가게조회(전체보기에서 검색시)
+	public List<Restaurant> selectRestaurantListByKeyword(String AllCategoryKeyword) {
+		Connection conn = getConnection();
+		List<Restaurant> list = restaurantDao.selectRestaurantListByKeyword(conn, AllCategoryKeyword);
+		close(conn);
+		return list;
+	}
 	
 	// 전체 가게조회-리스트_페이징 (가게관리용)
 	public List<Restaurant> selectResList(Map<String, String> param) {
@@ -197,6 +211,12 @@ public class RestaurantService {
 	}
 
 
+
+	
+	
+
+	
+
 	public int updateReviewCountByResId(int resId, int reviewCount) {
 		Connection conn = getConnection();
 		int result = 0;
@@ -226,6 +246,7 @@ public class RestaurantService {
 		}
 		return result;
 	}
+
 
 
 
