@@ -212,7 +212,7 @@ public class OrderDao {
 		return reviewCnt;
 	}
 
-<<<<<<< HEAD
+
 	public int updateReviewYNByOrderId(Connection conn, int orderId) {
 		int result = 0;
 		String sql = prop.getProperty("updateReviewYNByOrderId");
@@ -234,7 +234,9 @@ public class OrderDao {
 		}
 		
 		return result;
-=======
+		
+	}
+
 	//마이페이지 - 주문 조회
 	public List<MemberOrderList> selectRestaurantListByMeberId(Connection conn, String memberId) {
 		List<MemberOrderList> list = new ArrayList<>();
@@ -276,7 +278,6 @@ public class OrderDao {
 		
 		
 		return list;
->>>>>>> d8a872c3f761fe84dbe8cd00d46884b91384e705
 	}
 
 }
