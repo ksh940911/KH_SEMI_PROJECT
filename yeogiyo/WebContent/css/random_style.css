@@ -45,12 +45,55 @@
 	border: 1px solid #d9d9d9; */
 	
 }
+
+.restaurant-categori-menu li.main-search {
+	display:none;
+	position: absolute;
+    top: 47px;
+    width: 210px;
+    z-index: 1000;
+    border: 1px solid #d9d9d9;
+    padding: 5px;
+    background: #fff;
+}
+
+li.main-search .input-group {
+	position: relative;
+    border-collapse: separate;
+    display: table;
+}
+.input-group input.category_input {
+	height:30px;
+	border: 1px solid #d9d9d9;
+}
+.input-group input.category_input:focus {
+	outline:none;
+}
+.input-group span.searchBtn {
+	display: table-cell;
+	border-collapse: separate;
+	vertical-align: middle;
+	position: relative;
+    font-size: 0;
+    white-space: nowrap;
+}
+
+span.searchBtn #category_search_button {
+	background-color:#ff8a00;
+	border: 1px solid #ff8a00;
+	width: 30px;
+    height: 30px;
+}
+
+
+
+
 /* li.menu:not(:last-of-type)::after {
       content: "|";
    	  color: #d9d9d9;
 } */
 
-.restaurant-categori-menu li:not(:first-child):hover {
+.restaurant-categori-menu li:not(:first-child,:last-child):hover {
 	background-color:black;
 	color:#fff;
 }
