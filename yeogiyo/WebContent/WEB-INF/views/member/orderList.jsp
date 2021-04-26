@@ -40,7 +40,7 @@
 					JSONObject jsonObj = (JSONObject)jsonArray.get(0);
 					
 				%>
-				<%= jsonObj.get("menuName") %>
+				<%= jsonObj.get("menuName")	%>
 				<% if((jsonArray.size() - 1) > 0) { %>
 				외 <%= jsonArray.size() - 1 %>개
 				<% } %>
@@ -58,6 +58,7 @@
 				<td>
 				<input type="button" value="리뷰 쓰기" onclick="location.href='<%= request.getContextPath() %>/review/reviewForm?resId=<%= order.getResId()%>';"/>
 				<input type="hidden" name="resId" id="resId" value="<%= order.getResId()%>" />
+				<input type="hidden" name="menuName" id="menuName" value="<%= jsonObj.get("menuName") %>" />
 				</td>
 			</tr>
 			<% } %>
