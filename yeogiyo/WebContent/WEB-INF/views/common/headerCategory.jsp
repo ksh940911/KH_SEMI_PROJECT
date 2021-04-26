@@ -10,7 +10,7 @@
 
 			<ul>
 				<li class="menu search">
-					<a href="" class="search-btn">검색</a>
+					<a class="search-category-btn">검색</a>
 				</li>
 				<li class="menu m0" onclick="location.href='<%= request.getContextPath() %>/restaurant/randomList'" 
 				<% if("오늘뭐먹지".equals(category)) { %> id="selected" <% } %>>
@@ -59,6 +59,16 @@
 				<li class="menu m12" onclick="location.href='<%= request.getContextPath() %>/restaurant/restaurantList.do?category=convi'"
 				<% if("편의점".equals(category)) { %> id="selected" <% } %>>
 					<span class="category-name">편의점</span>
+				</li>
+				<li class="main-search">
+					<form action="" onsubmit="return false" name="ResSearchFrm">
+						<div class="input-group">
+							<input type="search" name="category_keyword" placeholder="음식점을 검색해보세요." class="category_input"/>
+							<span class="searchBtn">
+								<button type=button id="category_search_button" class="category_search_button">검색</button>
+							</span>
+						</div>
+					</form>
 				</li>
 				
 			

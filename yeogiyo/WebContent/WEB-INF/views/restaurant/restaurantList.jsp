@@ -11,15 +11,25 @@
 
       <div class="restaurant-list">
       <input class="cliked-category" type="hidden" value="<%= category %>"></input>
+     
       <% if(list.isEmpty() == true){ %>
-      
      	<p style="text-align: center;">조회된 가게가 없습니다.</p>
-      
-      
       <% }  else {%>
       
-      
+      <div class="align">
+	      <form id="alingFrm">
+	     	<select name="alignSelect" onchange="alignChange()">
+	     		<option value="default" selected>기본 정렬순</option>
+	     		<option value="star">별점순</option>
+	     		<option value="review">리뷰 많은순</option>
+	     		<option value="min">최소 주문 금액순</option>
+	     	</select>
+	     </form> 
+      </div>
+	  <hr />
+	  
    <%   for(Restaurant r : list){ %>
+   
         <!-- ngRepeat: restaurant in list -->
         <div class="col-sm-6 contract" >
           <div class="item-clearfix">
@@ -70,6 +80,15 @@
 
 
 <script>
+function alignChange() {
+	$("#alingFrm")
+		.attr("action",	
+				<% if(category.equals("전체보기")) { %>
+	 				"<%= request.getContextPath() %>/restaurant/restaurantList.do").submit();
+				<% } else { %>
+					"<%= request.getContextPath() %>/restaurant/restaurantList.do?category=<%= category %>").submit();
+				<% } %>
+};
 
 $(".item-clearfix").click(function(){
 	var resId = $(this).find("[name=resId]").val();
@@ -80,6 +99,9 @@ $(".item-clearfix").click(function(){
 //console.log($(".cliked-category").val());
 //console.log($(".category-name"));
 
+$(".search-category-btn").click(function(){
+	$(".main-search").css("display","block");
+});
 
 </script>
       

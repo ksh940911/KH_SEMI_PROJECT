@@ -700,7 +700,7 @@
     <% } else { %>
     	var selectedMenuArr = JSON.parse(sessionStorage.getItem(memberIdJAVA));
     	
-    	if( selectedMenuArr[0].menuName === ""){
+    	if( selectedMenuArr == null){
     		alert("메뉴를 선택해주세요.");
     	}
     	else{
