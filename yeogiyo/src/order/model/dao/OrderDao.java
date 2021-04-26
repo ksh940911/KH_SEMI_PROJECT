@@ -55,16 +55,16 @@ public class OrderDao {
 			 * */
 			
 			//order_id
-			pstmt.setString(1, order.getMemberId()); //kym9129
-			pstmt.setInt(2, order.getResId()); //21
-			pstmt.setString(3, order.getAddress()); //서울시 강남구
-			pstmt.setString(4, order.getAddressSub()); //테헤란로
-			pstmt.setString(5, order.getPhone()); //01099999999
-			pstmt.setString(6, order.getOrderComment()); //null
-			pstmt.setString(7, order.getPaymentWay()); //K
-			pstmt.setString(8, order.getPaymentPlace()); //N
-			pstmt.setString(9, order.getOrderMenu()); //null
-			pstmt.setInt(10, order.getTotalPrice()); //28000
+			pstmt.setString(1, order.getMemberId());
+			pstmt.setInt(2, order.getResId()); 
+			pstmt.setString(3, order.getAddress());
+			pstmt.setString(4, order.getAddressSub()); 
+			pstmt.setString(5, order.getPhone());
+			pstmt.setString(6, order.getOrderComment()); 
+			pstmt.setString(7, order.getPaymentWay()); 
+			pstmt.setString(8, order.getPaymentPlace());
+			pstmt.setString(9, order.getOrderMenu()); 
+			pstmt.setInt(10, order.getTotalPrice()); 
 			
 			System.out.println("orderDao(insertOrder) = " + order);
 			

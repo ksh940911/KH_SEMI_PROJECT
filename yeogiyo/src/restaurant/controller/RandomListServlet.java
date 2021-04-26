@@ -27,7 +27,7 @@ public class RandomListServlet extends HttpServlet {
 		String align = "default";
 		
 
-		List<Restaurant> list = new RestaurantService().selectRestaurantList();
+		List<Restaurant> list = new RestaurantService().selectRestaurantList(align);
 		int chk = 0;
 		Restaurant choiceRes;
 		do {
