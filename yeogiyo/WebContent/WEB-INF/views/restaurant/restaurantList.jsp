@@ -49,7 +49,7 @@
                       <div class="restaurant-name"><%= r.getResName() %></div>
                       <input type="hidden" name="resId" value="<%= r.getResId() %>" />
                       <div class="stars">
-						 <span class="ico-star">★ 4.8</span>
+						 <span class="ico-star">★ <%=r.getRateAvg() %></span>
 						 <span class="review" id="user-review"> 리뷰 <%= r.getReviewCnt() %></span>										
 					  </div>
 					  <div class="info">
