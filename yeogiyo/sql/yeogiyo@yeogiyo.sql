@@ -201,7 +201,7 @@ update member set email = 'suver72@naver.com' where member_id = 'honggd2';
 --                   이재성                    --
 --=========================
 --=========================
-
+select * from restaurant R left join res_img I on R.res_id = I.img_res_id and I.img_res_status = 'Y' where category = '치킨' and res_name like ? order by R.res_id desc;
 
 --=========================
 --=========================
