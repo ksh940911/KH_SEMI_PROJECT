@@ -27,7 +27,7 @@
       box-sizing: border-box;
       
     }
-    
+
     
 /********************************************/
     @media (min-width: 768px) {
@@ -95,4 +95,11 @@
 	}
     
 
+  /* 정렬 박스 */   
+    .align {
+   	 position: relative;
+   	 left: 85%;
+   	 border-bottom: 1px solid #E5E5E5;
+    }
+    
     

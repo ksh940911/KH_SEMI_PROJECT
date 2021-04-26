@@ -24,10 +24,15 @@ public class RandomListServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String align = "default";
 		
+<<<<<<< Updated upstream
 		List<Restaurant> list = new RestaurantService().selectRestaurantList();
 		//System.out.println("list@RandomListServlet = " + list);
 		
+=======
+		List<Restaurant> list = new RestaurantService().selectRestaurantList(align);
+>>>>>>> Stashed changes
 		
 		Random rnd = new Random();
 		int rnum = rnd.nextInt(3) + 1; //중복처리안함
