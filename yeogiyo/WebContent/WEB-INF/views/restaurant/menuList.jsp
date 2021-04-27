@@ -277,7 +277,7 @@
     			
     			//json data반영한 팝업레이어 html 삽입
     			if(data.menuImg != null){
-    			var $popupHtml = $('<div class="dimBg"></div><div id="layer2"class="pop-layer"><div class="detail-header"><div class="title">메뉴상세</div><input type="button"class="btn-layerClose"value="X"></div><div class="pop-container"><div class="pop-conts"><div class="detail-image"><img src="' + data.menuImg + '"alt=""></div><div class="detail-menu-id" style="display:none;">' + data.menuId + '</div><div class="detail-text"><div class="detail-menu-name">' + data.menuName + '</div><div class="menu-description">' + data.description + '</div></div><div class="detail-price"><strong>가격</strong><div class="detail-price-price"><span class="price" id="popup-price">' + data.price + '</span>원</div></div><div class="quantity-control"><strong>수량</strong><div><input type="button" id="popup-btn-minus" value="-"><span id="popup-amount">1</span><input type="button" id="popup-btn-plus" value="+"></div></div><div class="detail-total-wrap"><strong>총주문금액</strong><div class="total"><strong><span id="popup-total-price">4500</span>원</strong></div></div></div><div class="detail-btn-wrap"><button class="btn-add-cart"onclick="addCartById();">주문표에추가</button><button class="btn-order"onclick="checkout()">주문하기</button><div class="message ng-binding"></div></div></div></div>');
+    			var $popupHtml = $('<div class="dimBg"></div><div id="layer2"class="pop-layer"><div class="detail-header"><div class="title">메뉴상세</div><input type="button"class="btn-layerClose"value="X"></div><div class="pop-container"><div class="pop-conts"><div class="detail-image"><img src="' + data.menuImg + '"alt=""></div><div class="detail-menu-id" style="display:none;">' + data.menuId + '</div><div class="detail-text"><div class="detail-menu-name">' + data.menuName + '</div><div class="menu-description">' + data.description + '</div></div><div class="detail-price"><strong>가격</strong><div class="detail-price-price"><span class="price" id="popup-price">' + data.price + '</span>원</div></div><div class="quantity-control"><strong>수량</strong><div><input type="button" id="popup-btn-minus" value="-"><span id="popup-amount">1</span><input type="button" id="popup-btn-plus" value="+"></div></div><div class="detail-total-wrap"><strong>총주문금액</strong><div class="total"><strong><span id="popup-total-price">4500</span>원</strong></div></div></div><div class="detail-btn-wrap"><button class="btn-add-cart"onclick="addCartById();">주문표에추가</button><button class="btn-order"onclick="checkout();">주문하기</button><div class="message ng-binding"></div></div></div></div>');
     				
     			} else{
     			var $popupHtml = $('<div class="dimBg"></div><div id="layer2"class="pop-layer"><div class="detail-header"><div class="title">메뉴상세</div><input type="button"class="btn-layerClose"value="X"></div><div class="pop-container"><div class="pop-conts"><div class="detail-image"><img src="<%= request.getContextPath() %>/images/defaultMenu.png" alt=""></div><div class="detail-menu-id" style="display:none;">' + data.menuId + '</div><div class="detail-text"><div class="detail-menu-name">' + data.menuName + '</div><div class="menu-description">' + data.description + '</div></div><div class="detail-price"><strong>가격</strong><div class="detail-price-price"><span class="price" id="popup-price">' + data.price + '</span>원</div></div><div class="quantity-control"><strong>수량</strong><div><input type="button" id="popup-btn-minus" value="-"><span id="popup-amount">1</span><input type="button" id="popup-btn-plus" value="+"></div></div><div class="detail-total-wrap"><strong>총주문금액</strong><div class="total"><strong><span id="popup-total-price">4500</span>원</strong></div></div></div><div class="detail-btn-wrap"><button class="btn-add-cart"onclick="addCartById();">주문표에추가</button><button class="btn-order"onclick="checkout()">주문하기</button><div class="message ng-binding"></div></div></div></div>');
@@ -716,11 +716,16 @@
     //레이어 팝업에서 '주문하기' 버튼 클릭 시
     function checkout(){
     	
+    <% if(loginMember != null){ %>
+    	
 		//주문표에 추가한 후, 바로 결제페이지로 넘어간다.
 //       	add_to_cart();
 		addCartById();
 		
 		$("#orderFrm").submit();
+		<% }else {%>
+		alert("로그인이 필요합니다.");
+		<% } %>
     }
 
     /*
