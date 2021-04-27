@@ -31,7 +31,7 @@ div#search-gender {
 }
 
 #searchType {
-	width: 20%;
+	width: 10%;
 	height: 30px;
 }
 
@@ -41,18 +41,18 @@ div#search-gender {
     padding: 0 0 0 260px;
 }
 
-.serchName {
+.searchName {
 	height: 30px;
 }
 
-.serch-Click {
-	opacity: 0.6;
+.search-Click {
+	opacity: 0.9;
 	transition: 0.3s;
 	height: 30px;
 	width: 60px;
 }
 
-.serch-Click:hover {
+.search-Click:hover {
 	opacity: 1;
 }
 
@@ -61,6 +61,7 @@ div#search-gender {
 	width: 100%;
 	height: 45px;
 	text-align: center;
+	pointer-events: none;
 }
 
 .membership {
