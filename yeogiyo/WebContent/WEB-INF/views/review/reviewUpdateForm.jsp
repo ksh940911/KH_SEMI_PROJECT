@@ -42,16 +42,16 @@ function reviewValidate(){
 			<th colspan="5">별점을 선택해주세요.</th>
 		</tr>
 		<tr>
-			<td>
-			<input type="radio" name="star" id="star-1" value=1><label for="star-1">★</label>
-			<input type="radio" name="star" id="star-2" value=2><label for="star-2">★★</label>
-			<input type="radio" name="star" id="star-3" value=3><label for="star-3">★★★</label>
-			<input type="radio" name="star" id="star-4" value=4><label for="star-4">★★★★</label>
-			<input type="radio" name="star" id="star-5" value=5 checked><label for="star-5">★★★★★</label>
+			<td style="text-align: center">
+			<input type="radio" name="star" id="star-1" value=1><label for="star-1" style="color: #ffa400">★</label>
+			<input type="radio" name="star" id="star-2" value=2><label for="star-2" style="color: #ffa400">★★</label>
+			<input type="radio" name="star" id="star-3" value=3><label for="star-3" style="color: #ffa400">★★★</label>
+			<input type="radio" name="star" id="star-4" value=4><label for="star-4" style="color: #ffa400">★★★★</label>
+			<input type="radio" name="star" id="star-5" value=5 checked><label for="star-5" style="color: #ffa400">★★★★★</label>
 			</td>
 		</tr>	
 		<tr>
-			<td colspan="5"><textarea rows="5" cols="40" name="content" placeholder="여기요를 통해 음식을 주문해주셔서 감사합니다.&#13;&#10;더 좋은 서비스를 위해 별점과 리뷰를 등록해주세요"><%= review.getReviewContent() %></textarea></td>
+			<td colspan="5"><textarea style="font-family: 'Nanum Gothic', sans-serif" rows="5" cols="43" name="content" placeholder="여기요를 통해 음식을 주문해주셔서 감사합니다.&#13;&#10;더 좋은 서비스를 위해 별점과 리뷰를 등록해주세요"><%= review.getReviewContent() %></textarea></td>
 		</tr>
 		<br><hr><br>
 		<tr>
