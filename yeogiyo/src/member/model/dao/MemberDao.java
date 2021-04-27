@@ -300,8 +300,8 @@ public class MemberDao {
 				list.add(order);
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			throw new MemberException("주문 조회 오류",e);
 		} finally {
 			close(rset);
 			close(pstmt);
@@ -341,7 +341,7 @@ public class MemberDao {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new MemberException("전체 회원조회 오류",e);
+			throw new MemberException("전체 회원조회 오류(관리자용)",e);
 		} finally {
 			close(rset);
 			close(pstmt);
@@ -364,6 +364,7 @@ public class MemberDao {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+			throw new MemberException("전체 회원수 조회(관리자용)",e);
 		} finally {
 			close(rset);
 			close(pstmt);
@@ -407,6 +408,7 @@ public class MemberDao {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+			throw new MemberException("회원수 오류(관리자용)",e);
 		} finally {
 			close(rset);
 			close(pstmt);

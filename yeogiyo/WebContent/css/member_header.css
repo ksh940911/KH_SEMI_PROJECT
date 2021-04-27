@@ -12,7 +12,7 @@ font-family: 'Nanum Gothic', sans-serif;
 	padding: 0;
 }
 
-.member-menu-ul li {
+.member-menu-ul li:not(.member-menu.deco) {
 	cursor: pointer;
 }
 
@@ -39,7 +39,7 @@ ul .member-menu {
 	font-weight : bold;
 }
 
-.member-menu:hover:not(.mm5) {
+.member-menu:hover:not(.mm5):not(.member-menu.deco) {
 	color : #FA0050;
 }
 
