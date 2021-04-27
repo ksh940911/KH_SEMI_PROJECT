@@ -86,7 +86,7 @@ String memberRole = member.getMemberRole();
 					<td>
 						<input type="tel" placeholder="(-없이)01012345678" name="phone" id="phone" maxlength="11" value="<%=phone%>" required><br>
 						<input type="hidden" id="phoneValid" value="1" /> 
-						<spanid="phoneResult"></span>
+						<span id="phoneResult"></span>
 					</td>
 				</tr>
 				<tr>
@@ -159,10 +159,6 @@ $("#phone").keyup(function(){
  	})
  });
  
- //휴대폰 중복검사 후 값이 바뀔 경우 phoneValid의 값을 0으로 되돌린다.
-$("#phone").change(function() {
-	$("#phoneValid").val(0);
-});
  
 /**
  * ++++++++++++++++++++++++++++++++++
@@ -193,6 +189,13 @@ function updateMember() {
 		return;
 	}
 	 
+
+	 //휴대폰 중복검사 후 값이 바뀔 경우 phoneValid의 값을 0으로 되돌린다.
+	$("#phone").change(function() {
+		$("#phoneValid").val(0);
+	});
+	
+	
 	$("#memberUpdateFrm").attr("action", "<%=request.getContextPath()%>/admin/memberUpdate")
 						 .submit();
 }

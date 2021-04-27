@@ -36,7 +36,7 @@ public class AdminResManageServlet extends HttpServlet {
 		
 		
 		Map<String, String> param = new HashMap<>();
-		param.put("start", String.valueOf((cPage -1) * numPerPage -1));
+		param.put("start", String.valueOf((cPage -1) * numPerPage +1));
 		param.put("end", String.valueOf(cPage * numPerPage));
 				
 		List<Restaurant> list = resService.selectResList(param);		
