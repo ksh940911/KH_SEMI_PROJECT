@@ -22,7 +22,7 @@
 			<img src="<%=request.getContextPath()%>/images/logo.png" alt="로고"
 				width="150" height="50">
 		</div>
-		<form name="memberEnrollFrm"
+		<form name="memberEnrollFrm" id="memberEnrollFrm"
 			action="<%=request.getContextPath()%>/member/memberEnroll"
 			method="post">
 			<div id="contentBox">
@@ -98,15 +98,13 @@
 				</div>
 			</div>
 			<div class="memberEnroll-join">
-				<input type="button" value="회원가입" id="joinButton"
-					onclick="memberEnroll();">
+				<input type="button" value="회원가입" id="joinButton" onclick="memberEnroll();">
 			</div>
 		</form>
 	</section>
 
 
-	<script>
-
+<script>
 $("#memberId").blur(function(){
 	$.ajax({
 		url: "<%=request.getContextPath()%>/member/memberIdCheck",
@@ -162,31 +160,8 @@ $("#phone").blur(function(){
  	})
 });
 
-
-/**
-$("#phone").blur(function(){
-	$phone = $("#phone");
-	
-	 if(/^01[0-9][0-9]{8}/.test($phone.val()) == false) {
-			 $("#phoneResult").html("<p style='color:red'>유효한 휴대폰 번호를 입력하세요</p>");
-			 $("#phoneValid").val(0);
-	} else {
-		$("#phoneValid").val(1);
-		 $("#phoneResult").html("");
-	}
-	 
-});
-**/
-
-$("#memberId").change(function() {
-		$("#idValid").val(0);
-});
-$("#phone").change(function() {
-		$("#phoneValid").val(0);
-});
-
-
 function memberEnroll(){
+	
 	 var re = /^[a-zA-Z0-9]{4,12}$/ //아이디, 패스워드 정규표현식
 	 
 	//id 중복검사 확인용
@@ -227,6 +202,15 @@ function memberEnroll(){
 		 $memberName.select();
 		 return;
 	 }
+	 
+	 $("#memberId").change(function() {
+		$("#idValid").val(0);
+		return;
+	});
+	$("#phone").change(function() {
+		$("#phoneValid").val(0);
+		return;
+	});
 	 
 	$("#memberEnrollFrm").attr("action", "<%=request.getContextPath()%>/member/memberEnroll")
 	.submit();
