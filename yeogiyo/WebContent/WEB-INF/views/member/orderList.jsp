@@ -66,6 +66,7 @@
 					<% } else{ %>
 					<input type="button" value="리뷰 보기" onclick="location.href = '<%= request.getContextPath() %>/review/reviewList?resId=<%= order.getResId() %>';" />
 					<% } %>
+					<input type="hidden" name="orderId" id="orderId" value="<%= order.getOrderId() %>" />
 					<input type="hidden" name="resId" id="resId" value="<%= order.getResId()%>"/>
 					<input type="hidden" name="orderMenu" id="orderMenu" value="<%= jsonObj.get("menuName")%>"/>
 					<input type="hidden" name="menuCnt" id="menuCnt" value="<%= menuCnt -1%>"/>

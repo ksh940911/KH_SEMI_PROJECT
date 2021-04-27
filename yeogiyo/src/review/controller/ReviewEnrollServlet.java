@@ -85,8 +85,9 @@ public class ReviewEnrollServlet extends HttpServlet {
 			String memberId = multipartRequest.getParameter("writer");
 			int resId = Integer.parseInt(multipartRequest.getParameter("resId"));
 			System.out.println("resID@reviewEnroll=" + resId);
-			Order order = orderService.selectLastOrderById(memberId);
-			int orderId = order.getOrderId();
+//			Order order = orderService.selectLastOrderById(memberId);
+//			int orderId = order.getOrderId();
+			int orderId = Integer.parseInt(multipartRequest.getParameter("orderId"));
 			System.out.println("orderId@reviewEnroll=" + orderId);
 			String reviewOrder = multipartRequest.getParameter("writer");
 			
@@ -158,7 +159,8 @@ public class ReviewEnrollServlet extends HttpServlet {
 			int updateAvgReviewStarResult = restaurantService.updateAvgReviewStarByResId(resId, avgReviewStar);
 			
 			//tb_order테이블 review_yn 컬럼 'Y'로 변경
-			int updateReviewYN = orderService.updateReviewYNByOrderId(orderId);
+			int updateReviewYN = orderService.updateReviewYNByOrderId(orderId); 
+			System.out.println("리뷰 Y로 바꼈음? @reviewEnrollServlet = " + updateReviewYN);
 								
 			System.out.println("review.getReviewNo" + review.getReviewNo());
 			//3. DML요청 : 리다이렉트 & 사용자피드백

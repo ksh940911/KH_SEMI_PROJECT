@@ -28,6 +28,10 @@ public class ReviewFormServlet extends HttpServlet {
 		request.setAttribute("orderMenu", orderMenu);
 		System.out.println("orderMenu@formService = " + orderMenu);
 		
+		int orderId = Integer.parseInt(request.getParameter("orderId"));
+		System.out.println("orderId@formServlet = " + orderId);
+		request.setAttribute("orderId", orderId);
+		
 		System.out.println("----------------------------");
 		Enumeration params = request.getParameterNames();
 		while (params.hasMoreElements()){

@@ -34,6 +34,7 @@ function reviewValidate(){
 		<input type="hidden" name="resId" value="<%= request.getAttribute("resId") %>" />
 		<input type="hidden" name="orderMenu" value="<%= request.getAttribute("orderMenu") %>" />
 		<input type="hidden" name="menuCnt" value="<%= request.getAttribute("menuCnt") %>" />
+		<input type="hidden" name="orderId" value="<%= request.getAttribute("orderId") %>" />
 		<table id="tbl-review-view">
 		<tr>
 			<th colspan="5">별점을 선택해주세요.</th>
