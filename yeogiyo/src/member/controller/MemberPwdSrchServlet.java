@@ -52,6 +52,7 @@ public class MemberPwdSrchServlet extends HttpServlet {
 			
 			response.setContentType("application/json; charset=utf-8");
 			
+
 			String jsonStr = "";
 			String TemporaryPassword = "";
 			Gson gson = new Gson();
