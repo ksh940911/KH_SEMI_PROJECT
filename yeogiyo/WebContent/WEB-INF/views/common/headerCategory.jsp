@@ -11,7 +11,7 @@
   		<div class="restaurant-categori-menu" >
 
 			<ul>
-				<% if(category != "오늘뭐먹지") { %>
+				<% if(category != "오늘뭐먹지" && category != null) { %>
 				<li class="menu-search">
 					<!-- <a class="search-category-btn">검색</a> -->
 					<img class="search-category-btn" src="../images/sprite-icon2.png" alt="검색" />
