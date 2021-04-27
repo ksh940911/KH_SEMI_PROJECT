@@ -46,7 +46,8 @@
 
 
 <!-- favicon -->
-<link href=<%= request.getContextPath() %>/images/favicon.ico" rel="icon" type="image/x-icon" />
+<link rel="shortcut icon" href="<%= request.getContextPath() %>/images/favicon.ico" />
+<link href="<%= request.getContextPath() %>/images/favicon.ico" rel="icon" type="image/x-icon" />
 
 
 <!-- script 선언 -->
