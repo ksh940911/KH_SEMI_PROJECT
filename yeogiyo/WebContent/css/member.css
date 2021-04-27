@@ -54,6 +54,10 @@
 	background-color : #E6E6E6;
 }
 
+input[type="button"], input[type="radio"], input[type="submit"], input[type="date"] {
+	cursor: pointer;
+}
+
 
 
 
