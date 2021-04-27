@@ -23,13 +23,16 @@
 <div class="content-wrapper">
 <section class=resView-container>
 	<form class="resUpdateFrm" id="resUpdateFrm" method="POST" enctype="multipart/form-data">
+		<img src="/yeogiyo/images/logo.png"  class="loggo">
 		<div class="resView-title">
-			<p>[<%= res.getResId() %>.<%= res.getResName() %>] 가게 정보 수정</p>
+			<p class="updateRes">[<%= res.getResId() %>.<%= res.getResName() %>]</p> 
+			<input type="button" class="clickAddBtn" value="공지관리" onclick="noticeManage();" />
 		</div>
+		<div id="contentBox">
 		<table>
 			<tr>
-				<th>No</th>
-				<td>
+				<th class="resIdNo">No</th>
+				<td class="resIdNo">
 					<input type="text" name="resId" id="resId" value="<%= res.getResId() %>" readonly />
 				</td>
 			</tr>
@@ -51,11 +54,11 @@
 				</td>
 			</tr>
 			<tr>
-				<th>이미지</th>
+				<th class="resImg">이미지</th>
 				<td>
 				<input type="file" name="upImgFile" />
 				<% if(res.getResImg().getImgResStatus()){ %>
-					<p style="margin: 5px 0;">
+					<p class="pImg" style="margin: 5px 0;">
 						<img src="<%= request.getContextPath() %>/imges/image-icon.png" width="20px">
 						<%= res.getResImg().getOriginalFilname() %>
 						<input type="checkbox" name="delImgFile" id="delImgFile" value="<%= res.getResImg().getImgResNo() %>"/>
@@ -65,35 +68,42 @@
 				</td>
 			</tr>
 			<tr>
-				<th>가게명</th>
+				<th class="store">가게명</th>
 				<td>
 				<input type="text" name="resName" id="resName" placeholder="가게명"value="<%= res.getResName() %>" required />
 				</td>
 			</tr>
 			<tr>
+				<th>기존 주소</th>
+				 <td class="addrBefore">	
+					<input type="text" name="address" id="address" value="<%= res.getResAddress() %>"readonly><br>
+				 </td>
+			</tr>
+			<tr>
 				<th>주소</th>
-				<td>	
-					<input type="text" name="address" id="address" placeholder="주소" value="<%= res.getResAddress() %>"><br>
+				<td class="addr">	
+					<input type="text" id="postcode" placeholder="우편번호"><br>
+					<input type="button" onclick="execDaumPostcode()" value="우편번호 찾기"><br>
+					<input type="text" name="address" id="address" placeholder="주소"><br>
+					<input type="text" name="addressSub" id="addressSub" placeholder="상세주소"><br>
+					<input type="text" name="extraAddress" id="extraAddress" placeholder="참고항목"><br>
 				</td>
 			</tr>
 			<tr>
-				<th>최소주문금액</th>
+				<th class="min_sum">최소주문금액</th>
 				<td>
-
 				<input type="text" name="minPrice" id="minPrice" placeholder="0" value="<%= res.getMinPrice() %>"/>
-					<input type="range" name="minPrice" id="minPrice" min="0" max="20000" step="100" value="<%= res.getMinPrice() %>"
-								oninput="document.getElementById('mPval').innerHTML=this.value;"/><span id="mPval"><%= res.getMinPrice() %></span>원
-
+				<input type="range" name="minPrice" id="minPrice" min="0" max="20000" step="100" value="<%= res.getMinPrice() %>"
+					oninput="document.getElementById('mPval').innerHTML=this.value;"/><span id="mPval"><%= res.getMinPrice() %></span>원
 				</td>
 			</tr>
 		</table>
-		<div class="button-class">
-			<input type="button" value="공지관리" onclick="noticeManage();" />
-			<br />
-			<input type="button" value="수정" onclick="updateRes();" />
-			<input type="button" value="삭제" onclick="deleteRes();" />
-			<input type="button" value="취소" onclick="location.href='<%= request.getContextPath() %>/admin/resManage';" />
+		<div class="clickBtnDiv">
+			<input type="button" class="clickBtn" value="수정" onclick="updateRes();" />
+			<input type="button" class="clickBtn" value="삭제" onclick="deleteRes();" />
+			<input type="button" class="clickBtn" value="취소" onclick="location.href='<%= request.getContextPath() %>/admin/resManage';" />
 		</div>
+	</div>
 	</form>
 	<form action="<%= request.getContextPath() %>/notice/noticeView?resId=<%= res.getResId() %>"
 		id="noticeManageFrm"

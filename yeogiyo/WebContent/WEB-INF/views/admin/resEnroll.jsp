@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 
-<title>여기요 - rkrpcnrk</title>
+<title>여기요 - 가게등록</title>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/adminRes.css" />
 <script src="<%= request.getContextPath() %>/js/jquery-3.6.0.js"></script>
 <!-- 다음 카카오 주소 API -->
@@ -11,14 +11,12 @@
 <body>
 <section id=enroll-container>
 	<!-- 여기요 로고 삽입 -->
-	<div class="enroll-title">
-		<img src="<%= request.getContextPath() %>/images/logo.png" alt="로고" width="150" height="50">
-	</div>
 	<form name="resEnrollFrm" action="<%= request.getContextPath() %>/admin/resEnroll" method="POST" enctype="multipart/form-data">
+	<img src="/yeogiyo/images/logo.png"  class="loggo">
 		<div id="contentBox">
 			<table>
 				<tr>
-					<th>가게명</th>
+					<th class="store">가게명</th>
 					<td>
 					<input type="text" placeholder="가게명을 입력하세요." name="resName" id="resName" required><br>
 					</td>
@@ -42,7 +40,7 @@
 				</tr>
 				<tr>
 					<th>주소</th>
-					<td>	
+					<td class="addr">	
 						<input type="text" id="postcode" placeholder="우편번호"><br>
 						<input type="button" onclick="execDaumPostcode()" value="우편번호 찾기"><br>
 						<input type="text" name="address" id="address" placeholder="주소"><br>
@@ -52,19 +50,21 @@
 				</tr>
 				<tr>
 					<th>로고 이미지</th>
-					<td>
+					<td class="log_img">
 						<input type="file" name="upImgFile" accept="image/*" />
 					</td>
 				</tr>
 				<tr>
-					<th>최소주문금액</th>
+					<th class="min_sum">최소주문금액</th>
 					<td>
 						<input type="range" name="minPrice" id="minPrice" min="0" max="20000" step="100" value="0"
 								oninput="document.getElementById('mPval').innerHTML=this.value;"/><span id="mPval">0</span>원
 					</td>
 				</tr>
 				<tr>
-					<th>
+				<th>
+				</th>
+					<th class="btn_bt">
 						<input type="submit" value="등록" />
 						<input type="button" value="취소" onclick="location.href='<%= request.getContextPath() %>/admin/resManage'">
 					</th>
