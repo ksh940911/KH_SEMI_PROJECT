@@ -67,6 +67,7 @@ border: 1px solid  #D9D9D9;
     height: 40px;
     background-color: #fff;
     border: 1px solid #ddd;
+    cursor:pointer;
 }
 .paybtn-selected{
     color: #fa0050;
@@ -124,4 +125,5 @@ border: 1px solid  #D9D9D9;
     color: white;
     font-size: 18px;
     background-color: #FA0050;
+    cursor:pointer;
 }

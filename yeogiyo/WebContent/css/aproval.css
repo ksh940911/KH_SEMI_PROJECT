@@ -85,4 +85,8 @@ font-family: 'Nanum Gothic', sans-serif;
     background-color: #fa0050;
     color: #fff;
     border: none;
+  
+}
+input#btn-ok{
+	  cursor: pointer;
 }

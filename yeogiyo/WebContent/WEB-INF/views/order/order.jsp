@@ -20,7 +20,7 @@
                         <input type="hidden" name="member_id" value="<%=loginMember.getMemberId() %>" />
                         <input type="hidden" name="res_id" value="<%= r.getResId() %>" />
                         <input type="text" class="panel-text" name="address" id="address" value="<%= loginMember.getAddress() %>"><br>
-                        <input type="text" class="panel-text" name="address-sub" id="address-sub" value="<%= loginMember.getAddressSub() %>" required><br>
+                        <input type="text" class="panel-text" name="address-sub" id="address-sub" value="<%= loginMember.getAddressSub() == null? "" : loginMember.getAddressSub() %>" required><br>
                         <label for="phone">휴대전화번호</label>
                         <input type="text" class="panel-text" name="phone" id="phone" value="<%= loginMember.getPhone() %>" required>
                         <input type="hidden" id="payment_way" name="payment_way" value="" /> <%-- 결제수단 : 신용카드(C), 카카오페이(K), 현금(M) --%>
