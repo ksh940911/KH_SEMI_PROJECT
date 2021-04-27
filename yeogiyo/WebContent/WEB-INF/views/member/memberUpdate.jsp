@@ -114,7 +114,7 @@ $("#phone").keyup(function(){
  	})
  });
  
- //휴대폰 중복검사 후 값이 바뀔 경우 phoneValid의 값을 0으로 되돌린다.
+//휴대폰 중복검사 후 값이 바뀔 경우 phoneValid의 값을 0으로 되돌린다.
 function updateMember() {
 	var $memberName = $("#memberName");
 	

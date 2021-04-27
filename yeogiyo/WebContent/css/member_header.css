@@ -12,6 +12,10 @@ font-family: 'Nanum Gothic', sans-serif;
 	padding: 0;
 }
 
+.member-menu-ul li {
+	cursor: pointer;
+}
+
 .member-menu-nav {
 	height: 40px;
 	background-color: #fff;
@@ -31,7 +35,11 @@ ul .member-menu {
 	margin-left : 15px;
 }
 
-.member-menu:hover:not(.mm4) {
+.member-menu.mm5:hover {
+	font-weight : bold;
+}
+
+.member-menu:hover:not(.mm5) {
 	color : #FA0050;
 }
 
@@ -40,10 +48,13 @@ ul .member-menu {
 .member-menu.deco {
 	color : #A5A5A5;
 }
-
 .member-menu.mm5 {
 	color : #A5A5A5;
 	font-size : 13px;
 	margin-top: 2px;
+}
+
+input[type="button"], input[type="radio"], input[type="submit"], input[type="date"] {
+	cursor: pointer;
 }
 
