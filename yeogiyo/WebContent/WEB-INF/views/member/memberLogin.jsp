@@ -26,7 +26,7 @@
             </div>
             <div class="login-submit">
                 <input type="submit" value="로그인" name="loginbtn" disabled="disabled">
-            </div>    
+            </div>
         </form>
         <div class="join-container">
             <a href="<%= request.getContextPath() %>/member/memberEnroll">
