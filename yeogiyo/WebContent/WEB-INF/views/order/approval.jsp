@@ -104,7 +104,7 @@
         </table>
         <form action="<%= request.getContextPath() %>/member/orderList"> <%-- 주문내역페이지 서블릿 url --%>
         <input type="hidden" name="memberId" value="<%= loginMember.getMemberId() %>" />
-     	 <input type="submit" id="btn-ok" value="주문 내역 확인" style="width: 669px; height: 50px; font-size: 120%; background-color: #fa0050;  color: #fff;  border: none;" >
+     	 <input type="submit" id="btn-ok" value="주문 내역 확인" >
         </form>
     </div>
     

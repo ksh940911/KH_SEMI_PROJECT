@@ -34,6 +34,13 @@ object-fit: cover;
 text-align : center;
 border-right: none;
 }
+#btn-review{
+	cursor: pointer;
+}
+#btn-notice{
+	cursor: pointer;
+}
+
 #logo-img>img{
 width: 80px;
 height: 80px;
@@ -110,6 +117,7 @@ border : none;
 color : white;
 font-size : 18px;
 background-color:  #FA0050;
+cursor: pointer;
 }
 /* 메뉴 h3 */
 h3{
@@ -159,6 +167,7 @@ font-size: 95%;
 width: 140px;
 height: 98px;
 object-fit:cover;
+cursor:pointer;
 }
 
 /* 메뉴 카테고리 토글 버튼 리스트 */
@@ -176,6 +185,7 @@ height: 40px;
 background-color: #E6E6E6;
 padding: 10px 15px;
 font-size: 16px;
+cursor:pointer;
 }
 /* 카테고리 누르면 나타날 메뉴의 리스트 */
 .ul-menu-list{
@@ -190,6 +200,7 @@ list-style: none;
 width: 638px;
 border-bottom: 1px solid #E6E6E6;
 padding: 10px;
+cursor:pointer;
 }
 .td-menu-text{
 width: 500px;
@@ -225,6 +236,17 @@ width: 100px;
 /* --------레이어 팝업------------------------------------- */
 .pop-layer .pop-container {
 /* padding: 20px 25px; */
+}
+#popup-btn-minus{
+	width: 20px;
+	cursor: pointer;
+}
+#popup-btn-plus{
+	width: 20px;
+	cursor: pointer;
+}
+#popup-amount{
+	padding: 0 5px;
 }
 .detail-header{
     background: #fff;
@@ -328,10 +350,12 @@ object-fit: cover;
 .btn-add-cart {
     background: #555;
     color: #fff;
+	cursor: pointer;
 }
 .btn-order {
     background: #fa0050;
     color: #fff;
+    cursor:pointer;
 }
 
 /* 팝업 영역 */
@@ -380,6 +404,7 @@ right: 15px;
 /* top: 20px; */
 width: 24px;
 height: 24px;
+cursor: pointer;
 
 /* display: inline-block;
 height: 25px;

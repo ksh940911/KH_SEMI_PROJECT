@@ -49,7 +49,7 @@
     <div>
         <table class="tb-menuList" id="cart">
             <tr>
-                <td id="cart-title" style="padding: 0 10px">주문표  <input type="button" id="cart-del-all" value="전체삭제" style="float:right"></td>
+                <td id="cart-title" style="padding: 0 10px">주문표  <input type="button" id="cart-del-all" value="전체삭제" style="float:right; cursor:pointer;"></td>
             </tr>
             <tr>
                 <td>
