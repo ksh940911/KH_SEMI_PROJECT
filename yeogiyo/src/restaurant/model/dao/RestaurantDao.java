@@ -753,7 +753,7 @@ public class RestaurantDao {
 					res.setResImg(resImg);
 				}
 				list.add(res);
-				System.out.println("daoList = "+list);
+//				System.out.println("daoList = "+list);
 			}
 		} catch (Exception e) {
 			throw new RestaurantException("가게 이름 조회 오류(관리자용)", e);

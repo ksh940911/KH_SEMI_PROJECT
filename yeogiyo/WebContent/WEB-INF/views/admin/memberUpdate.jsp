@@ -71,12 +71,15 @@ String memberRole = member.getMemberRole();
 				</tr>
 				<tr>
 					<th>주소</th>
-					<td class="addr">
-						<input type="text" id="postcode" placeholder="우편번호" required><br> 
-						<input type="button" onclick="execDaumPostcode()" value="우편번호 찾기"><br> 
-						<input type="text" name="address" id="address" placeholder="주소" 	value="<%=address%>"><br> 
-						<input type="text" name="addressSub" id="addressSub" placeholder="상세주소" value="<%=addressSub%>"><br>
-					</td>
+					<td><input type="text" id="postcode" placeholder="우편번호"
+						required>
+						<br>
+						<input id="postCodebtn" type="button"
+						onclick="execDaumPostcode()" value="우편번호 찾기"><br><input
+						type="text" name="address" id="address" placeholder="주소"
+						value="<%=address%>"><br> <input type="text"
+						name="addressSub" id="addressSub" placeholder="상세주소"
+						value="<%=addressSub%>"><br></td>
 				</tr>
 				<tr>
 					<th class="memPhone">핸드폰</th>

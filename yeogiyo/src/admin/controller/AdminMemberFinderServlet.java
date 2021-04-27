@@ -52,6 +52,8 @@ public class AdminMemberFinderServlet extends HttpServlet {
 		String url = request.getRequestURI() + "?searchType=" + searchType + "&searchKeyword=" + searchKeyword;
 		String pageBar = MvcUtils.getPageBar(cPage, numPerPage, totalContents, url);
 
+//		request.setAttribute("searchType", searchType);
+//		request.setAttribute("searchKeyword", searchKeyword);
 		request.setAttribute("list", list);
 		request.setAttribute("pageBar", pageBar);
 		request.getRequestDispatcher("/WEB-INF/views/admin/memberManage.jsp").forward(request, response);

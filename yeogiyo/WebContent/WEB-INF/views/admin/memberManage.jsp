@@ -7,47 +7,41 @@
 	List<Member> list = (List<Member>)request.getAttribute("list");
 	String type = request.getParameter("searchType");
 	String kw = request.getParameter("searchKeyword");
-
 %>
-<link rel="stylesheet"
-	href="<%= request.getContextPath() %>/css/adminMember.css" />
+<link rel="stylesheet" href="<%= request.getContextPath() %>/css/adminMember.css" />
+<style>
+	div#search-memberId {display: <%= type == null || "memberId".equals(type) ? "inline-block" : "none" %>;}
+	div#search-memberName{display:<%= "memberName".equals(type) ? "inline-block" : "none" %>;}
+	div#search-gender{display: <%= "gender".equals(type) ? "inline-block" : "none" %>;}
+</style>
 <section id="memberManage-container">
 	<h2 class="management">※회원관리</h2>
 	<div id="search-container">
 		<ul class="user_search">회원조회</ul>
 		<select id="searchType">
-			<option value="memberId"
-				<%= "memberId".equals(type) ? "selected" : "" %>>아이디</option>
-			<option value="memberName"
-				<%= "memberName".equals(type) ? "selected" : "" %>>회원명</option>
+			<option value="memberId" <%= "memberId".equals(type) ? "selected" : "" %>>아이디</option>
+			<option value="memberName" <%= "memberName".equals(type) ? "selected" : "" %>>회원명</option>
 			<option value="gender" <%= "gender".equals(type) ? "selected" : "" %>>성별</option>
 		</select>
 		<div id="search-memberId" class="search-type">
 			<form action="<%=request.getContextPath()%>/admin/memberFinder">
-				<input type="hidden" name="searchType" value="memberId" /> <input
-					type="text" name="searchKeyword" size="25"
-					value="<%= "memberId".equals(type) ? kw : "" %>"
-					placeholder="검색할 아이디를 입력하세요." class="searchName" />
+				<input type="hidden" name="searchType" value="memberId" />
+				<input type="text" name="searchKeyword" size="25" value="<%= "memberId".equals(type) ? kw : "" %>" placeholder="검색할 아이디를 입력하세요." class="searchName" />
 				<button type="submit" class="search-Click">검색</button>
 			</form>
 		</div>
 		<div id="search-memberName" class="search-type">
 			<form action="<%=request.getContextPath()%>/admin/memberFinder">
-				<input type="hidden" name="searchType" value="memberName" /> <input
-					type="text" name="searchKeyword" size="25"
-					value="<%= "memberName".equals(type) ? kw : "" %>"
-					placeholder="검색할 이름을 입력하세요." class="searchName" />
+				<input type="hidden" name="searchType" value="memberName" />
+				<input type="text" name="searchKeyword" size="25" value="<%= "memberName".equals(type) ? kw : "" %>" placeholder="검색할 이름을 입력하세요." class="searchName" />
 				<button type="submit" class="search-Click">검색</button>
 			</form>
 		</div>
 		<div id="search-gender" class="search-type">
 			<form action="<%=request.getContextPath()%>/admin/memberFinder">
-				<input type="hidden" name="searchType" value="gender" /> <input
-					type="radio" name="searchKeyword" value="M"
-					<%= "gender".equals(type) && "M".equals(kw) ? "checked" : "" %>>
-				남 <input type="radio" name="searchKeyword" value="F"
-					<%= "gender".equals(type) && "F".equals(kw) ? "checked" : "" %>>
-				여
+				<input type="hidden" name="searchType" value="gender" />
+				<input type="radio" name="searchKeyword" value="M" <%= "gender".equals(type) && "M".equals(kw) ? "checked" : "" %>>	남
+				<input type="radio" name="searchKeyword" value="F" <%= "gender".equals(type) && "F".equals(kw) ? "checked" : "" %>>	여
 				<button type="submit" class="search-Click">검색</button>
 			</form>
 		</div>
