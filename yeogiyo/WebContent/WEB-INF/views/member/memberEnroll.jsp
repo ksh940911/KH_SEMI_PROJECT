@@ -8,8 +8,7 @@
 <head>
 <meta charset="UTF-8">
 <title>여기요 - 회원가입</title>
-<link rel="stylesheet"
-	href="<%=request.getContextPath()%>/css/memberEnroll.css" />
+<link rel="stylesheet" href="<%=request.getContextPath()%>/css/memberEnroll.css" />
 <script src="<%=request.getContextPath()%>/js/jquery-3.6.0.js"></script>
 <!-- 다음 카카오 주소 API -->
 <script

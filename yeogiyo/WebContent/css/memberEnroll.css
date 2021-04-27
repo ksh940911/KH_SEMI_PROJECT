@@ -85,3 +85,7 @@ section#enroll-container div.gender-group{
 .memberEnroll-join {
 	margin : 30px 0 25px 0;
 }
+
+input[type="button"], input[type="radio"], input[type="submit"], input[type="date"] {
+	cursor: pointer;
+}
