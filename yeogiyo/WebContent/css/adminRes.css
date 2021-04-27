@@ -1,9 +1,9 @@
 div#search-container {
 	margin: 0 auto;
-    padding: 20px 0 25px 310px;
-    background-color: rgb(250, 0, 80);
-    color: beige;
-    font-size: 20px;
+	padding: 20px 0 25px 310px;
+	background-color: rgb(250, 0, 80);
+	color: beige;
+	font-size: 20px;
 }
 
 #restaurantList-containe {
@@ -18,11 +18,10 @@ div#search-container {
 	padding: 2%;
 }
 
-
 .management {
 	font-size: 35px;
-    margin: 0 auto;
-    padding: 0 0 0 260px;
+	margin: 0 auto;
+	padding: 0 0 0 260px;
 }
 
 .searchName {
@@ -34,6 +33,14 @@ div#search-container {
 	transition: 0.3s;
 	height: 30px;
 	width: 60px;
+}
+
+.newResBtn {
+	opacity: 0.9;
+	transition: 0.3s;
+	height: 30px;
+	width: 60px;
+	margin: 0px 0px 0px 45%;
 }
 
 .search-Click:hover {
@@ -52,7 +59,8 @@ div#search-container {
 	width: 100%;
 	height: 30px;
 	text-align: center;
-	background-color: rgb(255, 255, 255)}
+	background-color: rgb(255, 255, 255)
+}
 
 .img_member {
 	margin: 20%;
@@ -69,7 +77,6 @@ div#search-container {
 .content-wrapper {
 	margin: 0 auto;
 	width: 330px;
-	height: 500px;
 }
 
 .button-class {
@@ -104,12 +111,132 @@ div#search-container {
 	padding: 0 0 2px 0;
 	margin: 0 auto;
 }
+
 #pageBar {
 	text-align: center;
 	font-size: 15px;
 }
+
 .res_search {
 	list-style: none;
-    margin: 0 auto;
-    padding: 0 0 0 0;
+	margin: 0 auto;
+	padding: 0 0 0 0;
+}
+
+/***resEnroll***/
+#contentBox {
+	margin: 0 auto;
+	position: relative;
+	padding: 0px 0 110px 0;
+	display: table;
+}
+
+.store {
+	margin: 0 auto;
+	padding: 0 0px 0px 0px;
+	height: 50px;
+}
+
+.category {
+	margin: 0 auto;
+	padding: 0 77px 0 0;
+	height: 30px;
+}
+
+.addrBefore {
+	margin: 0 auto;
+	padding: 8px 0px 14px 0px;
+}
+
+.addr {
+	margin: 0 auto;
+	padding: 8px 0px 14px 0px;
+	height: 145px;
+}
+
+.log_img {
+	margin: 0 auto;
+	padding: 0 0 0 0;
+	height: 45px;
+}
+
+.min_sum {
+	margin: 0 auto;
+	padding: 0 0 0 0;
+	height: 40px;
+}
+
+.loggo {
+	display: block;
+	margin: 70px auto;
+	width: 150px;
+	height: 50px;
+}
+
+td.addr>input {
+	height: 30px;
+}
+
+td.addrBefore>input {
+	height: 30px;
+}
+
+.clickAddBtn {
+	opacity: 0.9;
+	transition: 0.3s;
+	height: 30px;
+	width: 60px;
+	margin: 0px 0px 0px 43%;
+}
+
+.clickBtn {
+	opacity: 0.9;
+	transition: 0.3s;
+	height: 30px;
+	width: 60px;
+	margin: 0px 0px 0px 5%;
+}
+
+.clickBtnDiv {
+	margin: 0 0 0 10%;
+}
+
+.updateRes {
+	font-family: sans-serif;
+	font-size: 25px;
+	text-align: center;
+	font-weight: bold;
+}
+
+/***resUpdate***/
+.resView-title {
+	margin: 0 auto;
+	font-size: 20px;
+}
+
+.resIdNo {
+	margin: 0 auto;
+	padding: 0 0px 0px 0px;
+	height: 50px;
+}
+
+#resName {
+	height: 30px;
+}
+
+.resImg {
+	margin: 0 auto;
+	padding: 0 0 0 0;
+	height: 45px;
+}
+
+#resId {
+	height: 30px;
+}
+
+.loggo {
+	display: block;
+	margin: 35px auto;
+	width: 150px;
+	height: 50px;
 }

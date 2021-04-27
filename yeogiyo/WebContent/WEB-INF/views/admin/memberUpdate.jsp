@@ -23,75 +23,81 @@ String memberRole = member.getMemberRole();
 <div class="content-wrapper">
 	<section class=memberView-container>
 		<form class="memberUpdateFrm" id="memberUpdateFrm" method="POST">
+			<img src="/yeogiyo/images/logo.png"  class="loggo">
 			<div class="memberView-title">
-				<p><%=memberName%>(<%=memberId%>) 회원 정보 수정
-				</p>
+				<p class="updateMem"><%=memberName%>(<%=memberId%>)</p>
 			</div>
+			<div id="contentBox">
 			<table>
 				<tr>
-					<th>아이디</th>
-					<td><input type="text" name="memberId" id="memberId"
-						value="<%=memberId%>" readonly><br></td>
-				</tr>
-				<tr>
-					<th>비밀번호</th>
-					<td><input type="password" name="password" id="password"
-						value="****"><br></td>
-				</tr>
-				<tr>
-					<th>권한</th>
-					<td><input type="radio" name="memberRole" id="U" value="U"
-						<%=memberRole.equals("U") ? "checked" : ""%>> <label
-						for="U">일반사용자</label> <input type="radio" name="memberRole" id="A"
-						value="A" <%=memberRole.equals("A") ? "checked" : ""%>> <label
-						for="A">관리자</label></td>
-				</tr>
-				<tr>
-					<th>이름</th>
-					<td><input type="text" name="memberName" id="memberName"
-						placeholder="한글 2~5글자" value="<%=memberName%>" required><br>
+					<th class="memUpdateId">아이디</th>
+					<td>
+						<input type="text" name="memberId" id="memberId"value="<%=memberId%>" readonly><br>
 					</td>
 				</tr>
 				<tr>
-					<th>생년월일</th>
-					<td><input type="date" name="birthday" id="birthday"
-						value="<%=birthday%>"><br></td>
+					<th class="memPassword">비밀번호</th>
+						<td>
+							<input type="password" name="password" id="password" value="****"><br>
+						</td>
 				</tr>
 				<tr>
-					<th>성별</th>
-					<td><input type="radio" name="gender" id="gender0" value="M"
-						<%=gender.equals("M") ? "checked" : ""%>> <label
-						for="gender0">남자</label> <input type="radio" name="gender"
-						id="gender1" value="F" <%=gender.equals("F") ? "checked" : ""%>>
-						<label for="gender1">여자</label></td>
+					<th>권한</th>
+					<td>
+						<input type="radio" name="memberRole" id="U" value="U" <%=memberRole.equals("U") ? "checked" : ""%>>
+						<label for="U">일반사용자</label>
+						<input type="radio" name="memberRole" id="A" value="A" <%=memberRole.equals("A") ? "checked" : ""%>>
+						<label for="A">관리자</label>
+					</td>
+				</tr>
+				<tr>
+					<th class="memName">이름</th>
+					<td>
+						<input type="text" name="memberName" id="memberName" placeholder="한글 2~5글자" value="<%=memberName%>" required><br>
+					</td>
+				</tr>
+				<tr>
+					<th class="memBirth">생년월일</th>
+					<td><input type="date" name="birthday" id="birthday" value="<%=birthday%>"><br></td>
+				</tr>
+				<tr>
+					<th class="memGender">성별</th>
+					<td>
+						<input type="radio" name="gender" id="gender0" value="M" <%=gender.equals("M") ? "checked" : ""%>> 
+						<label for="gender0">남자</label> 
+						<input type="radio" name="gender" id="gender1" value="F" <%=gender.equals("F") ? "checked" : ""%>>
+						<label for="gender1">여자</label>
+					</td>
 				</tr>
 				<tr>
 					<th>주소</th>
-					<td><input type="text" id="postcode" placeholder="우편번호"
-						required><br> <input type="button"
-						onclick="execDaumPostcode()" value="우편번호 찾기"><br> <input
-						type="text" name="address" id="address" placeholder="주소"
-						value="<%=address%>"><br> <input type="text"
-						name="addressSub" id="addressSub" placeholder="상세주소"
-						value="<%=addressSub%>"><br></td>
+					<td class="addr">
+						<input type="text" id="postcode" placeholder="우편번호" required><br> 
+						<input type="button" onclick="execDaumPostcode()" value="우편번호 찾기"><br> 
+						<input type="text" name="address" id="address" placeholder="주소" 	value="<%=address%>"><br> 
+						<input type="text" name="addressSub" id="addressSub" placeholder="상세주소" value="<%=addressSub%>"><br>
+					</td>
 				</tr>
 				<tr>
-					<th>핸드폰</th>
-					<td><input type="tel" placeholder="(-없이)01012345678"
-						name="phone" id="phone" maxlength="11" value="<%=phone%>" required><br>
-						<input type="hidden" id="phoneValid" value="1" /> <span
-						id="phoneResult"></span></td>
+					<th class="memPhone">핸드폰</th>
+					<td>
+						<input type="tel" placeholder="(-없이)01012345678" name="phone" id="phone" maxlength="11" value="<%=phone%>" required><br>
+						<input type="hidden" id="phoneValid" value="1" /> 
+						<spanid="phoneResult"></span>
+					</td>
 				</tr>
 				<tr>
-					<th>이메일</th>
-					<td><input type="email" placeholder="abc@xyz.com" name="email"
-						id="email" value="<%=email%>"><br></td>
+					<th class="memEmail">이메일</th>
+					<td>
+						<input type="email" placeholder="abc@xyz.com" name="email" id="email" value="<%=email%>"><br>
+					</td>
 				</tr>
 			</table>
-			<div class="button-class">
-				<input type="button" value="수정" onclick="updateMember();" />
-				<input type="button" value="삭제" onclick="deleteMember();" />
-				<input type="button" value="취소" onclick="location.href='<%=request.getContextPath()%>/admin/memberManage';" />
+			<div class="clickBtnDiv">
+				<input type="button" class="clickBtn" value="수정" onclick="updateMember();" />
+				<input type="button" class="clickBtn" value="삭제" onclick="deleteMember();" />
+				<input type="button" class="clickBtn" value="취소" onclick="location.href='<%=request.getContextPath()%>/admin/memberManage';" />
+			</div>
 			</div>
 		</form>
 	</section>

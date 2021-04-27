@@ -32,9 +32,9 @@
     /* padding: 22px 0; */
     padding: 22px 10px;
 }
-.restaurant-categori-menu li:not(:first-child) {
+/* .restaurant-categori-menu li:not(:first-child) {
 	cursor:pointer;
-}
+} */
 
 
 .restaurant-categori-menu li#selected {
@@ -98,20 +98,18 @@ span.searchBtn input#category_search_button {
     cursor: pointer;
 }
 
-
-
-
-/* li.menu:not(:last-of-type)::after {
-      content: "|";
-   	  color: #d9d9d9;
-} */
-
-.restaurant-categori-menu li:not(:first-child,:last-child):hover {
+ 
+ .restaurant-categori-menu li:not(:first-child,:last-child):hover {
 	background-color:black;
 	color:#fff;
+	cursor:pointer;
+} 
+
+.restaurant-categori-menu li.menu:hover {
+	background-color:black;
+	color:#fff;
+	cursor:pointer;
 }
-
-
 
 
 

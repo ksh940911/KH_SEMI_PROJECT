@@ -17,10 +17,10 @@
 	            <form action="<%=request.getContextPath()%>/admin/resFinder">
 	    	         <input type="text" name="searchResName"  size="25" placeholder="검색할 가게명을 입력하세요." class="searchName"/>
 	                <button type="submit" class="search-Click">검색</button>			
+	                <input type="button" class="newResBtn" value="신규등록" onclick="location.href='<%= request.getContextPath() %>/admin/resEnroll';"/>
 	            </form>	
 	        </div>
 		</div>
-				<input type="button" value="신규가게등록" onclick="location.href='<%= request.getContextPath() %>/admin/resEnroll';"/>
 	<table id="tbl-resList">
 		<% if (list == null || list.isEmpty()) { %>
 			<tr>
