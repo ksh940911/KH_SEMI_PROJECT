@@ -208,7 +208,7 @@ start with 19;
 select * from user_sequences;
 
 
-
+select * from tb_order;
 
 
 
