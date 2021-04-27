@@ -44,22 +44,22 @@
 				<td><%= r.getReviewTime() %></td>
 				<td>
 				<% if(r.getReviewStar() == 1) { %>
-					<p>☆☆☆☆★</p>
+					<p>★☆☆☆☆</p>
 				<%
 					}
 				%>
 				<% if(r.getReviewStar() == 2) { %>
-					<p>☆☆☆★★</p>
+					<p>★★☆☆☆</p>
 				<%
 					}
 				%>
 				<% if(r.getReviewStar() == 3) { %>
-					<p>☆☆★★★</p>
+					<p>★★★☆☆</p>
 				<%
 					}
 				%>
 				<% if(r.getReviewStar() == 4) { %>
-					<p>☆★★★★</p>
+					<p>★★★★☆</p>
 				<%
 					}
 				%>
