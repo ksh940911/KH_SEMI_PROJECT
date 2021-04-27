@@ -1,13 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
+<%@ include file="/WEB-INF/views/common/header.jsp" %>
 	<h1>결제취소</h1>
-	<input type="button" href="<%= request.getContextPath() %>" value="메인화면으로" />
-</body>
-</html>
+	<input type="button" href="<%= request.getContextPath() %>" value="메인화면으로 돌아가기" />
+<%@ include file="/WEB-INF/views/common/footer.jsp" %>

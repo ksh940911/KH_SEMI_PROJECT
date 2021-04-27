@@ -91,9 +91,12 @@ public class KakaoPay {
 			//결제승인 요청을하면 approval_url에 넣은 value 값으로 
 			//결제절차중 취소를 하면 cancel_url
 			//결제가 15분이상 지연되면 faul_url 로 이동시켜준다.
-			params.put("approval_url", "http://localhost:9090/yeogiyo/order/approval.do");
-			params.put("cancel_url", "http://localhost:9090/yeogiyo/views/order/cancel.jsp");
-			params.put("fail_url", "http://localhost:9090/yeogiyo/views/order/fail.jsp");
+//			params.put("approval_url", "http://localhost:9090/yeogiyo/order/approval.do");
+//			params.put("cancel_url", "http://localhost:9090/yeogiyo/views/order/cancel.jsp");
+//			params.put("fail_url", "http://localhost:9090/yeogiyo/views/order/fail.jsp");
+			params.put("approval_url", "http://kym9129.ddns.net:10000/yeogiyo/order/approval.do");
+			params.put("cancel_url", "http://kym9129.ddns.net:10000/yeogiyo/views/order/cancel.jsp");
+			params.put("fail_url", "http://kym9129.ddns.net:10000/yeogiyo/views/order/fail.jsp");
 			
 			//map을 key=value&key=value 형태로 변경 
 			String string_params = new String();

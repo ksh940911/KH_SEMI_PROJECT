@@ -304,14 +304,27 @@ commit;
 
 --insertOrder
 insert into tb_order
-(order_id, member_id, res_id, address, address_sub, phone, order_comment, payment_way, payment_place, eview_yn, order_menu, total_price) 
+(order_id, member_id, res_id, address, address_sub, phone, order_comment, payment_way, payment_place, order_menu, review_yn, total_price) 
 values(seq_tb_order_id.nextval, 'kym9129', 21, '경기 안양시 동안구 관악대로 286', '버스가판대1103-2', '01075991973', null, 'M', 'F', '[{"resId":21,"menuId":164,"menuName":"블랙알리오","amount":1,"price":17900,"totalPrice":17900},{"resId":21,"menuId":165,"menuName":"고추마요 치킨","amount":1,"price":17900,"totalPrice":17900}]', 'N', 35800);
 
-
+rollback;
 
 select * from user_tab_columns where table_name = 'TB_ORDER';
 
 select * from tb_order order by order_id desc;
+
+
+
+--selectOrderList
+select * from tb_order o, restaurant r where o.res_id = r.res_id and o.member_id = 'honggd' order by order_date desc;
+select * from tb_order order by order_date desc;
+
+--selectReviewCntByResId
+select count(*) count from review where res_id = ?
+
+select * from review;
+
+ select * from tb_order o, restaurant r where o.res_id = r.res_id and o.member_id = 'honggd' order by order_date desc;
 
 insert into restaurant (res_id, res_name, res_address, category, logo_img) values(	14	,	'자다가도벌떡'	,	'서울 강남구 테헤란로 124 지하1층'	,		'분식'	,	'https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w750&src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20190519_55%2F15582467169946WXfO_PNG%2FnLARu8btaoA3ZMoljicXzjad.png'	);																		
 insert into restaurant (res_id, res_name, res_address, category, logo_img) values(	15	,	'스타벅스 역삼포스코점'	,	'서울 강남구 테헤란로 13'	,		'카페/디저트'	,	'https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w750&src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20190828_93%2F1566953601239OT9MQ_PNG%2FxX7Wv642gXMoTI0DAv0hRymS.png'	);																		
