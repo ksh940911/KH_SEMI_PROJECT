@@ -62,12 +62,13 @@ public class MemberPwdSrchServlet extends HttpServlet {
 				jsonStr = gson.toJson(null);
 				System.out.println("jsonStr = " + jsonStr);
 			}else {
-				String host = "smtp.naver.com";
+				//메일 서버 설정
+				String host = "smtp.naver.com";  //이메일발송을 처리해줄 SMTP 서버
 				String user = "yeogiyo6@naver.com";
 				String password = "matzip2jo!";
-				
+				//보낼 메일주소
 				String to_email = member.getEmail();
-				
+				//SMTP 서버 정보 설정
 				Properties props = new Properties();
 				props.put("mail.smtp.host", host);
 				props.put("mail.smtp.port", 465);
@@ -99,16 +100,19 @@ public class MemberPwdSrchServlet extends HttpServlet {
 				TemporaryPassword = temp.toString();
 				//System.out.println("임시비밀번호 : " + TemporaryPassword);
 				
+				//javax.mail.Session클래스 사용.  prop에 저장된 설정값을 저장하여 세션을 생성
+				//SMTP서버 정보와 사용자 정보를 기반으로 Session클래스의 인스턴스를 생성
 				Session mailSession = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
 					protected PasswordAuthentication getPasswordAuthentication() {
 						return new PasswordAuthentication(user,password);
 					}
 				});
 				
+				//javax.mail.internet.MimeMessage 클래스 사용. message클래스 객체를 사용
 				try {
 					MimeMessage msg = new MimeMessage(mailSession);
-					msg.setFrom(new InternetAddress(user, "Yeogiyo"));
-					msg.addRecipient(Message.RecipientType.TO, new InternetAddress(to_email));
+					msg.setFrom(new InternetAddress(user, "Yeogiyo")); //발신자
+					msg.addRecipient(Message.RecipientType.TO, new InternetAddress(to_email)); //수신자
 					
 					//메일 제목
 					msg.setSubject("안녕하세요 여기요입니다.");
@@ -116,7 +120,7 @@ public class MemberPwdSrchServlet extends HttpServlet {
 					//msg.setText("임시비밀번호는 :" + temp);
 					msg.setText("임시비밀번호 : " + TemporaryPassword);
 					
-					Transport.send(msg);
+					Transport.send(msg); //메일전송
 					System.out.println("이메일 전송 성공");
 					mailResult = 1;
 					
