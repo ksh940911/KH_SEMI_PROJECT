@@ -24,11 +24,12 @@
 				<th>결제 금액</th>
 				<th>리뷰 쓰기</th>
 			</tr>
+			<tr>
 			<%
 				for(int i = 0; i < orderList.size(); i++) {
 					MemberOrderList order = orderList.get(i);
+					if(order != null) {
 			%>
-			<tr>
 				<td><%=order.getOrderDate()%></td>
 				<td><%=order.getResName()%></td>
 				<td>
@@ -71,6 +72,9 @@
 					<input type="hidden" name="menuCnt" id="menuCnt" value="<%= menuCnt -1%>"/>
 				</form>
 				</td>
+				<% } else { %>
+				<td colspan="6">주문한 내역이 없습니다.</td>
+				<% } %>
 			</tr>
 			<% } %>
 		</table>
