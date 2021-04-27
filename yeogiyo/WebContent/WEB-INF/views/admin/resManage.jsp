@@ -8,45 +8,42 @@
 	
 %>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/adminRes.css" />
-<style>
-	div#search-container {margin:0 0 10px 0; padding:3px; background-color: rgba(250, 0, 80, 0.7);}
-</style>
+
 <section id="restaurantList-container">
-	<h2>가게관리</h2>
-	<input type="button" value="신규가게등록" onclick="location.href='<%= request.getContextPath() %>/admin/resEnroll';"/>
-		<div id="search-container">
-	
+	<h2 class="management"> ※가게관리</h2>
+	<div id="search-container">
+		<ul class="res_search">가게조회</ul>
 			<div id="search-resId" class="search-type">
 	            <form action="<%=request.getContextPath()%>/admin/resFinder">
-	               가게 조회 : <input type="text" name="searchResName"  size="25" placeholder="검색할 가게명을 입력하세요."/>
-	       
-	                <button type="submit">검색</button>			
+	    	         <input type="text" name="searchResName"  size="25" placeholder="검색할 가게명을 입력하세요." class="searchName"/>
+	                <button type="submit" class="search-Click">검색</button>			
 	            </form>	
 	        </div>
 		</div>
-<table id="tbl-resList">
-	<thead>
-		<tr>
-			<th>가게번호</th>
-			<th>카테고리</th>
-			<th>가게로고</th>
-			<th>가게명</th>
-			<th>가게주소</th>
-			<th>최소주문금액</th>
-			<th>별점평균</th>
-			<th>리뷰갯수</th>
-		</tr>
-	</thead>
-	<tbody>
-	<% if (list == null || list.isEmpty()) { %>
-		<tr>
-			<td colspan="8" style="text-align:center;"> 조회된 가게가 없습니다. </td>
-		</tr>
-	<% 
-		} else { 
-		for(Restaurant res : list) {
-	%>
-		<tr onmouseover="this.style.background='rgba(250, 0, 80, 0.2)'" onmouseout="this.style.background='white'">
+				<input type="button" value="신규가게등록" onclick="location.href='<%= request.getContextPath() %>/admin/resEnroll';"/>
+	<table id="tbl-resList">
+		<% if (list == null || list.isEmpty()) { %>
+			<tr>
+				<td colspan="8" style="text-align:center;"> 조회된 가게가 없습니다. </td>
+			</tr>
+		<% } else { %>
+		<thead>
+			<tr class="table_id">
+				<th class="res_id">가게번호</th>
+				<th class="res_category">카테고리</th>
+				<th class="res_img">가게로고</th>
+				<th class="res_name">가게명</th>
+				<th class="rse_address">가게주소</th>
+				<th class="res_min_price">최소주문금액</th>
+				<th class="res_rate_avg">별점평균</th>
+				<th class="res_review_cnt">리뷰갯수</th>
+			</tr>
+		</thead>
+		<tbody>
+	<% for(Restaurant res : list) { %>
+		<tr class="resLists" 
+			onmouseover="this.style.background='rgba(250, 0, 80, 0.2)'" 
+			onmouseout="this.style.background='white'">
 			<td><%= res.getResId() %></td>
 			<td><%= res.getCategory() %></td>
 			<td>
