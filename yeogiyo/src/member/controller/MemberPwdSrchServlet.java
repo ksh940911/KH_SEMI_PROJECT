@@ -45,10 +45,10 @@ public class MemberPwdSrchServlet extends HttpServlet {
 		try {
 			
 			String email = request.getParameter("email");
-			System.out.println("email@MemberPwdSrchServlet = " + email);
+			//System.out.println("email@MemberPwdSrchServlet = " + email);
 			
 			Member member = memberService.selectMemberByEmail(email);
-			System.out.println("member@MemberPwdSrchServlet = " + member);
+			//System.out.println("member@MemberPwdSrchServlet = " + member);
 			
 			response.setContentType("application/json; charset=utf-8");
 			
@@ -97,7 +97,7 @@ public class MemberPwdSrchServlet extends HttpServlet {
 				}
 				//String AuthenticationKey = temp.toString();
 				TemporaryPassword = temp.toString();
-				System.out.println("임시비밀번호 : " + TemporaryPassword);
+				//System.out.println("임시비밀번호 : " + TemporaryPassword);
 				
 				Session mailSession = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
 					protected PasswordAuthentication getPasswordAuthentication() {
@@ -132,7 +132,7 @@ public class MemberPwdSrchServlet extends HttpServlet {
 				member.setPassword(TemporaryPassword);
 				updateResult = memberService.updateMemberPassword(member);
 				jsonStr = gson.toJson((updateResult > 0) ? "성공" : "실패");
-				System.out.println("jsonStr = " + jsonStr);		
+				//System.out.println("jsonStr = " + jsonStr);		
 			}
 			
 			

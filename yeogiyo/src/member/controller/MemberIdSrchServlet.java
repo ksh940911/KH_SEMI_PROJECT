@@ -39,9 +39,9 @@ public class MemberIdSrchServlet extends HttpServlet {
 		
 		try {
 			String phone = request.getParameter("phone");
-			System.out.println("phone@MemberIdSrchServlet = " + phone);
+			//System.out.println("phone@MemberIdSrchServlet = " + phone);
 			String chk = request.getParameter("chk");
-			System.out.println("chk@MemberIdSrchServlet = " + chk);
+			//System.out.println("chk@MemberIdSrchServlet = " + chk);
 			
 			//response.setContentType("text/plain; charset=utf-8");
 			response.setContentType("application/json; charset=utf-8");
@@ -65,14 +65,14 @@ public class MemberIdSrchServlet extends HttpServlet {
 				}
 				result = SendSMS.verify(phone,num);
 				jsonStr = gson.toJson(result == 1 ? num : "문자전송실패");
-				System.out.println("jsonStr = " + jsonStr);
+				//System.out.println("jsonStr = " + jsonStr);
 			}
 			
 			if("1".equals(chk)) {
 				Member member = memberService.selectMemberByPhone(phone);
 				//msg = (member != null) ? member.getMemberId() : null;
 				jsonStr = gson.toJson(member != null ? member.getMemberId() : null);
-				System.out.println("jsonStr = " + jsonStr);
+				//System.out.println("jsonStr = " + jsonStr);
 			}
 			
 			PrintWriter out = response.getWriter(); //출력스트림을 사용해서 응답메세지작성

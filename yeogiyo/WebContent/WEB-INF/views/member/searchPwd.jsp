@@ -105,13 +105,15 @@ $(document.pwdsearchFrm).submit(function(){
 //모달폼 닫기
 function modalClose() {
 	$modal.css("display","none");
+	$(".modal-body").html("");
 }
 //모달폼 밖
 $(window).click(function(e){
 	var modal = e.target.className;
 	
 	if(modal == "modal-wrapper"){
-		$modal.css("display","none");	
+		$modal.css("display","none");
+		$(".modal-body").html("");
 	}
 });
 
