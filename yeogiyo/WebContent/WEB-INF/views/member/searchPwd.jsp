@@ -92,7 +92,6 @@ $(document.pwdsearchFrm).submit(function(){
 			},
 			error:function(xhr,status,err){
 				console.log(xhr,status,err);
-				$(".modal-body").html("xhr,status,err");
 			}
 		});
 		$("[name=email]").val("");
