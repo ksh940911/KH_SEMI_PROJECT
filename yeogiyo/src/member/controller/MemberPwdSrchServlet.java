@@ -42,8 +42,8 @@ public class MemberPwdSrchServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		try {
-			
+	
+		try {	
 			String email = request.getParameter("email");
 			//System.out.println("email@MemberPwdSrchServlet = " + email);
 			
@@ -52,6 +52,7 @@ public class MemberPwdSrchServlet extends HttpServlet {
 			
 			response.setContentType("application/json; charset=utf-8");
 			
+
 			String jsonStr = "";
 			String TemporaryPassword = "";
 			Gson gson = new Gson();
@@ -108,6 +109,7 @@ public class MemberPwdSrchServlet extends HttpServlet {
 					}
 				});
 				
+				
 				//javax.mail.internet.MimeMessage 클래스 사용. message클래스 객체를 사용
 				try {
 					MimeMessage msg = new MimeMessage(mailSession);
@@ -127,6 +129,7 @@ public class MemberPwdSrchServlet extends HttpServlet {
 				}catch (Exception e) {
 					System.out.println("이메일 전송 실패");
 					e.printStackTrace();
+					//jsonStr = gson.toJson("전송실패");
 				}
 			}
 			
@@ -145,11 +148,11 @@ public class MemberPwdSrchServlet extends HttpServlet {
 			out.print(jsonStr);
 			
 			
-			
 		}catch(Exception e) {
 			e.printStackTrace();
 			throw e;
-		}
+		}	
+		
 		
 		
 		

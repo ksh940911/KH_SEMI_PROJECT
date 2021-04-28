@@ -3,6 +3,8 @@
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 
 
+
+
 	<div class="verify-wrapper">
       <form name="pwdsearchFrm" onsubmit="return false" action="<%= request.getContextPath() %>/member/searchPwd" method="POST">
         <div class="pwdsearch">
@@ -68,7 +70,7 @@ var $modal = $(".modal-wrapper");
 $(document.pwdsearchFrm).submit(function(){
 	console.log($(".chkemail").val());
 	
-	if($(".chkemail").val() == "0"){
+	if($(".chkemail").val() == 0){
 		//유효성검사 통과 후
 		$.ajax({
 			url: "<%= request.getContextPath() %>/member/searchPwd",
@@ -76,7 +78,8 @@ $(document.pwdsearchFrm).submit(function(){
 			data:{
 				email:$("[name=email]").val()
 			},
-			success:function(data){				
+			success:function(data){		
+				console.log(data);
 				if(data != null){
 					if(data == "성공"){
 						$(".modal-body").html("입력하신 메일로 임시비밀번호를 전송하였습니다. 확인해주세요.");
