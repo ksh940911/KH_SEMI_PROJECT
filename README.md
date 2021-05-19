@@ -32,7 +32,7 @@
 * [Oracle 11g express edition](https://www.oracle.com)
 * [JQuery](https://jquery.com)
 * [GitHub](https://github.com)
-* [Servlets&Jsp]
+* [Servlets&Jsp](https://www.java.com/ko/)
 * [ApacheTomcat](http://tomcat.apache.org/)
 <!-- * [**AWS** RDS](https://aws.amazon.com/ko/rds/)   -->
 
