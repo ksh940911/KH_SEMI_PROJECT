@@ -44,7 +44,7 @@ public class KakaoPay {
 //			adminKey = prop.getProperty("adminKey");
 //			System.out.println("adminKeyProperties@kakao = " + adminKey);
 			//key를 properties파일에 담으려고 했는데 왜인지 계속 읽어오질 못한다ㅠㅠ
-			adminKey = "KakaoAK 75418995b493f8fec66ecbc9a35492cc";
+			adminKey = "";
 //			
 			//URL에 요청할때 보낼 헤더 값
 			conn.setRequestProperty("Authorization", adminKey);

@@ -103,7 +103,7 @@
     
     //아임포트 초기화
 	var IMP = window.IMP;
-	IMP.init('imp32692513'); //가맹점 식별코드
+	IMP.init(''); //가맹점 식별코드
 	
 	
 	var memberIdJAVA = '<%= loginMember.getMemberId() %>';
